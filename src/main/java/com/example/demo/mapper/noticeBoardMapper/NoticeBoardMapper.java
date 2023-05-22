@@ -27,4 +27,32 @@ public interface NoticeBoardMapper {
 				id = #{id}
 			""")
 	NoticeBoard selectById(Integer id);
+
+	@Update("""
+			UPDATE noticeboard
+			SET
+				title = #{title},
+				content = #{content}
+			WHERE
+				id = #{id}
+			""")
+	int update(NoticeBoard nboard);
+
+	@Delete("""
+			DELETE FROM noticeboard
+			WHERE id = #{id}
+			""")
+	int deleteById(Integer id);
+
+	@Insert("""
+			INSERT INTO noticeboard (title, content, writer)
+			VALUES (#{title}, #{content}, #{writer})
+			""")
+	int insert(NoticeBoard nboard);
+
+	@Insert("""
+			INSERT INTO noticeboardfile (notice_board_id, file_name)
+			VALUES (#{notice_board_id}, #{file_name})
+			""")
+	Integer insertNoticeboardfile(Integer notice_board_id, String file_name);
 }
