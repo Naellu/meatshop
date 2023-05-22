@@ -14,6 +14,8 @@
 </head>
 <body>
 	<my:navBar></my:navBar>
+	<my:alert></my:alert>
+	
 	<h1>${param.id}번 상품문의</h1>
 	<hr />
 	<form method="post" enctype="maultipart/form-date">

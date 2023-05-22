@@ -22,5 +22,12 @@ public interface ProductInquiryMapper {
 			""")
 	int addInquiry(Integer productId, String userNickname, String inquiryTitle, String inquiryText);
 
+	@Delete("""
+			UPDATE productinquiry
+			set nickname = '25삭제'
+			WHERE id = #{inquiryId }
+			""")
+	int deleteInquiry(Integer inquiryId);
+
 
 }
