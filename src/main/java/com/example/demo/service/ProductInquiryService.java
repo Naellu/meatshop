@@ -19,5 +19,10 @@ public class ProductInquiryService {
 		
 		return Map.of("inquiryList", inquiryList);
 	}
+	public boolean addInquiry(Integer productId, String userNickname, String inquiryTitle, String inquiryText) {
+		int cnt = mapper.addInquiry(productId, userNickname, inquiryTitle, inquiryText);
+		
+		return cnt ==1;
+	}
 
 }

@@ -19,27 +19,36 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">상품명</th>
+      <th scope="col">문의목록</th>
       <th scope="col">상품문의</th>
-      <th scope="col">상품리뷰</th>
+      <th scope="col">문의수정</th>
+      <th scope="col">문의삭제</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">1</th>
       <td>소고기</td>
-      <td><a href="/inquiry/list?id=22">문의하기</a></td>
-      <td>@mdo</td>
+      <td><a href="/inquiry/list?id=22">문의목록</a></td>
+      <td><a href="/inquiry/add?id=22">문의하기</a> </td>
+      <td><a href="/inquiry/modify?id=22">문의수정</a></td>
+      <td><a href="/inquiry/delete?id=22">문의삭제</a> </td>
     </tr>
     <tr>
       <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
+      <td>돼지고기</td>
+      <td><a href="/inquiry/list?id=33">문의목록</a></td>
+      <td><a href="/inquiry/add?id=33">문의하기</a> </td>
+      <td><a href="/inquiry/modify?id=33">문의수정</a></td>
+      <td><a href="/inquiry/delete?id=33">문의삭제</a> </td>
     </tr>
     <tr>
       <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
+       <td>닭고기</td>
+      <td><a href="/inquiry/list?id=44">문의목록</a></td>
+      <td><a href="/inquiry/add?id=44">문의하기</a> </td>
+      <td><a href="/inquiry/modify?id=44">문의수정</a></td>
+      <td><a href="/inquiry/delete?id=44">문의삭제</a> </td>
     </tr>
   </tbody>
 </table>
