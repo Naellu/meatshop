@@ -1,17 +1,17 @@
-package com.example.demo;
+package com.example.demo.controller.admin;
 
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.*;
 
-@Slf4j
-@Controller
-@RequestMapping("/")
+@Controller("adminMainController")
+@RequestMapping("/admin")
 public class MainController {
 
-	@GetMapping
+	@GetMapping("/main")
     public String mainPage() {
-		return "main";
+		return "admin/adminMain";
     }
 }
+

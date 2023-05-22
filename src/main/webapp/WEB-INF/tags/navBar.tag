@@ -68,6 +68,10 @@
 				<li class="nav-item">
 					<a class="nav-link ${current eq 'support' ? 'active' : '' }" href="/support">고객센터</a>
 				</li>
+				
+				<li class="nav-item">
+					<a class="nav-link ${current eq 'support' ? 'active' : '' }" href="/admin/main">관리자</a>
+				</li>
 
 				<sec:authorize access="isAuthenticated()">
 				<li class="nav-item">
