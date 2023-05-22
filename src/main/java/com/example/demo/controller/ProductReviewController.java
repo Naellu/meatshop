@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("review")
-public class ReviewController {
+public class ProductReviewController {
 
 	@GetMapping("test")
 	public void testPage() {
