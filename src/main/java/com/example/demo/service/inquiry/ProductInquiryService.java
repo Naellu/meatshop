@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.service.inquiry;
 
 import java.util.*;
 
@@ -7,6 +7,7 @@ import org.springframework.stereotype.*;
 
 import com.example.demo.domain.*;
 import com.example.demo.mapper.*;
+import com.example.demo.mapper.productInquiry.*;
 
 @Service
 public class ProductInquiryService {
