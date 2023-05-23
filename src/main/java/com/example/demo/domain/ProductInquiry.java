@@ -2,7 +2,7 @@ package com.example.demo.domain;
 
 import java.sql.*;
 
-import lombok.*;
+import lombok.Data;
 
 @Data
 public class ProductInquiry {

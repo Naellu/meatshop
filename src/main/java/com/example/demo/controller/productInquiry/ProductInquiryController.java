@@ -14,7 +14,7 @@ import com.example.demo.service.inquiry.*;
 
 
 @Controller
-@RequestMapping("inquiry")
+@RequestMapping("productinquiry")
 public class ProductInquiryController {
 	
 	@Autowired
