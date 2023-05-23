@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.MemberMapper">
+
+	<resultMap type="com.example.demo.domain.Members" id="memberMap">
+	<id property="id" column="id"></id>
+	<result property="MemberPassword" column="member_password"></result>
+	<result property="MemberBirthday" column="member_birthday"></result>
+	<result property="Memberemail" column="member_email"></result>
+	<result property="MemberAddress" column="member_address"></result>
+	
+	<result property="MemberPhoneNumber" column="member_phone_number"></result>
+		
+	<collection property="authority" ofType="string">
+	<result column="authority"></result>
+	</collection>
+	</resultMap>
+</mapper>
