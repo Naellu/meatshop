@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.controller.productInquiry;
 
 import java.util.*;
 
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.*;
 
 import com.example.demo.service.*;
+import com.example.demo.service.inquiry.*;
 
 
 @Controller
