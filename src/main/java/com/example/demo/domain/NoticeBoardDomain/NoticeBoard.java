@@ -1,6 +1,7 @@
 package com.example.demo.domain.NoticeBoardDomain;
 
 import java.time.*;
+import java.util.*;
 
 import lombok.*;
 
@@ -12,4 +13,6 @@ public class NoticeBoard {
 	private String title;
 	private String content;
 	private LocalDateTime inserted;
+	
+	private List<String> fileName;
 }

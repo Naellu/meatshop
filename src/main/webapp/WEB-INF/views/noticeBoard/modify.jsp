@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +12,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	<my:navBar current="nbList"/>
+	<my:navBar current="nbList" />
+	
+	<my:alert/>
 
 	<div class="container-lg">
 
@@ -29,6 +31,30 @@
 					</div>
 
 
+					<!-- 그림 파일 출력 -->
+					<div class="mb-3">
+						<c:forEach items="${nboard.fileName }" var="fileName" varStatus="status">
+							<div class="mb-3">
+								<div class="row">
+									<div class="col-2 d-flex">
+										<div class="form-check form-switch m-auto">
+											<input name="removeFiles" value="${fileName }" class="form-check-input" type="checkbox" role="switch" id="removeCheckBox${status.index }">
+											<label class="form-check-label" for="removeCheckBox${status.index }">
+												<i class="fa-solid fa-trash-can text-danger"></i>
+											</label>
+										</div>
+									</div>
+
+									<div class="col-10">
+										<div>
+											<img class="img-thumbnail img-fluid" src="${bucketUrl }/noticeboard/${nboard.id }/${fileName}" alt="" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+
 					<div class="mb-3">
 						<label for="contentTextarea" class="form-label">본문</label>
 						<textarea class="form-control" id="contentTextarea" rows="10" name="content">${nboard.content }</textarea>
@@ -38,6 +64,13 @@
 						<input class="form-control" type="text" value="${nboard.inserted }" readonly />
 					</div>
 
+					<!-- 새 그림 파일 추가 input -->
+					<div class="mb-3">
+						<label for="fileInput" class="form-label">그림 파일</label>
+						<input class="form-control" type="file" id="fileInput" name="files" accept="image/*" multiple>
+						<div class="form-text">총 10MB, 하나의 파일은 1MB를 초과할 수 없습니다.</div>
+					</div>
+					
 					<div class="mb-3">
 						<input class="btn btn-secondary" type="submit" value="수정" />
 					</div>

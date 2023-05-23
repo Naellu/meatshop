@@ -28,7 +28,15 @@
 						<label for="contextTextarea" class="form-label">본문</label>
 						<textarea rows="10" id="contentTextarea" class="form-control" name="content">${nboard.content }</textarea>
 					</div>
-
+					
+					<div class="mb-3">
+						<label for="fileInput" class="form-label">그림 파일</label>
+						<input class="form-control" type="file" id="fileInput" name="files" accept="image/*" multiple>
+						<div class="form-text">
+							총 10MB, 하나의 파일은 1MB를 초과할 수 없습니다. 
+						</div>
+					</div>
+					
 					<div class="mb-3">
 						<input class="btn btn-primary" type="submit" value="등록" />
 					</div>
