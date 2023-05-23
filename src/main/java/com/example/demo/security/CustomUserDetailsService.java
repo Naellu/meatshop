@@ -23,7 +23,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Members member = mapper.selectId(username);
-		System.out.println(member);
+		System.out.println("this is security" + member);
 		if(member == null) {
 			throw new UsernameNotFoundException(username + "해당 회원 조회 불가");
 		}
@@ -41,7 +41,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 //				.authorities(member.getAuthority().stream().map(SimpleGrantedAuthority::new).toList())
 				.build();
 				
-		
+		System.out.println(user);
 		return user;
 	}
 	
