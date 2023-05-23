@@ -11,18 +11,28 @@ import org.springframework.web.multipart.*;
 import com.example.demo.domain.NoticeBoardDomain.*;
 import com.example.demo.mapper.noticeBoardMapper.*;
 
-import software.amazon.awssdk.services.s3.*;
-import software.amazon.awssdk.services.s3.model.*;
+//import software.amazon.awssdk.services.s3.*;
+//import software.amazon.awssdk.services.s3.model.*;
 
 
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class NoticeBoardService implements NoticeBoardServiceInterface{
+<<<<<<< HEAD
 	/*
 	 * @Autowired private S3Client s3;
 	 * 
 	 * @Value("${aws.s3.bucketName}") private String bucketName;
 	 */
+=======
+
+
+//	@Autowired
+//	private S3Client s3;
+//
+//	@Value("${aws.s3.bucketName}")
+//	private String bucketName;
+>>>>>>> 37c97c593a75b156bf22e20e1636bae25dab373d
 	
 	@Autowired
 	private NoticeBoardMapper mapper;
@@ -53,6 +63,7 @@ public class NoticeBoardService implements NoticeBoardServiceInterface{
 	public boolean addNoticeBoard(NoticeBoard nboard, MultipartFile[] files) {
 		int cnt = mapper.insert(nboard);
 		
+<<<<<<< HEAD
 		/*
 		 * for (MultipartFile file : files) { if (file.getSize() > 0) { String objectKey
 		 * = "noticeBoard/" + nboard.getId() + "/" + file.getOriginalFilename();
@@ -65,6 +76,24 @@ public class NoticeBoardService implements NoticeBoardServiceInterface{
 		 * 
 		 * mapper.insertNoticeboardfile(nboard.getId(), file.getOriginalFilename()); } }
 		 */
+=======
+//		for (MultipartFile file : files) {
+//			if (file.getSize() > 0) {
+//				String objectKey = "noticeBoard/" + nboard.getId() + "/" + file.getOriginalFilename();
+//				
+//				PutObjectRequest por = PutObjectRequest.builder()
+//						.bucket(bucketName)
+//						.key(objectKey)
+//						.acl(ObjectCannedACL.PUBLIC_READ)
+//						.build();
+//				RequestBody rb = RequestBody.fromInputStream(file.getInputStream(), file.getSize());
+//				
+//				s3.putObject(por, rb);
+//				
+//				mapper.insertNoticeboardfile(nboard.getId(), file.getOriginalFilename());
+//			}
+//		}
+>>>>>>> 37c97c593a75b156bf22e20e1636bae25dab373d
 		return cnt == 1;
 	}
 
