@@ -30,7 +30,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${inquiryList }" var="inquiry" varStatus="loop">
+			<c:forEach items="${inquiryList }" var="inquiry">
 				<tr>
 					<td>${inquiry.customer_name }</td>
 					<td>${inquiry.nickname }</td>
@@ -40,9 +40,7 @@
 						<a href="/inquiry/modify/id=${inquiry.id }">수정하기</a>
 					</td>
 					<td>
-						<button name="removeButton" id="${inquiry.id }" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">
-						${inquiry.id }삭제
-						</button>
+						<button name="removeButton" id="${inquiry.id }" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">${inquiry.id }삭제</button>
 					</td>
 
 				</tr>
@@ -52,19 +50,18 @@
 					</td>
 
 				</tr>
+
+
 			</c:forEach>
 		</tbody>
 	</table>
 
-
-	<!-- <div class="d-none"> -->
-	<div>
+	<div class="d-none">
 		<form action="/inquiry/delete" method="post" id="removeForm">
-			<input type="text" name="productId" value="${param.id}" } />
+			<input type="text" name="productId" value="${param.id}" />
 			<input type="text" name="inquiryId" value="" />
 		</form>
 	</div>
-
 	<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -82,10 +79,13 @@
 	</div>
 
 
+
+
+
+
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="/js/productInquiry/list.js"></script>
-	
-	
+
 </body>
 </html>

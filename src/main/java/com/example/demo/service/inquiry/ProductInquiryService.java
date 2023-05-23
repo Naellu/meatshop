@@ -26,9 +26,6 @@ public class ProductInquiryService {
 		return cnt == 1;
 	}
 	public boolean deleteInquiry(Integer inquiryId) {
-		System.out.println("-----service----");
-		System.out.println(inquiryId);
-		System.out.println("-----------------");
 		int cnt = mapper.deleteInquiry(inquiryId);
 		return cnt==1;
 	}
