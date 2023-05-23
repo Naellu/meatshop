@@ -56,6 +56,7 @@
 	</table>
 
 
+	<!-- <div class="d-none"> -->
 	<div>
 		<form action="/inquiry/delete" method="post" id="removeForm">
 			<input type="text" name="productId" value="${param.id}" } />
