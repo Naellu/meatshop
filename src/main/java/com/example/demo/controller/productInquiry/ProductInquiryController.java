@@ -8,6 +8,7 @@ import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.*;
 
+import com.example.demo.domain.*;
 import com.example.demo.service.*;
 import com.example.demo.service.inquiry.*;
 
@@ -25,9 +26,9 @@ public class ProductInquiryController {
 	}
 	
 	@GetMapping("list")
-	public String list(Integer id, Model model) {
+	public String list(Integer productId, Model model) {
 		
-		Map<String, Object> result = service.showInquiryList(id);
+		Map<String, Object> result = service.showInquiryListByProductId(productId);
 		
 		model.addAllAttributes(result);
 		
@@ -35,38 +36,63 @@ public class ProductInquiryController {
 	}
 	
 	@GetMapping("add")
-	public void addFrom(Integer id) {
+	public void addFrom(Integer productId) {
 		
 	}
 	
 	@PostMapping("add")
-	public String add(Integer productId ,String userNickname, String inquiryTitle, String inquiryText,
+	public String addProcess(ProductInquiry productInquiry,
 			RedirectAttributes rttr) {
-		boolean ok = service.addInquiry(productId, userNickname, inquiryTitle, inquiryText);
+		
+		boolean ok = service.addInquiry(productInquiry);
 		if (ok) {
 			rttr.addFlashAttribute("message", "문의가 등록되었습니다.");
-			return "redirect:/inquiry/list?id="+ productId; 
+			return "redirect:/inquiry/list?productId="+ productInquiry.getProductId(); 
 		} else {
 			rttr.addFlashAttribute("message", "문의가 등록되지 않았습니다.");
-			return "redirect:/inquiry/add?id=" + productId;
+			return "redirect:/inquiry/add?productId=" + productInquiry.getProductId(); 
 		}
 	}
 	
 	@PostMapping("delete")
-	public String delete(Integer inquiryId, Integer productId, RedirectAttributes rttr) {
-		boolean ok = service.deleteInquiry(inquiryId);
-		System.out.println("-----controller----");
-		System.out.println(inquiryId);
-		System.out.println("-----------------");
+	public String delete(ProductInquiry productInquiry, RedirectAttributes rttr) {
+		System.out.println(productInquiry.getProductId());
+		
+		boolean ok = service.deleteInquiry(productInquiry.getInquiryId());
+		
 		
 		if(ok) {
 			rttr.addFlashAttribute("message", "문의가 삭제되었습니다.");
-			return "redirect:/inquiry/list?id=" + productId;
+			return "redirect:/inquiry/list?productId=" + productInquiry.getProductId();
 		} else {
 			rttr.addFlashAttribute("message", "문의가 삭제되지 않았습니다.");
-			return "redirect:/inquiry/list?id=" + productId;
+			return "redirect:/inquiry/list?productId=" + productInquiry.getProductId();
 		}
 		
 	}
 	
+	@GetMapping("modify/{inquiryId}")
+	public String modifyFrom(@PathVariable("inquiryId") Integer inquiryId, Model model) {
+		model.addAttribute("productInquiry", service.getInquiry(inquiryId));
+		return "inquiry/modify";
+	}
+	
+	@PostMapping("modify/{inquiryId}")
+	public String modifyProcess(@PathVariable("inquiryId") Integer inquiryId,
+			ProductInquiry productInquiry,
+			RedirectAttributes rttr
+			) {
+		boolean ok = service.modifyInquiry(productInquiry);
+		
+		if(ok) {
+			rttr.addFlashAttribute("message", "문의가 수정되었습니다.");
+			return "redirect:/inquiry/list?productId=" + productInquiry.getProductId();
+		} else {
+			rttr.addFlashAttribute("message", "문의가 수정되지 않았습니다.");
+			return "redirect:/inquiry/list?productId=" + productInquiry.getProductId();
+		}
+
+	}
+	
+
 }

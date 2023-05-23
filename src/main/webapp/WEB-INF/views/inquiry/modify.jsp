@@ -12,40 +12,25 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	
-	<h1>테스트페이지</h1>
-	<hr />
-	
-	<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">상품명</th>
-      <th scope="col">문의목록</th>
-      <th scope="col">상품문의</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>소고기</td>
-      <td><a href="/inquiry/list?productId=22">문의목록</a></td>
-      <td><a href="/inquiry/add?productId=22">문의하기</a> </td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>돼지고기</td>
-      <td><a href="/inquiry/list?productId=33">문의목록</a></td>
-      <td><a href="/inquiry/add?productId=33">문의하기</a> </td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-       <td>닭고기</td>
-      <td><a href="/inquiry/list?productId=44">문의목록</a></td>
-      <td><a href="/inquiry/add?productId=44">문의하기</a> </td>
-    </tr>
-  </tbody>
-</table>
+	<form method="post" enctype="maultipart/form-date">
+		<div class="mb-3">
+		<input type="hidden" name="id" value="${productInquiry.inquiryId }"/>
+		<input type="hidden" name="productId" value="${productInquiry.productId}"/>
+		</div>
+		<div class="mb-3">
+		<input type="hidden" name="nickName" value="${productInquiry.nickName }" />
+		</div>
+		<div class="mb-3">
+		제목 : <input type="text" name="inquiryTitle" value="${productInquiry.inquiryTitle }"/><br />
+		</div>
+		<div class="mb-3 form-floating " >
+		문의 내용 <br />
+		<textarea class="form-control" id="bodyTextarea" rows="10" name="inquiryText">${productInquiry.inquiryText }</textarea>
+		<br />
+		</div>
+		<input type="submit" value="수정하기" />
+		
+	</form>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

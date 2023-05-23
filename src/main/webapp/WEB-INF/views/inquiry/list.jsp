@@ -15,7 +15,8 @@
 
 	<my:alert />
 
-	<h1>${param.id}번상품문의목록</h1>
+	
+	<h1>${param.productId}번상품문의목록</h1>
 	<hr />
 
 	<table class="table">
@@ -32,21 +33,21 @@
 		<tbody>
 			<c:forEach items="${inquiryList }" var="inquiry">
 				<tr>
-					<td>${inquiry.customer_name }</td>
-					<td>${inquiry.nickname }</td>
-					<td>${inquiry.inquiry_title }</td>
-					<td>${inquiry.created_at }</td>
+					<td>${inquiry.customerName }</td>
+					<td>${inquiry.nickName }</td>
+					<td>${inquiry.inquiryTitle }</td>
+					<td>${inquiry.createdAt }</td>
 					<td>
-						<a href="/inquiry/modify/id=${inquiry.id }">수정하기</a>
+						<a href="/inquiry/modify/${inquiry.inquiryId }">수정하기</a>
 					</td>
 					<td>
-						<button name="removeButton" id="${inquiry.id }" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">${inquiry.id }삭제</button>
+						<button name="removeButton" id="${inquiry.inquiryId }" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">${inquiry.inquiryId }삭제</button>
 					</td>
 
 				</tr>
 				<tr>
 					<td>
-						<div style="white-space: pre-wrap;">${inquiry.inquiry_text }</div>
+						<div style="white-space: pre-wrap;">${inquiry.inquiryText }</div>
 					</td>
 
 				</tr>
@@ -58,8 +59,8 @@
 
 	<div class="d-none">
 		<form action="/inquiry/delete" method="post" id="removeForm">
-			<input type="text" name="productId" value="${param.id}" />
-			<input type="text" name="inquiryId" value="" />
+			<input type="text" name="productId" value="${param.productId}" />
+			<input type="text" name=inquiryId value="" />
 		</form>
 	</div>
 	<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
