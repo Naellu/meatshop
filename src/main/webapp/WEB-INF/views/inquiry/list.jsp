@@ -30,7 +30,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${inquiryList }" var="inquiry">
+			<c:forEach items="${inquiryList }" var="inquiry" varstatus="loop">
 				<tr>
 					<td>${inquiry.customer_name }</td>
 					<td>${inquiry.nickname }</td>
@@ -40,7 +40,7 @@
 						<a href="/inquiry/modify/id=${inquiry.id }">수정하기</a>
 					</td>
 					<td>
-						<button id="removeButton" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">${inquiry.id }삭제</button>
+						<button id="removeButton${loop.index }" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">${inquiry.id }삭제</button>
 
 					</td>
 
