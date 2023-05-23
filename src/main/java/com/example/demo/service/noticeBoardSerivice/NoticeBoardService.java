@@ -18,13 +18,11 @@ import software.amazon.awssdk.services.s3.model.*;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class NoticeBoardService implements NoticeBoardServiceInterface{
-
-
-	@Autowired
-	private S3Client s3;
-
-	@Value("${aws.s3.bucketName}")
-	private String bucketName;
+	/*
+	 * @Autowired private S3Client s3;
+	 * 
+	 * @Value("${aws.s3.bucketName}") private String bucketName;
+	 */
 	
 	@Autowired
 	private NoticeBoardMapper mapper;
@@ -55,22 +53,18 @@ public class NoticeBoardService implements NoticeBoardServiceInterface{
 	public boolean addNoticeBoard(NoticeBoard nboard, MultipartFile[] files) {
 		int cnt = mapper.insert(nboard);
 		
-		for (MultipartFile file : files) {
-			if (file.getSize() > 0) {
-				String objectKey = "noticeBoard/" + nboard.getId() + "/" + file.getOriginalFilename();
-				
-				PutObjectRequest por = PutObjectRequest.builder()
-						.bucket(bucketName)
-						.key(objectKey)
-						.acl(ObjectCannedACL.PUBLIC_READ)
-						.build();
-				RequestBody rb = RequestBody.fromInputStream(file.getInputStream(), file.getSize());
-				
-				s3.putObject(por, rb);
-				
-				mapper.insertNoticeboardfile(nboard.getId(), file.getOriginalFilename());
-			}
-		}
+		/*
+		 * for (MultipartFile file : files) { if (file.getSize() > 0) { String objectKey
+		 * = "noticeBoard/" + nboard.getId() + "/" + file.getOriginalFilename();
+		 * 
+		 * PutObjectRequest por = PutObjectRequest.builder() .bucket(bucketName)
+		 * .key(objectKey) .acl(ObjectCannedACL.PUBLIC_READ) .build(); RequestBody rb =
+		 * RequestBody.fromInputStream(file.getInputStream(), file.getSize());
+		 * 
+		 * s3.putObject(por, rb);
+		 * 
+		 * mapper.insertNoticeboardfile(nboard.getId(), file.getOriginalFilename()); } }
+		 */
 		return cnt == 1;
 	}
 
