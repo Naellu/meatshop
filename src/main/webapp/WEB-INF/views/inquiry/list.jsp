@@ -7,6 +7,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
+<style>
+.accordion-button::after {
+	display: none;
+}
+</style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -15,47 +20,55 @@
 
 	<my:alert />
 
-	
+
 	<h1>${param.productId}번상품문의목록</h1>
 	<hr />
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th scope="col">고객이름</th>
-				<th scope="col">고객닉네임</th>
-				<th scope="col">제목</th>
-				<th scope="col">작성시각</th>
-				<th scope="col">수정</th>
-				<th scope="col">삭제</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${inquiryList }" var="inquiry">
+	<div class="accordion " id="accordionExample">
+		<table class="table">
+			<thead>
 				<tr>
-					<td>${inquiry.customerName }</td>
-					<td>${inquiry.nickName }</td>
-					<td>${inquiry.inquiryTitle }</td>
-					<td>${inquiry.createdAt }</td>
-					<td>
-						<a href="/inquiry/modify/${inquiry.inquiryId }">수정하기</a>
-					</td>
-					<td>
-						<button name="removeButton" id="${inquiry.inquiryId }" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">${inquiry.inquiryId }삭제</button>
-					</td>
-
+					<th scope="col">고객이름</th>
+					<th scope="col">고객닉네임</th>
+					<th scope="col">제목</th>
+					<th scope="col">작성시각</th>
+					<th scope="col">수정</th>
+					<th scope="col">삭제</th>
 				</tr>
-				<tr>
-					<td>
-						<div style="white-space: pre-wrap;">${inquiry.inquiryText }</div>
-					</td>
+			</thead>
+			<tbody>
+				<c:forEach items="${inquiryList}" var="inquiry">
+					<tr>
+						<td>${inquiry.customerName}</td>
+						<td>${inquiry.nickName}</td>
+						<td>
+							<button style="background-color: #ffffff;" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${inquiry.inquiryId}" aria-expanded="false" aria-controls="collapse${inquiry.inquiryId}">${inquiry.inquiryTitle}</button>
+						</td>
+						<td>${inquiry.createdAt}</td>
+						<td>
+							<button class="btn btn-primary" onclick="location.href='/inquiry/modify/${inquiry.inquiryId}'">수정</button >
+						</td>
+						<td>
+							<button name="removeButton" id="${inquiry.inquiryId}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="6">
+							<div id="collapse${inquiry.inquiryId}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+								<div class="accordion-body">
+									<div style="white-space: pre-wrap;">${inquiry.inquiryText}</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
 
-				</tr>
 
 
-			</c:forEach>
-		</tbody>
-	</table>
+
 
 	<div class="d-none">
 		<form action="/inquiry/delete" method="post" id="removeForm">

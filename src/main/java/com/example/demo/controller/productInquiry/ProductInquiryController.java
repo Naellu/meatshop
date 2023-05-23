@@ -26,7 +26,7 @@ public class ProductInquiryController {
 	}
 	
 	@GetMapping("list")
-	public String list(Integer productId, Model model) {
+	public String getListByProductId(Integer productId, Model model) {
 		
 		Map<String, Object> result = service.showInquiryListByProductId(productId);
 		
