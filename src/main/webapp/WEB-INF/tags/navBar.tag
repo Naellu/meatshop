@@ -66,11 +66,15 @@
 				
 				
 				<li class="nav-item">
-					<a class="nav-link ${current eq 'notify' ? 'active' : '' }" href="/notify">공지사항</a>
+					<a class="nav-link ${current eq 'nbList' ? 'active' : '' }" href="/noticeBoard/list">공지사항</a>
 				</li>
 				
 				<li class="nav-item">
 					<a class="nav-link ${current eq 'support' ? 'active' : '' }" href="/support">고객센터</a>
+				</li>
+				
+				<li class="nav-item">
+					<a class="nav-link ${current eq 'support' ? 'active' : '' }" href="/admin/main">관리자</a>
 				</li>
 
 				<sec:authorize access="isAuthenticated()">
