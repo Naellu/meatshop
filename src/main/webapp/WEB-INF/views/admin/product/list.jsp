@@ -11,12 +11,16 @@
 <title>관리자 상품 관리</title>
 </head>
 <body>
-	<my:navBar></my:navBar>
+	<my:navBar />
+
+	<my:alert />
+
 	<div class="container-lg">
 		<div class="d-flex">
 			<div class="me-auto">
 				<h1>상품 관리</h1>
 			</div>
+
 			<div>
 				<form action="#" class="d-flex" role="search">
 					<div class="input-group">
@@ -34,7 +38,12 @@
 					</div>
 				</form>
 			</div>
+			<div class="ms-5">
+				<a class="btn btn-primary" href="/admin/product/reg">상품등록</a>
+			</div>
 		</div>
+
+
 		<table class="table">
 			<thead>
 				<tr>
@@ -45,7 +54,7 @@
 					<th>재고</th>
 					<th>카테고리</th>
 					<th>가격</th>
-					<th>선택</th>
+					<th>상세페이지</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -53,7 +62,8 @@
 					<tr>
 						<td>${product.productId }</td>
 						<td>
-							<img alt="${product.fileName[0]}" src="/img/product/${product.fileName[0]}" width="100" height="100">
+							<img alt="사진준비중" src="${bucketUrl}/product/1.png" width="100" height="100">
+							<!-- <img alt="사진준비중" src="${bucketUrl}/product/${product.productId}/main.png" width="100" height="100"> -->
 						</td>
 						<td>${product.productName}</td>
 						<td>${product.countryOfOrigin}</td>
@@ -61,7 +71,7 @@
 						<td>${product.categoryName}</td>
 						<td>${product.price}</td>
 						<td>
-							<a class="btn btn-secondary" href="/admin/product/detail?id=${product.productId}">상세보기</a>
+							<a class="btn btn-secondary" href="/admin/product/detail/${product.productId}">상세보기</a>
 						</td>
 					</tr>
 				</c:forEach>

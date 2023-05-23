@@ -17,17 +17,71 @@
 			<result column="file_name" />
 		</collection>
 	</resultMap>
-	
+
+	<!-- 상품 목록 -->
 	<select id="getAllView" resultMap="productViewMap">
-		SELECT * FROM productview ORDER BY product_id DESC
+		SELECT * FROM productview
+		ORDER BY product_id DESC
 	</select>
-	
+
+	<!-- 상품 상세 -->
 	<select id="getViewById" resultMap="productViewMap">
-		SELECT * FROM productview WHERE product_id = #{productId}
+		SELECT * FROM productview
+		WHERE product_id = #{productId}
 	</select>
-	
+
+	<!-- 상품 삭제 -->
 	<delete id="deleteById">
 		DELETE FROM products WHERE product_id = #{productId}
 	</delete>
+
+	<!-- 상품 추가 -->
+	<insert id="create" useGeneratedKeys="true"
+		keyProperty="productId">
+		INSERT
+		INTO products
+		(product_name, country_of_origin,
+		category_id, price, stock_quantity)
+		VALUES
+		(#{productName},
+		#{countryOfOrigin}, #{categoryId}, #{price},
+		#{stockQuantity})
+	</insert>
+
+	<!-- 파일관련 -->
+	<insert id="insertFileName">
+		INSERT INTO productfilename (product_id, file_name)
+		VALUES (#{productId}, #{originalFilename})
+	</insert>
+
+	<!-- <resultMap type="java.util.ArrayList" id="fileNameMap"> <collection 
+		property="fileName" ofType="String"> <result column="file_name" /> </collection> 
+		</resultMap> 상품id로 파일 검색 -->
+	<!-- <select id="selectFileNamesByProductId" resultType="ArrayList"> SELECT 
+		file_name FROM productfilename WHERE product_id = #{productId} </select> -->
+
+	<!-- 상품id로 파일 삭제 -->
+	<delete id="deleteFileNameByProductId">
+		DELETE FROM productfilename
+		WHERE product_id = #{productId}
+	</delete>
+
+	<!-- 특정상품의 특정사진 삭제 -->
+	<delete id="deleteFileNameByBoardIdAndFileName">
+		DELETE FROM productfilename
+		WHERE product_id = #{productId}
+		AND file_Name = #{fileName}
+	</delete>
+
+	<!-- 상품 수정 -->
+	<update id="update">
+		UPDATE products SET
+		product_name = #{productName},
+		country_of_origin = #{countryOfOrigin},
+		category_id = #{categoryId},
+		price = #{price},
+		stock_quantity = #{stockQuantity}
+		WHERE product_id = #{productId}
+	</update>
 </mapper>
 

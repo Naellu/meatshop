@@ -204,5 +204,4 @@ VALUES
 (99, '1.png'),
 (100, '1.png');
 
-
 UPDATE productfilename set file_name = '1.png' WHERE product_id != 1;

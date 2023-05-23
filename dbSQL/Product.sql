@@ -7,6 +7,7 @@ CREATE TABLE products (
 );
 
 SELECT * FROM products ORDER BY product_id DESC;
+SELECT * FROM productfilename ORDER BY product_id DESC;
 
 DESC products;
 

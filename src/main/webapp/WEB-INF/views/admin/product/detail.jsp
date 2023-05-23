@@ -11,7 +11,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	<my:navBar></my:navBar>
+	<my:navBar />
+
+	<my:alert />
 
 	<div class="container-lg">
 		<!-- .row.justify-content-center>.col-12.col-md-8.col-lg-6 -->
@@ -21,7 +23,7 @@
 					<div class="me-auto">
 						<h1>
 							<span id="boardIdText"> ${product.productId} </span>
-							상품
+							번 상품
 						</h1>
 					</div>
 				</div>
@@ -29,6 +31,14 @@
 					<div class="mb-3">
 						<label for="" class="form-label">상품명</label>
 						<input type="text" class="form-control" value="${product.productName}" readonly />
+					</div>
+
+					<div class="mb-3">
+						<c:forEach items="${product.fileName}" var="fileName">
+							<div>
+								<img class="img-thumbnail img-fluid " src="${bucketUrl}/product/${product.productId}/${fileName}" alt="${fileName}" />
+							</div>
+						</c:forEach>
 					</div>
 
 					<div class="mb-3">
@@ -51,17 +61,10 @@
 						<input type="text" class="form-control" value="${product.price}" readonly />
 					</div>
 
-					<div class="mb-3">
-						<c:forEach items="${product.fileName}" var="fileName">
-							<div>
-								<img class="img-thumbnail img-fluid " src="/img/product/${fileName}" alt="${fileName}" />
-							</div>
-						</c:forEach>
-					</div>
-
 					<div>
-						<a class="btn btn-secondary" href="/update/${board.id}">수정</a>
+						<a class="btn btn-primary" href="/admin/product/modify/${product.productId}">수정</a>
 						<button id="removeButton" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
+						<a class="btn btn-secondary" href="/admin/product/list">상품관리</a>
 					</div>
 				</div>
 			</div>
