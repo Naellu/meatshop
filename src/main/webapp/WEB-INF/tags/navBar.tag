@@ -57,7 +57,11 @@
 				</sec:authorize>
 				 -->
 				<li class="nav-item">
-					<a class="nav-link ${current eq 'mypage' ? 'active' : '' }" href="/mypage">마이페이지</a>
+					<a class="nav-link ${current eq 'mypage' ? 'active' : '' }" href="member/mypage">마이페이지</a>
+				</li>
+				
+				<li class="nav-item">
+					<a class="nav-link ${current eq 'memberList' ? 'active' : '' }" href="/member/list">회원목록</a>
 				</li>
 				
 				
@@ -76,6 +80,8 @@
 				</sec:authorize>
 
 			</ul>
+			
+			
 			
 			<!-- 
 			<form action="/list" class="d-flex" role="search">
@@ -99,11 +105,12 @@
 	</div>
 </nav>
 
-<!-- 
+
 <div>
     <sec:authentication property="principal"/>
+    <sec:authentication property="credentials"/>
 </div>
- -->
+
 
 
 
