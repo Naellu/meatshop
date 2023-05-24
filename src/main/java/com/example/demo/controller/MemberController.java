@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-
 import com.example.demo.domain.Members;
 import com.example.demo.service.MemberService;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("member")
@@ -67,7 +69,7 @@ public class MemberController {
 		
 	}
 	
-//0522 마무리못함 login 기능도 작동 안함
+// 마이페이지 (내정보 확인란)
 	@GetMapping("mypage")
 //	@PreAuthorize("isAuthenticated() and (authentication.name eq #id) or hasAuthority('admin')") 
 	public void mypage(String id,Model model) {
@@ -76,4 +78,55 @@ public class MemberController {
 		   model.addAttribute("member", member);
 	}
 	
+	
+	
+// 마이페이지 - 수정	
+	@GetMapping("modify")
+	@PreAuthorize("isAuthenticated()")
+	public void modifyForm(String id,Model model) {
+		
+		 Members member = service.get(id);
+		 System.out.println(member);
+		 model.addAttribute("member",member);
+}
+	
+	
+	@PostMapping("modify")
+	@PreAuthorize("isAuthenticated() and (authentication.name eq #member.id)")
+	public String modifyProcess(Members member, RedirectAttributes rttr,String oldPassword) {
+		boolean ok = service.modify(member,oldPassword);
+		System.out.println(oldPassword);
+		System.out.println(ok);
+		if (ok) {
+//			rttr.addFlashAttribute("message", "회원 정보가 수정되었습니다.");
+			return "redirect:/member/mypage?id=" + member.getId();
+		} else {
+//			rttr.addFlashAttribute("message", "회원 정보 수정시 문제가 발생하였습니다.");
+//			return "redirect:/member/modify?id=" + member.getId();
+			return "redirect:/";
+		}
+		
+	}
+	
+	
+	@PostMapping("remove")
+//	@PreAuthorize("isAuthenticated() and (authentication.name eq #member.id)") //remove메소드의 Member파라미터의 id값을 받아옴
+	public String remove(Members member,RedirectAttributes rttr,
+			HttpServletRequest request) throws ServletException {
+	
+		boolean ok = service.remove(member);
+		
+		if(ok) {
+//			rttr.addFlashAttribute("message","탈퇴완료");
+			
+			// 로그아웃
+			request.logout();
+			return "redirect:/";
+			
+		}else {
+//			rttr.addFlashAttribute("message","탈퇴 문제 발생");
+			return "redirect:/member/mypage?id=" + member.getId();
+			
+		}
+	}
 }
