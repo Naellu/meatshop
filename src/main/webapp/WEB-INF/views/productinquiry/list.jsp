@@ -46,7 +46,7 @@
 						</td>
 						<td>${inquiry.createdAt}</td>
 						<td>
-							<button class="btn btn-primary" onclick="location.href='/inquiry/modify/${inquiry.inquiryId}'">수정</button >
+							<button class="btn btn-primary" onclick="location.href='/productinquiry/modify/${inquiry.inquiryId}'">수정</button >
 						</td>
 						<td>
 							<button name="removeButton" id="${inquiry.inquiryId}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
@@ -71,7 +71,7 @@
 
 
 	<div class="d-none">
-		<form action="/inquiry/delete" method="post" id="removeForm">
+		<form action="/productinquiry/delete" method="post" id="removeForm">
 			<input type="text" name="productId" value="${param.productId}" />
 			<input type="text" name=inquiryId value="" />
 		</form>
