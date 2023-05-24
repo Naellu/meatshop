@@ -33,6 +33,50 @@ public class AdminProductServiceImpl implements AdminProductService {
 		return productMapper.getAllView();
 	}
 
+	// 상품목록
+	@Override
+	public Map<String, Object> getViewList(Integer page, String type, String search, Integer stockQuantity) {
+		// 0~10 10~20 20~30
+		Integer pageSize = 10; // 10 20 30 인데 mariadb 10씩
+		Integer startIndex = (page - 1) * pageSize; // 0 10 20
+
+		// 페이지 네이션에 필요한 정보
+		// 전체 레코드 수
+		Integer count = productMapper.countAll(type, search, stockQuantity);
+
+		// 마지막 페이지 번호
+		// 총 글개수 -1 / pageSize + 1
+		Integer lastPage = (count - 1) / pageSize + 1;
+
+		// 페이지네이션 왼쪽번호 1 11 21 31
+		Integer leftPageNumber = (page - 1) / pageSize * pageSize + 1;
+		leftPageNumber = Math.max(leftPageNumber, 1);
+
+		// 페이지네이션 오른쪽 번호
+		Integer rightPageNumber = leftPageNumber + 9;
+		rightPageNumber = Math.min(rightPageNumber, lastPage);
+
+		// 현재 페이지
+		Integer currentPageNumber = page;
+
+		// 이전페이지
+		Integer prevPageNumber = leftPageNumber - 10;
+
+		// 다음 페이지
+		Integer nextPageNumber = leftPageNumber + 10;
+
+		Map<String, Object> pageInfo = new HashMap<>();
+		pageInfo.put("lastPageNumber", lastPage);
+		pageInfo.put("leftPageNumber", leftPageNumber);
+		pageInfo.put("rightPageNumber", rightPageNumber);
+		pageInfo.put("currentPageNumber", currentPageNumber);
+		pageInfo.put("prevPageNumber", prevPageNumber);
+		pageInfo.put("nextPageNumber", nextPageNumber);
+
+		List<ProductView> productList = productMapper.selectAllPaging(page, startIndex, pageSize, type, search, stockQuantity);
+		return Map.of("pageInfo", pageInfo, "productList", productList);
+	}
+
 	// 상품상세페이지
 	@Override
 	public ProductView getOneView(Integer productId) {
@@ -131,9 +175,23 @@ public class AdminProductServiceImpl implements AdminProductService {
 			s3.deleteObject(dor);
 		}
 
-		//db에서 상품삭제
+		// db에서 상품삭제
 		Integer cnt = productMapper.deleteById(productId);
 		return cnt == 1;
+	}
+
+	@Override
+	public boolean pubProductAll(String[] openIds, String ids) {
+		
+		//공개할 목록들을 리스트로
+		List<String> oids = Arrays.asList(openIds);
+		
+		//전체 아이디들을 배열로
+		String[] idsArr = ids.trim().split(" ");
+		
+		Integer cnt = productMapper.changeProductPub(openIds, idsArr);
+		return cnt != 0;
+		
 	}
 
 }

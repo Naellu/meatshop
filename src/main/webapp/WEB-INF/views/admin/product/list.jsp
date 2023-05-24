@@ -22,16 +22,18 @@
 			</div>
 
 			<div>
-				<form action="#" class="d-flex" role="search">
+				<form id="form1" action="/admin/product/list" class="d-flex" role="search">
 					<div class="input-group">
-						<select class="form-select flex-grow-0" style="width: 100px;" name="type" id="">
+						<select class="form-select flex-grow-0" style="width: 120px;" name="type">
 							<option value="all">전체</option>
-							<option value="title">상품명</option>
-							<option value="body">원산지</option>
-							<option value="writer">카테고리</option>
-							<option value="writer">재고</option>
+							<option value="productName" ${param.type eq 'productName' ? 'selected' : ''}>상품명</option>
+							<option value="countryOfOrigin" ${param.type eq 'countryOfOrigin' ? 'selected' : ''}>원산지</option>
+							<option value="categoryName" ${param.type eq 'categoryName' ? 'selected' : ''}>카테고리</option>
 						</select>
-						<input value="1" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+						<input name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" value="${param.search }">
+						<c:if test="${not empty param.stockQuantity}">
+							<input type="hidden" name="stockQuantity" value="100">
+						</c:if>
 						<button class="btn btn-outline-success" type="submit">
 							<i class="fa-solid fa-magnifying-glass"></i>
 						</button>
@@ -41,42 +43,173 @@
 			<div class="ms-5">
 				<a class="btn btn-primary" href="/admin/product/reg">상품등록</a>
 			</div>
+			<div class="ms-3">
+				<form id="form2" action="/admin/product/list" method="get">
+					<c:if test="${not empty param.type}">
+						<input type="hidden" id="productName" name="search" value="${param.search}">
+					</c:if>
+					<c:if test="${not empty param.search}">
+						<input type="hidden" id="productName" name="type" value="${param.type}">
+					</c:if>
+					<input type="hidden" name="stockQuantity" value="100">
+					<button class="btn btn-primary" type="submit">100개 이하의 상품 보기</button>
+				</form>
+			</div>
 		</div>
 
-
-		<table class="table">
-			<thead>
-				<tr>
-					<th>상품ID</th>
-					<th>사진</th>
-					<th>상품명</th>
-					<th>원산지</th>
-					<th>재고</th>
-					<th>카테고리</th>
-					<th>가격</th>
-					<th>상세페이지</th>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach items="${productList}" var="product">
+		<form action="/admin/product/pub" id="form3" method="post">
+			<table class="table">
+				<thead>
 					<tr>
-						<td>${product.productId }</td>
-						<td>
-							<img alt="사진준비중" src="${bucketUrl}/product/1.png" width="100" height="100">
-							<!-- <img alt="사진준비중" src="${bucketUrl}/product/${product.productId}/main.png" width="100" height="100"> -->
-						</td>
-						<td>${product.productName}</td>
-						<td>${product.countryOfOrigin}</td>
-						<td>${product.stockQuantity}</td>
-						<td>${product.categoryName}</td>
-						<td>${product.price}</td>
-						<td>
-							<a class="btn btn-secondary" href="/admin/product/detail/${product.productId}">상세보기</a>
-						</td>
+						<th>상품ID</th>
+						<th>사진</th>
+						<th>상품명</th>
+						<th>원산지</th>
+						<th>재고</th>
+						<th>카테고리</th>
+						<th>가격</th>
+						<th>공개</th>
+						<th>상세페이지</th>
 					</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+				</thead>
+				<tbody>
+					<c:forEach items="${productList}" var="product">
+						<tr>
+							<td>${product.productId }</td>
+							<td>
+								<img alt="사진준비중" src="${bucketUrl}/product/1.png" width="100" height="100">
+								<!-- <img alt="사진준비중" src="${bucketUrl}/product/${product.productId}/main.png" width="100" height="100"> -->
+							</td>
+							<td>${product.productName}</td>
+							<td>${product.countryOfOrigin}</td>
+							<td>${product.stockQuantity}</td>
+							<td>${product.categoryName}</td>
+							<td>${product.price}</td>
+							<td>
+								<input type="checkbox" name="openIds" ${product.pub eq 1 ? 'checked' : ''} value="${product.productId}">
+								공개
+								<br />
+							</td>
+							<td>
+								<a class="btn btn-secondary" href="/admin/product/detail/${product.productId}">상세보기</a>
+							</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+	</div>
+		<div class="container-lg">
+			<div class="row">
+				<div class="d-flex justify-content-end">
+					<c:set var="ids" value="" />
+					<c:forEach items="${productList}" var="product">
+						<c:set var="ids" value="${ids} ${product.productId}" />
+					</c:forEach>
+					<input type="hidden" name="ids" value="${ids}" />
+					<input type="submit" class="btn-text btn-default" name="cmd" value="일괄공개">
+				</div>
+			</div>
+		</div>
+	</form>
+
+	<div class="container-lg">
+		<div class="row">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+
+					<c:if test="${pageInfo.currentPageNumber ne 1}">
+						<li class="page-item">
+							<c:url value="/admin/product/list" var="pageLink">
+								<c:param name="page" value="1" />
+								<c:if test="${not empty param.type}">
+									<c:param name="type" value="${param.type}" />
+								</c:if>
+								<c:if test="${not empty param.search}">
+									<c:param name="search" value="${param.search}" />
+								</c:if>
+								<c:if test="${not empty param.stockQuantity}">
+									<c:param name="stockQuantity" value="${param.stockQuantity}" />
+								</c:if>
+							</c:url>
+							<a class="page-link" href="${pageLink}">첫페이지로</a>
+						</li>
+					</c:if>
+
+
+					<c:if test="${pageInfo.leftPageNumber gt 1}">
+						<li class="page-item">
+							<c:url value="/admin/product/list" var="pageLink">
+								<c:param name="page" value="${pageInfo.prevPageNumber}" />
+								<c:if test="${not empty param.type}">
+									<c:param name="type" value="${param.type}" />
+								</c:if>
+								<c:if test="${not empty param.search}">
+									<c:param name="search" value="${param.search}" />
+								</c:if>
+								<c:if test="${not empty param.stockQuantity}">
+									<c:param name="stockQuantity" value="${param.stockQuantity}" />
+								</c:if>
+							</c:url>
+							<a class="page-link" href="${pageLink}">이전</a>
+						</li>
+					</c:if>
+
+					<c:forEach begin="${pageInfo.leftPageNumber}" end="${pageInfo.rightPageNumber }" var="pageNum">
+						<li class="page-item">
+							<c:url value="/admin/product/list" var="pageLink">
+								<c:param name="page" value="${pageNum}" />
+								<c:if test="${not empty param.type}">
+									<c:param name="type" value="${param.type}" />
+								</c:if>
+								<c:if test="${not empty param.search}">
+									<c:param name="search" value="${param.search}" />
+								</c:if>
+								<c:if test="${not empty param.stockQuantity}">
+									<c:param name="stockQuantity" value="${param.stockQuantity}" />
+								</c:if>
+							</c:url>
+							<a class="page-link ${pageNum eq pageInfo.currentPageNumber ? 'active' : '' }" href="${pageLink}">${pageNum}</a>
+						</li>
+					</c:forEach>
+
+					<c:if test="${pageInfo.rightPageNumber lt pageInfo.lastPageNumber}">
+						<li class="page-item">
+							<c:url value="/admin/product/list" var="pageLink">
+								<c:param name="page" value="${pageInfo.nextPageNumber}" />
+								<c:if test="${not empty param.type}">
+									<c:param name="type" value="${param.type}" />
+								</c:if>
+								<c:if test="${not empty param.search}">
+									<c:param name="search" value="${param.search}" />
+								</c:if>
+								<c:if test="${not empty param.stockQuantity}">
+									<c:param name="stockQuantity" value="${param.stockQuantity}" />
+								</c:if>
+							</c:url>
+							<a class="page-link" href="${pageLink}">다음</a>
+						</li>
+					</c:if>
+
+					<c:if test="${pageInfo.currentPageNumber ne pageInfo.lastPageNumber}">
+						<li class="page-item">
+							<c:url value="/admin/product/list" var="pageLink">
+								<c:param name="page" value="${pageInfo.lastPageNumber}" />
+								<c:if test="${not empty param.type}">
+									<c:param name="type" value="${param.type}" />
+								</c:if>
+								<c:if test="${not empty param.search}">
+									<c:param name="search" value="${param.search}" />
+								</c:if>
+								<c:if test="${not empty param.stockQuantity}">
+									<c:param name="stockQuantity" value="${param.stockQuantity}" />
+								</c:if>
+							</c:url>
+							<a class="page-link" href="${pageLink}">마지막페이지</a>
+						</li>
+					</c:if>
+				</ul>
+			</nav>
+		</div>
 	</div>
 
 

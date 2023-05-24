@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상품 수정</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -77,6 +77,14 @@
 							<input type="number" name="price" class="form-control" value="${product.price }" />
 						</div>
 
+						<div class="mb-3">
+							<label for="" class="form-label">공개</label>
+							<select class="form-select" aria-label="Default select example" name="pub">
+								<option value="1" ${product.pub eq 1 ? 'selected' : '' }>공개</option>
+								<option value="0" ${product.pub eq 0 ? 'selected' : '' }>비공개</option>
+							</select>
+						</div>
+						
 						<div class="mb-3">
 							<label for="formFile" class="form-label">첨부 파일</label>
 							<input class="form-control" name="files" type="file" id="formFile" accept="image/*" multiple>

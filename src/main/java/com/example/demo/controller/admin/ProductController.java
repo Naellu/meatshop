@@ -23,10 +23,29 @@ public class ProductController {
 
 	// 상품 목록 페이지
 	@GetMapping("list")
-	public String list(Model model) {
-		List<ProductView> productList = productService.getViewList();
-		model.addAttribute("productList", productList);
+	public String list(Model model,
+			@RequestParam(value = "page", defaultValue = "1") Integer page,
+			@RequestParam(value = "type", required = false) String type,
+			@RequestParam(value = "search", defaultValue = "") String search,
+			@RequestParam(value = "stockQuantity", required = false) Integer stockQuantity) {
+		// List<ProductView> productList = productService.getViewList();
+		Map<String, Object> result = productService.getViewList(page, type, search, stockQuantity);
+		model.addAllAttributes(result);
 		return "admin/product/list";
+	}
+
+	@PostMapping("pub")
+	public String pubProc(String[] openIds,
+			String ids,
+			RedirectAttributes rttr) {
+		boolean ok = productService.pubProductAll(openIds, ids);
+		if (ok) {
+			rttr.addFlashAttribute("message", "공개설정을 성공했습니다.");
+			return "redirect:/admin/product/list";
+		} else {
+			rttr.addFlashAttribute("message", "공개설정에 실패하였습니다.");
+			return "redirect:/admin/product/list";
+		}
 	}
 
 	// 상품 상세 페이지

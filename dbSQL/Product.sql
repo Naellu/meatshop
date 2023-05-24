@@ -7,7 +7,7 @@ CREATE TABLE products (
 );
 
 SELECT * FROM products ORDER BY product_id DESC;
-SELECT * FROM productfilename ORDER BY product_id DESC;
+SELECT * FROM productfilename ORDER BY id DESC;
 
 DESC products;
 
@@ -35,7 +35,6 @@ SELECT * FROM products;
 
 DESC productview;
 
-
 CREATE View productview
 AS
 SELECT p.product_id, p.product_name, p.country_of_origin, p.price, p.stock_quantity, c.*, f.file_name
@@ -56,3 +55,4 @@ INSERT INTO productfilename (product_id, file_name) VALUES (4, '1.png');
 INSERT INTO productfilename (product_id, file_name) VALUES (5, '1.png');
 
 TRUNCATE TABLE products;
+

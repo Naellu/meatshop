@@ -10,4 +10,5 @@ public class Product {
 	private Integer categoryId;
 	private Double price;
 	private Integer stockQuantity;
+	private Integer pub;
 }

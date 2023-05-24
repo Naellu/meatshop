@@ -10,6 +10,7 @@
 		<result column="country_of_origin" property="countryOfOrigin" />
 		<result column="price" property="price" />
 		<result column="stock_quantity" property="stockQuantity" />
+		<result column="pub" property="pub" />
 		<result column="category_id" property="categoryId" />
 		<result column="category_name" property="categoryName" />
 		<result column="description" property="description" />
@@ -21,7 +22,7 @@
 	<!-- 상품 목록 -->
 	<select id="getAllView" resultMap="productViewMap">
 		SELECT * FROM productview
-		ORDER BY product_id DESC
+		ORDER BY product_id DESC LIMIT 0, 10
 	</select>
 
 	<!-- 상품 상세 -->
@@ -41,11 +42,11 @@
 		INSERT
 		INTO products
 		(product_name, country_of_origin,
-		category_id, price, stock_quantity)
+		category_id, price, stock_quantity, pub)
 		VALUES
 		(#{productName},
 		#{countryOfOrigin}, #{categoryId}, #{price},
-		#{stockQuantity})
+		#{stockQuantity}, #{pub})
 	</insert>
 
 	<!-- 파일관련 -->
@@ -63,13 +64,15 @@
 	<!-- 상품id로 파일 삭제 -->
 	<delete id="deleteFileNameByProductId">
 		DELETE FROM productfilename
-		WHERE product_id = #{productId}
+		WHERE product_id =
+		#{productId}
 	</delete>
 
 	<!-- 특정상품의 특정사진 삭제 -->
 	<delete id="deleteFileNameByBoardIdAndFileName">
 		DELETE FROM productfilename
-		WHERE product_id = #{productId}
+		WHERE product_id =
+		#{productId}
 		AND file_Name = #{fileName}
 	</delete>
 
@@ -80,8 +83,82 @@
 		country_of_origin = #{countryOfOrigin},
 		category_id = #{categoryId},
 		price = #{price},
-		stock_quantity = #{stockQuantity}
-		WHERE product_id = #{productId}
+		stock_quantity = #{stockQuantity},
+		pub = #{pub}
+		WHERE
+		product_id =
+		#{productId}
 	</update>
+
+	<!-- 페이지네이션 -->
+	<!-- 글 개수 -->
+	<select id="countAll" resultType="Integer">
+		<bind name="pattern" value="'%' + search + '%'" />
+		SELECT count(product_id) FROM
+		<if test="stockQuantity != null and stockQuantity != ''">
+			(SELECT * FROM productview WHERE stock_quantity &lt;=
+			#{stockQuantity}) f
+		</if>
+		<if test="stockQuantity == null or stockQuantity == ''">
+			productview
+		</if>
+		<where>
+			<if test="type eq 'all' or type eq 'productName'">
+				product_name LIKE #{pattern}
+			</if>
+			<if test="type eq 'all' or type eq 'countryOfOrigin'">
+				OR country_of_origin LIKE #{pattern}
+			</if>
+			<if test="type eq 'all' or type eq 'categoryName'">
+				OR category_name LIKE #{pattern}
+			</if>
+		</where>
+	</select>
+
+	<!-- 페이징과 검색이 적용된 상품 목록 -->
+	<select id="selectAllPaging" resultMap="productViewMap">
+		<bind name="pattern" value="'%' + search + '%'" />
+		SELECT * FROM productview
+
+		<where>
+			<if test="type eq 'all' or type eq 'productName'">
+				product_name LIKE #{pattern}
+			</if>
+			<if test="type eq 'all' or type eq 'countryOfOrigin'">
+				OR country_of_origin LIKE #{pattern}
+			</if>
+			<if test="type eq 'all' or type eq 'categoryName'">
+				OR category_name LIKE #{pattern}
+			</if>
+			<if test="stockQuantity != null and stockQuantity != ''">
+				AND stock_quantity &lt; #{stockQuantity}
+			</if>
+		</where>
+
+		ORDER BY product_id DESC
+		LIMIT #{startIndex}, #{pageSize}
+	</select>
+
+	<!-- 공개 비공개 처리 -->
+	<update id="changeProductPub" parameterType="java.util.Map">
+		UPDATE productview
+		SET pub =
+		CASE
+		WHEN product_id IN
+		<foreach collection="openIds" item="oid" open="(" close=")"
+			separator=",">
+			#{oid}
+		</foreach>
+		THEN 1
+		ELSE 0
+		END
+		WHERE product_id IN
+		<foreach collection="idsArr" item="ids" open="(" close=")"
+			separator=",">
+			#{ids}
+		</foreach>
+	</update>
+
+
 </mapper>
 
