@@ -31,20 +31,20 @@
     <tr>
       <th scope="row">1</th>
       <td>소고기</td>
-      <td><a href="/productinquiry/list?productId=22">문의목록</a></td>
-      <td><a href="/productinquiry/add?productId=22">문의하기</a> </td>
+      <td><a href="/productInquiry/list?productId=22">문의목록</a></td>
+      <td><a href="/productInquiry/add?productId=22">문의하기</a> </td>
     </tr>
     <tr>
       <th scope="row">2</th>
       <td>돼지고기</td>
-      <td><a href="/productinquiry/list?productId=33">문의목록</a></td>
-      <td><a href="/productinquiry/add?productId=33">문의하기</a> </td>
+      <td><a href="/productInquiry/list?productId=33">문의목록</a></td>
+      <td><a href="/productInquiry/add?productId=33">문의하기</a> </td>
     </tr>
     <tr>
       <th scope="row">3</th>
        <td>닭고기</td>
-      <td><a href="/productinquiry/list?productId=44">문의목록</a></td>
-      <td><a href="/productinquiry/add?productId=44">문의하기</a> </td>
+      <td><a href="/productInquiry/list?productId=44">문의목록</a></td>
+      <td><a href="/productInquiry/add?productId=44">문의하기</a> </td>
     </tr>
   </tbody>
 </table>

@@ -17,8 +17,8 @@ public class ProductInquiryService {
 	
 	
 	public Map<String, Object> showInquiryListByProductId(Integer productId) {
-		List<ProductInquiry> inquiryList = mapper.showListByProductId(productId);		
-		return Map.of("inquiryList", inquiryList);
+		List<ProductInquiry> productInquiryList = mapper.showListByProductId(productId);		
+		return Map.of("productInquiryList", productInquiryList);
 	}
 	
 	

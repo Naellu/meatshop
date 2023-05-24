@@ -37,7 +37,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach items="${inquiryList}" var="inquiry">
+				<c:forEach items="${productInquiryList}" var="inquiry">
 					<tr>
 						<td>${inquiry.customerName}</td>
 						<td>${inquiry.nickName}</td>
@@ -46,7 +46,7 @@
 						</td>
 						<td>${inquiry.createdAt}</td>
 						<td>
-							<button class="btn btn-primary" onclick="location.href='/productinquiry/modify/${inquiry.inquiryId}'">수정</button >
+							<button class="btn btn-primary" onclick="location.href='/productInquiry/modify/${inquiry.inquiryId}'">수정</button >
 						</td>
 						<td>
 							<button name="removeButton" id="${inquiry.inquiryId}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
@@ -57,6 +57,9 @@
 							<div id="collapse${inquiry.inquiryId}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
 								<div class="accordion-body">
 									<div style="white-space: pre-wrap;">${inquiry.inquiryText}</div>
+									<div>
+										<button class="btn btn-primary" id="answer${inqpuriy.inquiryId }" name="answerButton"></button>
+									</div>
 								</div>
 							</div>
 						</td>
@@ -71,7 +74,7 @@
 
 
 	<div class="d-none">
-		<form action="/productinquiry/delete" method="post" id="removeForm">
+		<form action="/productInquiry/delete" method="post" id="removeForm">
 			<input type="text" name="productId" value="${param.productId}" />
 			<input type="text" name=inquiryId value="" />
 		</form>
