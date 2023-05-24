@@ -16,14 +16,14 @@
 	<my:navBar></my:navBar>
 	<my:alert></my:alert>
 	
-	<h1>${param.id}번 상품문의</h1>
+	<h1>${param.productId}번 상품문의</h1>
 	<hr />
 	<form method="post" enctype="maultipart/form-date">
 		<div class="mb-3">
-		상품명 : <input type="hidden" name="productId" value="${param.id}"/> ${param.id } <br />
+		<input type="hidden" name="productId" value="${param.productId}"/>
 		</div>
 		<div class="mb-3">
-		닉네임 : <input type="hidden" name="userNickname" value="회민" /> 회민 <br />
+		<input type="hidden" name="nickName" value="회민" />
 		</div>
 		<div class="mb-3">
 		제목 : <input type="text" name="inquiryTitle" /><br />
