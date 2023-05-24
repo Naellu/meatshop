@@ -42,11 +42,11 @@
 						<td>${inquiry.customerName}</td>
 						<td>${inquiry.nickName}</td>
 						<td>
-							<button style="background-color: #ffffff;" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${inquiry.inquiryId}" aria-expanded="false" aria-controls="collapse${inquiry.inquiryId}">${inquiry.inquiryTitle}</button>
+							<button onclick="listAnswer('${inquiry.inquiryId}')" style="background-color: #ffffff;" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${inquiry.inquiryId}" aria-expanded="false" aria-controls="collapse${inquiry.inquiryId}">${inquiry.inquiryTitle}</button>
 						</td>
 						<td>${inquiry.createdAt}</td>
 						<td>
-							<button class="btn btn-primary" onclick="location.href='/productInquiry/modify/${inquiry.inquiryId}'">수정</button >
+							<button class="btn btn-primary" onclick="location.href='/productinquiry/modify/${inquiry.inquiryId}'">수정</button>
 						</td>
 						<td>
 							<button name="removeButton" id="${inquiry.inquiryId}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
@@ -56,10 +56,27 @@
 						<td colspan="6">
 							<div id="collapse${inquiry.inquiryId}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
 								<div class="accordion-body">
-									<div style="white-space: pre-wrap;">${inquiry.inquiryText}</div>
-									<div>
-										<button class="btn btn-primary" id="answer${inqpuriy.inquiryId }" name="answerButton"></button>
+									<div style="white-space: pre-wrap;">${inquiry.inquiryText}
+										<br />
+										${inquiry.inquiryId}
 									</div>
+									관리자 답변 <br />
+									
+									<div class="mb-3" id="answerContainer${inquiry.inquiryId }" >
+									</div>
+									<!-- 관리자만 보이게 할 예정 -->
+									<div class="mb-3" >
+										
+										<div class="input-group">
+											<div class="form-floating">
+												<textarea style="height: 97px" 	class="form-control" id="answerTextArea${inquiry.inquiryId }"></textarea>
+											</div>
+											<button name="sendAnswerButton" class="btn btn-outline-primary" id="sendAnswerBtn${inquiry.inquiryId }">
+												답변하기
+											</button>
+										</div>
+									</div>
+									
 								</div>
 							</div>
 						</td>
@@ -72,11 +89,11 @@
 
 
 
-
+	<!-- 문의 삭제 모달 -->
 	<div class="d-none">
-		<form action="/productInquiry/delete" method="post" id="removeForm">
+		<form action="/productinquiry/delete" method="post" id="removeForm">
 			<input type="text" name="productId" value="${param.productId}" />
-			<input type="text" name=inquiryId value="" />
+			<input type="text" id="removeInquiry" name="inquiryId" value="" />
 		</form>
 	</div>
 	<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -94,6 +111,7 @@
 			</div>
 		</div>
 	</div>
+
 
 
 

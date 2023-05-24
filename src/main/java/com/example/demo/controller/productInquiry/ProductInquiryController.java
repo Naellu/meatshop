@@ -32,7 +32,7 @@ public class ProductInquiryController {
 		
 		model.addAllAttributes(result);
 		
-		return "productInquiry/list";
+		return "productinquiry/list";
 	}
 	
 	@GetMapping("add")
@@ -47,26 +47,27 @@ public class ProductInquiryController {
 		boolean ok = service.addInquiry(productInquiry);
 		if (ok) {
 			rttr.addFlashAttribute("message", "문의가 등록되었습니다.");
-			return "redirect:/productInquiry/list?productId="+ productInquiry.getProductId(); 
+			return "redirect:/productinquiry/list?productId="+ productInquiry.getProductId(); 
 		} else {
 			rttr.addFlashAttribute("message", "문의가 등록되지 않았습니다.");
-			return "redirect:/productInquiry/add?productId=" + productInquiry.getProductId(); 
+			return "redirect:/productinquiry/add?productId=" + productInquiry.getProductId(); 
 		}
 	}
 	
 	@PostMapping("delete")
 	public String delete(ProductInquiry productInquiry, RedirectAttributes rttr) {
-		System.out.println(productInquiry.getProductId());
+		
+		System.out.println(productInquiry.getInquiryId());
 		
 		boolean ok = service.deleteInquiry(productInquiry.getInquiryId());
 		
 		
 		if(ok) {
 			rttr.addFlashAttribute("message", "문의가 삭제되었습니다.");
-			return "redirect:/productInquiry/list?productId=" + productInquiry.getProductId();
+			return "redirect:/productinquiry/list?productId=" + productInquiry.getProductId();
 		} else {
 			rttr.addFlashAttribute("message", "문의가 삭제되지 않았습니다.");
-			return "redirect:/productInquiry/list?productId=" + productInquiry.getProductId();
+			return "redirect:/productinquiry/list?productId=" + productInquiry.getProductId();
 		}
 		
 	}
@@ -74,7 +75,7 @@ public class ProductInquiryController {
 	@GetMapping("modify/{inquiryId}")
 	public String modifyFrom(@PathVariable("inquiryId") Integer inquiryId, Model model) {
 		model.addAttribute("productInquiry", service.getInquiry(inquiryId));
-		return "productInquiry/modify";
+		return "productinquiry/modify";
 	}
 	
 	@PostMapping("modify/{inquiryId}")
@@ -86,10 +87,10 @@ public class ProductInquiryController {
 		
 		if(ok) {
 			rttr.addFlashAttribute("message", "문의가 수정되었습니다.");
-			return "redirect:/productInquiry/list?productId=" + productInquiry.getProductId();
+			return "redirect:/productinquiry/list?productId=" + productInquiry.getProductId();
 		} else {
 			rttr.addFlashAttribute("message", "문의가 수정되지 않았습니다.");
-			return "redirect:/productInquiry/list?productId=" + productInquiry.getProductId();
+			return "redirect:/productinquiry/list?productId=" + productInquiry.getProductId();
 		}
 
 	}
