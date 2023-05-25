@@ -1,28 +1,62 @@
+$(document).ready(function() {
+	$("#list1").show();
+	$("#list2").hide();
+	$("#list3").hide();
+	$("#list4").hide();
+	$("#list5").hide();
+	$("#list6").hide();
+})
+
 $("#product").click(function() {
-	var category = $(this).data("category");
-	faqByCategory(category);
+	$("#list1").show();
+	$("#list2").hide();
+	$("#list3").hide();
+	$("#list4").hide();
+	$("#list5").hide();
+	$("#list6").hide();
 });
 
-function faqByCategory(category) {
-	const data = {category}
-	
-	$.ajax("/faq/list",{
-		method: "get",
-		contentType: "application/json",
-		data: JSON.stringify(category),
-		success: function(response) {
-			updateFaqList(response);
-		}
-	});
-}
+$("#order").click(function() {
+	$("#list1").hide();
+	$("#list2").show();
+	$("#list3").hide();
+	$("#list4").hide();
+	$("#list5").hide();
+	$("#list6").hide();
+});
 
-function updateFaqList(list) {
-	var faqList = $("#list");
-	faqList.empty();
-	
-	for (var i = 0; i < list.length; i++) {
-		var faq = faqList[i];
-		var faqItem = $("<div>").text(faq.question);
-		faqList.append(faq);
-	}
-}
+$("#deliver").click(function() {
+	$("#list1").hide();
+	$("#list2").hide();
+	$("#list3").show();
+	$("#list4").hide();
+	$("#list5").hide();
+	$("#list6").hide();
+});
+
+$("#cancel").click(function() {
+	$("#list1").hide();
+	$("#list2").hide();
+	$("#list3").hide();
+	$("#list4").show();
+	$("#list5").hide();
+	$("#list6").hide();
+});
+
+$("#profile").click(function() {
+	$("#list1").hide();
+	$("#list2").hide();
+	$("#list3").hide();
+	$("#list4").hide();
+	$("#list5").show();
+	$("#list6").hide();
+});
+
+$("#service").click(function() {
+	$("#list1").hide();
+	$("#list2").hide();
+	$("#list3").hide();
+	$("#list4").hide();
+	$("#list5").hide();
+	$("#list6").show();
+});

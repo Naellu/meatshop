@@ -15,4 +15,10 @@ public interface FaqMapper {
 			""")
 	List<Faq> selectAll();
 
+	@Delete("""
+			DELETE FROM faq
+			WHERE id = #{id}
+			""")
+	int deleteById(Integer id);
+
 }
