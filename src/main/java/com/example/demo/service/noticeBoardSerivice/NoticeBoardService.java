@@ -119,16 +119,21 @@ public class NoticeBoardService implements NoticeBoardServiceInterface {
 
 	}
 	
-	public Map<String, Object> getList(Integer page) {
+	public Map<String, Object> getList(Integer page, String search, String type) {
 		Integer rowPerPage = 10;
 		
 		Integer startIndex = (page -1) * rowPerPage;
 		
-		Integer numOfRecords = 5;
+		Integer numOfRecords = mapper.countAll(search, type);
+		
 		Integer lastPageNumber = (numOfRecords -1) / rowPerPage + 1;
+		
 		Integer leftPageNum = page - 5;
-		leftPageNum = Math.max(lastPageNumber, 1);
+		
+		leftPageNum = Math.max(leftPageNum, 1);
+		
 		Integer rightPageNum = leftPageNum + 9;
+		
 		rightPageNum = Math.min(rightPageNum, lastPageNumber);
 		
 		Map<String, Object> pageInfo = new HashMap<>();
@@ -137,9 +142,9 @@ public class NoticeBoardService implements NoticeBoardServiceInterface {
 		pageInfo.put("currentPageNum", page);
 		pageInfo.put("lastPageNum", lastPageNumber);
 		
-		List<NoticeBoard> list = mapper.selectAllPaging(startIndex, rowPerPage);
+		List<NoticeBoard> list = mapper.selectAllPaging(startIndex, rowPerPage, search, type);
 
-		return Map.of("pageInfo", pageInfo, "boardList", list);
+		return Map.of("pageInfo", pageInfo, "noticeBoardList", list);
 	}
 
 }

@@ -15,30 +15,32 @@
 
 	<a href="/noticeBoard/add">공지사항 작성</a>
 
-	<!-- table.table>thead>tr>th*4^^tbody -->
-	<table class="table">
-		<thead>
-			<tr>
-				<th>#</th>
-				<th>제목</th>
-				<th>작성자</th>
-				<th>작성일시</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${noticeBoardList }" var="nboard">
+	<div class="container-lg">
+		<!-- table.table>thead>tr>th*4^^tbody -->
+		<table class="table">
+			<thead>
 				<tr>
-					<td>${nboard.id }</td>
-					<td>
-						<a href="/noticeBoard/id/${nboard.id }"> ${nboard.title } </a>
-					</td>
-					<td>${nboard.writer }</td>
-					<td>${nboard.inserted }</td>
+					<th>#</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일시</th>
 				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-
+			</thead>
+			<tbody>
+				<c:forEach items="${noticeBoardList }" var="nboard">
+					<tr>
+						<td>${nboard.id }</td>
+						<td>
+							<a href="/noticeBoard/id/${nboard.id }"> ${nboard.title } </a>
+						</td>
+						<td>${nboard.writer }</td>
+						<td>${nboard.inserted }</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+	
 	<div class="container-lg">
 		<div class="row">
 			<nav aria-label="Page navigation example">
@@ -46,24 +48,24 @@
 
 					<!-- 이전 버튼 -->
 					<c:if test="${pageInfo.currentPageNum gt 1 }">
-						<my:pageItem pageNum="${pageInfo.currentPageNum - 1 }">
+						<my:noticeBoardPageInfo pageNum="${pageInfo.currentPageNum - 1 }">
 							<i class="fa-solid fa-angle-left"></i>
-						</my:pageItem>
+						</my:noticeBoardPageInfo>
 					</c:if>
 
 					<c:forEach begin="${pageInfo.leftPageNum }" end="${pageInfo.rightPageNum }" var="pageNum">
-						<my:pageItem pageNum="${pageNum }">
+						<my:noticeBoardPageInfo pageNum="${pageNum }">
 							${pageNum }
-						</my:pageItem>
+						</my:noticeBoardPageInfo>
 					</c:forEach>
 
 					<!-- 다음 버튼 -->
 					<c:if test="${pageInfo.currentPageNum lt pageInfo.lastPageNum }">
-						<%-- 페이지 번호 : ${pageInfo.currentPageNum + 1 } --%>
-						<my:pageItem pageNum="${pageInfo.currentPageNum + 1 }">
+						
+						<my:noticeBoardPageInfo pageNum="${pageInfo.currentPageNum + 1 }">
 							<i class="fa-solid fa-angle-right"></i>
-						</my:pageItem>
-					
+						</my:noticeBoardPageInfo>
+
 					</c:if>
 
 				</ul>

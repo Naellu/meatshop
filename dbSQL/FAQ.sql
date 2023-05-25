@@ -1,0 +1,38 @@
+## 고객센터
+
+CREATE TABLE noticeboard(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(100) NOT NULL,
+    writer VARCHAR(50) NOT NULL,
+    content VARCHAR(1000) NOT NULL,
+    inserted DATETIME NOT NULL DEFAULT now()
+);
+
+CREATE TABLE faq(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(100) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    content VARCHAR(1000) NOT NULL
+);
+
+CREATE TABLE question(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT NOT NULL,
+    content VARCHAR(1000) NOT NULL,
+    inserted DATETIME NOT NULL DEFAULT now(),
+    answered BOOLEAN
+);
+
+CREATE TABLE qfile(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    q_id INT NOT NULL,
+    file_name VARCHAR (300) NOT NULL,
+    FOREIGN KEY (q_id) REFERENCES question(id)
+);
+
+CREATE TABLE answer(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    content VARCHAR(1000),
+    admin_id VARCHAR(100),
+    inserted DATETIME NOT NULL DEFAULT now()
+);

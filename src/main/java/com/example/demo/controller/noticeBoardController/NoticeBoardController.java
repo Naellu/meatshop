@@ -21,9 +21,13 @@ public class NoticeBoardController {
 	
 	@GetMapping("list")
 	public String list(Model model,
-			@RequestParam(value = "page", defaultValue = "1") Integer page) {
+			@RequestParam(value = "page", defaultValue = "1") Integer page,
+			@RequestParam(value = "search", defaultValue = "") String search,
+			@RequestParam(value = "type", required = false) String type) {
 //		List<NoticeBoard> list = service.getList();
-		Map<String, Object> result = service.getList(page);
+		Map<String, Object> result = service.getList(page, search, type);
+		
+		model.addAllAttributes(result);
 		
 		return "noticeBoard/list";
 	}

@@ -91,8 +91,54 @@ public interface NoticeBoardMapper {
 	void insertFileName(Integer notice_board_id, String file_name);
 
 	@Select("""
+			<script>
+			<bind name="pattern" value="'%' + search + '%'" />
+			SELECT
+				nb.id,
+				nb.title,
+				nb.writer,
+				nb.inserted,
+				COUNT(f.id) fileCount
+			FROM noticeboard nb LEFT JOIN noticeboardfile f ON nb.id = f.notice_board_id
+			
+			<where>
+				<if test="(type eq 'all') or (type eq 'title')">
+				   title  LIKE #{pattern}
+				</if>
+				<if test="(type eq 'all') or (type eq 'content')">
+				OR content   LIKE #{pattern}
+				</if>
+				<if test="(type eq 'all') or (type eq 'writer')">
+				OR writer LIKE #{pattern}
+				</if>
+			</where>
+			
+			GROUP BY nb.id
+			ORDER BY nb.id DESC
+			LIMIT #{startIndex}, #{rowPerPage}
+			</script>
+			""")
+	List<NoticeBoard> selectAllPaging(Integer startIndex, Integer rowPerPage, String search, String type);
+
+	@Select("""
+			<script>
+			<bind name="pattern" value="'%' + search + '%'" />
 			SELECT COUNT(*) 
 			FROM noticeboard
+			
+			<where>
+				<if test="(type eq 'all') or (type eq 'title')">
+				   title  LIKE #{pattern}
+				</if>
+				<if test="(type eq 'all') or (type eq 'content')">
+				OR content   LIKE #{pattern}
+				</if>
+				<if test="(type eq 'all') or (type eq 'writer')">
+				OR writer LIKE #{pattern}
+				</if>
+			</where>
+			
+			</script>
 			""")
-	List<NoticeBoard> selectAllPaging(Integer startIndex, Integer rowPerPage);
+	Integer countAll(String search, String type);
 }
