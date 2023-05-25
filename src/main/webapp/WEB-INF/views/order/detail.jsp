@@ -23,7 +23,7 @@
 	
 	<div class="container-lg">
 		<div class="row justify-content-center">
-			<div class="col-12 col-md-8 col-lg-6">
+			<div class="col-12 col-md-8">
 			
 				<form id="orderDetailForm" action="/order/detail" method="post" style="text-align: center;">
 					
@@ -50,8 +50,8 @@
 					              <td>${product.countryOfOrigin }</td>
 					              <td>${product.categoryId }</td>
 				              		<td>
-				                        <input type="hidden" name="productIdList" value="${product.productId}" />
-					                    <input type="hidden" name="quantities" value="${quantity }" />
+				                        <input type="hidden" name="productId" value="${product.productId}" />
+					                    <input type="hidden" name="quantity" value="${quantity }" />
 				                  	</td>
 					          </tr>
 					      </c:forEach>

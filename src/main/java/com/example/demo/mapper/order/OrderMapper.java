@@ -26,7 +26,7 @@ public interface OrderMapper {
 	// 주문 생성
 	@Insert("""
 			INSERT INTO orders (member_id, status, total_price)
-			VALUES (#{memberId}, #{orderStatus}, #{totalPrice})
+			VALUES (#{memberId}, #{status}, #{totalPrice})
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	Integer saveOrder(Order order);
@@ -77,5 +77,16 @@ public interface OrderMapper {
 			""")
 	List<Order> findAllByMemberId(String memberId);
 
+
+	@Select("""
+   			SELECT 
+   				id,
+   				member_Id memberId,
+   				status,
+   				created,
+   				total_price totalPrice
+   			FROM orders
+			""")
+	List<Order> findAll();
 
 }

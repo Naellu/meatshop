@@ -1,6 +1,5 @@
 package com.example.demo.domain.order;
 
-import com.example.demo.domain.Members;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +15,8 @@ public class Order {
 	private Integer id;
 	private String memberId;
 	private List<OrderItem> orderItems = new ArrayList<>();
-	private OrderStatus orderStatus; // 주문상태
+	private LocalDateTime created;
+	private Status status; // 주문상태
 	private Long totalPrice;
 
 	public Order(String memberId) {
@@ -32,7 +32,7 @@ public class Order {
 	public static Order createOrder(String memberId, List<OrderItem> orderItems) {
 		Order order = new Order();
 		order.setMemberId(memberId);
-		order.setOrderStatus(OrderStatus.CREATED); // 주문생성 시 결제상태는 무조건 CREATED(결제전)
+		order.setStatus(Status.CREATED); // 주문생성 시 결제상태는 무조건 CREATED(결제전)
 		for (OrderItem orderItem : orderItems) {
 			order.addOrderItem(orderItem);
 		}
@@ -45,5 +45,16 @@ public class Order {
 		this.totalPrice = this.orderItems.stream()
 				.mapToLong(orderItem -> orderItem.getOrderPrice())
 				.sum();
+	}
+
+	@Override
+	public String toString() {
+		return "Order{" +
+				"id=" + id +
+				", memberId='" + memberId + '\'' +
+				", orderItems=" + orderItems +
+				", status=" + status +
+				", totalPrice=" + totalPrice +
+				'}';
 	}
 }

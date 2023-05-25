@@ -1,10 +1,7 @@
 package com.example.demo.service.order;
 
-import com.example.demo.domain.Members;
-import com.example.demo.domain.Product;
 import com.example.demo.domain.order.Order;
 import com.example.demo.domain.order.OrderItem;
-import com.example.demo.domain.order.OrderStatus;
 import com.example.demo.mapper.order.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,25 +19,27 @@ public class OrderServiceImpl implements OrderService{
 	
 	private final OrderMapper orderMapper;
 
-//	@Override
-//	public int makeOrder(String memberId, Integer productId, int quantity) {
-//
-//		double price = orderMapper.findPrice(productId);
-//		int orderPrice = (int) price;
-//
-//		// 주문상세(OrderItem) 생성 - 상품, 상품가격, 구매수량을 받음
-//		OrderItem orderItem = OrderItem.createOrderItem(productId, orderPrice, quantity);
-//		orderMapper.saveOrderItems(orderItem);
-//
-//		// 주문상태와 주문항목을 가진 새로운 주문 생성
-//		Order order = Order.createOrder(memberId, orderItem);
-//		orderMapper.saveOrder(order);
-//
-//		return 0;
-//	}
+	// 추후 수정 예정
+	@Override
+	public int makeOrderOfSingleProduct(String memberId, Integer productId, int quantity) {
+		double price = orderMapper.findPrice(productId);
+		int orderPrice = (int) price;
+
+		List<OrderItem> orderItems = new ArrayList<>();
+		OrderItem orderItem = OrderItem.createOrderItem(productId, orderPrice, quantity);
+		orderItems.add(orderItem);
+
+		Order order = Order.createOrder(memberId, orderItems);
+		orderMapper.saveOrder(order);
+
+		orderItems.get(0).setOrderId(order.getId());
+		orderMapper.saveOrderItems(orderItem);
+
+		return order.getId();
+	}
 
 	@Override
-	public int makeOrder(String memberId, List<Integer> productIdList, List<Integer> quantities) {
+	public int makeOrderOfMultipleProduct(String memberId, List<Integer> productIdList, List<Integer> quantities) {
 
 		List<OrderItem> orderItems = new ArrayList<>();
 		for (int i = 0; i < productIdList.size(); i++) {
@@ -77,6 +76,11 @@ public class OrderServiceImpl implements OrderService{
 	public List<Order> showOrderList(String memberId) {
 		List<Order> orderItemList = orderMapper.findAllByMemberId(memberId);
 		return orderItemList;
+	}
+
+	public List<Order> showAllOrders() {
+		List<Order> orders = orderMapper.findAll();
+		return orders;
 	}
 
 

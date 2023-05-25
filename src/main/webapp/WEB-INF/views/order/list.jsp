@@ -8,6 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    </style>
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -23,27 +25,29 @@
 	
 	<div class="container-lg">
 		<div class="row justify-content-center">
-			<div class="col-12 col-md-8 col-lg-6">
+			<div class="col-12 col-md-8">
 			
 				<table class="table">
-			        <thead>
-			            <tr>
-			                <th>상품명</th>
-			                <th>상품가격</th>
-			                <th>수량</th>
-			                <th>총 주문금액</th>
-			            </tr>
-			        </thead>
-			        <tbody>
-			            <c:forEach items="${cartItem }" var="item">
-			                <tr>
-			                    <td>${item.productName }</td>
-			                    <td>${item.productPrice }</td>
-			                    <td>${item.quantity }</td>
-			                    <td>${item.totalPrice }</td>
-			                </tr>
-			            </c:forEach>
-			        </tbody>
+			       <thead>
+                       <tr>
+                           <th>주문id</th>
+                           <th>회원</th>
+                           <th>총 결제금액</th>
+                           <th>주문일자</th>
+                           <th>주문상태</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       <c:forEach var="order" items="${orders}">
+                           <tr>
+                               <td>${order.id }</td>
+                               <td>${order.memberId }</td>
+                               <td>${order.totalPrice }</td>
+                               <td>${order.created }</td>
+                               <td>${order.status }</td>
+                           </tr>
+                       </c:forEach>
+                   </tbody>
 			    </table>
 
 			</div>
