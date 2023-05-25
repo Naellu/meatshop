@@ -1,9 +1,26 @@
 package com.example.demo.domain.cart;
 
 import com.example.demo.domain.Product;
+import lombok.Data;
 
+@Data
 public class CartItem {
 	private Integer id;
-	private Cart cart;
-	private Product product;
+	private Integer cartId;
+	private Integer productId;
+	private Integer quantity;
+	private Integer productPrice;
+
+	public static CartItem createCartItem(Integer productId, Integer quantity, Integer productPrice) {
+		CartItem cartItem = new CartItem();
+		cartItem.setProductId(productId);
+		cartItem.setQuantity(quantity);
+		cartItem.setProductPrice(productPrice);
+		return cartItem;
+	}
+
+	public void addCount(int quantity) {
+		this.quantity += quantity;
+	}
+
 }
