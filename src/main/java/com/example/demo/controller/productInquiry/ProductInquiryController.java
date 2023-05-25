@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.*;
 
 import com.example.demo.domain.*;
-import com.example.demo.service.*;
 import com.example.demo.service.inquiry.*;
 
 

@@ -36,6 +36,7 @@ public class ProductInquiryService {
 	
 	
 	public ProductInquiry getInquiry(Integer inquiryId) {
+		
 		return mapper.getInquiryByInquiryId(inquiryId);
 	}
 

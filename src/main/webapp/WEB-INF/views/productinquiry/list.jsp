@@ -16,7 +16,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	<my:navBar></my:navBar>
 
 	<my:alert />
 
@@ -42,14 +41,15 @@
 						<td>${inquiry.customerName}</td>
 						<td>${inquiry.nickName}</td>
 						<td>
-							<button onclick="listAnswer('${inquiry.inquiryId}')" style="background-color: #ffffff;" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${inquiry.inquiryId}" aria-expanded="false" aria-controls="collapse${inquiry.inquiryId}">${inquiry.inquiryTitle}</button>
+							${inquiry.inquiryTitle}
+							<button onclick="listAnswer('${inquiry.inquiryId}')" style="background-color: #ffffff;" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${inquiry.inquiryId}" aria-expanded="false" aria-controls="collapse${inquiry.inquiryId}">문의내용 보기</button>
 						</td>
 						<td>${inquiry.createdAt}</td>
 						<td>
 							<button class="btn btn-primary" onclick="location.href='/productinquiry/modify/${inquiry.inquiryId}'">수정</button>
 						</td>
 						<td>
-							<button name="removeButton" id="${inquiry.inquiryId}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
+							<button name="removeButton" id="${inquiry.inquiryId}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteInquiryConfirmModal">삭제</button>
 						</td>
 					</tr>
 					<tr>
@@ -60,23 +60,24 @@
 										<br />
 										${inquiry.inquiryId}
 									</div>
-									관리자 답변 <br />
-									
-									<div class="mb-3" id="answerContainer${inquiry.inquiryId }" >
+									<div class="mb-3 answer-container" id="answerContainer${inquiry.inquiryId }">
+										<!-- 답변이 표시될 구역 -->
+
+										<button id="answerUpdateBtn${productAnswer.inquiryId}" class="answerUpdateButton btn btn-secondary" onclick="location.herf='proudctanswer/modify?inquiryId=${productAnswer.inquiryId}'">
+											<i class="fa-regular fa-pen-to-square"></i>
+										</button>
 									</div>
 									<!-- 관리자만 보이게 할 예정 -->
-									<div class="mb-3" >
-										
+									<div class="mb-3">
+
 										<div class="input-group">
 											<div class="form-floating">
-												<textarea style="height: 97px" 	class="form-control" id="answerTextArea${inquiry.inquiryId }"></textarea>
+												<textarea style="height: 97px" class="form-control" id="answerTextArea${inquiry.inquiryId }"></textarea>
 											</div>
-											<button name="sendAnswerButton" class="btn btn-outline-primary" id="sendAnswerBtn${inquiry.inquiryId }">
-												답변하기
-											</button>
+											<button name="sendAnswerButton" class="btn btn-outline-primary" id="sendAnswerBtn${inquiry.inquiryId }">답변하기</button>
 										</div>
 									</div>
-									
+
 								</div>
 							</div>
 						</td>
@@ -91,12 +92,12 @@
 
 	<!-- 문의 삭제 모달 -->
 	<div class="d-none">
-		<form action="/productinquiry/delete" method="post" id="removeForm">
+		<form action="/productinquiry/delete" method="post" id="inquiryRemoveForm">
 			<input type="text" name="productId" value="${param.productId}" />
 			<input type="text" id="removeInquiry" name="inquiryId" value="" />
 		</form>
 	</div>
-	<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="deleteInquiryConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -105,13 +106,29 @@
 				</div>
 				<div class="modal-body">삭제하시겠습니까?</div>
 				<div class="modal-footer">
-					<button type="submit" class="btn btn-outline-danger" form="removeForm">삭제</button>
+					<button type="submit" class="btn btn-outline-danger" form="inquiryRemoveForm">삭제</button>
 					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
+	<!-- 문의 답변 삭제 모달 -->
+	<div class="modal fade" id="deleteAnswerConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5">댓글 삭제 확인</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">삭제 하시겠습니까?</div>
+				<div class="modal-footer">
+					<button id="deleteAnswerModalButton" data-bs-dismiss="modal" type="submit" class="btn btn-danger">삭제</button>
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 
