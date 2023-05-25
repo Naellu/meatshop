@@ -20,7 +20,7 @@ import lombok.*;
 @RequiredArgsConstructor
 public class ProductController {
 
-	private final AdminProductService productService;
+	private final ProductService productService;
 
 	// 상품 목록 페이지
 	@GetMapping("list")

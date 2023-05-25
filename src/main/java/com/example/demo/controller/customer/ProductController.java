@@ -15,7 +15,7 @@ import lombok.*;
 @RequestMapping("/customer/product/")
 @RequiredArgsConstructor
 public class ProductController {
-	private final CustomerProductService productService;
+	private final ProductServiceImpl productService;
 
 	// 상품 목록 페이지
 	@GetMapping("list")

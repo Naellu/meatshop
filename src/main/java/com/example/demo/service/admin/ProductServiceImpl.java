@@ -16,9 +16,9 @@ import software.amazon.awssdk.core.sync.*;
 import software.amazon.awssdk.services.s3.*;
 import software.amazon.awssdk.services.s3.model.*;
 
-@Service
+@Service("adminProductServiceImpl")
 @RequiredArgsConstructor
-public class AdminProductServiceImpl implements AdminProductService {
+public class ProductServiceImpl implements ProductService {
 
 	@Value("${aws.s3.bucketName}")
 	private String bucketName;

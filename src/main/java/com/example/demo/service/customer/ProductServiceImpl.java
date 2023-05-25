@@ -9,20 +9,20 @@ import com.example.demo.mapper.customer.*;
 
 import lombok.*;
 
-@Service
+@Service("customerProductServiceImpl")
 @RequiredArgsConstructor
-public class CustomerProductService {
+public class ProductServiceImpl implements ProductService {
 
 	private final CustomerProductMapper productMapper;
 
+	@Override
 	public List<ProductView> getViewList() {
 		return productMapper.getAllView();
 	}
 
+	@Override
 	public ProductView getOneView(Integer id) {
-		return 	productMapper.getViewById(id);
+		return productMapper.getViewById(id);
 	}
-
-
 
 }

@@ -7,7 +7,7 @@ import org.springframework.web.multipart.*;
 
 import com.example.demo.domain.*;
 
-public interface AdminProductService {
+public interface ProductService {
 	// 상품 목록
 	public List<ProductView> getViewList();
 	
