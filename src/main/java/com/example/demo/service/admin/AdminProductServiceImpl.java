@@ -35,14 +35,14 @@ public class AdminProductServiceImpl implements AdminProductService {
 
 	// 상품목록
 	@Override
-	public Map<String, Object> getViewList(Integer page, String type, String search, Integer stockQuantity) {
+	public Map<String, Object> getViewList(Integer page, String type, String search, Integer stockQuantity, String pub) {
 		// 0~10 10~20 20~30
 		Integer pageSize = 10; // 10 20 30 인데 mariadb 10씩
 		Integer startIndex = (page - 1) * pageSize; // 0 10 20
 
 		// 페이지 네이션에 필요한 정보
 		// 전체 레코드 수
-		Integer count = productMapper.countAll(type, search, stockQuantity);
+		Integer count = productMapper.countAll(type, search, stockQuantity, pub);
 
 		// 마지막 페이지 번호
 		// 총 글개수 -1 / pageSize + 1
@@ -73,7 +73,7 @@ public class AdminProductServiceImpl implements AdminProductService {
 		pageInfo.put("prevPageNumber", prevPageNumber);
 		pageInfo.put("nextPageNumber", nextPageNumber);
 
-		List<ProductView> productList = productMapper.selectAllPaging(page, startIndex, pageSize, type, search, stockQuantity);
+		List<ProductView> productList = productMapper.selectAllPaging(page, startIndex, pageSize, type, search, stockQuantity, pub);
 		return Map.of("pageInfo", pageInfo, "productList", productList);
 	}
 
@@ -181,15 +181,15 @@ public class AdminProductServiceImpl implements AdminProductService {
 	}
 
 	@Override
-	public boolean pubProductAll(String[] openIds, String ids) {
+	public boolean pubProductAll(PubRequest pub) {
 		
 		//공개할 목록들을 리스트로
-		List<String> oids = Arrays.asList(openIds);
+		List<String> openIds = pub.getOpenIds();
 		
 		//전체 아이디들을 배열로
-		String[] idsArr = ids.trim().split(" ");
+		List<String> ids = pub.getIds();
 		
-		Integer cnt = productMapper.changeProductPub(openIds, idsArr);
+		Integer cnt = productMapper.changeProductPub(openIds, ids);
 		return cnt != 0;
 		
 	}

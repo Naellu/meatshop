@@ -3,6 +3,7 @@ package com.example.demo.controller.admin;
 import java.io.*;
 import java.util.*;
 
+import org.springframework.http.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
@@ -27,24 +28,24 @@ public class ProductController {
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
 			@RequestParam(value = "type", required = false) String type,
 			@RequestParam(value = "search", defaultValue = "") String search,
-			@RequestParam(value = "stockQuantity", required = false) Integer stockQuantity) {
+			@RequestParam(value = "stockQuantity", required = false) Integer stockQuantity,
+			@RequestParam(value = "pub", required = false) String pub) {
 		// List<ProductView> productList = productService.getViewList();
-		Map<String, Object> result = productService.getViewList(page, type, search, stockQuantity);
+		Map<String, Object> result = productService.getViewList(page, type, search, stockQuantity, pub);
 		model.addAllAttributes(result);
 		return "admin/product/list";
 	}
 
 	@PostMapping("pub")
-	public String pubProc(String[] openIds,
-			String ids,
-			RedirectAttributes rttr) {
-		boolean ok = productService.pubProductAll(openIds, ids);
+	public ResponseEntity<Map<String, Object>> pubProc(@RequestBody PubRequest pub) {
+		boolean ok = productService.pubProductAll(pub);
+
 		if (ok) {
-			rttr.addFlashAttribute("message", "공개설정을 성공했습니다.");
-			return "redirect:/admin/product/list";
+			Map<String, Object> response = Map.of("message", "공개처리 되었습니다.");
+			return ResponseEntity.ok().body(response);
 		} else {
-			rttr.addFlashAttribute("message", "공개설정에 실패하였습니다.");
-			return "redirect:/admin/product/list";
+			Map<String, Object> response = Map.of("message", "설정에 오류가 발생했습니다.");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
 	}
 

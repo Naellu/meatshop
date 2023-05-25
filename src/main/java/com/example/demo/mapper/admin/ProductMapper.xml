@@ -103,6 +103,9 @@
 			productview
 		</if>
 		<where>
+			<if test="(pub eq 'open' or pub eq 'close') and type eq 'all'">
+				(
+			</if>
 			<if test="type eq 'all' or type eq 'productName'">
 				product_name LIKE #{pattern}
 			</if>
@@ -111,6 +114,15 @@
 			</if>
 			<if test="type eq 'all' or type eq 'categoryName'">
 				OR category_name LIKE #{pattern}
+			</if>
+			<if test="(pub eq 'open' or pub eq 'close') and type eq 'all'">
+				)
+			</if>
+			<if test="pub eq 'open'">
+				AND pub = 1
+			</if>
+			<if test="pub eq 'close'">
+				AND pub = 0
 			</if>
 		</where>
 	</select>
@@ -121,6 +133,9 @@
 		SELECT * FROM productview
 
 		<where>
+			<if test="(pub eq 'open' or pub eq 'close') and type eq 'all'">
+				(
+			</if>
 			<if test="type eq 'all' or type eq 'productName'">
 				product_name LIKE #{pattern}
 			</if>
@@ -131,7 +146,16 @@
 				OR category_name LIKE #{pattern}
 			</if>
 			<if test="stockQuantity != null and stockQuantity != ''">
-				AND stock_quantity &lt; #{stockQuantity}
+				AND stock_quantity &lt;= #{stockQuantity}
+			</if>
+			<if test="(pub eq 'open' or pub eq 'close') and type eq 'all'">
+				)
+			</if>
+			<if test="pub eq 'open'">
+				AND pub = 1
+			</if>
+			<if test="pub eq 'close'">
+				AND pub = 0
 			</if>
 		</where>
 
@@ -153,9 +177,9 @@
 		ELSE 0
 		END
 		WHERE product_id IN
-		<foreach collection="idsArr" item="ids" open="(" close=")"
+		<foreach collection="ids" item="id" open="(" close=")"
 			separator=",">
-			#{ids}
+			#{id}
 		</foreach>
 	</update>
 

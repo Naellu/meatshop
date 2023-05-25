@@ -11,7 +11,7 @@ public interface AdminProductService {
 	// 상품 목록
 	public List<ProductView> getViewList();
 	
-	public Map<String, Object> getViewList(Integer page, String type, String search, Integer stockQuantity);
+	public Map<String, Object> getViewList(Integer page, String type, String search, Integer stockQuantity, String pub);
 	
 	//상품 상세 페이지
 	public ProductView getOneView(Integer productId);
@@ -26,5 +26,5 @@ public interface AdminProductService {
 	public boolean modify(Product product, List<String> removeFileNames, MultipartFile[] files) throws IOException;
 
 	//상품 공개처리
-	public boolean pubProductAll(String[] openIds, String ids);
+	public boolean pubProductAll(PubRequest pub);
 }
