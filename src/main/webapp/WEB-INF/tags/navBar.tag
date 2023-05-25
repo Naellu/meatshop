@@ -66,7 +66,7 @@
 				</li>
 				
 				<li class="nav-item">
-					<a class="nav-link ${current eq 'support' ? 'active' : '' }" href="/support">고객센터</a>
+					<a class="nav-link ${current eq 'faq' ? 'active' : '' }" href="/faq/list">고객센터</a>
 				</li>
 				
 				<li class="nav-item">

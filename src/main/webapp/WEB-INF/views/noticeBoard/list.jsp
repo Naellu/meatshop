@@ -40,7 +40,7 @@
 			</tbody>
 		</table>
 	</div>
-	
+
 	<div class="container-lg">
 		<div class="row">
 			<nav aria-label="Page navigation example">
@@ -61,7 +61,7 @@
 
 					<!-- 다음 버튼 -->
 					<c:if test="${pageInfo.currentPageNum lt pageInfo.lastPageNum }">
-						
+
 						<my:noticeBoardPageInfo pageNum="${pageInfo.currentPageNum + 1 }">
 							<i class="fa-solid fa-angle-right"></i>
 						</my:noticeBoardPageInfo>

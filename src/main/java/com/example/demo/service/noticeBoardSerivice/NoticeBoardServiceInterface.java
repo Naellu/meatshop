@@ -13,4 +13,5 @@ public interface NoticeBoardServiceInterface {
 	public boolean modify(NoticeBoard nboard, MultipartFile[] addFiles, List<String> removeFileNames) throws Exception;
 	public boolean remove(Integer id);
 	public boolean addNoticeBoard(NoticeBoard nboard, MultipartFile[] files) throws Exception;
+	public Map<String, Object> getList(Integer page, String search, String type);
 }
