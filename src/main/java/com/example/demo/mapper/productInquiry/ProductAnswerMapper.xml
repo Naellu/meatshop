@@ -9,6 +9,10 @@
 		<result column="created_at" property="createdAt"/>		
 	</resultMap>
 	
+	<resultMap type="com.example.demo.domain.ProductAnswer" id="getAnswersByInqruiryId">
+		<id column="inquiry_id" property="inquiryId"/>
+		<result column="created_at" property="createdAt"/>		
+	</resultMap>
 	
 	
 	

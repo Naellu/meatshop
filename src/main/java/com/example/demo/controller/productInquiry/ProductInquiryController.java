@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.*;
 
 import com.example.demo.domain.*;
-import com.example.demo.service.*;
 import com.example.demo.service.inquiry.*;
 
 
@@ -26,9 +25,14 @@ public class ProductInquiryController {
 	}
 	
 	@GetMapping("list")
-	public String getListByProductId(Integer productId, Model model) {
+	public String getListByProductId(
+			Integer productId, 
+			@RequestParam(value="page",defaultValue = "1") Integer inquirys,
+			@RequestParam(value = "customerId", defaultValue = "") String customerId,
+			Model model
+			) {
 		
-		Map<String, Object> result = service.showInquiryListByProductId(productId);
+		Map<String, Object> result = service.showInquiryListByProductId(productId,inquirys);
 		
 		model.addAllAttributes(result);
 		

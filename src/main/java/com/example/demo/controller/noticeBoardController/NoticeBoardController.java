@@ -20,10 +20,14 @@ public class NoticeBoardController {
 	private NoticeBoardService service;
 	
 	@GetMapping("list")
-	public String list(Model model) {
-		List<NoticeBoard> list = service.getList();
-//		Map<String, Object> result = service.getList();
-		model.addAttribute("noticeBoardList", list);
+	public String list(Model model,
+			@RequestParam(value = "page", defaultValue = "1") Integer page,
+			@RequestParam(value = "search", defaultValue = "") String search,
+			@RequestParam(value = "type", required = false) String type) {
+//		List<NoticeBoard> list = service.getList();
+		Map<String, Object> result = service.getList(page, search, type);
+		
+		model.addAllAttributes(result);
 		
 		return "noticeBoard/list";
 	}
@@ -44,9 +48,12 @@ public class NoticeBoardController {
 	}
 	
 	@PostMapping("/modify/{id}")
-	public String modifyProcess(NoticeBoard nboard, RedirectAttributes rttr) {
+	public String modifyProcess(NoticeBoard nboard, 
+			@RequestParam(value = "files", required = false) MultipartFile[] addFiles,
+			@RequestParam(value = "removeFiles", required = false) List<String> removeFileNames,
+			RedirectAttributes rttr) throws Exception {
 		
-		boolean ok = service.modify(nboard);
+		boolean ok = service.modify(nboard, addFiles, removeFileNames);
 		
 		if (ok) {
 			rttr.addFlashAttribute("message", "게시물이 수정되었습니다.");

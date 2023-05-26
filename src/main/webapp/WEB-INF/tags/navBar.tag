@@ -14,7 +14,7 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				<li class="nav-item">
-					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/list">상품</a>
+					<a class="nav-link ${current eq 'list' ? 'active' : '' }" href="/customer/product/list">상품</a>
 				</li>
 
 				<!--
@@ -37,12 +37,16 @@
 					<a class="nav-link ${current eq 'memberList' ? 'active' : '' }" href="/member/list">회원목록</a>
 				</li>
 				</sec:authorize>
-
+				
+				
+<!--   참고용 회원관리 작업 마무리 되면 삭제해도 됨
 				<sec:authorize access="isAuthenticated()">
                     <li class="nav-item">
                         <a class="nav-link ${current eq 'memberInfo' ? 'active' : '' }" href="/member/info?id=<sec:authentication property="name" />">회원정보</a>
                     </li>
                 </sec:authorize>
+-->
+
 
 
 				<sec:authorize access="isAnonymous()">
@@ -57,7 +61,7 @@
 				</sec:authorize>
 				 -->
 				<li class="nav-item">
-					<a class="nav-link ${current eq 'mypage' ? 'active' : '' }" href="member/mypage">마이페이지</a>
+					<a class="nav-link ${current eq 'mypage' ? 'active' : '' }" href="/member/mypage?id=<sec:authentication property="name" />">마이페이지</a>
 				</li>
 				
 				<li class="nav-item">
@@ -70,7 +74,7 @@
 				</li>
 				
 				<li class="nav-item">
-					<a class="nav-link ${current eq 'support' ? 'active' : '' }" href="/support">고객센터</a>
+					<a class="nav-link ${current eq 'faq' ? 'active' : '' }" href="/faq/list">고객센터</a>
 				</li>
 				
 				<li class="nav-item">

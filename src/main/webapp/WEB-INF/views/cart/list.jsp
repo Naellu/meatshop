@@ -19,7 +19,35 @@
 	
 	<h3 style="text-align: center;">장바구니</h3>
 	
+	<div class="container-lg">
+        <div class="row justify-content-center">
+            <div class="col-8 col-md-8">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"><input type="checkbox" id="checkAll"></th>
+                            <th scope="col">상품id</th>
+                            <th scope="col">구매수량</th>
+                            <th scope="col">상품가격</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="cartItem" items="${cartItems}">
+                            <tr>
+                                <td><input type="checkbox" class="item-check" value="${cartItem.id}"></td>
+                                <td>${cartItem.productId} - test</td>
+                                <td>${cartItem.quantity}</td>
+                                <td>${cartItem.productPrice} - test</td>
+                                <td><button type="button" class="btn btn-danger btn-delete" value="${cartItem.id}">삭제</button></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 	
+	<script src="/js/cart/list.js"></script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>

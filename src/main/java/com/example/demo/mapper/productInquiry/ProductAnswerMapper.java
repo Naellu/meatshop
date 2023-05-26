@@ -1,6 +1,5 @@
 package com.example.demo.mapper.productInquiry;
 
-import java.util.*;
 
 import org.apache.ibatis.annotations.*;
 
@@ -18,12 +17,29 @@ public interface ProductAnswerMapper {
 	int addAnswer(ProductAnswer productAnswer);
 
 	@Select("""
-			SELECT answer
+			SELECT *
 			FROM productanswer
 			WHERE 
 			inquiry_id = #{inquiryId}
 			""")
-	List<Object> getAnswersByInqruiryId(Integer inquiryId);
+	@ResultMap("getAnswersByInqruiryId")
+	ProductAnswer getAnswersByInqruiryId(Integer inquiryId);
+
+	@Update("""
+			UPDATE productanswer
+			SET answer = #{answer}
+			WHERE inquiry_id = #{inquiryId}
+			""")
+	int modifyAnswerByInquiryId(ProductAnswer productAnswer);
+	
+	
+	@Delete("""
+			DELETE
+			FROM productanswer
+			WHERE inquiry_id = #{inquiryId}
+			""")
+	int removeAnswerByInquiryId(Integer inquiryid);
+
 	
 	
 

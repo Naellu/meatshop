@@ -23,7 +23,7 @@
 		<input type="hidden" name="productId" value="${param.productId}"/>
 		</div>
 		<div class="mb-3">
-		<input type="hidden" name="nickName" value="회민" />
+		<input type="hidden" name="customerId" value="hoimin" />
 		</div>
 		<div class="mb-3">
 		제목 : <input type="text" name="inquiryTitle" /><br />

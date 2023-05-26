@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.example.demo.mapper.product.CustomerProductMapper">
+	<resultMap type="com.example.demo.domain.ProductView"
+		id="productViewMap">
+		<id column="product_id" property="productId" />
+		<result column="product_name" property="productName" />
+		<result column="country_of_origin" property="countryOfOrigin" />
+		<result column="price" property="price" />
+		<result column="stock_quantity" property="stockQuantity" />
+		<result column="pub" property="pub" />
+		<result column="category_id" property="categoryId" />
+		<result column="category_name" property="categoryName" />
+		<result column="description" property="description" />
+		<collection property="fileName" ofType="string">
+			<result column="file_name" />
+		</collection>
+	</resultMap>
+
+	<!-- 상품 목록 -->
+	<select id="getAllView" resultMap="productViewMap">
+		SELECT * FROM productview
+		ORDER BY product_id DESC;
+	</select>
+	
+	<!-- 상품 상세 -->
+	<select id="getViewById" resultMap="productViewMap">
+		SELECT * FROM productview
+		WHERE product_id = #{productId}
+	</select>
+</mapper>
+
