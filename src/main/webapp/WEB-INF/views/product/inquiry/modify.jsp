@@ -21,14 +21,14 @@
 		<input type="hidden" name="customerId" value="${productInquiry.customerId }" />
 		</div>
 		<div class="mb-3">
-		제목 : <input type="text" name="inquiryTitle" value="${productInquiry.inquiryTitle }"/><br />
+		제목 : <input class="form-control" type="text" name="inquiryTitle" value="${productInquiry.inquiryTitle }"/><br />
 		</div>
 		<div class="mb-3 form-floating " >
 		문의 내용 <br />
 		<textarea class="form-control" id="bodyTextarea" rows="10" name="inquiryText">${productInquiry.inquiryText }</textarea>
 		<br />
 		</div>
-		<input type="submit" value="수정하기" />
+		<input class="btn btn-primary" type="submit" value="수정하기" />
 		
 	</form>
 

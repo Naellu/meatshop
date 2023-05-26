@@ -10,7 +10,7 @@ for (var removeButton of removeButtons) {
 
 // 문의 답변 내용, 답변 from, 삭제/수정버튼 출력
 function listAnswer(inquiryId) {
-	$.ajax("/product/answer/get?inquiryId=" + inquiryId, {
+	$.ajax("/product/inquiryAnswer/get?inquiryId=" + inquiryId, {
 		success: function(productAnswer) {
 			const answerTextboxId = "#answerContainer" + inquiryId;
 			const answer = productAnswer.answer;
@@ -35,7 +35,7 @@ function listAnswer(inquiryId) {
 					<button
 						id="answerUpdateBtn${productAnswer.answer}"
 						class="answerUpdateButton btn btn-secondary"
-						onclick="location.href='/product/answer/modify/${productAnswer.inquiryId}'">
+						onclick="location.href='/product/inquiryAnswer/modify/${productAnswer.inquiryId}'">
 							<i class="fa-regular fa-pen-to-square"></i>
 						</button>
 			`;
@@ -55,7 +55,7 @@ function listAnswer(inquiryId) {
 // 문의답변 삭제 모달에서 삭제 버튼 클릭시 
 $("#deleteAnswerModalButton").click(function() {
 	const answerId = $(this).attr("data-answer-id");
-	$.ajax("/product/answer/inquiryid/" + answerId, {
+	$.ajax("/product/inquiryAnswer/inquiryid/" + answerId, {
 		method: "delete",
 		complete: function(jqXHR) {
 			listAnswer(answerId);
@@ -75,7 +75,7 @@ for (var sendAnswerButton of sendAnswerButtons) {
 		const answer = $(answerContentId).val();
 		const data = { inquiryId, answer };
 
-		$.ajax("/product/answer/add", {
+		$.ajax("/product/inquiryAnswer/add", {
 			method: "post",
 			contentType: "application/json",
 			data: JSON.stringify(data),

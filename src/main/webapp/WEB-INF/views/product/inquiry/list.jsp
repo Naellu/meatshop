@@ -17,13 +17,10 @@
 </head>
 <body>
 
-	<my:navBar></my:navBar>
 	<my:alert />
 
-
-	<h1>${param.productId}번상품문의목록</h1>
-	<hr />
-
+	<button class="btn btn-primary" id="addInquiry" >문의하기</button>
+	<br />
 	<div class="accordion " id="accordionExample">
 		<table class="table">
 			<thead>
@@ -111,7 +108,7 @@
 	<!-- 문의 삭제 모달 -->
 	<div class="d-none">
 		<form action="/product/inquiry/delete" method="post" id="inquiryRemoveForm">
-			<input type="text" name="productId" value="${param.productId}" />
+			<input type="text" name="productId" value="${productInquiry.productId}" />
 			<input type="text" id="removeInquiry" name="inquiryId" value="" />
 		</form>
 	</div>

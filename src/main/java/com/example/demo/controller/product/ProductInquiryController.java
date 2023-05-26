@@ -26,21 +26,19 @@ public class ProductInquiryController {
 	
 	@GetMapping("list")
 	public String getListByProductId(
-			Integer productId, 
-			@RequestParam(value="page",defaultValue = "1") Integer inquirys,
+			ProductInquiry productInquiry, 
+			@RequestParam(value="page",defaultValue = "1") Integer page,
 			Model model
 			) {
-		
-		Map<String, Object> result = service.showInquiryListByProductId(productId,inquirys);
-		
+		Map<String, Object> result = service.showInquiryListByProductId(productInquiry,page);
+		result.put("customerId", "hoimin");
 		model.addAllAttributes(result);
 		
 		return "product/inquiry/list";
 	}
 	
 	@GetMapping("add")
-	public void addFrom(Integer productId) {
-		
+	public void addFrom(ProductInquiry productInquiry) {
 	}
 	
 	@PostMapping("add")
@@ -50,10 +48,10 @@ public class ProductInquiryController {
 		boolean ok = service.addInquiry(productInquiry);
 		if (ok) {
 			rttr.addFlashAttribute("message", "문의가 등록되었습니다.");
-			return "redirect:/product/inquiry/list?productId="+ productInquiry.getProductId(); 
+			return "redirect:/customer/product/detail/"+ productInquiry.getProductId(); 
 		} else {
 			rttr.addFlashAttribute("message", "문의가 등록되지 않았습니다.");
-			return "redirect:/product/inquiry/add?productId=" + productInquiry.getProductId(); 
+			return "redirect:/customer/product/detail/"+ productInquiry.getProductId(); 
 		}
 	}
 	
@@ -67,10 +65,10 @@ public class ProductInquiryController {
 		
 		if(ok) {
 			rttr.addFlashAttribute("message", "문의가 삭제되었습니다.");
-			return "redirect:/product/inquiry/list?productId=" + productInquiry.getProductId();
+			return "redirect:/customer/product/detail/"+ productInquiry.getProductId();
 		} else {
 			rttr.addFlashAttribute("message", "문의가 삭제되지 않았습니다.");
-			return "redirect:/product/inquiry/list?productId=" + productInquiry.getProductId();
+			return "redirect:/customer/product/detail/"+ productInquiry.getProductId();
 		}
 		
 	}

@@ -12,19 +12,18 @@ public interface ProductInquiryMapper {
 	@Select("""
 			SELECT * FROM
 			productinquiry
-			WHERE product_id = #{productId}
+			WHERE product_id = #{productInquiry.productId}
 			ORDER BY
 			inquiry_id DESC
 			LIMIT 10
 			""")
 	@ResultMap("showListByProductId")
-	List<ProductInquiry> showListByProductId(Integer productId, Integer inquirys);
+	List<ProductInquiry> showListByProductId(ProductInquiry productInquiry, Integer inquirys);
 
 	@Insert("""
 			INSERT INTO	productinquiry(product_id,customer_name,customer_id,inquiry_title,	inquiry_text)
-			VALUES(#{productId},'user1',#{customerId},#{inquiryTitle},#{inquiryText})
+			VALUES(#{productId},#{customerName},#{customerId},#{inquiryTitle},#{inquiryText})
 			""")
-	@ResultMap("addInquiry")
 	int addInquiry(ProductInquiry productInquiry);
 
 	@Delete("""
@@ -32,7 +31,6 @@ public interface ProductInquiryMapper {
 			FROM productinquiry
 			WHERE inquiry_id = #{inquiryId }
 			""")
-	@ResultMap("deleteInquiry")
 	int deleteInquiry(Integer inquiryId);
 
 	@Select("""
@@ -52,7 +50,6 @@ public interface ProductInquiryMapper {
 			WHERE 
 			inquiry_id = #{inquiryId}
 			""")
-	@ResultMap("modifyInquiry")
 	int modifyInquiry(ProductInquiry productInquiry);
 
 

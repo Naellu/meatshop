@@ -13,27 +13,23 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-	<my:navBar></my:navBar>
 	<my:alert></my:alert>
 	
 	<h1>${param.productId}번 상품문의</h1>
 	<hr />
-	<form method="post" enctype="maultipart/form-date">
+	<form action="/product/inquiry/add" method="post" enctype="maultipart/form-date">
+		<input type="hidden" name="productId" value="${productInquiry.productId}"/>
+		<input type="hidden" name="customerId" value="${productInquiry.customerId }" />
+		<input type="hidden" name="customerName" value="정회민" />
 		<div class="mb-3">
-		<input type="hidden" name="productId" value="${param.productId}"/>
-		</div>
-		<div class="mb-3">
-		<input type="hidden" name="customerId" value="hoimin" />
-		</div>
-		<div class="mb-3">
-		제목 : <input type="text" name="inquiryTitle" /><br />
+		제목 : <input class="form-control" type="text" name="inquiryTitle" /><br />
 		</div>
 		<div class="mb-3 form-floating " >
 		문의 내용 <br />
 		<textarea class="form-control" id="bodyTextarea" rows="10" name="inquiryText"></textarea>
 		<br />
 		</div>
-		<input type="submit" value="등록" />
+		<input class="btn btn-primary" type="submit" value="등록" />
 		
 	</form>
 	
