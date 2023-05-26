@@ -1,4 +1,4 @@
-package com.example.demo.mapper.productInquiry;
+package com.example.demo.mapper.product.inquiry;
 
 import java.util.*;
 
@@ -13,6 +13,8 @@ public interface ProductInquiryMapper {
 			SELECT * FROM
 			productinquiry
 			WHERE product_id = #{productId}
+			ORDER BY
+			inquiry_id DESC
 			LIMIT 10
 			""")
 	@ResultMap("showListByProductId")

@@ -1,4 +1,4 @@
-package com.example.demo.controller.review;
+package com.example.demo.controller.product;
 
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;

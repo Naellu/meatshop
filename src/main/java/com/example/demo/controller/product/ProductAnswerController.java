@@ -1,4 +1,4 @@
-package com.example.demo.controller.productInquiry;
+package com.example.demo.controller.product;
 
 import java.util.*;
 
@@ -9,14 +9,14 @@ import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.domain.*;
-import com.example.demo.service.inquiry.*;
+import com.example.demo.service.product.inquiry.*;
 
 @Controller
-@RequestMapping("productanswer")
+@RequestMapping("product/answer")
 public class ProductAnswerController {
 	
 	@Autowired
-	private ProductAnswerService answerService;
+	private ProductInquiryAnswerService answerService;
 	
 	@Autowired
 	private ProductInquiryService inquiryService;
@@ -49,7 +49,7 @@ public class ProductAnswerController {
 		model.addAttribute("productInquiry", productInquiry);
 		model.addAttribute("productAnswer", productAnswer);
 		
-		return "productanswer/modify";
+		return "product/answer/modify";
 		
 	}
 	
@@ -65,9 +65,9 @@ public class ProductAnswerController {
 		boolean ok = answerService.modifyAnswer(productAnswer);
 		
 		if(ok) {
-			return "redirect:/productinquiry/list?productId=" + productId;
+			return "redirect:/product/inquiry/list?productId=" + productId;
 		} else {
-			return "redirect:/productinquiry/list?productId=" + productId;
+			return "redirect:/product/inquiry/list?productId=" + productId;
 		}
 	}
 	

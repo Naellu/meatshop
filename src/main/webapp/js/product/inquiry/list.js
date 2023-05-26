@@ -10,7 +10,7 @@ for (var removeButton of removeButtons) {
 
 // 문의 답변 내용, 답변 from, 삭제/수정버튼 출력
 function listAnswer(inquiryId) {
-	$.ajax("/productanswer/get?inquiryId=" + inquiryId, {
+	$.ajax("/product/answer/get?inquiryId=" + inquiryId, {
 		success: function(productAnswer) {
 			const answerTextboxId = "#answerContainer" + inquiryId;
 			const answer = productAnswer.answer;
@@ -19,13 +19,13 @@ function listAnswer(inquiryId) {
 			if (answer !== undefined) {
 				const answerDiv = `
     				<h5 class="answer-title">관리자 답변</h5>
-				    <div class="answer-content">${answer}</div>
+				    <div class="answer-content"><textarea class="form-control" rows="5">${answer}</textarea></div>
 			`;
 				$(answerTextboxId).append(answerDiv); // 답변 내용추가
 			}
 
 			const editButtons = `
-					<button rDeleteBtn${productAnswer.inquiryId}" 
+					<button id= answerDeleteBtn${productAnswer.inquiryId}" 
 						class="answerDeleteButton btn btn-danger"
 						data-bs-toggle="modal"
 						data-bs-target="#deleteAnswerConfirmModal"
@@ -35,7 +35,7 @@ function listAnswer(inquiryId) {
 					<button
 						id="answerUpdateBtn${productAnswer.answer}"
 						class="answerUpdateButton btn btn-secondary"
-						onclick="location.href='/productanswer/modify/${productAnswer.inquiryId}'">
+						onclick="location.href='/product/answer/modify/${productAnswer.inquiryId}'">
 							<i class="fa-regular fa-pen-to-square"></i>
 						</button>
 			`;
@@ -55,7 +55,7 @@ function listAnswer(inquiryId) {
 // 문의답변 삭제 모달에서 삭제 버튼 클릭시 
 $("#deleteAnswerModalButton").click(function() {
 	const answerId = $(this).attr("data-answer-id");
-	$.ajax("/productanswer/inquiryid/" + answerId, {
+	$.ajax("/product/answer/inquiryid/" + answerId, {
 		method: "delete",
 		complete: function(jqXHR) {
 			listAnswer(answerId);
@@ -75,7 +75,7 @@ for (var sendAnswerButton of sendAnswerButtons) {
 		const answer = $(answerContentId).val();
 		const data = { inquiryId, answer };
 
-		$.ajax("/productanswer/add", {
+		$.ajax("/product/answer/add", {
 			method: "post",
 			contentType: "application/json",
 			data: JSON.stringify(data),
