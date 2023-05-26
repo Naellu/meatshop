@@ -16,9 +16,11 @@ import software.amazon.awssdk.core.sync.*;
 import software.amazon.awssdk.services.s3.*;
 import software.amazon.awssdk.services.s3.model.*;
 
+
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class NoticeBoardService implements NoticeBoardServiceInterface {
+
 
 	@Autowired
 	private S3Client s3;
@@ -39,6 +41,7 @@ public class NoticeBoardService implements NoticeBoardServiceInterface {
 		NoticeBoard nb = mapper.selectById(id);
 		return nb;
 	}
+
 
 	public boolean modify(NoticeBoard nboard, MultipartFile[] addFiles, List<String> removeFileNames) throws Exception {
 		
@@ -75,13 +78,13 @@ public class NoticeBoardService implements NoticeBoardServiceInterface {
 						s3.putObject(por, rb);
 					}
 				}
-		
 		int cnt = mapper.update(nboard);
 
 		return cnt == 1;
 	}
 
 	public boolean remove(Integer id) {
+
 		List<String> fileNames = mapper.selectFileNamesByBoardId(id);
 		mapper.deleteFileNameByBoardId(id);
 		
@@ -94,7 +97,6 @@ public class NoticeBoardService implements NoticeBoardServiceInterface {
 							.build();
 					s3.deleteObject(dor);
 				}
-		
 		int cnt = mapper.deleteById(id);
 
 		return cnt == 1;
@@ -102,6 +104,7 @@ public class NoticeBoardService implements NoticeBoardServiceInterface {
 
 	public boolean addNoticeBoard(NoticeBoard nboard, MultipartFile[] files) throws Exception {
 		int cnt = mapper.insert(nboard);
+    
 		for (MultipartFile file : files) {
 			if (file.getSize() > 0) {
 				String objectKey = "meatshop/noticeboard/" + nboard.getId() + "/" + file.getOriginalFilename();
