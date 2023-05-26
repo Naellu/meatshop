@@ -14,6 +14,7 @@ public class ProductView {
 	private Integer categoryId;
 	private String categoryName;
 	private String description;
+	private Integer pub;
 	
 	private List<String> fileName;
 }
