@@ -19,29 +19,43 @@
 			<div class="col-12 col-md-8 col-lg-6">
 				<!-- 테이블 크기조절 -->
 				<h1>회원 목록</h1>
+					<form action = "membersearch" class="d-flex" role="search">
+		<select class="form-select flex-grow-0" name = "type" id= "" style = "width : 100px;">
+			<option value= "all">전체</option>
+			<option value= "name" ${param.type eq 'name' ? 'selected' : '' }>이름</option>
+			<option value= "birthday" ${param.type eq 'birthday' ? 'selected' : '' }>생일</option>
+			<option value= "phoneNumber" ${param.type eq 'phoneNumber' ? 'selected' : '' }>핸드폰 번호</option>
+			</select>
+				<input value="${param.search }" name="search" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+				<button class="btn btn-outline-success" type="submit">
+					<i class="fa-solid fa-magnifying-glass"></i>
+				</button>
+			</form>
 				<table class="table">
 					<thead>
 						<tr>
 							<th>ID</th>
 							<th>PASSWORD</th>
-							<th>별명</th>
+							<th>이름</th>
 							<th>이메일</th>
 							<th>가입일시</th>
 						</tr>
 					</thead>
+					
+	
 
 
 					<tbody>
-						<c:forEach items="${memberList}" var="member">
+						<c:forEach items="${memberlist}" var="member">
 							<tr>
-								<c:url value="/member/info" var="memberInfoLink">
+								<c:url value="/member/mypage" var="memberInfoLink">
 									<c:param name="id" value="${member.id}" />
 								</c:url>
 								<td><a href="${memberInfoLink}">${member.id}</a></td>
-								<td>${member.member_password}</td>
-								<td>${member.member_name}</td>
-								<td>${member.member_email}</td>
-								<td>${member.member_created}</td>
+								<td>${member.password}</td>
+								<td>${member.name}</td>
+								<td>${member.email}</td>
+								<td>${member.created}</td>
 							</tr>
 						</c:forEach>
 
@@ -54,6 +68,8 @@
 			</div>
 		</div>
 	</div>
+	
+	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script><!-- 부트 스트랩 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!--jquery-->
 </body>

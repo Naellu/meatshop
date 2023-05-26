@@ -1,4 +1,4 @@
-package com.example.demo.mapper.productInquiry;
+package com.example.demo.mapper.product.inquiry;
 
 
 import org.apache.ibatis.annotations.*;

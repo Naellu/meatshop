@@ -1,4 +1,4 @@
-package com.example.demo.controller.productInquiry;
+package com.example.demo.controller.product;
 
 import java.util.*;
 
@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.*;
 
 import com.example.demo.domain.*;
-import com.example.demo.service.inquiry.*;
+import com.example.demo.service.product.inquiry.*;
 
 
 @Controller
-@RequestMapping("productinquiry")
+@RequestMapping("product/inquiry")
 public class ProductInquiryController {
 	
 	@Autowired
@@ -26,22 +26,19 @@ public class ProductInquiryController {
 	
 	@GetMapping("list")
 	public String getListByProductId(
-			Integer productId, 
-			@RequestParam(value="page",defaultValue = "1") Integer inquirys,
-			@RequestParam(value = "customerId", defaultValue = "") String customerId,
+			ProductInquiry productInquiry, 
+			@RequestParam(value="page",defaultValue = "1") Integer page,
 			Model model
 			) {
-		
-		Map<String, Object> result = service.showInquiryListByProductId(productId,inquirys);
-		
+		Map<String, Object> result = service.showInquiryListByProductId(productInquiry,page);
+		result.put("customerId", "hoimin");
 		model.addAllAttributes(result);
 		
-		return "productinquiry/list";
+		return "product/inquiry/list";
 	}
 	
 	@GetMapping("add")
-	public void addFrom(Integer productId) {
-		
+	public void addFrom(ProductInquiry productInquiry) {
 	}
 	
 	@PostMapping("add")
@@ -51,10 +48,10 @@ public class ProductInquiryController {
 		boolean ok = service.addInquiry(productInquiry);
 		if (ok) {
 			rttr.addFlashAttribute("message", "문의가 등록되었습니다.");
-			return "redirect:/productinquiry/list?productId="+ productInquiry.getProductId(); 
+			return "redirect:/customer/product/detail/"+ productInquiry.getProductId(); 
 		} else {
 			rttr.addFlashAttribute("message", "문의가 등록되지 않았습니다.");
-			return "redirect:/productinquiry/add?productId=" + productInquiry.getProductId(); 
+			return "redirect:/customer/product/detail/"+ productInquiry.getProductId(); 
 		}
 	}
 	
@@ -68,10 +65,10 @@ public class ProductInquiryController {
 		
 		if(ok) {
 			rttr.addFlashAttribute("message", "문의가 삭제되었습니다.");
-			return "redirect:/productinquiry/list?productId=" + productInquiry.getProductId();
+			return "redirect:/customer/product/detail/"+ productInquiry.getProductId();
 		} else {
 			rttr.addFlashAttribute("message", "문의가 삭제되지 않았습니다.");
-			return "redirect:/productinquiry/list?productId=" + productInquiry.getProductId();
+			return "redirect:/customer/product/detail/"+ productInquiry.getProductId();
 		}
 		
 	}
@@ -79,7 +76,7 @@ public class ProductInquiryController {
 	@GetMapping("modify/{inquiryId}")
 	public String modifyFrom(@PathVariable("inquiryId") Integer inquiryId, Model model) {
 		model.addAttribute("productInquiry", service.getInquiry(inquiryId));
-		return "productinquiry/modify";
+		return "product/inquiry/modify";
 	}
 	
 	@PostMapping("modify/{inquiryId}")
@@ -91,10 +88,10 @@ public class ProductInquiryController {
 		
 		if(ok) {
 			rttr.addFlashAttribute("message", "문의가 수정되었습니다.");
-			return "redirect:/productinquiry/list?productId=" + productInquiry.getProductId();
+			return "redirect:/product/inquiry/list?productId=" + productInquiry.getProductId();
 		} else {
 			rttr.addFlashAttribute("message", "문의가 수정되지 않았습니다.");
-			return "redirect:/productinquiry/list?productId=" + productInquiry.getProductId();
+			return "redirect:/product/inquiry/list?productId=" + productInquiry.getProductId();
 		}
 
 	}
