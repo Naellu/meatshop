@@ -3,6 +3,7 @@
   <%@ taglib prefix="c" uri="jakarta.tags.core" %><!-- 태그이용을 위한 링크 -->
   <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %> <!-- spring security 라이브러리를 사용하기위한 태그 -->
     <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%><!-- 내가 만든 태그 -->
+    <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 
 <!DOCTYPE html>
 <html>
@@ -14,6 +15,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+
+<my:navBar></my:navBar>
+
 
 <div class="container-lg">
 
@@ -33,13 +38,21 @@
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="">패스워드</label>
-					<input class="form-control" type="text" value="${member.member_password }" readonly/>
+					<input class="form-control" type="text" value="${member.password }" readonly/>
 				</div>
 				
 				<div class="mb-3">
 					<label class="form-label" for="">이메일</label>
-					<input class="form-control" type="text" value="${member.member_email }" readonly />
+					<input class="form-control" type="text" value="${member.email }" readonly />
 				</div>
+					<div class="mb-3">
+						<label class="form-label" for="inputAdress"> 주소 </label>
+						<input id="inputAdress" class="form-control" type="text" name="address" value="${member.address }" readonly />
+					</div>
+						<div class="mb-3">
+						<label class="form-label" for="inputEmail"> 번호 </label>
+						<input id="inputPhoneNumber" class="form-control" type="text" name="phoneNumber" value="${member.phoneNumber }"  readonly />
+					</div>
 		
 		<!-- <sec:authorize access="authentication.name eq #member.id">  -->	
 				<a class="btn btn-secondary" href="/member/modify?id=${member.id }">수정</a>
@@ -63,7 +76,7 @@
 					<form id="removeForm" action="/member/remove" method="post">
 						<input type="hidden" name="id" value="${member.id }" />
 						<label for="passwordInput1">암호</label>
-						<input id="passwordInput1" type="password" name="member_password" class="form-control" />
+						<input id="passwordInput1" type="password" name="password" class="form-control" />
 					</form>
 				</div>
 				<div class="modal-footer">

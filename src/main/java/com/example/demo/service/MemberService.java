@@ -1,10 +1,12 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import com.example.demo.domain.Members;
 import com.example.demo.mapper.MemberMapper;
@@ -24,8 +26,8 @@ public class MemberService {
 	
 
 	public boolean signup(Members member) {
-		String plain = member.getMember_password();
-		member.setMember_password(passwordEncoder.encode(plain));
+		String plain = member.getPassword();
+		member.setPassword(passwordEncoder.encode(plain));
 		
 		int cnt = mapper.insert(member);
 		return cnt == 1;
@@ -48,15 +50,15 @@ public class MemberService {
 
 	public boolean modify(Members member, String oldPassword) {
 		
-		if(!member.getMember_password().isBlank()) {
-			String plain = member.getMember_password();
-			member.setMember_password(passwordEncoder.encode(plain));
+		if(!member.getPassword().isBlank()) {
+			String plain = member.getPassword();
+			member.setPassword(passwordEncoder.encode(plain));
 		}
 		
 		Members oldMember = mapper.selectId(member.getId());
 
 		int cnt = 0;
-		if (passwordEncoder.matches(oldPassword, oldMember.getMember_password())) {
+		if (passwordEncoder.matches(oldPassword, oldMember.getPassword())) {
 			
 			cnt = mapper.update(member);
 		}
@@ -70,7 +72,7 @@ public class MemberService {
 		System.out.println(member);
 		int cnt = 0;
 		
-		if (passwordEncoder.matches(member.getMember_password(),oldMember.getMember_password())) {
+		if (passwordEncoder.matches(member.getPassword(),oldMember.getPassword())) {
 			// 입력한 암호와 기존 암호가 같으면?
 			
 			
@@ -86,6 +88,12 @@ public class MemberService {
 		}
 		
 		return cnt == 1;
+	}
+
+	public Map<String, Object> list(String search, String type) {
+		List<Members> list = mapper.selectMember(search, type);
+		System.out.println(list);
+		return Map.of("memberlist", list);
 	}
 
 	}

@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -23,12 +24,12 @@ public interface MemberMapper {
 			member_phone_number)
 			VALUES(
 			#{id},
-			#{member_password},
-			#{member_name},
-			#{member_birthday},
-			#{member_email},
-			#{member_address},
-			#{member_phone_number}
+			#{password},
+			#{name},
+			#{birthday},
+			#{email},
+			#{address},
+			#{phoneNumber}
 			)
 
 						""")
@@ -36,19 +37,20 @@ public interface MemberMapper {
 	int insert(Members member);
 
 	
-	
+	// 회원과 관리자권한까지 통합해서 검색
 	@Select("""
-			SELECT * FROM members
+			SELECT * FROM members m LEFT JOIN memberauthority ma ON m.id = ma.member_id
 			WHERE id = #{id}
 			""")
+	@ResultMap("memberMap")
 	Members selectId(String id);
 
 	@Select("""
-			SELECT * FROM members
+			SELECT * FROM members m LEFT JOIN memberauthority ma ON m.id = ma.member_id
 			ORDER BY member_created DESC
 			
 			""")
-
+	@ResultMap("memberMap")
 	List<Members> selectALL();
 
 
@@ -58,17 +60,20 @@ public interface MemberMapper {
 			
 			UPDATE members
 			SET 
-				<if test="member_password neq null and member_password neq ''">
-				member_password = #{member_password},
+				<if test="password neq null and password neq ''">
+				member_password = #{password},
 				</if>
 				
 			   
-			    member_email = #{member_email}
+			    member_email = #{email},
+			    member_address = #{address},
+			    member_phone_number = #{phoneNumber}
 			WHERE
 				id = #{id}
 			
 			</script>
 			""")
+	@ResultMap("memberMap")
 	Integer update(Members member);
 
 
@@ -80,5 +85,36 @@ public interface MemberMapper {
 			""")
 
 	int deleteById(String id);
+
+
+	
+	
+	
+	
+	
+	@Select("""
+	        <script>
+	        <bind name="pattern" value="'%' + search + '%'" />
+	        SELECT *  FROM memberview 
+	        
+	        <where>
+	          <if test="(type eq 'all') or (type eq 'name')">
+	               member_name  LIKE #{pattern}
+	            </if>
+	            <if test="(type eq 'all') or (type eq 'birthday')">
+	            OR member_birthday   LIKE #{pattern}
+	            </if>
+	            <if test="(type eq 'all') or (type eq 'phoneNumber')">
+	            OR member_phone_number LIKE #{pattern}
+	            </if>
+	        </where>
+	        
+	        GROUP BY member_id
+	        ORDER BY member_id DESC
+	       
+	        </script>
+	        """)	
+	@ResultMap("memberMap")
+	List<Members> selectMember(String search, String type);
 
 }
