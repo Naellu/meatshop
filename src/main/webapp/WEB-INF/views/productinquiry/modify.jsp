@@ -18,7 +18,7 @@
 		<input type="hidden" name="productId" value="${productInquiry.productId}"/>
 		</div>
 		<div class="mb-3">
-		<input type="hidden" name="nickName" value="${productInquiry.nickName }" />
+		<input type="hidden" name="customerId" value="${productInquiry.customerId }" />
 		</div>
 		<div class="mb-3">
 		제목 : <input type="text" name="inquiryTitle" value="${productInquiry.inquiryTitle }"/><br />

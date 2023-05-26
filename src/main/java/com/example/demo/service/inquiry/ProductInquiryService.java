@@ -16,9 +16,11 @@ public class ProductInquiryService {
 	
 	
 	
-	public Map<String, Object> showInquiryListByProductId(Integer productId) {
-		List<ProductInquiry> productInquiryList = mapper.showListByProductId(productId);		
-		return Map.of("productInquiryList", productInquiryList);
+	public Map<String, Object> showInquiryListByProductId(Integer productId, Integer page) {
+		Map<String, Object> res = new HashMap<>();
+		List<ProductInquiry> productInquiryList = mapper.showListByProductId(productId, page);
+		res.put("productInquiryList", productInquiryList);
+		return res;
 	}
 	
 	

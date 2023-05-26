@@ -8,7 +8,7 @@
 		<id column="inquiry_id" property="inquiryId"/>
 		<result column="product_id" property="productId"/>
 		<result column="customer_name" property="customerName"/>
-		<result column="nickname" property="nickName"/>
+		<result column="customer_id" property="customerId"/>
 		<result column="inquiry_title" property="inquiryTitle"/>
 		<result column="inquiry_text" property="inquiryText"/>
 		<result column="created_at" property="createdAt"/>		
@@ -18,7 +18,7 @@
 		<id column="inquiry_id" property="inquiryId"/>
 		<result column="product_id" property="productId"/>
 		<result column="customer_name" property="customerName"/>
-		<result column="nickname" property="nickName"/>
+		<result column="customer_id" property="customerId"/>
 		<result column="inquiry_title" property="inquiryTitle"/>
 		<result column="inquiry_text" property="inquiryText"/>
 		<result column="created_at" property="createdAt"/>		
@@ -28,7 +28,7 @@
 		<id column="inquiry_id" property="inquiryId"/>
 		<result column="product_id" property="productId"/>
 		<result column="customer_name" property="customerName"/>
-		<result column="nickname" property="nickName"/>
+		<result column="customer_id" property="customerId"/>
 		<result column="inquiry_title" property="inquiryTitle"/>
 		<result column="inquiry_text" property="inquiryText"/>
 		<result column="created_at" property="createdAt"/>		
@@ -38,7 +38,7 @@
 		<id column="inquiry_id" property="inquiryId"/>
 		<result column="product_id" property="productId"/>
 		<result column="customer_name" property="customerName"/>
-		<result column="nickname" property="nickName"/>
+		<result column="customer_id" property="customerId"/>
 		<result column="inquiry_title" property="inquiryTitle"/>
 		<result column="inquiry_text" property="inquiryText"/>
 		<result column="created_at" property="createdAt"/>		
@@ -48,7 +48,7 @@
 		<id column="inquiry_id" property="inquiryId"/>
 		<result column="product_id" property="productId"/>
 		<result column="customer_name" property="customerName"/>
-		<result column="nickname" property="nickName"/>
+		<result column="customer_id" property="customerId"/>
 		<result column="inquiry_title" property="inquiryTitle"/>
 		<result column="inquiry_text" property="inquiryText"/>
 		<result column="created_at" property="createdAt"/>		

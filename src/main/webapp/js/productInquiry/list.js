@@ -25,13 +25,12 @@ function listAnswer(inquiryId) {
 			}
 
 			const editButtons = `
-					<button 
-						id="answerDeleteBtn${productAnswer.inquiryId}" 
+					<button rDeleteBtn${productAnswer.inquiryId}" 
 						class="answerDeleteButton btn btn-danger"
 						data-bs-toggle="modal"
 						data-bs-target="#deleteAnswerConfirmModal"
 						data-answer-id="${productAnswer.inquiryId}">
-							<i class="fa-regular fa-trash-can"></i>
+							<i class="fa-regular fa-trash-can id="answecan"></i>
 						</button>
 					<button
 						id="answerUpdateBtn${productAnswer.answer}"
@@ -93,6 +92,7 @@ for (var sendAnswerButton of sendAnswerButtons) {
 		})
 	})
 }
+
 
 /* - 보류, 나중에 쓸 수 도?
 var answerButtons = document.getElementsByName("inquiryAnswerButton");

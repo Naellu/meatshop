@@ -13,13 +13,14 @@ public interface ProductInquiryMapper {
 			SELECT * FROM
 			productinquiry
 			WHERE product_id = #{productId}
+			LIMIT 10
 			""")
 	@ResultMap("showListByProductId")
-	List<ProductInquiry> showListByProductId(Integer productId);
+	List<ProductInquiry> showListByProductId(Integer productId, Integer inquirys);
 
 	@Insert("""
-			INSERT INTO	productinquiry(product_id,customer_name,nickname,inquiry_title,	inquiry_text)
-			VALUES(#{productId},'user1',#{nickName},#{inquiryTitle},#{inquiryText})
+			INSERT INTO	productinquiry(product_id,customer_name,customer_id,inquiry_title,	inquiry_text)
+			VALUES(#{productId},'user1',#{customerId},#{inquiryTitle},#{inquiryText})
 			""")
 	@ResultMap("addInquiry")
 	int addInquiry(ProductInquiry productInquiry);

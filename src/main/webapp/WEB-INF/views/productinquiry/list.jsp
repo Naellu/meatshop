@@ -28,7 +28,7 @@
 			<thead>
 				<tr>
 					<th scope="col">고객이름</th>
-					<th scope="col">고객닉네임</th>
+					<th scope="col">고객ID</th>
 					<th scope="col">제목</th>
 					<th scope="col">작성시각</th>
 					<th scope="col">수정</th>
@@ -39,7 +39,7 @@
 				<c:forEach items="${productInquiryList}" var="inquiry">
 					<tr>
 						<td>${inquiry.customerName}</td>
-						<td>${inquiry.nickName}</td>
+						<td>${inquiry.customerId}</td>
 						<td>
 							${inquiry.inquiryTitle}
 							<button onclick="listAnswer('${inquiry.inquiryId}')" style="background-color: #ffffff;" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${inquiry.inquiryId}" aria-expanded="false" aria-controls="collapse${inquiry.inquiryId}">문의내용 보기</button>
@@ -85,8 +85,26 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		<nav aria-label="...">
+			<ul class="pagination justify-content-center">
+				<li class="page-item disabled">
+					<span class="page-link">Previous</span>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="#">1</a>
+				</li>
+				<li class="page-item active" aria-current="page">
+					<span class="page-link">2</span>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="#">3</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="#">Next</a>
+				</li>
+			</ul>
+		</nav>
 	</div>
-
 
 
 
