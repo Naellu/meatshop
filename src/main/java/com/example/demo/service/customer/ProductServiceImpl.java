@@ -5,7 +5,7 @@ import java.util.*;
 import org.springframework.stereotype.*;
 
 import com.example.demo.domain.*;
-import com.example.demo.mapper.customer.*;
+import com.example.demo.mapper.product.*;
 
 import lombok.*;
 

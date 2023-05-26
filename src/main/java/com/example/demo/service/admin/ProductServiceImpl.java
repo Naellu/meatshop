@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.*;
 import org.springframework.web.multipart.*;
 
 import com.example.demo.domain.*;
-import com.example.demo.mapper.admin.*;
+import com.example.demo.mapper.product.*;
 
 import lombok.*;
 import software.amazon.awssdk.core.sync.*;

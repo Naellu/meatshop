@@ -1,4 +1,4 @@
-package com.example.demo.mapper.admin;
+package com.example.demo.mapper.product;
 
 import java.util.*;
 

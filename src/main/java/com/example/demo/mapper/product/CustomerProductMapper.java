@@ -1,4 +1,4 @@
-package com.example.demo.mapper.customer;
+package com.example.demo.mapper.product;
 
 import java.util.*;
 
