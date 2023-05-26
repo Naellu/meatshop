@@ -17,6 +17,7 @@
 </head>
 <body>
 
+	<my:navBar></my:navBar>
 	<my:alert />
 
 

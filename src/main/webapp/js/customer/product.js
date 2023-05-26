@@ -67,3 +67,17 @@ $("#goToCartBtn").click(function() {
 		}
 	});
 })
+
+// 상품문의 탭을 클릭하면 실행하는 script
+$("#productInquiry").click(function(){ //상품문의를 누르면
+	$("a.nav-link").removeClass("active"); // "nav-link"클래스를 가지오 있는 모든 a엘리멘트의 "active" 클래스를 제거 후
+	$(this).addClass("active"); // 현재(상품문의)에만 "active"클래스를 추가한다
+	var productId = $(this).data('productid');
+})
+
+
+// 상품문의 탭을 클릭하면 실행하는 script
+$("#productReview").click(function(){ //상품문의를 누르면
+	$("a.nav-link").removeClass("active"); // "nav-link"클래스를 가지오 있는 모든 a엘리멘트의 "active" 클래스를 제거 후
+	$(this).addClass("active"); // 현재(상품문의)에만 "active"클래스를 추가한다
+})

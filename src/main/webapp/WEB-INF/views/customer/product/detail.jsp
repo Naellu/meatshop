@@ -4,6 +4,33 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style>
+.tab {
+	overflow: hidden;
+}
+
+.tab button {
+	background-color: #f2f2f2;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	padding: 10px 20px;
+	transition: background-color 0.3s;
+}
+
+.tab button:hover {
+	background-color: #ddd;
+}
+
+.tab button.active {
+	background-color: #ccc;
+}
+
+.tabcontent {
+	padding: 20px;
+	border: 1px solid #ccc;
+}
+</style>
 <meta charset="UTF-8">
 <title>상품 상세 정보</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -81,16 +108,40 @@
 		</div>
 	</div>
 
-	<div class="row justify-content-center">
+	<!-- 	<div class="row justify-content-center">
 		<div class="col-12 col-md-8 col-lg-6">
 			<h1>상품 상세설명란</h1>
 		</div>
+	</div> -->
+
+	<div class="container mt-4">
+		<ul class="nav nav-tabs">
+			<li class="nav-item">
+				<a class="nav-link active" data-toggle="tab" href="#details">상품상세</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" id="productInquiry" data-productid="${product.productId}">상품문의</a>
+				
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" data-toggle="tab" id="productReview" data-productid="${product.productId}">상품리뷰</a>
+			</li>
+		</ul>
+
+		<div class="tab-content mt-2">
+			<div id="details" class="tab-pane fade show active">
+				여기에 상품상세/상품문의/상품리퓨 표시될 예정
+			</div>
+		</div>
 	</div>
+
+
 
 
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="/js/customer/product.js"></script>
+	
 </body>
 </html>

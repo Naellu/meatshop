@@ -43,8 +43,8 @@
     <tr>
       <th scope="row">3</th>
        <td>닭고기</td>
-      <td><a href="/productinquiry/list?productId=44">문의목록</a></td>
-      <td><a href="/productinquiry/add?productId=44">문의하기</a> </td>
+      <td><a href="/productinquiry/list?productId=100">문의목록</a></td>
+      <td><a href="/productinquiry/add?productId=100">문의하기</a> </td>
     </tr>
   </tbody>
 </table>

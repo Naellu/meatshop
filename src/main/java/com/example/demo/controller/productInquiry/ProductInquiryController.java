@@ -28,7 +28,6 @@ public class ProductInquiryController {
 	public String getListByProductId(
 			Integer productId, 
 			@RequestParam(value="page",defaultValue = "1") Integer inquirys,
-			@RequestParam(value = "customerId", defaultValue = "") String customerId,
 			Model model
 			) {
 		
