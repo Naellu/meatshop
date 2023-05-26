@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.domain.Members;
@@ -64,10 +66,21 @@ public class MemberController {
 	@GetMapping("list")
 	public void list(Model model) {
 		List<Members> list = service.listMember();
-		model.addAttribute("memberList", list);
-		
-		
+		model.addAttribute("memberlist", list);
 	}
+	
+	@GetMapping("membersearch")
+	public String list (Model model,
+//			@RequestParam(value="page", defaultValue="1") Integer page,
+			@RequestParam(value = "search",defaultValue= "")String search,
+			@RequestParam(value = "type", required = false) String type) {
+		
+		Map<String, Object> list = service.list(search,type); 
+		model.addAllAttributes(list);
+		return "member/list";
+	}
+	
+		
 	
 // 마이페이지 (내정보 확인란)
 	@GetMapping("mypage")
@@ -96,7 +109,7 @@ public class MemberController {
 	public String modifyProcess(Members member, RedirectAttributes rttr,String oldPassword) {
 		boolean ok = service.modify(member,oldPassword);
 		System.out.println(oldPassword);
-		System.out.println(ok);
+		System.out.println(member);
 		if (ok) {
 //			rttr.addFlashAttribute("message", "회원 정보가 수정되었습니다.");
 			return "redirect:/member/mypage?id=" + member.getId();
@@ -114,8 +127,8 @@ public class MemberController {
 	public String remove(Members member,RedirectAttributes rttr,
 			HttpServletRequest request) throws ServletException {
 	
+		System.out.println(member);
 		boolean ok = service.remove(member);
-		
 		if(ok) {
 //			rttr.addFlashAttribute("message","탈퇴완료");
 			

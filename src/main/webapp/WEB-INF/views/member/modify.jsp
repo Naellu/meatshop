@@ -29,16 +29,23 @@
 					</div>
 					<div class="mb-3">
 						<label class="form-label" for="inputPassword"> New Password </label>
-						<input id="inputPassword" class="form-control" type="text" name="member_password" value="" />
+						<input id="inputPassword" class="form-control" type="text" name="password" value="" />
 					</div>
 
-						
-					
-		
 					<div class="mb-3">
 						<label class="form-label" for="inputEmail"> 이메일 </label>
-						<input id="inputEmail" class="form-control" type="email" name="member_email" value="${member.member_email }" />
+						<input id="inputEmail" class="form-control" type="email" name="email" value="${member.email }" />
 					</div>
+						
+						<div class="mb-3">
+						<label class="form-label" for="inputAdress"> 주소 </label>
+						<input id="inputAdress" class="form-control" type="text" name="address" value="${member.address }" />
+					</div>
+						<div class="mb-3">
+						<label class="form-label" for="inputEmail"> 번호수정 </label>
+						<input id="inputPhoneNumber" class="form-control" type="tel" name="phoneNumber" value="${member.phoneNumber }" required/>
+					</div>
+		
 
 					<button id="modifyButton" type="button" data-bs-toggle="modal" data-bs-target="#confirmModal" class="btn btn-primary">수정</button>
 				</form>
