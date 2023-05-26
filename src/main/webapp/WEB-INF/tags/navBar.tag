@@ -37,12 +37,16 @@
 					<a class="nav-link ${current eq 'memberList' ? 'active' : '' }" href="/member/list">회원목록</a>
 				</li>
 				</sec:authorize>
-
+				
+				
+<!--   참고용 회원관리 작업 마무리 되면 삭제해도 됨
 				<sec:authorize access="isAuthenticated()">
                     <li class="nav-item">
                         <a class="nav-link ${current eq 'memberInfo' ? 'active' : '' }" href="/member/info?id=<sec:authentication property="name" />">회원정보</a>
                     </li>
                 </sec:authorize>
+-->
+
 
 
 				<sec:authorize access="isAnonymous()">
@@ -57,7 +61,11 @@
 				</sec:authorize>
 				 -->
 				<li class="nav-item">
-					<a class="nav-link ${current eq 'mypage' ? 'active' : '' }" href="/mypage">마이페이지</a>
+					<a class="nav-link ${current eq 'mypage' ? 'active' : '' }" href="/member/mypage?id=<sec:authentication property="name" />">마이페이지</a>
+				</li>
+				
+				<li class="nav-item">
+					<a class="nav-link ${current eq 'memberList' ? 'active' : '' }" href="/member/list">회원목록</a>
 				</li>
 				
 				
@@ -81,6 +89,8 @@
 
 			</ul>
 			
+			
+			
 			<!-- 
 			<form action="/list" class="d-flex" role="search">
 				<div class="input-group">
@@ -103,11 +113,12 @@
 	</div>
 </nav>
 
-<!-- 
+
 <div>
     <sec:authentication property="principal"/>
+    <sec:authentication property="credentials"/>
 </div>
- -->
+
 
 
 
