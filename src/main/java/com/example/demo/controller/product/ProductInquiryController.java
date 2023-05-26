@@ -48,10 +48,10 @@ public class ProductInquiryController {
 		boolean ok = service.addInquiry(productInquiry);
 		if (ok) {
 			rttr.addFlashAttribute("message", "문의가 등록되었습니다.");
-			return "redirect:/customer/product/detail/"+ productInquiry.getProductId(); 
+			return "redirect:/product/info/"+ productInquiry.getProductId(); 
 		} else {
 			rttr.addFlashAttribute("message", "문의가 등록되지 않았습니다.");
-			return "redirect:/customer/product/detail/"+ productInquiry.getProductId(); 
+			return "redirect:/product/info/"+ productInquiry.getProductId(); 
 		}
 	}
 	
@@ -65,10 +65,10 @@ public class ProductInquiryController {
 		
 		if(ok) {
 			rttr.addFlashAttribute("message", "문의가 삭제되었습니다.");
-			return "redirect:/customer/product/detail/"+ productInquiry.getProductId();
+			return "redirect:/product/info/"+ productInquiry.getProductId();
 		} else {
 			rttr.addFlashAttribute("message", "문의가 삭제되지 않았습니다.");
-			return "redirect:/customer/product/detail/"+ productInquiry.getProductId();
+			return "redirect:/product/info/"+ productInquiry.getProductId();
 		}
 		
 	}
