@@ -14,22 +14,15 @@
 <body>
 	<my:navBar current="faq" />
 
+	<a href="/faq/add">FAQ 작성</a>
+
 	<button id="product" type="button" class="btn btn-outline-primary">상품관련</button>
 	<button id="order" type="button" class="btn btn-outline-secondary">주문결제</button>
 	<button id="deliver" type="button" class="btn btn-outline-success">배송</button>
 	<button id="cancel" type="button" class="btn btn-outline-danger">변경/취소/반품</button>
 	<button id="profile" type="button" class="btn btn-outline-warning">회원정보</button>
 	<button id="service" type="button" class="btn btn-outline-info">서비스이용</button>
-
-	<%-- 	<c:forEach items="${list }" var="faq">
-		<p>
-			<button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">${faq.category }&nbsp&nbsp&nbsp&nbsp&nbsp${faq.title }</button>
-		</p>
-
-		<div class="collapse" id="collapseExample">
-			<div class="card card-body">${faq.content }</div>
-		</div>
-	</c:forEach> --%>
+	
 
 	<div id="list1">
 		<c:forEach items="${faq}" var="faq">
@@ -43,20 +36,18 @@
 						</h2>
 						<div id="collapse-${faq.id}" class="accordion-collapse collapse" aria-labelledby="heading-${faq.id}">
 							<div class="accordion-body">${faq.content}</div>
+							<!-- 수정, 삭제 -->
+							<a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a>
+							<button id="removeButton-${faq.id}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
 						</div>
-						<!-- 수정, 삭제 -->
-						<%-- <a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a> --%>
-						<button id="removeButton-${faq.id}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
+					</div>
+					<!-- 삭제 -->
+					<div class="d-none">
+						<form action="/faq/remove" method="post" id="removeForm-${faq.id}">
+							<input type="text" name="id" value="${faq.id}" />
+						</form>
 					</div>
 				</div>
-				<!-- 삭제 -->
-				<div class="d-none">
-					<form action="/faq/remove" method="post" id="removeForm-${faq.id}">
-						<input type="text" name="id" value="${faq.id}" />
-					</form>
-				</div>
-				<!-- Modal -->
-
 			</c:if>
 		</c:forEach>
 	</div>
@@ -73,19 +64,18 @@
 						</h2>
 						<div id="collapse-${faq.id}" class="accordion-collapse collapse" aria-labelledby="heading-${faq.id}">
 							<div class="accordion-body">${faq.content}</div>
+							<!-- 수정, 삭제 -->
+							<a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a>
+							<button id="removeButton-${faq.id}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
 						</div>
-						<!-- 수정, 삭제 -->
-						<%-- <a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a> --%>
-						<button id="removeButton-${faq.id}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
+					</div>
+					<!-- 삭제 -->
+					<div class="d-none">
+						<form action="/faq/remove" method="post" id="removeForm-${faq.id}">
+							<input type="text" name="id" value="${faq.id}" />
+						</form>
 					</div>
 				</div>
-				<!-- 삭제 -->
-				<div class="d-none">
-					<form action="/faq/remove" method="post" id="removeForm-${faq.id}">
-						<input type="text" name="id" value="${faq.id}" />
-					</form>
-				</div>
-
 			</c:if>
 		</c:forEach>
 	</div>
@@ -102,17 +92,17 @@
 						</h2>
 						<div id="collapse-${faq.id}" class="accordion-collapse collapse" aria-labelledby="heading-${faq.id}">
 							<div class="accordion-body">${faq.content}</div>
+							<!-- 수정, 삭제 -->
+							<a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a>
+							<button id="removeButton-${faq.id}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
 						</div>
-						<!-- 수정, 삭제 -->
-						<%-- <a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a> --%>
-						<button id="removeButton-${faq.id}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
 					</div>
-				</div>
-				<!-- 삭제 -->
-				<div class="d-none">
-					<form action="/faq/remove" method="post" id="removeForm-${faq.id}">
-						<input type="text" name="id" value="${faq.id}" />
-					</form>
+					<!-- 삭제 -->
+					<div class="d-none">
+						<form action="/faq/remove" method="post" id="removeForm-${faq.id}">
+							<input type="text" name="id" value="${faq.id}" />
+						</form>
+					</div>
 				</div>
 			</c:if>
 		</c:forEach>
@@ -130,17 +120,17 @@
 						</h2>
 						<div id="collapse-${faq.id}" class="accordion-collapse collapse" aria-labelledby="heading-${faq.id}">
 							<div class="accordion-body">${faq.content}</div>
+							<!-- 수정, 삭제 -->
+							<a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a>
+							<button id="removeButton-${faq.id}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
 						</div>
-						<!-- 수정, 삭제 -->
-						<%-- <a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a> --%>
-						<button id="removeButton-${faq.id}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
 					</div>
-				</div>
-				<!-- 삭제 -->
-				<div class="d-none">
-					<form action="/faq/remove" method="post" id="removeForm-${faq.id}">
-						<input type="text" name="id" value="${faq.id}" />
-					</form>
+					<!-- 삭제 -->
+					<div class="d-none">
+						<form action="/faq/remove" method="post" id="removeForm-${faq.id}">
+							<input type="text" name="id" value="${faq.id}" />
+						</form>
+					</div>
 				</div>
 			</c:if>
 		</c:forEach>
@@ -158,17 +148,17 @@
 						</h2>
 						<div id="collapse-${faq.id}" class="accordion-collapse collapse" aria-labelledby="heading-${faq.id}">
 							<div class="accordion-body">${faq.content}</div>
+							<!-- 수정, 삭제 -->
+							<a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a>
+							<button id="removeButton-${faq.id}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
 						</div>
-						<!-- 수정, 삭제 -->
-						<%-- <a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a> --%>
-						<button id="removeButton-${faq.id}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
 					</div>
-				</div>
-				<!-- 삭제 -->
-				<div class="d-none">
-					<form action="/faq/remove" method="post" id="removeForm-${faq.id}">
-						<input type="text" name="id" value="${faq.id}" />
-					</form>
+					<!-- 삭제 -->
+					<div class="d-none">
+						<form action="/faq/remove" method="post" id="removeForm-${faq.id}">
+							<input type="text" name="id" value="${faq.id}" />
+						</form>
+					</div>
 				</div>
 			</c:if>
 		</c:forEach>
@@ -187,8 +177,8 @@
 						<div id="collapse-${faq.id}" class="accordion-collapse collapse" aria-labelledby="heading-${faq.id}">
 							<div class="accordion-body">${faq.content}</div>
 							<!-- 수정, 삭제 -->
-							<%-- <a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a> --%>
-							<button id="removeButton-${faq.id}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제asdasdasdioasiodu</button>
+							<a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a>
+							<button id="removeButton-${faq.id}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
 						</div>
 					</div>
 					<!-- 삭제 -->
@@ -213,7 +203,7 @@
 				<div class="modal-body">삭제 하시겠습니까?</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-					<button type="submit" class="btn btn-danger" form="removeForm}">삭제</button>
+					<button id="confirmDeleteButton" type="submit" class="btn btn-danger" form="removeForm">삭제</button>
 				</div>
 			</div>
 		</div>

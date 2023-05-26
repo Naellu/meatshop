@@ -68,7 +68,7 @@ $(document).ready(function() {
 		// 모달에서 확인 버튼 클릭 시 삭제 작업 수행
 		$("#confirmDeleteButton").on("click", function() {
 			// 삭제할 FAQ 항목의 form 선택하여 submit
-			$("#removeForm").submit();
+			$("#removeForm-"+ faqId).submit();
 		});
 	});
 });

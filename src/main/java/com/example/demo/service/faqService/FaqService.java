@@ -28,6 +28,24 @@ public class FaqService {
 		return cnt == 1;
 	}
 
+	public Faq getOneList(Integer id) {
+		Faq faq = mapper.selectById(id);
+		
+		return faq;
+	}
+
+	public boolean modify(Faq faq) {
+		int cnt = mapper.update(faq);
+		
+		return cnt == 1;
+	}
+
+	public boolean addFaq(Faq faq) {
+		int cnt = mapper.insert(faq);
+		
+		return cnt == 1;
+	}
+
 	
 
 }
