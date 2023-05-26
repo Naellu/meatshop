@@ -6,7 +6,7 @@ import com.example.demo.domain.*;
 
 public interface ProductService {
 	
-	public List<ProductView> getViewList();
+	public Map<String, Object> getViewList(Integer page, Integer categoryId, String type, String search);
 	
 	public ProductView getOneView(Integer id);
 

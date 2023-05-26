@@ -1,12 +1,12 @@
-let productName = false;
-let price = false;
-let stockQuantity = false;
+let productName = true;
+let price = true;
+let stockQuantity = true;
 
 function enableSubmit() {
 	if (productName && price && stockQuantity) {
-		$("#addBtn").removeAttr("disabled");
+		$("#updateBtn").removeAttr("disabled");
 	} else {
-		$("#addBtn").attr("disabled", "");
+		$("#updateBtn").attr("disabled", "");
 	}
 }
 

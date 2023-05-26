@@ -101,6 +101,8 @@ VALUES
 ('상품99', '원산지3', 3, 10000.00),
 ('상품100', '원산지1', 1, 10000.00);
 
+TRUNCATE Table products;
+
 -- 파일넣기
 INSERT INTO productfilename (product_id, file_name)
 VALUES

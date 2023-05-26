@@ -46,7 +46,7 @@
 
 						<div class="mb-3">
 							<label for="" class="form-label">상품명</label>
-							<input type="text" name="productName" class="form-control" value="${product.productName }" />
+							<input type="text" id="productNameInput" name="productName" class="form-control" value="${product.productName }" />
 						</div>
 
 						<div class="mb-3">
@@ -69,12 +69,13 @@
 
 						<div class="mb-3">
 							<label for="" class="form-label">재고</label>
-							<input type="number" name="stockQuantity" class="form-control" value="${product.stockQuantity}" />
+							<input type="number" id="stockQuantityInput" name="stockQuantity" class="form-control" value="${product.stockQuantity}" />
 						</div>
 
 						<div class="mb-3">
 							<label for="" class="form-label">가격</label>
-							<input type="number" name="price" class="form-control" value="${product.price }" />
+							<input type="number" id="priceInput" name="price" class="form-control" value="${product.price }" />
+							<div class="form-text">소수점 두자리까지 가능</div>
 						</div>
 
 						<div class="mb-3">
@@ -84,16 +85,17 @@
 								<option value="0" ${product.pub eq 0 ? 'selected' : '' }>비공개</option>
 							</select>
 						</div>
-						
+
 						<div class="mb-3">
 							<label for="formFile" class="form-label">첨부 파일</label>
 							<input class="form-control" name="files" type="file" id="formFile" accept="image/*" multiple>
+							<div class="form-text">기본사진은 main.png, 상품설명사진은 detail.png로 작성해주세요</div>
 							<div class="form-text">총 10MB, 하나의 파일을 1MB를 초과할 수 없습니다.</div>
 						</div>
 
 						<div>
 							<input type="hidden" name="productId" value="${product.productId}" />
-							<input class="btn btn-primary" type="submit" value="수정하기" />
+							<input id="updateBtn" class="btn btn-primary" type="submit" value="수정하기" />
 							<a class="btn btn-secondary" href="/admin/product/list">상품관리</a>
 						</div>
 					</form>
@@ -105,5 +107,6 @@
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="/js/admin/product/modify.js"></script>
 </body>
 </html>

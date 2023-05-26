@@ -183,6 +183,57 @@
 		</foreach>
 	</update>
 
+	<!-- 고객 -->
+	<!-- 상품 목록 -->
+	<select id="selectCustomerAllPaging" resultMap="productViewMap">
+		<bind name="pattern" value="'%' + search + '%'" />
+		SELECT * FROM (SELECT * FROM productview WHERE pub = 1) p
+		<where>
+			<if test="type eq 'all' and categoryId != null">
+				(product_name LIKE #{pattern} OR country_of_origin LIKE #{pattern})
+			</if>
+			<if test="type eq 'productName'">
+				OR product_name LIKE #{pattern}
+			</if>
+			<if test="type eq 'countryOfOrigin'">
+				OR country_of_origin LIKE #{pattern}
+			</if>
+			<if test="categoryId != null">
+				AND category_id = #{categoryId}
+			</if>
+		</where>
+		ORDER BY product_id DESC
+		LIMIT #{startIndex}, #{pageSize}
+	</select>
+
+	<!-- 상품 상세 -->
+	<select id="getCustomerViewById" resultMap="productViewMap">
+		SELECT * FROM
+		productview
+		WHERE product_id = #{productId}
+
+	</select>
+
+	<!-- 고객 페이지 네이션 -->
+	<select id="countCustomerAll" resultType="Integer">
+		<bind name="pattern" value="'%' + search + '%'" />
+		SELECT
+		count(product_id) FROM (SELECT * FROM productview WHERE pub = 1) p
+		<where>
+			<if test="type eq 'all' and categoryId != null">
+				(product_name LIKE #{pattern} OR country_of_origin LIKE #{pattern})
+			</if>
+			<if test="type eq 'productName'">
+				OR product_name LIKE #{pattern}
+			</if>
+			<if test="type eq 'countryOfOrigin'">
+				OR country_of_origin LIKE #{pattern}
+			</if>
+			<if test="categoryId != null">
+				AND category_id = #{categoryId}
+			</if>
+		</where>
+	</select>
 
 </mapper>
 
