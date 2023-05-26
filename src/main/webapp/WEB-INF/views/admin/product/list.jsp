@@ -24,13 +24,13 @@
 			</div>
 		</div>
 	</div>
+	<!-- Header-->
+	<my:header>
+		관리자 상품 관리
+	</my:header>
 
-	<div class="container-lg">
-		<div class="d-flex">
-			<div class="me-auto">
-				<h1>상품 관리</h1>
-			</div>
-
+	<div class="container-lg mt-3">
+		<div class="d-flex justify-content-center">
 			<div>
 				<form id="form1" action="/admin/product/list" class="d-flex" role="search">
 					<div class="input-group">
@@ -143,7 +143,9 @@
 									<c:param name="stockQuantity" value="${param.stockQuantity}" />
 								</c:if>
 							</c:url>
-							<a class="page-link" href="${pageLink}">첫페이지로</a>
+							<a class="page-link" href="${pageLink}">
+								<i class="fa-solid fa-angles-left"></i>
+							</a>
 						</li>
 					</c:if>
 
@@ -162,7 +164,9 @@
 									<c:param name="stockQuantity" value="${param.stockQuantity}" />
 								</c:if>
 							</c:url>
-							<a class="page-link" href="${pageLink}">이전</a>
+							<a class="page-link" href="${pageLink}">
+								<i class="fa-solid fa-angle-left"></i>
+							</a>
 						</li>
 					</c:if>
 
@@ -198,7 +202,9 @@
 									<c:param name="stockQuantity" value="${param.stockQuantity}" />
 								</c:if>
 							</c:url>
-							<a class="page-link" href="${pageLink}">다음</a>
+							<a class="page-link" href="${pageLink}">
+								<i class="fa-solid fa-angle-right"></i>
+							</a>
 						</li>
 					</c:if>
 
@@ -216,7 +222,9 @@
 									<c:param name="stockQuantity" value="${param.stockQuantity}" />
 								</c:if>
 							</c:url>
-							<a class="page-link" href="${pageLink}">마지막페이지</a>
+							<a class="page-link" href="${pageLink}">
+								<i class="fa-solid fa-angles-right"></i>
+							</a>
 						</li>
 					</c:if>
 				</ul>

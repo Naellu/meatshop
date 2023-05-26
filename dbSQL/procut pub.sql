@@ -22,3 +22,15 @@ WHEN product_id IN (100,99,98) THEN 1
 ELSE 0 END
 WHERE product_id IN (100,99,98, 97, 96, 95);
 
+UPDATE products SET stock_quantity = 100;
+SELECT * FROM productview WHERE stock_quantity <= 50;
+SELECT * FROM productview WHERE product_name LIKE '%%' OR country_of_origin LIKE '%%' OR category_name LIKE '%%' AND stock_quantity < 50;
+SELECT count(product_id) FROM (SELECT * FROM productview WHERE stock_quantity <= 50) f;
+
+
+SELECT count(product_id) FROM productview WHERE (category_name LIKE '%소%') AND pub = 0;
+
+SELECT * FROM productview WHERE product_name LIKE '%%' OR country_of_origin LIKE '%%' OR category_name LIKE '%%' OR category_name LIKE '%소%' AND pub < 
+
+
+

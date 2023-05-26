@@ -40,11 +40,24 @@ public interface ProductMapper {
 	public int update(Product product);
 	
 	//페이징 처리
-	public List<ProductView> selectAllPaging(Integer page, Integer startIndex, Integer pageSize, String type, String search, Integer stockQuantity, String pub);
+	public List<ProductView> selectAllPaging(Integer startIndex, Integer pageSize, String type, String search, Integer stockQuantity, String pub);
 
 	//전체 게시글 개수
 	public Integer countAll(String type, String search, Integer stockQuantity, String pub);
 
 	//공개 비공개처리
 	public Integer changeProductPub(List<String> openIds, List<String> ids);
+
+	//고객 페이지
+	// 고객 상품 목록
+	public List<ProductView> getCustomerView();
+
+	//고객 상품 목록
+	public List<ProductView> selectCustomerAllPaging(Integer pageSize, Integer startIndex, Integer categoryId, String type, String search);
+	
+	//고객 상품 상세페이지
+	public ProductView getCustomerViewById(Integer id);
+
+	//고객 상품 개수 pub = 1만
+	public Integer countCustomerAll(Integer categoryId, String type, String search);
 }

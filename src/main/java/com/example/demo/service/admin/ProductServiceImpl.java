@@ -73,7 +73,7 @@ public class ProductServiceImpl implements ProductService {
 		pageInfo.put("prevPageNumber", prevPageNumber);
 		pageInfo.put("nextPageNumber", nextPageNumber);
 
-		List<ProductView> productList = productMapper.selectAllPaging(page, startIndex, pageSize, type, search, stockQuantity, pub);
+		List<ProductView> productList = productMapper.selectAllPaging(startIndex, pageSize, type, search, stockQuantity, pub);
 		return Map.of("pageInfo", pageInfo, "productList", productList);
 	}
 
