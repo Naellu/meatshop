@@ -8,13 +8,13 @@ import lombok.Data;
 @Data
 public class Members {
 	private String id;
-	private String member_password;
-	private String member_name;
-	private String member_birthday;
-	private String member_email;
-	private String member_address;
-	private String member_phone_number;
-	private String member_created;
+	private String password;
+	private String name;
+	private String birthday;
+	private String email;
+	private String address;
+	private String phoneNumber;
+	private String created;
 
 //	private LocalDateTime inserted;
 	private String oldPassword;

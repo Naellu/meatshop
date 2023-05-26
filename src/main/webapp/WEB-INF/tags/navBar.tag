@@ -39,13 +39,6 @@
 				</sec:authorize>
 				
 				
-<!--   참고용 회원관리 작업 마무리 되면 삭제해도 됨
-				<sec:authorize access="isAuthenticated()">
-                    <li class="nav-item">
-                        <a class="nav-link ${current eq 'memberInfo' ? 'active' : '' }" href="/member/info?id=<sec:authentication property="name" />">회원정보</a>
-                    </li>
-                </sec:authorize>
--->
 
 
 
@@ -60,14 +53,19 @@
 				
 				</sec:authorize>
 				 -->
+				 
+				 <sec:authorize access="isAuthenticated()">
 				<li class="nav-item">
 					<a class="nav-link ${current eq 'mypage' ? 'active' : '' }" href="/member/mypage?id=<sec:authentication property="name" />">마이페이지</a>
 				</li>
+				</sec:authorize>
 				
+				
+				<sec:authorize access="hasAuthority('admin')">
 				<li class="nav-item">
 					<a class="nav-link ${current eq 'memberList' ? 'active' : '' }" href="/member/list">회원목록</a>
 				</li>
-				
+				</sec:authorize>
 				
 				<li class="nav-item">
 					<a class="nav-link ${current eq 'nbList' ? 'active' : '' }" href="/noticeBoard/list">공지사항</a>
@@ -76,11 +74,11 @@
 				<li class="nav-item">
 					<a class="nav-link ${current eq 'faq' ? 'active' : '' }" href="/faq/list">고객센터</a>
 				</li>
-				
+				<sec:authorize access="hasAuthority('admin')">
 				<li class="nav-item">
 					<a class="nav-link ${current eq 'support' ? 'active' : '' }" href="/admin/main">관리자</a>
 				</li>
-
+				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 				<li class="nav-item">
 					<a class="nav-link" href="/member/logout">로그아웃</a>

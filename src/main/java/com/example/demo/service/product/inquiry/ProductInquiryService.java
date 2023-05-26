@@ -1,4 +1,4 @@
-package com.example.demo.service.inquiry;
+package com.example.demo.service.product.inquiry;
 
 import java.util.*;
 
@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
 import com.example.demo.domain.*;
-import com.example.demo.mapper.productInquiry.*;
+import com.example.demo.mapper.product.inquiry.*;
 
 @Service
 public class ProductInquiryService {
@@ -16,9 +16,9 @@ public class ProductInquiryService {
 	
 	
 	
-	public Map<String, Object> showInquiryListByProductId(Integer productId, Integer page) {
+	public Map<String, Object> showInquiryListByProductId(ProductInquiry productInquiry, Integer page) {
 		Map<String, Object> res = new HashMap<>();
-		List<ProductInquiry> productInquiryList = mapper.showListByProductId(productId, page);
+		List<ProductInquiry> productInquiryList = mapper.showListByProductId(productInquiry, page);
 		res.put("productInquiryList", productInquiryList);
 		return res;
 	}

@@ -19,10 +19,8 @@
 
 	<my:alert />
 
-
-	<h1>${param.productId}번상품문의목록</h1>
-	<hr />
-
+	<button class="btn btn-primary" id="addInquiry" >문의하기</button>
+	<br />
 	<div class="accordion " id="accordionExample">
 		<table class="table">
 			<thead>
@@ -42,11 +40,11 @@
 						<td>${inquiry.customerId}</td>
 						<td>
 							${inquiry.inquiryTitle}
-							<button onclick="listAnswer('${inquiry.inquiryId}')" style="background-color: #ffffff;" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${inquiry.inquiryId}" aria-expanded="false" aria-controls="collapse${inquiry.inquiryId}">문의내용 보기</button>
+							<button onclick="listAnswer('${inquiry.inquiryId}')" style="background-color: #ffffff;" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${inquiry.inquiryId}" aria-expanded="false" aria-controls="collapse${inquiry.inquiryId}">문의내용 보기(${inquiry.inquiryId})</button>
 						</td>
 						<td>${inquiry.createdAt}</td>
 						<td>
-							<button class="btn btn-primary" onclick="location.href='/productinquiry/modify/${inquiry.inquiryId}'">수정</button>
+							<button class="btn btn-primary" onclick="location.href='/product/inquiry/modify/${inquiry.inquiryId}'">수정</button>
 						</td>
 						<td>
 							<button name="removeButton" id="${inquiry.inquiryId}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteInquiryConfirmModal">삭제</button>
@@ -56,9 +54,8 @@
 						<td colspan="6">
 							<div id="collapse${inquiry.inquiryId}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
 								<div class="accordion-body">
-									<div style="white-space: pre-wrap;">${inquiry.inquiryText}
-										<br />
-										${inquiry.inquiryId}
+									<div style="white-space: pre-wrap;">
+										<textarea class="form-control" rows="5">${inquiry.inquiryText}</textarea>
 									</div>
 									<div class="mb-3 answer-container" id="answerContainer${inquiry.inquiryId }">
 										<!-- 답변이 표시될 구역 -->
@@ -110,8 +107,8 @@
 
 	<!-- 문의 삭제 모달 -->
 	<div class="d-none">
-		<form action="/productinquiry/delete" method="post" id="inquiryRemoveForm">
-			<input type="text" name="productId" value="${param.productId}" />
+		<form action="/product/inquiry/delete" method="post" id="inquiryRemoveForm">
+			<input type="text" name="productId" value="${productInquiry.productId}" />
 			<input type="text" id="removeInquiry" name="inquiryId" value="" />
 		</form>
 	</div>
@@ -155,7 +152,7 @@
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="/js/productInquiry/list.js"></script>
+	<script src="/js/product/inquiry/list.js"></script>
 
 </body>
 </html>

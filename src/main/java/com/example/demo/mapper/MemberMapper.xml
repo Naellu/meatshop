@@ -7,12 +7,14 @@
 
 	<resultMap type="com.example.demo.domain.Members" id="memberMap">
 	<id property="id" column="id"></id>
-	<result property="MemberPassword" column="member_password"></result>
-	<result property="MemberBirthday" column="member_birthday"></result>
-	<result property="Memberemail" column="member_email"></result>
-	<result property="MemberAddress" column="member_address"></result>
+	<result property="password" column="member_password"></result>
+	<result property="birthday" column="member_birthday"></result>
+	<result property="name" column="member_name"></result>
+	<result property="email" column="member_email"></result>
+	<result property="address" column="member_address"></result>
+	<result property="created" column="member_created"></result>
 	
-	<result property="MemberPhoneNumber" column="member_phone_number"></result>
+	<result property="phoneNumber" column="member_phone_number"></result>
 		
 	<collection property="authority" ofType="string">
 	<result column="authority"></result>
