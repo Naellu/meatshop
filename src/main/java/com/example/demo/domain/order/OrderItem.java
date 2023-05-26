@@ -22,13 +22,13 @@ public class OrderItem {
 		orderItem.setProductId(productId);
 		orderItem.setOrderPrice(orderPrice);
 		orderItem.setQuantity(quantity);
-		orderItem.calculateTotalPrice();
+//		orderItem.calculateTotalPrice();
 		return orderItem;
 	}
 
 	// 주문상품 전체 가격 조회
-	public void calculateTotalPrice() {
-		this.orderPrice = getOrderPrice() * getQuantity();
-	}
+//	public void calculateTotalPrice() {
+//		this.orderPrice = getOrderPrice() * getQuantity();
+//	}
 	
 }

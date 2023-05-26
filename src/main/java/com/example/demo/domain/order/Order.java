@@ -28,6 +28,16 @@ public class Order {
 		orderItems.add(orderItem);
 	}
 
+	// 단일 상품 주문생성
+	public static Order createOrder(String memberId, OrderItem orderItem) {
+		Order order = new Order();
+		order.setMemberId(memberId);
+		order.setStatus(Status.CREATED); // 주문생성 시 결제상태는 무조건 CREATED(결제전)
+		order.addOrderItem(orderItem);
+		order.calculateTotalPrice();
+		return order;
+	}
+
 	// 여러개의 주문상세와 하나의 회원을 가진 주문 객체 생성하기
 	public static Order createOrder(String memberId, List<OrderItem> orderItems) {
 		Order order = new Order();
@@ -43,7 +53,7 @@ public class Order {
 	// 주문 전체 가격
 	public void calculateTotalPrice() {
 		this.totalPrice = this.orderItems.stream()
-				.mapToLong(orderItem -> orderItem.getOrderPrice())
+				.mapToLong(orderItem -> orderItem.getOrderPrice() * orderItem.getQuantity())
 				.sum();
 	}
 

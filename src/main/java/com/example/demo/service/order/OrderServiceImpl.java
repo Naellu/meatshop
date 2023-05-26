@@ -1,5 +1,6 @@
 package com.example.demo.service.order;
 
+import com.example.demo.domain.Product;
 import com.example.demo.domain.order.Order;
 import com.example.demo.domain.order.OrderItem;
 import com.example.demo.mapper.order.OrderMapper;
@@ -19,20 +20,18 @@ public class OrderServiceImpl implements OrderService{
 	
 	private final OrderMapper orderMapper;
 
-	// 추후 수정 예정
+	// 단일 상품 주문
 	@Override
-	public int makeOrderOfSingleProduct(String memberId, Integer productId, int quantity) {
-		double price = orderMapper.findPrice(productId);
-		int orderPrice = (int) price;
+	public int makeOrderOfSingleProduct(String memberId, Integer productId, int quantity, Double price) {
+//		double price = orderMapper.findPrice(productId);
+		int orderPrice = price.intValue();
 
-		List<OrderItem> orderItems = new ArrayList<>();
 		OrderItem orderItem = OrderItem.createOrderItem(productId, orderPrice, quantity);
-		orderItems.add(orderItem);
 
-		Order order = Order.createOrder(memberId, orderItems);
+		Order order = Order.createOrder(memberId, orderItem);
 		orderMapper.saveOrder(order);
 
-		orderItems.get(0).setOrderId(order.getId());
+		orderItem.setOrderId(order.getId());
 		orderMapper.saveOrderItems(orderItem);
 
 		return order.getId();
@@ -83,6 +82,10 @@ public class OrderServiceImpl implements OrderService{
 		return orders;
 	}
 
+	@Override
+	public Product findOneOfProduct(Integer productId) {
+		return orderMapper.selectByProductId(productId);
+	}
 
 	@Override
 	public void orderCancel() {
