@@ -17,6 +17,6 @@ public class Members {
 	private String member_created;
 
 //	private LocalDateTime inserted;
-//	private String oldPassword;
+	private String oldPassword;
 	private List<String> authority;
 }
