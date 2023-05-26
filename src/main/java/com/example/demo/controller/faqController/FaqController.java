@@ -22,23 +22,22 @@ public class FaqController {
 	public String list(Model model) {
 		
 		List<Faq> faq = service.getList();
-		
 		model.addAttribute("faq", faq);
 		
 		return "faq/list";
 	}
 	
-//	@PostMapping("remove")
-//	public String remove(Integer id, RedirectAttributes rttr) {
-//		
-//		boolean ok = service.remove(id);
-//		
-//		if (ok) {
-//			rttr.addFlashAttribute("message", "게시물이 삭제되었습니다.");
-//			return "redirect:/faq/list";
-//		} else {
-//			rttr.addFlashAttribute("message", "게시물이 삭제되지 않았습니다.");
-//			return "redirect:/faq/list";
-//		}
-//	}
+	@PostMapping("remove")
+	public String remove(Integer id, RedirectAttributes rttr) {
+		
+		boolean ok = service.remove(id);
+		
+		if (ok) {
+			rttr.addFlashAttribute("message", "게시물이 삭제되었습니다.");
+			return "redirect:/faq/list";
+		} else {
+			rttr.addFlashAttribute("message", "게시물이 삭제되지 않았습니다.");
+			return "redirect:/faq/list";
+		}
+	}
 }
