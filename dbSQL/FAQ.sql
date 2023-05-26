@@ -36,3 +36,22 @@ CREATE TABLE answer(
     admin_id VARCHAR(100),
     inserted DATETIME NOT NULL DEFAULT now()
 );
+
+SELECT * FROM faq;
+
+DESC faq;
+
+INSERT INTO faq (title, category, content)
+VALUES ('서비스이용1', '서비스이용', '서비스이용1');
+
+INSERT INTO faq (title, category, content)
+VALUES ('서비스이용2', '서비스이용', '서비스이용2');
+
+INSERT INTO faq (title, category, content)
+VALUES ('서비스이용3', '서비스이용', '서비스이용3');
+
+INSERT INTO faq (title, category, content)
+VALUES ('서비스이용4', '서비스이용', '서비스이용4');
+
+INSERT INTO faq (title, category, content)
+VALUES ('서비스이용5', '서비스이용', '서비스이용5');
