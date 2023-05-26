@@ -23,7 +23,7 @@
 				</sec:authorize>
 				 -->
 				<li class="nav-item">
-					<a class="nav-link ${current eq 'cart' ? 'active' : '' }" href="/cart/list">장바구니</a>
+					<a class="nav-link ${current eq 'cart' ? 'active' : '' }" href="/cart">장바구니</a>
 				</li>
 
                 <sec:authorize access="isAnonymous()">
