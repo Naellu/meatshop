@@ -145,7 +145,7 @@
 						<div id="collapse-${faq.id}" class="accordion-collapse collapse" aria-labelledby="heading-${faq.id}">
 							<div class="accordion-body">
 								${faq.content}
-								<button id="removeButton" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
+								<!-- <button id="removeButton" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button> -->
 							</div>
 						</div>
 					</div>
@@ -156,17 +156,17 @@
 	
 	<!-- 수정, 삭제 -->
 	<%-- <a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a> --%>
-	<button type="button" class="btn btn-danger" form="removeForm" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button>
+	<!-- <button type="button" class="btn btn-danger" form="removeForm" data-bs-toggle="modal" data-bs-target="#deleteConfirmModal">삭제</button> -->
 
 	<!-- 삭제 -->
 	<%-- <div class="d-none">
 		<form action="/faq/remove" method="post" id="removeForm">
 			<input type="text" name="id" value="${faq.id }" />
 		</form>
-	</div> --%>
+	</div>  --%>
 	
 	<!-- Modal -->
-	<div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<!-- <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -180,7 +180,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

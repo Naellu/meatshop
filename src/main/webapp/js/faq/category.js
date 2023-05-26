@@ -1,11 +1,11 @@
-$(document).ready(function() {
+/*$(document).ready(function() {
 	$("#list1").show();
 	$("#list2").hide();
 	$("#list3").hide();
 	$("#list4").hide();
 	$("#list5").hide();
 	$("#list6").hide();
-})
+})*/
 
 $("#product").click(function() {
 	$("#list1").show();
