@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.product.ProductMapper">
+	<resultMap type="com.example.demo.domain.ProductView"
+		id="productViewMap">
+		<id column="product_id" property="productId" />
+		<result column="product_name" property="productName" />
+		<result column="country_of_origin" property="countryOfOrigin" />
+		<result column="price" property="price" />
+		<result column="stock_quantity" property="stockQuantity" />
+		<result column="pub" property="pub" />
+		<result column="category_id" property="categoryId" />
+		<result column="category_name" property="categoryName" />
+		<result column="description" property="description" />
+		<collection property="fileName" ofType="string">
+			<result column="file_name" />
+		</collection>
+	</resultMap>
+
+	<!-- 상품 목록 -->
+	<select id="getAllView" resultMap="productViewMap">
+		SELECT * FROM productview
+		ORDER BY product_id DESC LIMIT 0, 10
+	</select>
+
+	<!-- 상품 상세 -->
+	<select id="getViewById" resultMap="productViewMap">
+		SELECT * FROM productview
+		WHERE product_id = #{productId}
+	</select>
+
+	<!-- 상품 삭제 -->
+	<delete id="deleteById">
+		DELETE FROM products WHERE product_id = #{productId}
+	</delete>
+
+	<!-- 상품 추가 -->
+	<insert id="create" useGeneratedKeys="true"
+		keyProperty="productId">
+		INSERT
+		INTO products
+		(product_name, country_of_origin,
+		category_id, price, stock_quantity, pub)
+		VALUES
+		(#{productName},
+		#{countryOfOrigin}, #{categoryId}, #{price},
+		#{stockQuantity}, #{pub})
+	</insert>
+
+	<!-- 파일관련 -->
+	<insert id="insertFileName">
+		INSERT INTO productfilename (product_id, file_name)
+		VALUES (#{productId}, #{originalFilename})
+	</insert>
+
+	<!-- <resultMap type="java.util.ArrayList" id="fileNameMap"> <collection 
+		property="fileName" ofType="String"> <result column="file_name" /> </collection> 
+		</resultMap> 상품id로 파일 검색 -->
+	<!-- <select id="selectFileNamesByProductId" resultType="ArrayList"> SELECT 
+		file_name FROM productfilename WHERE product_id = #{productId} </select> -->
+
+	<!-- 상품id로 파일 삭제 -->
+	<delete id="deleteFileNameByProductId">
+		DELETE FROM productfilename
+		WHERE product_id =
+		#{productId}
+	</delete>
+
+	<!-- 특정상품의 특정사진 삭제 -->
+	<delete id="deleteFileNameByBoardIdAndFileName">
+		DELETE FROM productfilename
+		WHERE product_id =
+		#{productId}
+		AND file_Name = #{fileName}
+	</delete>
+
+	<!-- 상품 수정 -->
+	<update id="update">
+		UPDATE products SET
+		product_name = #{productName},
+		country_of_origin = #{countryOfOrigin},
+		category_id = #{categoryId},
+		price = #{price},
+		stock_quantity = #{stockQuantity},
+		pub = #{pub}
+		WHERE
+		product_id =
+		#{productId}
+	</update>
+
+	<!-- 페이지네이션 -->
+	<!-- 글 개수 -->
+	<select id="countAll" resultType="Integer">
+		<bind name="pattern" value="'%' + search + '%'" />
+		SELECT count(product_id) FROM
+		<if test="stockQuantity != null and stockQuantity != ''">
+			(SELECT * FROM productview WHERE stock_quantity &lt;=
+			#{stockQuantity}) f
+		</if>
+		<if test="stockQuantity == null or stockQuantity == ''">
+			productview
+		</if>
+		<where>
+			<if test="(pub eq 'open' or pub eq 'close') and type eq 'all'">
+				(
+			</if>
+			<if test="type eq 'all' or type eq 'productName'">
+				product_name LIKE #{pattern}
+			</if>
+			<if test="type eq 'all' or type eq 'countryOfOrigin'">
+				OR country_of_origin LIKE #{pattern}
+			</if>
+			<if test="type eq 'all' or type eq 'categoryName'">
+				OR category_name LIKE #{pattern}
+			</if>
+			<if test="(pub eq 'open' or pub eq 'close') and type eq 'all'">
+				)
+			</if>
+			<if test="pub eq 'open'">
+				AND pub = 1
+			</if>
+			<if test="pub eq 'close'">
+				AND pub = 0
+			</if>
+		</where>
+	</select>
+
+	<!-- 페이징과 검색이 적용된 상품 목록 -->
+	<select id="selectAllPaging" resultMap="productViewMap">
+		<bind name="pattern" value="'%' + search + '%'" />
+		SELECT * FROM productview
+
+		<where>
+			<if test="(pub eq 'open' or pub eq 'close') and type eq 'all'">
+				(
+			</if>
+			<if test="type eq 'all' or type eq 'productName'">
+				product_name LIKE #{pattern}
+			</if>
+			<if test="type eq 'all' or type eq 'countryOfOrigin'">
+				OR country_of_origin LIKE #{pattern}
+			</if>
+			<if test="type eq 'all' or type eq 'categoryName'">
+				OR category_name LIKE #{pattern}
+			</if>
+			<if test="stockQuantity != null and stockQuantity != ''">
+				AND stock_quantity &lt;= #{stockQuantity}
+			</if>
+			<if test="(pub eq 'open' or pub eq 'close') and type eq 'all'">
+				)
+			</if>
+			<if test="pub eq 'open'">
+				AND pub = 1
+			</if>
+			<if test="pub eq 'close'">
+				AND pub = 0
+			</if>
+		</where>
+
+		ORDER BY product_id DESC
+		LIMIT #{startIndex}, #{pageSize}
+	</select>
+
+	<!-- 공개 비공개 처리 -->
+	<update id="changeProductPub" parameterType="java.util.Map">
+		UPDATE productview
+		SET pub =
+		CASE
+		WHEN product_id IN
+		<foreach collection="openIds" item="oid" open="(" close=")"
+			separator=",">
+			#{oid}
+		</foreach>
+		THEN 1
+		ELSE 0
+		END
+		WHERE product_id IN
+		<foreach collection="ids" item="id" open="(" close=")"
+			separator=",">
+			#{id}
+		</foreach>
+	</update>
+
+
+</mapper>
+

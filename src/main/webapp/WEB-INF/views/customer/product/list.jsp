@@ -8,37 +8,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<title>관리자 상품 관리</title>
+<title>커스터머 상품목록</title>
 </head>
 <body>
 	<my:navBar />
 
 	<my:alert />
 
-	<!-- toast -->
-	<div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
-		<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-			<div class="d-flex">
-				<div class="toast-body"></div>
-				<button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-			</div>
-		</div>
-	</div>
-
 	<div class="container-lg">
 		<div class="d-flex">
 			<div class="me-auto">
-				<h1>상품 관리</h1>
+				<h1>커스터머 상품목록</h1>
 			</div>
 
 			<div>
 				<form id="form1" action="/admin/product/list" class="d-flex" role="search">
 					<div class="input-group">
-						<select class="form-select flex-grow-0" style="width: 120px;" name="pub">
-							<option value="all">전체공개</option>
-							<option value="open" ${param.pub eq 'open' ? 'selected' : ''}>공개</option>
-							<option value="close" ${param.pub eq 'close' ? 'selected' : ''}>비공개</option>
-						</select>
 						<select class="form-select flex-grow-0" style="width: 120px;" name="type">
 							<option value="all">전체</option>
 							<option value="productName" ${param.type eq 'productName' ? 'selected' : ''}>상품명</option>
@@ -61,13 +46,10 @@
 			<div class="ms-3">
 				<form id="form2" action="/admin/product/list" method="get">
 					<c:if test="${not empty param.type}">
-						<input type="hidden" name="search" value="${param.search}">
+						<input type="hidden" id="productName" name="search" value="${param.search}">
 					</c:if>
 					<c:if test="${not empty param.search}">
-						<input type="hidden" name="type" value="${param.type}">
-					</c:if>
-					<c:if test="${not empty param.pub}">
-						<input type="hidden" name="pub" value="${param.pub}">
+						<input type="hidden" id="productName" name="type" value="${param.type}">
 					</c:if>
 					<input type="hidden" name="stockQuantity" value="100">
 					<button class="btn btn-primary" type="submit">100개 이하의 상품 보기</button>
@@ -85,7 +67,6 @@
 					<th>재고</th>
 					<th>카테고리</th>
 					<th>가격</th>
-					<th>공개</th>
 					<th>상세페이지</th>
 				</tr>
 			</thead>
@@ -103,12 +84,7 @@
 						<td>${product.categoryName}</td>
 						<td>${product.price}</td>
 						<td>
-							<input type="checkbox" name="openIds" ${product.pub eq 1 ? 'checked' : ''} value="${product.productId}">
-							공개
-							<br />
-						</td>
-						<td>
-							<a class="btn btn-secondary" href="/admin/product/detail/${product.productId}">상세보기</a>
+							<a class="btn btn-secondary" href="/customer/product/detail/${product.productId}">상세보기</a>
 						</td>
 					</tr>
 				</c:forEach>
