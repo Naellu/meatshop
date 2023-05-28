@@ -28,7 +28,7 @@
 				<%--<form id="orderDetailForm" action="/order/detail" method="post" style="text-align: center;"> --%>
 					
 					<%-- <input type="hidden" name="memberId" value="${member.id}" /> --%>
-					<input type="hidden" name="memberId" value="${memberId}" />
+					<input type="hidden" name="memberId" value="${orderItemDto.memberId }" />
 
 					<table class="table">
 				        <thead>
@@ -40,12 +40,14 @@
 				        </thead>
 				        <tbody>
 					          <tr>
-					              <td>${product.productName }</td>
-					              <td>${product.price }</td>
+					              <td>${productName }</td>
+					              <td>${orderItemDto.price }</td>
+					              <td>${orderItemDto.quantity }</td>
+					              <td></td>
 				              		<td>
-				                        <input type="hidden" id="productId" name="productId" value="${product.productId}" />
-					                    <input type="hidden" id="quantity" name="quantity" value="${quantity }" />
-					                    <input type="hidden" id="price" name="price" value="${product.price }" />
+				                        <input type="hidden" id="productId" name="productId" value="${orderItemDto.productId}" />
+					                    <input type="hidden" id="quantity" name="quantity" value="${orderItemDto.quantity }" />
+					                    <input type="hidden" id="price" name="price" value="${orderItemDto.price }" />
 				                  	</td>
 					          </tr>
 				        </tbody>

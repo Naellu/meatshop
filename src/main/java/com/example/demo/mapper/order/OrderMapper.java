@@ -53,13 +53,13 @@ public interface OrderMapper {
 			""")
 	Members selectByMemberId(String id);
 	
-	// 상품 모든정보
+	// 상품 이름
 	@Select("""
-			SELECT *
+			SELECT product_name
 			FROM products
 			WHERE product_id = #{product_id}
 			""")
-	Product selectByProductId(Integer productId);
+	String selectByProductId(Integer productId);
 
 	// 상품 가격
 	@Select("""

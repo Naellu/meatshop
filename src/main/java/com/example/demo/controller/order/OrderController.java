@@ -46,18 +46,23 @@ public class OrderController {
 
 		OrderItemDto orderItemDto = (OrderItemDto) session.getAttribute("orderItemDto");
 		log.info("orderItemDto={}", orderItemDto);
+		
+		Integer productId = orderItemDto.getProductId();
 
 		String memberId = "user22"; // 임시 회원id
 		orderItemDto.setMemberId(memberId);
 		log.info("orderItemDto={}", orderItemDto);
-		log.info("productId in orderItemDto={}",orderItemDto.getProductId());
+		log.info("productId in orderItemDto={}",productId);
 
-		Product product = orderService.findOneOfProduct(orderItemDto.getProductId());
-		log.info("order detail product={}",product);
+		String productName = orderService.findOneOfProduct(productId);
+//		log.info("order detail product={}",product);
+		log.info("GET order/detail product_name={}",productName);
 
-		model.addAttribute("product", product);
-		model.addAttribute("memberId", orderItemDto.getMemberId());
-		model.addAttribute("quantity", orderItemDto.getQuantity());
+//		model.addAttribute("product", product);
+		model.addAttribute("productName", productName);
+		model.addAttribute("orderItemDto", orderItemDto);
+//		model.addAttribute("memberId", orderItemDto.getMemberId());
+//		model.addAttribute("quantity", orderItemDto.getQuantity());
 		log.info("model={}",model);
 
 		return "order/detail";

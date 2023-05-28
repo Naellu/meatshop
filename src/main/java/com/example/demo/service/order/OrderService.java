@@ -19,8 +19,8 @@ public interface OrderService {
 	// 전체 주문목록
 	List<Order> showAllOrders();
 
-	// 상품 찾기
-	Product findOneOfProduct(Integer productId);
+	// 상품 이름 찾기
+	String findOneOfProduct(Integer productId);
 
 	// 주문 취소
 	void orderCancel();

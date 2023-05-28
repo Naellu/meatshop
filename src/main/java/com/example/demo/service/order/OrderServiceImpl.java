@@ -83,7 +83,7 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public Product findOneOfProduct(Integer productId) {
+	public String findOneOfProduct(Integer productId) {
 		return orderMapper.selectByProductId(productId);
 	}
 
