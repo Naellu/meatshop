@@ -10,6 +10,8 @@ public class CartItem {
 	private Integer productId;
 	private Integer quantity;
 	private Integer productPrice;
+	
+	private String productName;
 
 	public static CartItem createCartItem(Integer productId, Integer quantity, Integer productPrice) {
 		CartItem cartItem = new CartItem();

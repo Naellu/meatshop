@@ -8,7 +8,7 @@ import java.util.List;
 public interface CartService {
 
 
-    int makeOrderByCartItems(String memberId, Integer productId, Integer quantity, Integer productPrice);
+    int makeOrderByCartItems(String memberId, Integer productId, Integer quantity, Double price);
 
     Cart findCartByMemberId(String memberId);
 

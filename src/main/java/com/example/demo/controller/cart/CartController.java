@@ -1,24 +1,21 @@
 package com.example.demo.controller.cart;
 
-import com.example.demo.domain.Members;
 import com.example.demo.domain.cart.Cart;
 import com.example.demo.domain.cart.CartItem;
+import com.example.demo.domain.cart.dto.CartItemDto;
 import com.example.demo.service.cart.CartService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Slf4j
 @Controller
@@ -27,22 +24,18 @@ import java.util.UUID;
 public class CartController {
 
 	private final CartService cartService;
-
-	// 장바구니에 물건 담기
-	@GetMapping("/add")
+	
+	// 상품상세에서 장바구니 담기 
+	@PostMapping
 	@ResponseBody
-	public String addCartItem() {
-
-		String memberId = "user05";
-		CartItem cartItem = CartItem.createCartItem(26, 4, 25000);
-
-		// 장바구니에 cartItem 담기
-		cartService.makeOrderByCartItems(memberId,
-										cartItem.getProductId(),
-										cartItem.getQuantity(),
-										cartItem.getProductPrice());
-
-		return "cart add ok";
+	public String addCart(@RequestBody CartItemDto cartItemDto, HttpSession session) {
+		
+		// 회원id, 상품id, 구매개수, 가격 받아서 저장
+		String memberId = "user22";
+		cartService.makeOrderByCartItems(memberId, cartItemDto.getProductId(), cartItemDto.getQuantity(), cartItemDto.getPrice());
+		
+		// 알림 메시지에 들어갈 내용
+		return "상품을 장바구니에 담았습니다";
 	}
 
 	// 장바구니 불러오기
@@ -50,7 +43,7 @@ public class CartController {
 	public String getCart(Model model) {
 
 		// 회원id 가져오기 - 테스트데이터
-		String memberId = "user05";
+		String memberId = "user22";
 
 		// 회원id로 장바구니 찾기
 		Cart memberCart = cartService.findCartByMemberId(memberId);
@@ -65,6 +58,8 @@ public class CartController {
 
 		return "cart/list";
 	}
+	
+	
 
 
 	

@@ -62,10 +62,11 @@ $("#goToCartBtn").click(function() {
 		method: "post",
 		contentType: 'application/json',
 		data: JSON.stringify(data),
-		success: function() {
+		success: function(message) {
 			//값을 가지고
 			// orderdteatil/ odreid로 이동
 			//다른페이지로이동
+			alert(message);
 		}
 	});
 })
