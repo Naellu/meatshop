@@ -20,7 +20,7 @@ public class CartServiceImpl implements CartService{
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public int makeOrderByCartItems(String memberId, Integer productId, Integer quantity, Integer productPrice) {
+	public int makeOrderByCartItems(String memberId, Integer productId, Integer quantity, Double price) {
 
 		// 회원id로 장바구니 조회
 		Cart cart = cartMapper.findByMemberId(memberId);
@@ -36,6 +36,7 @@ public class CartServiceImpl implements CartService{
 		// 장바구니에 해당 cartitem이 없다면
 		if (cartItem == null) {
 
+			int productPrice = price.intValue();
 			// 장바구니에 장바구니항목 추가
 			cartItem = CartItem.createCartItem(productId, quantity, productPrice);
 			cartItem.setCartId(cart.getId());
@@ -59,6 +60,6 @@ public class CartServiceImpl implements CartService{
 
 	@Override
 	public List<CartItem> findAllItems(Cart cart) {
-		return cartMapper.findAllCartItems(cart);
+		return cartMapper.findAllCartItems(cart.getId());
 	}
 }

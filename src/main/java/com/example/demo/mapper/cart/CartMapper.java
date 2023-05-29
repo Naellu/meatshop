@@ -1,6 +1,5 @@
 package com.example.demo.mapper.cart;
 
-import com.example.demo.domain.Product;
 import com.example.demo.domain.cart.Cart;
 import com.example.demo.domain.cart.CartItem;
 import org.apache.ibatis.annotations.Insert;
@@ -51,9 +50,16 @@ public interface CartMapper {
     Cart findByMemberId(String memberId);
 
     @Select("""
-            SELECT *
-            FROM cartitems
-            WHERE cart_id = #{id}
+            SELECT
+				ci.id,
+				ci.cart_id as cartId,
+				ci.product_id as productId,
+				ci.quantity,
+				ci.product_price as productPrice,
+			    p.product_name as productName
+			FROM cartitems as ci
+			LEFT JOIN products as p ON ci.product_id = p.product_id
+			WHERE cart_id = #{cartId};
             """)
-    List<CartItem> findAllCartItems(Cart cart);
+    List<CartItem> findAllCartItems(Integer cartId);
 }

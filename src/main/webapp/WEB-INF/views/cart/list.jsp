@@ -26,7 +26,7 @@
                     <thead>
                         <tr>
                             <th scope="col"><input type="checkbox" id="checkAll"></th>
-                            <th scope="col">상품id</th>
+                            <th scope="col">상품명</th>
                             <th scope="col">구매수량</th>
                             <th scope="col">상품가격</th>
                         </tr>
@@ -35,10 +35,10 @@
                         <c:forEach var="cartItem" items="${cartItems}">
                             <tr>
                                 <td><input type="checkbox" class="item-check" value="${cartItem.id}"></td>
-                                <td>${cartItem.productId} - test</td>
+                                <td>${cartItem.productName}</td>
                                 <td>${cartItem.quantity}</td>
-                                <td>${cartItem.productPrice} - test</td>
-                                <td><button type="button" class="btn btn-danger btn-delete" value="${cartItem.id}">삭제</button></td>
+                                <td>${cartItem.productPrice}</td>
+                                <td><button type="button" class="btn btn-danger btn-delete" value="${cartItem.id}">삭제(구현X)</button></td>
                             </tr>
                         </c:forEach>
                     </tbody>
