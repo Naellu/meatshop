@@ -1,17 +1,19 @@
 package com.example.demo.service.order;
 
-import com.example.demo.domain.Product;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.demo.domain.order.Order;
 import com.example.demo.domain.order.OrderItem;
 import com.example.demo.domain.order.dto.OrderItemDto;
 import com.example.demo.mapper.order.OrderMapper;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Service
@@ -39,6 +41,7 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
+	@Transactional
 	public int makeOrderOfMultipleProduct(String memberId, List<OrderItemDto> orderItemDtos) {
 		List<OrderItem> orderItems = new ArrayList<>();
 		
@@ -59,6 +62,16 @@ public class OrderServiceImpl implements OrderService{
 			orderMapper.saveOrderItems(orderItem);
 		}
 		
+		List<Integer> productIds = orderItemDtos.stream()
+				.filter(OrderItemDto::isFromCart)
+				.map(OrderItemDto::getProductId)
+				.collect(Collectors.toList());
+		
+		if(!productIds.isEmpty()) {
+			// 장바구니에서 상품을 주문했다면 장바구니에서 항목 삭제
+			orderMapper.deleteItemsFromCart(productIds, memberId);
+		}
+		
 		return order.getId();
 	}
 
@@ -67,6 +80,8 @@ public class OrderServiceImpl implements OrderService{
 		//  결제 완료
 		return true;
 	}
+	
+	
 
 
 	@Override
@@ -90,6 +105,8 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		//  주문 취소
 	}
+
+	
 
 	
 	

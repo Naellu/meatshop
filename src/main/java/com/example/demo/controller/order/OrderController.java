@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping("/order")
 @RequiredArgsConstructor
 public class OrderController {
-
+	
 	private final OrderService orderService;
 
 	// 상품 상세에서 order/detail POST 요청 처리하는 메서드
@@ -37,7 +37,7 @@ public class OrderController {
 	    return orderItemDtos;
 	}
 
-	// 상품 상세에서 데이터 받아서 주문 상세 보여주기
+	
 	@GetMapping("/detail")
 	public String checkOrderDetail(HttpSession session, Model model) {
 		
@@ -60,6 +60,7 @@ public class OrderController {
 		return "order/detail";
 	}
 	
+	
 	// 주문 상세에서 결제버튼 누르면 
 	// 실제 주문 들어가는 POST 메서드
 	@PostMapping("/payed")
@@ -74,26 +75,28 @@ public class OrderController {
 		
 	}
 
+
 	// 전체 주문내역보기
 	@GetMapping("/list")
 	public String submitOrder(Model model) {
 		List<Order> orders = orderService.showAllOrders();
 		model.addAttribute("orders", orders);
-		log.info("model={}", model);
+		log.info("model={}",model);
 		return "order/list";
 	}
 
+
 	// 회원의 주문내역보기
-	// @GetMapping("/list/{memberId}")
-	// public void getOrderPage(@PathVariable String memberId, Model model) {
-	// List<Order> orderList = orderService.showOrderList(memberId);
-	// model.addAttribute("orderList", orderList);
-	// }
+//	@GetMapping("/list/{memberId}")
+//	public void getOrderPage(@PathVariable String memberId, Model model) {
+//		List<Order> orderList = orderService.showOrderList(memberId);
+//		model.addAttribute("orderList", orderList);
+//	}
 
 	@GetMapping("/success")
 	public void successOrder() {
 		// 결제 완료 시
-
+		
 	}
-
+	
 }

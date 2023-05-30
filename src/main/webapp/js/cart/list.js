@@ -33,7 +33,8 @@ $(document).ready(function () {
                 memberId: $('#memberId').val(),
                 productId: $('#productId_' + cartItemId).val(),
                 quantity: $('#quantity_' + cartItemId).text(),
-                price: $('#productPrice_' + cartItemId).text()
+                price: $('#productPrice_' + cartItemId).text(),
+                fromCart: true
             };
 
             selectedCartItems.push(cartItem);
@@ -49,7 +50,7 @@ $(document).ready(function () {
             success: function (response) {
                 // Handle the success response
                 console.log(jsonData);
-                 window.location.href = "/order/detail";
+             	window.location.href = "/order/detail";
             },
             error: function (xhr, status, error) {
                 // Handle the error

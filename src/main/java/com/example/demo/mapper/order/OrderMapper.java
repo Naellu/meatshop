@@ -1,16 +1,17 @@
 package com.example.demo.mapper.order;
 
-import com.example.demo.domain.order.Order;
-import com.example.demo.domain.order.OrderItem;
+import java.util.List;
+
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import com.example.demo.domain.Members;
-import com.example.demo.domain.Product;
-
-import java.util.List;
+import com.example.demo.domain.order.Order;
+import com.example.demo.domain.order.OrderItem;
 
 @Mapper
 public interface OrderMapper {
@@ -30,13 +31,6 @@ public interface OrderMapper {
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	Integer saveOrder(Order order);
-
-//	@Insert("""
-//   			INSERT INTO (member_id)
-//   			VALUES (#{memberId})
-//			""")
-//	@Options(useGeneratedKeys = true, keyProperty = "id")
-//	Integer saveOrder(Order order);
 
 	@Select("""
    			SELECT id
@@ -88,5 +82,18 @@ public interface OrderMapper {
    			FROM orders
 			""")
 	List<Order> findAll();
+
+	
+	@Delete("""
+			<script>
+			DELETE FROM cartitems
+			WHERE product_id IN
+			<foreach item='item' index='index' collection='productIds' open='(' separator=',' close=')'>
+				#{item}
+			</foreach>
+			AND cart_id IN (SELECT id FROM carts WHERE member_id = #{memberId})
+			</script>
+			""")
+	void deleteItemsFromCart(@Param("productIds") List<Integer> productIds, @Param("memberId") String memberId);
 
 }

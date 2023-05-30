@@ -48,6 +48,7 @@
 				                        <input type="hidden" id="productId" name="productId" value="${orderItemDto.productId}" />
 					                    <input type="hidden" id="quantity" name="quantity" value="${orderItemDto.quantity }" />
 					                    <input type="hidden" id="price" name="price" value="${orderItemDto.price }" />
+					                    <input type="hidden" id="fromCart" name="fromCart" value="${orderItemDto.fromCart }" />
 				                  	</td>
 					          </tr>
 				          	</c:forEach>
