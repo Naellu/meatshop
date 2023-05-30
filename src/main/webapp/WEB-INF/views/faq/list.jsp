@@ -15,6 +15,9 @@
 	<my:navBar current="faq" />
 
 	<a href="/faq/add">FAQ 작성</a>
+	<a href="/question/list">1:1문의하러 가기</a>
+	
+	<h1>FAQ</h1>
 
 	<button id="product" type="button" class="btn btn-outline-primary">상품관련</button>
 	<button id="order" type="button" class="btn btn-outline-secondary">주문결제</button>
