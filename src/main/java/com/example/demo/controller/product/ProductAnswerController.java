@@ -12,7 +12,7 @@ import com.example.demo.domain.*;
 import com.example.demo.service.product.inquiry.*;
 
 @Controller
-@RequestMapping("product/inquiryAnswer")
+@RequestMapping("product/answer")
 public class ProductAnswerController {
 	
 	@Autowired
@@ -42,36 +42,36 @@ public class ProductAnswerController {
 		return answerService.getAnswer(inquiryId); 
 	}
 	
-	@GetMapping("modify/{inquiryId}")
-	public String modifyForm(@PathVariable("inquiryId") Integer inquiryId, Model model) {
+	@GetMapping("modify")
+	public String modifyForm(Integer inquiryId, Model model) {
 		ProductInquiry productInquiry = inquiryService.getInquiry(inquiryId);
 		ProductAnswer productAnswer = answerService.getAnswer(inquiryId);
 		model.addAttribute("productInquiry", productInquiry);
 		model.addAttribute("productAnswer", productAnswer);
 		
-		return "product/inquiryAnswer/modify";
+		return "product/answer/modify";
 		
 	}
 	
 	
-	@PostMapping("modify/{inquiryId}")
-	public String modifyProcess(
-			@PathVariable("inquiryId") Integer inquiryId,
-			String answer,
-//			@RequestBody 
-			ProductAnswer productAnswer,
-			Integer productId) {
+	@PostMapping("modify")
+	public ResponseEntity<Map<String, Object>> modifyProcess(
+			@RequestBody ProductAnswer productAnswer
+			) {
+		
+		Map<String, Object> res = new HashMap<>();
 		
 		boolean ok = answerService.modifyAnswer(productAnswer);
 		
-		if(ok) {
-			return "redirect:/product/inquiry/list?productId=" + productId;
+		if (ok) {
+			res.put("message", "문의가 수정되었습니다.");
+			return ResponseEntity.ok().body(res);
 		} else {
-			return "redirect:/product/inquiry/list?productId=" + productId;
+			return ResponseEntity.status(403).build();
 		}
 	}
 	
-	@DeleteMapping("inquiryid/{inquiryid}")
+	@DeleteMapping("delete/{inquiryid}")
 	public ResponseEntity<Map<String, Object>>remove(@PathVariable("inquiryid") Integer inquiryid){
 		
 		Map<String, Object> res = answerService.remove(inquiryid);

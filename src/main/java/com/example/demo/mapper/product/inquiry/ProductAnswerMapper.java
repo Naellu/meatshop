@@ -36,7 +36,7 @@ public interface ProductAnswerMapper {
 	@Delete("""
 			DELETE
 			FROM productanswer
-			WHERE inquiry_id = #{inquiryId}
+			WHERE inquiry_id = #{inquiryid}
 			""")
 	int removeAnswerByInquiryId(Integer inquiryid);
 
