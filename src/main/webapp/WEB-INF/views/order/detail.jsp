@@ -28,7 +28,6 @@
 				<%--<form id="orderDetailForm" action="/order/detail" method="post" style="text-align: center;"> --%>
 					
 					<%-- <input type="hidden" name="memberId" value="${member.id}" /> --%>
-					<input type="hidden" name="memberId" value="${orderItemDto.memberId }" />
 
 					<table class="table">
 				        <thead>
@@ -39,17 +38,20 @@
 				            </tr>
 				        </thead>
 				        <tbody>
+			        		<c:forEach var="orderItemDto" varStatus="status" items="${orderItemDtos}">
 					          <tr>
-					              <td>${productName }</td>
+					              <td>${productNames[status.index] }</td>
 					              <td>${orderItemDto.price }</td>
 					              <td>${orderItemDto.quantity }</td>
-					              <td></td>
 				              		<td>
+										<input type="hidden" name="memberId" value="${orderItemDto.memberId }" />
 				                        <input type="hidden" id="productId" name="productId" value="${orderItemDto.productId}" />
 					                    <input type="hidden" id="quantity" name="quantity" value="${orderItemDto.quantity }" />
 					                    <input type="hidden" id="price" name="price" value="${orderItemDto.price }" />
+					                    <input type="hidden" id="fromCart" name="fromCart" value="${orderItemDto.fromCart }" />
 				                  	</td>
 					          </tr>
+				          	</c:forEach>
 				        </tbody>
 				    </table>
 				    

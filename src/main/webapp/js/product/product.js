@@ -26,11 +26,11 @@ $("#orderButton").click(function() {
 	const price = $("#price").val();
 
 	//json형식으로 담기
-	const data = {
+	const data = [{
 		quantity: count,
 		productId: productId,
 		price: price
-	};
+	}];
 
 	$.ajax("/order/detail", {
 		method: "post",
