@@ -42,9 +42,9 @@ public class ProductInquiryAnswerService {
 		int cnt = answerMapper.removeAnswerByInquiryId(inquiryid);
 		
 		if(cnt==1) {
-			res.put("message", "문의가 삭제되었습니다.");
+			res.put("message", "답변이 삭제되었습니다.");
 		} else {
-			res.put("message", "문의가 삭제되지 않았습니다.");
+			res.put("message", "답변이 삭제되지 않았습니다.");
 		}
 		return res;
 	}

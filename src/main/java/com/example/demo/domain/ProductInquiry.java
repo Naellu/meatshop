@@ -2,6 +2,7 @@ package com.example.demo.domain;
 
 import java.sql.*;
 
+
 import lombok.Data;
 
 @Data

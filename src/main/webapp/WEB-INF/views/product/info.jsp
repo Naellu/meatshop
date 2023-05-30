@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +40,9 @@
 </head>
 <body>
 	<my:navBar />
-
+	
+	<sec:authentication property="name" var="userid" />
+	
 	<my:alert />
 
 	<!-- Product section-->
@@ -85,15 +88,14 @@
 
 	<div class="container mt-4">
 		<ul class="nav nav-tabs">
-			<li class="nav-item">
-				<a class="nav-link active" data-toggle="tab" href="#details">상품상세</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" id="productInquiry" data-product-id="${product.productId}" data-customer-id="hoimin" [로그인기능 구현되면 로그인한 ID값 들어갈 곳]>상품문의</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" id="productReview" data-productId="${product.productId}">상품리뷰</a>
-			</li>
+
+			<li class="nav-item"><a class="nav-link active"
+					data-toggle="tab" href="#details">상품상세</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab"
+					id="productInquiry" data-product-id="${product.productId}"
+					data-customer-id="${userid }">상품문의</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab"
+					id="productReview" data-productId="${product.productId}">상품리뷰</a></li>
 		</ul>
 		<div class="tab-content mt-2">
 			<div id="content" class="tab-pane fade show active">여기에 상품상세/상품문의/상품리퓨 표시될 예정</div>

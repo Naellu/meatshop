@@ -21,7 +21,7 @@ public interface ProductInquiryMapper {
 	List<ProductInquiry> showListByProductId(ProductInquiry productInquiry, Integer inquirys);
 
 	@Insert("""
-			INSERT INTO	productinquiry(product_id,customer_name,customer_id,inquiry_title,	inquiry_text)
+			INSERT INTO	productinquiry(product_id,customer_name,customer_id,inquiry_title,inquiry_text)
 			VALUES(#{productId},#{customerName},#{customerId},#{inquiryTitle},#{inquiryText})
 			""")
 	int addInquiry(ProductInquiry productInquiry);

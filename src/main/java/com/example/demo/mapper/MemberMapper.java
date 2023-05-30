@@ -128,4 +128,14 @@ public interface MemberMapper {
 	@ResultMap("memberMap")
 	List<Members> selectMember(String search, String type);
 
+
+	@Select("""
+			SELECT member_name
+			FROM members
+			WHERE
+			id = #{customerId}
+			""")
+	String getCustomerNameById(String customerId);
+	
+
 }
