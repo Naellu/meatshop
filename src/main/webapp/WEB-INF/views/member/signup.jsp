@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%><!-- 태그이용을 위한 링크 -->
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 <!-- spring security 라이브러리를 사용하기위한 태그 -->
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags"%><!-- 내가 만든 태그 -->
 
@@ -18,6 +19,7 @@
 </head>
 <body>
 
+<my:navBar></my:navBar>
 
 	<div class="container-lg">
 		<div class="row justify-content-center">
@@ -27,7 +29,7 @@
 
 
 
-				<h1>회원 가입</h1>
+				<h3>회원 가입</h3>
 				<form method="post">
 					<!-- .mb-3*5>(label.form-label[for]+input.form-control[name]) -->
 					<div class="mb-3">
@@ -62,7 +64,7 @@
 
 
 					<div class="mb-3">
-						<label for="inputaddress" class="form-label">전화번호</label> <input id="inputaddress" type="text" class="form-control" name="phoneNumber" />
+						<label for="inputaddress" class="form-label">전화번호</label> <input id="inputPhoneNumber" type="text" class="form-control" name="phoneNumber" />
 					</div>
 
 					<div class="mb-3">
@@ -98,7 +100,7 @@
 					</div>
 				</div>
 				<div class="mb-3">
-					<input id="signupSubmit" type="submit" class="btn btn-primary" value="가입" />
+					<input id="signupSubmit" type="submit" class="btn btn-primary" value="가입" disabled />
 				</div>
 				</form>
 			</div>
@@ -109,6 +111,6 @@
 	<!-- 부트 스트랩 -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<!--jquery-->
-
+<script src="/js/member/signup.js"></script>
 </body>
 </html>

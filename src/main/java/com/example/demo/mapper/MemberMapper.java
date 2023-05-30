@@ -44,6 +44,17 @@ public interface MemberMapper {
 			""")
 	@ResultMap("memberMap")
 	Members selectId(String id);
+	
+	// ------------------------------------------------------------------------------
+	
+	@Select("""
+			SELECT * FROM members m LEFT JOIN memberauthority ma ON m.id = ma.member_id
+			WHERE member_email = #{email}
+			""")
+	@ResultMap("memberMap")
+	Members selectEmail(String email);
+	
+	// ------------------------------------------------------------------------------
 
 	@Select("""
 			SELECT * FROM members m LEFT JOIN memberauthority ma ON m.id = ma.member_id

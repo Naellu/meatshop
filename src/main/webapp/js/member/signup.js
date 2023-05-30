@@ -1,93 +1,44 @@
-let checkId = false;
-let checkEmail = false;
-let checkNickName = false;
-let checkPassword = false;
-
-function enableSubmit() {
-	if (checkId && checkEmail && checkNickName && checkPassword) {
-		$("#signupSubmit").removeAttr("disabled");
-	} else {
-		$("#signupSubmit").attr("disabled", "");
+/*	let checkId = false;
+	let checkEmail = false;
+	let checkPhoneNumber = false;
+	let checkPassword = false;
+	
+	function enableSubmit() {
+		if (checkId && checkEmail && checkPhoneNumber && checkPassword) {
+			$("#signupSubmit").removeAttr("disabled");
+		} else {
+			$("#signupSubmit").attr("disabled", "");
+		}
 	}
-}
+*/
 
-// input 아이디에 키보드 입력 발생시
-$("#inputId").keyup(function() {
-	// 아이디 중복확인 다시
-	checkId = false;
-	$("#availableIdMessage").addClass("d-none")
-	$("#notAvailableIdMessage").addClass("d-none")
+/*
+
+아이디, 이름, 이메일,전화번호,비밀번호,주소 입력해야함
+아이디,이메일은 중복 불가능해야함
+
+비밀번호 재확인 만들기
+
+
+*/
+let checkId = false;
+	let checkName = false;
+	let checkEmail = false;
+	let checkPhoneNumber = false;
+	let checkPassword = false;
+	let checkAddress = false;
 	
-	// submit 버튼 비활성화
-	enableSubmit();
-});
-
-// nickName 인풋에 키보드 입력 발생시
-$("#inputNickName").keyup(function() {
-	// 별명 중복확인 다시
-	checkNickName = false;
-	$("#availableNickNameMessage").addClass("d-none")
-	$("#notAvailableNickNameMessage").addClass("d-none")
-	
-	// submit 버튼 비활성화
-	enableSubmit();
-})
-
-// email 인풋에 키보드 입력 발생시
-$("#inputEmail").keyup(function() {
-	// 이메일 중복확인 다시
-	checkEmail = false;
-	$("#availableEmailMessage").addClass("d-none")
-	$("#notAvailableEmailMessage").addClass("d-none")
-	
-	// submit 버튼 비활성화
-	enableSubmit();
-})
+function enableSubmit() {
+		if (checkId & checkAddress & checkName & checkPassword & checkPhoneNumber & checkEmail) {
+			$("#signupSubmit").removeAttr("disabled");
+		} else {
+			$("#signupSubmit").attr("disabled", "");
+		}
+	}
 
 
-// 이메일 중복확인 버튼이 클릭되면
-$("#checkEmailBtn").click(function() {
-	const email = $("#inputEmail").val();
-	$.ajax("/member/checkEmail/" + email, {
-		success: function(data) {
-			
-			if (data.available) {
-				$("#availableEmailMessage").removeClass("d-none");
-				$("#notAvailableEmailMessage").addClass("d-none");
-				checkEmail = true;
-			} else {
-				$("#availableEmailMessage").addClass("d-none");
-				$("#notAvailableEmailMessage").removeClass("d-none");
-				checkEmail = false;
-			}
-		},
-		complete: enableSubmit
-	});
-});
 
-// 별명 중복확인 버튼이 클릭되면
-$("#checkNickNameBtn").click(function() {
-	const nickName = $("#inputNickName").val();
-	
-	$.ajax("/member/checkNickName/" + nickName, {
-		success: function(data) {
-			`{"available": true}`
-
-			if (data.available) {
-				$("#availableNickNameMessage").removeClass("d-none");
-				$("#notAvailableNickNameMessage").addClass("d-none");
-				checkNickName = true;
-			} else {
-				$("#availableNickNameMessage").addClass("d-none");
-				$("#notAvailableNickNameMessage").removeClass("d-none");
-				checkNickName = false;
-			}
-		},
-		complete: enableSubmit
-	});
-});
-
-// id 중복확인 버튼이 클릭되면
+//---------------------- 아이디 중복 체크 버튼 관련 스크립트 ----------------------
 $("#checkIdBtn").click(function() {
 	const userid = $("#inputId").val();	
 	// 입력한 ID와 ajax 요청 보내서
@@ -111,8 +62,110 @@ $("#checkIdBtn").click(function() {
 	})
 });
 
+	
+	$("#inputId").keyup(function() {
+	// 아이디 입력란에 새로운 입력이 들어 왔을시 
+	checkId = false;
+	$("#availableIdMessage").addClass("d-none")
+	$("#notAvailableIdMessage").addClass("d-none")
+	
+	// submit 버튼 비활성화
+	enableSubmit();
+});
 
-// 패스워드, 패스워드체크 인풋에 키업 이벤트 발생하면
+//---------------------- 아이디 중복 확인 관련 스크립트 끝 ----------------------
+//---------------------- 이메일 중복 확인 관련 스크립트 시작 ----------------------
+
+$("#checkEmailBtn").click(function() {
+	const useremail = $("#inputEmail").val();	
+	// 입력한 Email을 ajax 요청 보내서
+	$.ajax("/member/checkEmail/" + useremail, {
+		success: function(data) {
+			// `{"available": true}` 
+			
+			if (data.available) {
+				// 사용가능하다는 메세지 출력
+				$("#availableEmailMessage").removeClass("d-none");
+				$("#notAvailableEmailMessage").addClass("d-none");
+				checkEmail = true;
+			} else {
+				// 사용가능하지 않다는 메세지 출력
+				$("#availableEmailMessage").addClass("d-none");
+				$("#notAvailableEmailMessage").removeClass("d-none");
+				checkEmail= false;
+			}
+		},
+		complete: enableSubmit
+	})
+});
+//---------------------- 이메일 중복 확인 관련 스크립트 끝 ----------------------
+	
+
+
+
+
+// --------------------  주소칸 반드시 입력해야하는 스크립트 시작 -------
+
+	$("#inputAddress").keyup(function() {
+		// 주소 중복확인 다시
+		checkAddress = false;
+		const ad = $("#inputAddress").val();
+		if(ad != ""){
+			checkAddress = true;
+		}
+		
+		
+		
+		
+		
+		
+		// submit 버튼 비활성화
+		enableSubmit();
+	
+	});
+// --------------------  주소칸 반드시 입력해야하는 스크립트 끝-------
+
+
+	$("#inputName").keyup(function() {
+		// 주소 입력란에 새로운 입력이 들어왔을시
+		checkName = false;
+		const na = $("#inputName").val();
+		if(na != ""){
+			checkName = true;
+		}
+		
+			enableSubmit();
+		});
+		
+		
+		
+		
+				$("#inputPhoneNumber").keyup(function() {
+		// 전화번호 재입력시 
+		checkPhoneNumber = false;
+		const pn = $("#inputPhoneNumber").val();
+		if(pn != ""){
+			checkPhoneNumber= true;
+		}
+		
+			enableSubmit();
+		});
+		
+		
+		
+			$("#inputEmail").keyup(function() {
+	// 이메일 입력란에 새로운 입력이 들어 왔을시 
+	checkEmail = false;
+	$("#availableEmailMessage").addClass("d-none")
+	$("#notAvailableEmailMessage").addClass("d-none")
+	
+	// submit 버튼 비활성화
+	enableSubmit();
+});
+
+
+// 확인할 것
+
 $("#inputPassword, #inputPasswordCheck").keyup(function() {
 	// 패스워드에 입력한 값
 	const pw1 = $("#inputPassword").val();

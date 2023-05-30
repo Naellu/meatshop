@@ -96,5 +96,17 @@ public class MemberService {
 		return Map.of("memberlist", list);
 	}
 
+	public Map<String,Object> checkId(String id) {
+	Members member = mapper.selectId(id);
+		
+	return Map.of("available",member == null);
+	}
+	
+	public Map<String,Object> checkEmail(String id) {
+		Members member = mapper.selectEmail(id);
+			
+		return Map.of("available",member == null);
+		}
+
 	}
 
