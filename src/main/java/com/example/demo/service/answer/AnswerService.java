@@ -1,0 +1,68 @@
+package com.example.demo.service.answer;
+
+import java.util.*;
+
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.security.core.*;
+import org.springframework.stereotype.*;
+
+import com.example.demo.domain.answer.*;
+import com.example.demo.mapper.answer.*;
+
+@Service
+public class AnswerService {
+
+	@Autowired
+	private AnswerMapper mapper;
+	
+	public List<Answer> list(Integer questionId) {
+		List<Answer> answers = mapper.selectAllByQuestionId(questionId);
+		return answers;
+	}
+
+	public Map<String, Object> add(Answer answer) {
+		
+		var res = new HashMap<String, Object>();
+		
+		int cnt = mapper.insert(answer);
+		if (cnt == 1) {
+			res.put("message", "답변이 등록되었습니다.");
+		} else {
+			res.put("message", "답변이 등록되지 않았습니다.");
+		}
+		
+		return res;
+	}
+
+	public Answer get(Integer id) {
+
+		return mapper.selectById(id);
+	}
+
+	public Map<String, Object> update(Answer answer) {
+		var res = new HashMap<String, Object>();
+		
+		int cnt = mapper.update(answer);
+		if (cnt == 1) {
+			res.put("message", "댓글이 수정되었습니다.");
+		} else {
+			res.put("message", "댓글이 수정되지 않았습니다.");
+		}
+		
+		return null;
+	}
+
+	public Map<String, Object> remove(Integer id) {
+		var res = new HashMap<String, Object>();
+		
+		int cnt = mapper.deleteById(id);
+		if (cnt == 1) {
+			res.put("message", "댓글이 삭제되었습니다.");
+		} else {
+			res.put("message", "댓글이 삭제되지 않았습니다.");
+		}
+		
+		return res;
+	}
+
+}
