@@ -61,6 +61,15 @@
 	<!-- <select id="selectFileNamesByProductId" resultType="ArrayList"> SELECT 
 		file_name FROM productfilename WHERE product_id = #{productId} </select> -->
 
+	<select id="selectFileNamesByProductId" resultType="String"
+		parameterType="java.lang.Integer">
+		SELECT file_name
+		FROM
+		productfilename
+		WHERE product_id =
+		#{productId}
+	</select>
+
 	<!-- 상품id로 파일 삭제 -->
 	<delete id="deleteFileNameByProductId">
 		DELETE FROM productfilename
@@ -168,11 +177,18 @@
 		UPDATE productview
 		SET pub =
 		CASE
-		WHEN product_id IN
-		<foreach collection="openIds" item="oid" open="(" close=")"
-			separator=",">
-			#{oid}
-		</foreach>
+		<choose>
+			<when test="openIds != null and openIds.size() > 0">
+				WHEN product_id IN
+				<foreach collection="openIds" item="oid" open="(" close=")"
+					separator=",">
+					#{oid}
+				</foreach>
+			</when>
+			<otherwise>
+				WHEN 0
+			</otherwise>
+		</choose>
 		THEN 1
 		ELSE 0
 		END
@@ -190,7 +206,8 @@
 		SELECT * FROM (SELECT * FROM productview WHERE pub = 1) p
 		<where>
 			<if test="type eq 'all' and categoryId != null">
-				(product_name LIKE #{pattern} OR country_of_origin LIKE #{pattern})
+				(product_name LIKE #{pattern} OR country_of_origin LIKE
+				#{pattern})
 			</if>
 			<if test="type eq 'productName'">
 				OR product_name LIKE #{pattern}
@@ -218,10 +235,12 @@
 	<select id="countCustomerAll" resultType="Integer">
 		<bind name="pattern" value="'%' + search + '%'" />
 		SELECT
-		count(product_id) FROM (SELECT * FROM productview WHERE pub = 1) p
+		count(product_id) FROM (SELECT * FROM productview WHERE pub = 1)
+		p
 		<where>
 			<if test="type eq 'all' and categoryId != null">
-				(product_name LIKE #{pattern} OR country_of_origin LIKE #{pattern})
+				(product_name LIKE #{pattern} OR country_of_origin LIKE
+				#{pattern})
 			</if>
 			<if test="type eq 'productName'">
 				OR product_name LIKE #{pattern}

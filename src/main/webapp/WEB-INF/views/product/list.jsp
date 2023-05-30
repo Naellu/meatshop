@@ -27,20 +27,21 @@
 						<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
-						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-tabs nav-pills">
 							<li class="nav-item ms-5">
-								<a id="allLink" class="nav-link" href="">전체</a>
+								<a id="allLink" class="nav-link ${empty param.category ? 'active text-white' : '' }">전체</a>
 							</li>
 							<li class="nav-item">
-								<a id="beefLink" class="nav-link" href="">소고기</a>
+								<a id="beefLink" class="nav-link ${param.category eq 1 ? 'active text-white' : '' }">소고기</a>
 							</li>
 							<li class="nav-item">
-								<a id="porkLink" class="nav-link" href="">돼지고기</a>
+								<a id="porkLink" class="nav-link ${param.category eq 2 ? 'active text-white' : '' }">돼지고기</a>
 							</li>
 							<li class="nav-item">
-								<a id="chickenLink" class="nav-link" href="">닭고기</a>
+								<a id="chickenLink" class="nav-link ${param.category eq 3 ? 'active text-white' : '' }">닭고기</a>
 							</li>
 						</ul>
+
 						<div>
 							<form id="form1" action="/product/list" class="d-flex" role="search">
 								<div class="input-group">
@@ -83,12 +84,16 @@
 									<br />
 									${product.price}원
 									<br />
+									남은수량 : ${product.stockQuantity}
+									<span class="badge text-bg-danger ${product.stockQuantity eq 0 ? '' : 'd-none'}">품절</span>
 								</div>
 							</div>
 							<!-- Product actions-->
 							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 								<div class="text-center">
-									<a class="btn btn-outline-dark mt-auto" href="/product/info/${product.productId}">상품 상세 보기</a>
+									<button onclick="location.href='/product/info/${product.productId}'" class="btn btn-secondary mt-auto" ${product.stockQuantity eq 0 ? 'disabled' : ''}>
+										상품 상세 보기
+									</button>
 								</div>
 							</div>
 						</div>

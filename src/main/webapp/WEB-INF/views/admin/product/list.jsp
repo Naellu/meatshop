@@ -85,7 +85,7 @@
 					<th>재고</th>
 					<th>카테고리</th>
 					<th>가격</th>
-					<th>공개</th>
+					<th><input type="checkbox" id="allCheck"/>공개</th>
 					<th>상세페이지</th>
 				</tr>
 			</thead>
@@ -119,7 +119,8 @@
 	<div class="container-lg">
 		<div class="row">
 			<div class="d-flex justify-content-end">
-				<input id="pubBtn" type="button" class="btn btn-primary" name="cmd" value="일괄공개">
+				<input id="pubBtn" type="button" class="btn btn-primary me-3" name="cmd" value="일괄공개">
+				<a class="btn btn-secondary"  href="/admin/product/list">검색취소</a>
 			</div>
 		</div>
 	</div>

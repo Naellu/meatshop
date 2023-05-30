@@ -35,7 +35,8 @@ public class ProductServiceImpl implements ProductService {
 
 	// 상품목록
 	@Override
-	public Map<String, Object> getViewList(Integer page, String type, String search, Integer stockQuantity, String pub) {
+	public Map<String, Object> getViewList(Integer page, String type, String search, Integer stockQuantity,
+			String pub) {
 		// 0~10 10~20 20~30
 		Integer pageSize = 10; // 10 20 30 인데 mariadb 10씩
 		Integer startIndex = (page - 1) * pageSize; // 0 10 20
@@ -73,7 +74,8 @@ public class ProductServiceImpl implements ProductService {
 		pageInfo.put("prevPageNumber", prevPageNumber);
 		pageInfo.put("nextPageNumber", nextPageNumber);
 
-		List<ProductView> productList = productMapper.selectAllPaging(startIndex, pageSize, type, search, stockQuantity, pub);
+		List<ProductView> productList = productMapper.selectAllPaging(startIndex, pageSize, type, search, stockQuantity,
+				pub);
 		return Map.of("pageInfo", pageInfo, "productList", productList);
 	}
 
@@ -182,16 +184,14 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public boolean pubProductAll(PubRequest pub) {
-		
-		//공개할 목록들을 리스트로
+
+		// 공개할 목록들을 리스트로
 		List<String> openIds = pub.getOpenIds();
-		
-		//전체 아이디들을 배열로
+
+		// 전체 아이디들을 배열로
 		List<String> ids = pub.getIds();
-		
+
 		Integer cnt = productMapper.changeProductPub(openIds, ids);
 		return cnt != 0;
-		
 	}
-
 }

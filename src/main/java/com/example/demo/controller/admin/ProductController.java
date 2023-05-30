@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import lombok.*;
 @Controller("adminProductController")
 @RequestMapping("/admin/product/")
 @RequiredArgsConstructor
+@PreAuthorize("hasAuthority('admin')")
 public class ProductController {
 
 	private final ProductService productService;
@@ -51,6 +53,7 @@ public class ProductController {
 
 	// 상품 상세 페이지
 	@GetMapping("detail/{id}")
+	//@PreAuthorize("hasAuthority('admin')")
 	public String detail(Model model, @PathVariable("id") Integer id) {
 		ProductView product = productService.getOneView(id);
 		model.addAttribute("product", product);

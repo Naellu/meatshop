@@ -26,9 +26,6 @@ public interface ProductMapper {
 	public void insertFileName(Integer productId, String originalFilename);
 
 	// 상품아이디로 파일 검색
-	@Select("""
-			SELECT file_name FROM productfilename WHERE product_id = #{productId}
-			""")
 	public List<String> selectFileNamesByProductId(Integer productId);
 
 	// 상품아이디로 파일 삭제
