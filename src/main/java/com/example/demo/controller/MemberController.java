@@ -8,9 +8,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.domain.Members;
@@ -18,6 +20,7 @@ import com.example.demo.service.MemberService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.websocket.server.PathParam;
 
 @Controller
 @RequestMapping("member")
@@ -142,4 +145,23 @@ public class MemberController {
 			
 		}
 	}
+	
+	@GetMapping("checkId/{userid}")
+	@ResponseBody // 객체를 json으로 넘겨줌
+	public Map<String,Object> checkId( @PathVariable("userid") String id) {
+		
+		System.out.println(id);
+		
+		return service.checkId(id);
+	}
+	
+	@GetMapping("checkEmail/{useremail}")
+	@ResponseBody // 객체를 json으로 넘겨줌
+	public Map<String,Object> checkemail( @PathVariable("useremail") String id) {
+		
+		System.out.println(id);
+		
+		return service.checkEmail(id);
+	}
+	
 }
