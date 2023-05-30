@@ -2,6 +2,7 @@ package com.example.demo.controller.customer;
 
 import java.util.*;
 
+import org.springframework.security.access.prepost.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,7 @@ public class ProductController {
 
 	// 상품 정보 페이지
 	@GetMapping("info/{id}")
+	//@PreAuthorize("isAuthenticated() and hasAuthority('admin')")
 	public String detail(Model model, @PathVariable("id") Integer id) {
 		ProductView product = productService.getOneView(id);
 		model.addAttribute("product", product);

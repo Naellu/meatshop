@@ -33,3 +33,20 @@ $('#pubBtn').click(function() {
 		}
 	});
 })
+
+//체크박스 전체 누르기
+$("#allCheck").change(function() {
+	var isChecked = $(this).is(":checked");
+
+	//openIds에 true면 checked추가 아니면 없애기
+	$("input[name='openIds']").prop("checked", isChecked);
+});
+
+// 체크박스 해제
+$("input[name='openIds']").change(function() {
+	var totalOpenIds = $("input[name='openIds']").length;
+	var checkedOpenIds = $("input[name='openIds']:checked").length;
+
+	//전체 박스개수와 체크된박스수를 비교 allCheck에 true면 checked추가 아니면 없애기
+	$("#allCheck").prop("checked", totalOpenIds === checkedOpenIds);
+});
