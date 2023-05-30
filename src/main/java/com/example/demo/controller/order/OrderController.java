@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -29,61 +30,48 @@ public class OrderController {
 	// 상품 상세에서 order/detail POST 요청 처리하는 메서드
 	@PostMapping("/detail")
 	@ResponseBody
-	public OrderItemDto initOrderUseJSON(@RequestBody OrderItemDto orderItemDto, HttpSession session) {
-
-		// JSON 데이터 세션에 저장
-		session.setAttribute("orderItemDto", orderItemDto);
-
-		// OrderItemDto를 GET 메서드에 반환해줘야함
-		return orderItemDto;
+	public List<OrderItemDto> initOrderUseJSON(@RequestBody List<OrderItemDto> orderItemDtos, HttpSession session) {
+	    // JSON 데이터 세션에 저장
+	    session.setAttribute("orderItemDtos", orderItemDtos);
+	    // OrderItemDto의 리스트를 GET 메서드에 반환해줘야함
+	    return orderItemDtos;
 	}
 
 	// 상품 상세에서 데이터 받아서 주문 상세 보여주기
 	@GetMapping("/detail")
 	public String checkOrderDetail(HttpSession session, Model model) {
-		log.info("GET detail");
+		
+		List<OrderItemDto> orderItemDtos = (List<OrderItemDto>) session.getAttribute("orderItemDtos");
+		List<String> ProductNames = new ArrayList();
+		
+		for(OrderItemDto orderItemDto : orderItemDtos) {
+			Integer productId = orderItemDto.getProductId();
+			
+			String memberId = "user22"; // 임시 회원id
+			orderItemDto.setMemberId(memberId);
 
-		OrderItemDto orderItemDto = (OrderItemDto) session.getAttribute("orderItemDto");
-		log.info("orderItemDto={}", orderItemDto);
-
-		Integer productId = orderItemDto.getProductId();
-
-		String memberId = "user22"; // 임시 회원id
-		orderItemDto.setMemberId(memberId);
-		log.info("orderItemDto={}", orderItemDto);
-		log.info("productId in orderItemDto={}", productId);
-
-		String productName = orderService.findOneOfProduct(productId);
-		// log.info("order detail product={}",product);
-		log.info("GET order/detail product_name={}", productName);
-
-		// model.addAttribute("product", product);
-		model.addAttribute("productName", productName);
-		model.addAttribute("orderItemDto", orderItemDto);
-		// model.addAttribute("memberId", orderItemDto.getMemberId());
-		// model.addAttribute("quantity", orderItemDto.getQuantity());
-
-		log.info("model={}", model);
-
+			String productName = orderService.findOneOfProduct(productId);
+			ProductNames.add(productName);
+		}
+		
+		model.addAttribute("productNames", ProductNames);
+		model.addAttribute("orderItemDtos", orderItemDtos);
+		
 		return "order/detail";
 	}
-
-	// 주문 상세에서 결제버튼 누르면
+	
+	// 주문 상세에서 결제버튼 누르면 
 	// 실제 주문 들어가는 POST 메서드
 	@PostMapping("/payed")
-	public ResponseEntity payedOrder(@RequestBody OrderItemDto orderItemDto) {
-		log.info("POST detail");
-
+	public ResponseEntity payedOrder(@RequestBody List<OrderItemDto> orderItemDtos) {
+		
 		String memberId = "user22"; // Authentication으로 받아와야 하는 회원id
 		// String memberId = authentication.getName();
-		log.info("memberId={}", memberId);
-		// 단일 주문 생성
-		int orderId = orderService.makeOrderOfSingleProduct(memberId, orderItemDto.getProductId(),
-				orderItemDto.getQuantity(), orderItemDto.getPrice());
-		log.info("order id = {}", orderId);
-
+		
+		int orderId = orderService.makeOrderOfMultipleProduct(memberId, orderItemDtos);
+		
 		return ResponseEntity.ok(orderId);
-
+		
 	}
 
 	// 전체 주문내역보기

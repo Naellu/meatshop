@@ -3,6 +3,7 @@ package com.example.demo.service.order;
 import com.example.demo.domain.Product;
 import com.example.demo.domain.order.Order;
 import com.example.demo.domain.order.OrderItem;
+import com.example.demo.domain.order.dto.OrderItemDto;
 import com.example.demo.mapper.order.OrderMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,29 +39,26 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public int makeOrderOfMultipleProduct(String memberId, List<Integer> productIdList, List<Integer> quantities) {
-
+	public int makeOrderOfMultipleProduct(String memberId, List<OrderItemDto> orderItemDtos) {
 		List<OrderItem> orderItems = new ArrayList<>();
-		for (int i = 0; i < productIdList.size(); i++) {
-			int productId = productIdList.get(i);
-			int quantity = quantities.get(i);
-
-			double price = orderMapper.findPrice(productId);
-			int orderPrice = (int) price;
-
-			OrderItem orderItem = OrderItem.createOrderItem(productId, orderPrice, quantity);
+		
+		for(OrderItemDto orderItemDto : orderItemDtos) {
+			OrderItem orderItem = OrderItem.createOrderItem(
+					orderItemDto.getProductId(), 
+					orderItemDto.getPrice().intValue(),
+					orderItemDto.getQuantity());
 			orderItems.add(orderItem);
 		}
-
+		
+		
 		Order order = Order.createOrder(memberId, orderItems);
-
 		orderMapper.saveOrder(order);
-
-		for (OrderItem orderItem : order.getOrderItems()) {
+		
+		for (OrderItem orderItem : orderItems) {
 			orderItem.setOrderId(order.getId());
 			orderMapper.saveOrderItems(orderItem);
 		}
-
+		
 		return order.getId();
 	}
 
@@ -92,6 +90,8 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		//  주문 취소
 	}
+
+	
 	
 	
 

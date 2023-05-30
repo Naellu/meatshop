@@ -35,14 +35,17 @@
                         <c:forEach var="cartItem" items="${cartItems}">
                             <tr>
                                 <td><input type="checkbox" class="item-check" value="${cartItem.id}"></td>
-                                <td>${cartItem.productName}</td>
-                                <td>${cartItem.quantity}</td>
-                                <td>${cartItem.productPrice}</td>
+                                <td id="productName_${cartItem.id}">${cartItem.productName}</td>
+			                    <td id="quantity_${cartItem.id}">${cartItem.quantity}</td>
+			                    <td id="productPrice_${cartItem.id}">${cartItem.productPrice}</td>
                                 <td><button type="button" class="btn btn-danger btn-delete" value="${cartItem.id}">삭제(구현X)</button></td>
                             </tr>
+			                    <input type="hidden" id="productId_${cartItem.id}" value="${cartItem.productId }"/>
                         </c:forEach>
+			                    <input type="hidden" name="memberId" id="memberId" value="${memberId }"/>
                     </tbody>
                 </table>
+            <button id="orderButton" class="btn btn-primary">주문하러가기</button>
             </div>
         </div>
     </div>

@@ -2,8 +2,8 @@ package com.example.demo.service.order;
 
 import java.util.List;
 
-import com.example.demo.domain.Product;
 import com.example.demo.domain.order.Order;
+import com.example.demo.domain.order.dto.OrderItemDto;
 
 public interface OrderService {
 
@@ -11,7 +11,7 @@ public interface OrderService {
 	int makeOrderOfSingleProduct(String memberId, Integer productId, int quantity, Double price);
 
 	// 여러 상품 주문
-	int makeOrderOfMultipleProduct(String memberId, List<Integer> productId, List<Integer> quantity);
+	int makeOrderOfMultipleProduct(String memberId, List<OrderItemDto> orderItemDtos);
 
 	// 회원 주문목록
 	List<Order> showOrderList(String memberId);

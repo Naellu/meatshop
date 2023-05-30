@@ -55,6 +55,7 @@ public class CartController {
 
 		// List<CartItem>을 뷰에 전달
 		model.addAttribute("cartItems", cartItems);
+		model.addAttribute("memberId", memberId);
 
 		return "cart/list";
 	}
