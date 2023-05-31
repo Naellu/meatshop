@@ -15,10 +15,11 @@ public interface ProductInquiryMapper {
 			WHERE product_id = #{productInquiry.productId}
 			ORDER BY
 			inquiry_id DESC
-			LIMIT 10
+			LIMIT 
+			#{startIndex}, 10
 			""")
 	@ResultMap("showListByProductId")
-	List<ProductInquiry> showListByProductId(ProductInquiry productInquiry, Integer inquirys);
+	List<ProductInquiry> showListByProductId(ProductInquiry productInquiry, Integer startIndex);
 
 	@Insert("""
 			INSERT INTO	productinquiry(product_id,customer_name,customer_id,inquiry_title,inquiry_text)
@@ -51,6 +52,18 @@ public interface ProductInquiryMapper {
 			inquiry_id = #{inquiryId}
 			""")
 	int modifyInquiry(ProductInquiry productInquiry);
+
+	@Select("""
+			<script>
+			SELECT COUNT(*) FROM productinquiry
+			WHERE 
+				product_id = #{productId}
+			<if test="customerId != 'anonymousUser'">
+				AND customer_id = #{customerId}
+			</if> 
+			</script>
+			""")
+	Integer size(ProductInquiry productInquiry);
 
 
 }
