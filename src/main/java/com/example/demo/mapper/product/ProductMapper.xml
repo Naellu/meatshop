@@ -205,7 +205,7 @@
 		<bind name="pattern" value="'%' + search + '%'" />
 		SELECT * FROM (SELECT * FROM productview WHERE pub = 1) p
 		<where>
-			<if test="type eq 'all' and categoryId != null">
+			<if test="type eq 'all'">
 				(product_name LIKE #{pattern} OR country_of_origin LIKE
 				#{pattern})
 			</if>
@@ -238,7 +238,7 @@
 		count(product_id) FROM (SELECT * FROM productview WHERE pub = 1)
 		p
 		<where>
-			<if test="type eq 'all' and categoryId != null">
+			<if test="type eq 'all'">
 				(product_name LIKE #{pattern} OR country_of_origin LIKE
 				#{pattern})
 			</if>

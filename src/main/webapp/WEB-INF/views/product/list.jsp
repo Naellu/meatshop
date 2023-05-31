@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<title>커스터머 상품목록</title>
+<title>상품목록</title>
 </head>
 <body>
 	<my:navBar />
@@ -17,6 +17,7 @@
 
 	<my:header>
 		상 품 목 록
+		<input type="hidden" id="bucketUrl" value="${bucketUrl}" />
 	</my:header>
 
 	<section class="py-5">
@@ -42,7 +43,7 @@
 							</li>
 						</ul>
 
-						<div>
+						<div class="d-flex">
 							<form id="form1" action="/product/list" class="d-flex" role="search">
 								<div class="input-group">
 									<select class="form-select flex-grow-0" style="width: 120px;" name="type">
@@ -59,6 +60,13 @@
 									</button>
 								</div>
 							</form>
+							<c:if test="${not empty param}">
+								<div class="ms-3">
+									<button class="btn btn-outline-danger" type="button" id="cancelSearchButton">
+										<i class="fa-solid fa-x"></i>
+									</button>
+								</div>
+							</c:if>
 						</div>
 					</div>
 				</div>
@@ -91,9 +99,7 @@
 							<!-- Product actions-->
 							<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 								<div class="text-center">
-									<button onclick="location.href='/product/info/${product.productId}'" class="btn btn-secondary mt-auto" ${product.stockQuantity eq 0 ? 'disabled' : ''}>
-										상품 상세 보기
-									</button>
+									<button onclick="location.href='/product/info/${product.productId}'" class="btn btn-secondary mt-auto" ${product.stockQuantity eq 0 ? 'disabled' : ''}>상품 상세 보기</button>
 								</div>
 							</div>
 						</div>
@@ -104,7 +110,6 @@
 					</c:if>
 				</c:forEach>
 			</div>
-
 			<nav aria-label="Page navigation example">
 				<ul class="pagination justify-content-center">
 					<c:if test="${pageInfo.currentPageNumber ne 1}">
@@ -185,7 +190,7 @@
 						</li>
 					</c:if>
 
-					<c:if test="${pageInfo.currentPageNumber ne pageInfo.lastPageNumber}">
+					<c:if test="${pageInfo.currentPagjqeNumber ne pageInfo.lastPageNumber}">
 						<li class="page-item">
 							<c:url value="/product/list" var="pageLink">
 								<c:param name="page" value="${pageInfo.lastPageNumber}" />
@@ -209,6 +214,18 @@
 		</div>
 	</section>
 
+	<hr />
+	<hr />
+	<!-- 연구할 부분 -->
+	<div>
+		<div class="container px-4 px-lg-5 mt-5">
+			<div id="productView" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"></div>
+		</div>
+		<nav id="productNav" aria-label="Page navigation example">
+			<ul class="pagination justify-content-center">
+			</ul>
+		</nav>
+	</div>
 
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
