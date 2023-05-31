@@ -21,13 +21,10 @@ public class ProductController {
 
 	// 상품 목록 페이지
 	@GetMapping("list")
-	public String list(Model model,
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
-			@RequestParam(value = "category", required = false) Integer categoryId,
-			@RequestParam(value = "type", required = false) String type,
-			@RequestParam(value = "search", defaultValue = "") String search) {
-		Map<String, Object> result = productService.getViewList(page, categoryId, type, search);
-		model.addAllAttributes(result);
+	public String list() {
+		// Map<String, Object> result = productService.getViewList(page, categoryId,
+		// type, search);
+		// model.addAllAttributes(result);
 		return "product/list";
 	}
 
@@ -38,7 +35,7 @@ public class ProductController {
 			@RequestParam(value = "category", required = false) Integer categoryId,
 			@RequestParam(value = "type", required = false) String type,
 			@RequestParam(value = "search", defaultValue = "") String search) {
-		
+
 		Map<String, Object> result = productService.getViewList(page, categoryId, type, search);
 		return ResponseEntity.ok(result);
 	}
