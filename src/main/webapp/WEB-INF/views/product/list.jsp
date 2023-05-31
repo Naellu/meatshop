@@ -72,6 +72,76 @@
 				</div>
 			</nav>
 		</div>
+		<div>
+			<div class="container px-4 px-lg-5 mt-5">
+				<div id="productView" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"></div>
+			</div>
+			<nav aria-label="Page navigation example">
+				<ul id="pageUl" class="pagination justify-content-center">
+				</ul>
+			</nav>
+		</div>
+	</section>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="/js/product/list.js"></script>
+</body>
+</html>
+
+<%-- 
+	<section class="py-5">
+		<div class="container-lg">
+			<nav class="navbar navbar-expand-lg bg-body-white">
+				<div class="container-fluid bg-white">
+					<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navbarSupportedContent">
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0 nav-tabs nav-pills">
+							<li class="nav-item ms-5">
+								<a id="allLink" class="nav-link ${empty param.category ? 'active text-white' : '' }">전체</a>
+							</li>
+							<li class="nav-item">
+								<a id="beefLink" class="nav-link ${param.category eq 1 ? 'active text-white' : '' }">소고기</a>
+							</li>
+							<li class="nav-item">
+								<a id="porkLink" class="nav-link ${param.category eq 2 ? 'active text-white' : '' }">돼지고기</a>
+							</li>
+							<li class="nav-item">
+								<a id="chickenLink" class="nav-link ${param.category eq 3 ? 'active text-white' : '' }">닭고기</a>
+							</li>
+						</ul>
+
+						<div class="d-flex">
+							<form id="form1" action="/product/list" class="d-flex" role="search">
+								<div class="input-group">
+									<select class="form-select flex-grow-0" style="width: 120px;" name="type">
+										<option value="all">전체</option>
+										<option value="productName" ${param.type eq 'productName' ? 'selected' : ''}>상품명</option>
+										<option value="countryOfOrigin" ${param.type eq 'countryOfOrigin' ? 'selected' : ''}>원산지</option>
+									</select>
+									<c:if test="${not empty param.category}">
+										<input type="hidden" name="category" value="${param.category}">
+									</c:if>
+									<input name="search" class="form-control" type="search" placeholder="Search" aria-label="Search" value="${param.search }">
+									<button class="btn btn-outline-success" type="submit">
+										<i class="fa-solid fa-magnifying-glass"></i>
+									</button>
+								</div>
+							</form>
+							<c:if test="${not empty param}">
+								<div class="ms-3">
+									<button class="btn btn-outline-danger" type="button" id="cancelSearchButton">
+										<i class="fa-solid fa-x"></i>
+									</button>
+								</div>
+							</c:if>
+						</div>
+					</div>
+				</div>
+			</nav>
+		</div>
 		<div class="container px-4 px-lg-5 mt-5">
 			<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 				<c:forEach items="${productList}" var="product" varStatus="status">
@@ -190,7 +260,7 @@
 						</li>
 					</c:if>
 
-					<c:if test="${pageInfo.currentPagjqeNumber ne pageInfo.lastPageNumber}">
+					<c:if test="${pageInfo.currentPageNumber ne pageInfo.lastPageNumber}">
 						<li class="page-item">
 							<c:url value="/product/list" var="pageLink">
 								<c:param name="page" value="${pageInfo.lastPageNumber}" />
@@ -212,25 +282,4 @@
 				</ul>
 			</nav>
 		</div>
-	</section>
-
-	<hr />
-	<hr />
-	<!-- 연구할 부분 -->
-	<div>
-		<div class="container px-4 px-lg-5 mt-5">
-			<div id="productView" class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"></div>
-		</div>
-		<nav id="productNav" aria-label="Page navigation example">
-			<ul class="pagination justify-content-center">
-			</ul>
-		</nav>
-	</div>
-
-
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-	<script src="/js/product/list.js"></script>
-
-</body>
-</html>
+	</section> --%>
