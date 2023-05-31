@@ -12,5 +12,6 @@
 		<result column="inserted" property="inserted" />
 	</resultMap>
 
+
 </mapper>
 

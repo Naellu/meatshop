@@ -25,21 +25,24 @@ public class QuestionService {
 
 	@Autowired
 	private QuestionMapper mapper;
-	
+
 	public List<Question> getList() {
 		List<Question> list = mapper.selectAll();
-		
+		for (Question question : list) {
+			boolean answered = mapper.isAnswered(question.getId());
+			question.setAnswered(answered);
+		}
 		return list;
 	}
-	
+
 	public Question getQuestion(Integer id) {
 		Question q = mapper.selectById(id);
 		return q;
 	}
-	
+
 	public boolean addQuestion(Question question, MultipartFile[] files) throws Exception {
 		int cnt = mapper.insert(question);
-		
+
 		for (MultipartFile file : files) {
 			if (file.getSize() > 0) {
 				String objectKey = "meatshop/question/" + question.getId() + "/" + file.getOriginalFilename();
@@ -55,7 +58,6 @@ public class QuestionService {
 		}
 		return cnt == 1;
 	}
-	
 
 	public Map<String, Object> getList(Integer page, String search, String type) {
 
@@ -86,7 +88,25 @@ public class QuestionService {
 		return Map.of("pageInfo", pageInfo, "questionList", list);
 	}
 
-	
+	public Map<String, Object> getAllQuestionsMap() {
+		List<Question> questions = mapper.getAllQuestions();
+		Map<String, Object> result = new HashMap<>();
+		result.put("questions", questions);
+		return result;
+	}
 
+	public Map<String, Object> getAnsweredQuestionsMap() {
+		List<Question> questions = mapper.getAnsweredQuestions();
+		Map<String, Object> result = new HashMap<>();
+		result.put("questions", questions);
+		return result;
+	}
+
+	public Map<String, Object> getUnansweredQuestionsMap() {
+		List<Question> questions = mapper.getUnansweredQuestions();
+		Map<String, Object> result = new HashMap<>();
+		result.put("questions", questions);
+		return result;
+	}
 
 }

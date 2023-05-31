@@ -5,11 +5,14 @@ import java.util.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 
 import com.example.demo.domain.answer.*;
+import com.example.demo.domain.question.*;
 import com.example.demo.mapper.answer.*;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class AnswerService {
 
 	@Autowired
@@ -23,7 +26,7 @@ public class AnswerService {
 	public Map<String, Object> add(Answer answer) {
 		
 		var res = new HashMap<String, Object>();
-		
+		mapper.updateQuestionAnswered(answer.getQuestionId());
 		int cnt = mapper.insert(answer);
 		if (cnt == 1) {
 			res.put("message", "답변이 등록되었습니다.");
@@ -49,7 +52,7 @@ public class AnswerService {
 			res.put("message", "댓글이 수정되지 않았습니다.");
 		}
 		
-		return null;
+		return res;
 	}
 
 	public Map<String, Object> remove(Integer id) {

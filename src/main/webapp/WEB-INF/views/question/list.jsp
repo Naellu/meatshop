@@ -16,6 +16,11 @@
 	<h1>1:1 문의하기</h1>
 	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#questionModal">문의하기</button>
 
+	<div>
+        <a href="/question/list">All</a> |
+        <a href="/question/list?status=answered">Answered</a> |
+        <a href="/question/list?status=unanswered">Unanswered</a>
+    </div>
 	<!-- 모달 -->
 	<div class="modal fade" id="questionModal" tabindex="-1" aria-labelledby="questionModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -69,7 +74,7 @@
 						<td>
 							<a href="/question/id/${question.id}">${question.title}</a>
 						</td>
-						<td>${question.answered}</td>
+						<td>${question.answered ? '답변 완료' : '미답변'}</td>
 						<td>${question.inserted}</td>
 					</tr>
 				</c:forEach>

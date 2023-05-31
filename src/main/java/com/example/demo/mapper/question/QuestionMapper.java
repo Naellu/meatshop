@@ -117,6 +117,28 @@ public interface QuestionMapper {
 			""")
 	Integer insertQuestionfile(Integer q_id, String file_name);
 
+	@Select("""
+	        SELECT answered
+	        FROM question
+	        WHERE id = #{id}
+	        """)
+	boolean isAnswered(Integer id);
+
+	@Select("""
+			SELECT * FROM question
+			""")
+	List<Question> getAllQuestions();
+
+	@Select("""
+			SELECT * FROM question WHERE answered = true
+			""")
+	List<Question> getAnsweredQuestions();
+
+	@Select("""
+			SELECT * FROM question WHERE answered = false
+			""")
+	List<Question> getUnansweredQuestions();
+
 
 
 }

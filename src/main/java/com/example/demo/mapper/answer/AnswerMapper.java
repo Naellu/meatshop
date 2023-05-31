@@ -19,8 +19,10 @@ public interface AnswerMapper {
 
 	@Insert("""
 			INSERT INTO answer (question_id, content, admin_id)
-			VALUES (#{question_id}, #{content}, #{admin_id})
+			VALUES (#{questionId}, #{content}, #{adminId})
 			""")
+	@ResultMap("answerResultMap")
+	@Options(useGeneratedKeys = true, keyProperty = "id")
 	Integer insert(Answer answer);
 
 	@Select("""
@@ -38,11 +40,20 @@ public interface AnswerMapper {
 			WHERE
 				id = #{id}
 			""")
+	@ResultMap("answerResultMap")
 	Integer update(Answer answer);
 
 	@Delete("""
 			DELETE FROM answer
 			WHERE id = #{id}
 			""")
+	@ResultMap("answerResultMap")
 	Integer deleteById(Integer id);
+	
+    @Update("""
+            UPDATE question
+            SET answered = TRUE
+            WHERE id = #{questionId}
+            """)
+    void updateQuestionAnswered(Integer questionId);
 }
