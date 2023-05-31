@@ -36,7 +36,6 @@ public class CustomConfig {
 	public void init() {
 		application.setAttribute("bucketUrl", bucketUrl);
 	}
-
   
 	@Bean
 	public S3Client S3Client() {
