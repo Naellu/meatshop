@@ -25,9 +25,22 @@ public class QuestionController {
 	public String list(Model model,
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
 			@RequestParam(value = "search", defaultValue = "") String search,
-			@RequestParam(value = "type", required = false) String type) {
+			@RequestParam(value = "type", required = false) String type,
+			@RequestParam(value = "status", required = false) String status) {
 		
 		Map<String, Object> result = service.getList(page, search, type);
+		
+		if (status != null) {
+            if (status.equals("answered")) {
+            	result = service.getAllQuestionsMap();
+            } else if (status.equals("unanswered")) {
+            	result = service.getAnsweredQuestionsMap();
+            } else {
+            	result = service.getUnansweredQuestionsMap();
+            }
+        } else {
+        	result = service.getAllQuestionsMap();
+        }
 		
 		model.addAllAttributes(result);
 		
