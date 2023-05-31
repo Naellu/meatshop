@@ -79,5 +79,15 @@ public class CartController {
 		}
 	}
 	
+	// 장바구니 항목 수량 업데이트
+	@PostMapping("/update")
+	@ResponseBody
+	public String updateItemQuantity(@RequestBody CartItemDto cartItemDto) {
+		cartService.updateCartItemQuantity(cartItemDto);
+		
+		return "수량 갱신 완료";
+	}
+	
+	
 	
 }

@@ -15,14 +15,14 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 @RequiredArgsConstructor
 public class CartServiceImpl implements CartService{
 
     private final CartMapper cartMapper;
 
 	@Override
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional
 	public int makeOrderByCartItems(String memberId, Integer productId, Integer quantity, Double price) {
 
 		// 회원id로 장바구니 조회
@@ -71,6 +71,16 @@ public class CartServiceImpl implements CartService{
 	public boolean deleteCartItem(CartItemDto cartItemDto) {
 		log.info("cartItemId={}",cartItemDto);
 		return cartMapper.deleteCartItem(cartItemDto.getMemberId(), cartItemDto.getProductId());
+	}
+
+	@Override
+	@Transactional
+	public Integer updateCartItemQuantity(CartItemDto cartItemDto) {
+		Integer cartItemId = cartItemDto.getId();
+		CartItem cartItem = cartMapper.findByCartItemId(cartItemId);
+		cartItem.updateQuantity(cartItemDto.getQuantity());
+		
+		return cartMapper.updateItems(cartItem);
 	}
 	
 	

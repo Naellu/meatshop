@@ -48,6 +48,19 @@ public interface CartMapper {
             WHERE cart_id = #{cartId} AND product_id = #{productId}
             """)
     CartItem findByCartIdAndProductId(Integer cartId, Integer productId);
+    
+    // cartItem의 id로 장바구니 항목 가져오기
+    @Select("""
+    		SELECT
+    			id,
+    			cart_id,
+    			product_id,
+    			quantity,
+    			product_price
+    		FROM cartitems
+    		WHERE id = #{id}
+    		""")
+    CartItem findByCartItemId(Integer Id);
 
     // 장바구니 가져오기
     @Select("""

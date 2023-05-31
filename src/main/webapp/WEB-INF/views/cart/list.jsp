@@ -34,10 +34,16 @@
                     <tbody>
                         <c:forEach var="cartItem" items="${cartItems}">
                             <tr>
-                                <td><input type="checkbox" id="cartItemId" class="item-check" value="${cartItem.id}" data-price="${cartItem.productPrice * cartItem.quantity}"></td>
+                                <td><input type="checkbox" id="" class="item-check cartItemId" value="${cartItem.id}" data-total-price="${cartItem.productPrice * cartItem.quantity}"></td>
                                 <td id="productName_${cartItem.id}">${cartItem.productName}</td>
-			                    <td id="quantity_${cartItem.id}">${cartItem.quantity}</td>
-			                    <td id="productPrice_${cartItem.id}">${cartItem.productPrice}</td>
+                                
+			                    <td>
+	                                <button type="button" class="btn btn-secondary btn-quantity-decrease" value="${cartItem.id}">-</button>
+				                    <input type="number" id="quantity_${cartItem.id}" class="quantity-input" value="${cartItem.quantity}" min="1" readonly>
+				                    <button type="button" class="btn btn-secondary btn-quantity-increase" value="${cartItem.id}">+</button>
+			                    </td>
+			                    
+			                    <td id="productPrice_${cartItem.id}" data-unit-price="${cartItem.productPrice}">${cartItem.productPrice}</td>
                                 <td>
 	                                <button type="button" id="deleteButton" class="btn btn-danger btn-delete" value="${cartItem.id}">
 	                                	<i class="fa-solid fa-xmark"></i>
