@@ -40,6 +40,53 @@ function listAnswer(inquiryId) {
 				var inquiryId = $(this).attr("data-inquiry-id");
 				$("#deleteAnswerModalButton").attr("data-inquiry-id", inquiryId);
 			});
+			
+			$(".answerUpdateBtn").click(function() {
+				var inquiryId = $(this).attr("data-inquiry-id");
+				var answer = $(this).attr("data-answer");
+
+
+				const data = {
+					inquiryId: inquiryId
+				};
+
+				$.ajax("/product/answer/modify", {
+					data: data,
+					contentType: 'application/json',
+					success: function(answerModifyPage) {
+						const answerContentId = "#answerContainer" + inquiryId;
+						$("#answerOfInquiry").empty();
+						$(answerContentId).html(answerModifyPage);
+
+						$("#modifyAnswerBtn").click(function() {
+							const inquiryId = $("#inquiryId").val();
+							const answer = $("#bodyTextarea").val();
+
+							console.log(inquiryId)
+							console.log(answer)
+
+							const modifyData = {
+								inquiryId: inquiryId,
+								answer: answer
+							}
+
+							$.ajax("/product/answer/modify", {
+								method: "post",
+								contentType: 'application/json',
+								data: JSON.stringify(modifyData),
+								success: function(result) {
+									alert(result.message)
+								},
+								complete: function() {
+									window.location.reload()
+
+								}
+							})
+						})
+
+					}
+				})
+			})
 		}
 
 	})
@@ -51,9 +98,17 @@ function listAnswer(inquiryId) {
 
 var answerUpdateBtns = document.getElementsByName("answerUpdateBtn");
 for (var answerUpdateBtn of answerUpdateBtns) {
-	answerUpdateBtn.addEventListener("click", function() {
+    answerUpdateBtn.addEventListener("click", function() {
+        var inquiryId = this.dataset.inquiryId;
+        var customerId = this.dataset.customerId;
+        console.log("Clicked on answer update button. Inquiry ID: " + inquiryId + ", Customer ID: " + customerId);
+        
+        // 여기에 추가 동작을 수행하는 코드를 작성하세요.
+        // 예를 들면 AJAX 요청을 보내거나 다른 함수를 호출할 수 있습니다.
+    });
+}
 
-		const inquiryId = this.getAttribute('data-inquiry-id');
+/*const inquiryId = this.getAttribute('data-inquiry-id');
 		const data = {
 			inquiryId: inquiryId
 		};
@@ -92,12 +147,7 @@ for (var answerUpdateBtn of answerUpdateBtns) {
 				})
 
 			}
-		});
-	})
-
-}	
-
-
+		});*/
 
 
 // 문의답변 삭제 모달에서 삭제 버튼 클릭시 
