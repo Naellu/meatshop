@@ -66,22 +66,23 @@ public class MemberController {
 	}
 	
 	//회원목록
-	@GetMapping("list")
-	public void list(Model model) {
-		List<Members> list = service.listMember();
-		model.addAttribute("memberlist", list);
-	}
-	
-	@GetMapping("membersearch")
-	public String list (Model model,
-//			@RequestParam(value="page", defaultValue="1") Integer page,
-			@RequestParam(value = "search",defaultValue= "")String search,
-			@RequestParam(value = "type", required = false) String type) {
-		
-		Map<String, Object> list = service.list(search,type); 
-		model.addAllAttributes(list);
-		return "member/list";
-	}
+//	@GetMapping("list")
+//	public void list(Model model) {
+//		List<Members> list = service.listMember();
+//		model.addAttribute("memberlist", list);
+//	}
+//	
+//	@GetMapping("membersearch")
+//	public String list (Model model,
+////			@RequestParam(value="page", defaultValue="1") Integer page,
+//			@RequestParam(value = "search",defaultValue= "")String search,
+//			@RequestParam(value = "type", required = false) String type) {
+//		
+//		Map<String, Object> list = service.list(search,type); 
+//		model.addAllAttributes(list);
+//	
+//		return "member/list";
+//	}
 	
 		
 	
@@ -163,5 +164,39 @@ public class MemberController {
 		
 		return service.checkEmail(id);
 	}
+	
+	
+	
+	// ------------------- memberList 페이지네이션 ------------------------
+	
+//	@RequestMapping({"/","list"}, method = RequestMethod.GET)
+	@GetMapping({"/","list"}) // "/" ,"list" 경로로 들어온 get요청 처리
+	public String list(Model model,
+					@RequestParam(value="page", defaultValue="1") Integer page,
+					@RequestParam(value = "search",defaultValue= "")String search,
+					@RequestParam(value = "type", required = false) String type) {
+
+		// 1. request param 수집 / 가공
+		// 2. business logic 처리
+//		List<Members> memberlist = service.listMember();
+//		model.addAttribute("memberlist", memberlist);
+//		List<Board> list = service.listBoard();
+		Map<String, Object> list = service.listBoard(page, search,type); 
+		// 3. add attribute
+		
+	//	model.addAttribute("boardList",list.get("boardList"));
+		model.addAllAttributes(list);
+		
+		// 4. forward/ redirect
+	
+		return "member/list";
+	
+	}
+	
+	
+	
+	
+	
+	
 	
 }
