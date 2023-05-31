@@ -24,5 +24,9 @@ public class CartItem {
 	public void addCount(int quantity) {
 		this.quantity += quantity;
 	}
+	
+	public void updateQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 
 }

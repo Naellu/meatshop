@@ -16,4 +16,6 @@ public interface CartService {
     List<CartItem> findAllItems(Cart cart);
     
     boolean deleteCartItem(CartItemDto cartItemDto);
+    
+    Integer updateCartItemQuantity(CartItemDto cartItemDto);
 }
