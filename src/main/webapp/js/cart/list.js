@@ -13,10 +13,34 @@ $(document).ready(function() {
         }
     });
 
-    // Delete button click event
+    // 장바구니에서 상품 삭제버튼 누를 시
     $('.btn-delete').click(function() {
-        // Delete the item from the cart
-        // TODO: Implement the delete functionality
+        
+        // 해당 상품 정보를 컨트롤러에 전달
+        const cartItemId = $(this).val(); // 클릭 시 버튼에 할당된 id 가져오기
+        
+        const data = {
+			id: cartItemId,
+            memberId: $('#memberId').val(),
+            productId: $('#productId_' + cartItemId).val(),
+            quantity: $('#quantity_' + cartItemId).text(),
+            price: $('#productPrice_' + cartItemId).text(),
+		};
+        
+        $.ajax({
+			url: '/cart/delete',
+			type: 'POST',
+			contentType: 'application/json',
+			data: JSON.stringify(data),
+			success: function(response) {
+				alert(response);
+				window.location.replace("/cart");
+			},
+            error: function (xhr, status, error) {
+				console.log(error);
+            }
+		})
+        
     });
 });
 

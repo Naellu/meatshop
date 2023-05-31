@@ -1,9 +1,10 @@
 package com.example.demo.service.cart;
 
+import java.util.List;
+
 import com.example.demo.domain.cart.Cart;
 import com.example.demo.domain.cart.CartItem;
-
-import java.util.List;
+import com.example.demo.domain.cart.dto.CartItemDto;
 
 public interface CartService {
 
@@ -13,4 +14,6 @@ public interface CartService {
     Cart findCartByMemberId(String memberId);
 
     List<CartItem> findAllItems(Cart cart);
+    
+    boolean deleteCartItem(CartItemDto cartItemDto);
 }

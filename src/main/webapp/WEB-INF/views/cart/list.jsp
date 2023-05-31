@@ -34,11 +34,11 @@
                     <tbody>
                         <c:forEach var="cartItem" items="${cartItems}">
                             <tr>
-                                <td><input type="checkbox" class="item-check" value="${cartItem.id}"></td>
+                                <td><input type="checkbox" id="cartItemId" class="item-check" value="${cartItem.id}"></td>
                                 <td id="productName_${cartItem.id}">${cartItem.productName}</td>
 			                    <td id="quantity_${cartItem.id}">${cartItem.quantity}</td>
 			                    <td id="productPrice_${cartItem.id}">${cartItem.productPrice}</td>
-                                <td><button type="button" class="btn btn-danger btn-delete" value="${cartItem.id}">삭제(구현X)</button></td>
+                                <td><button type="button" id="deleteButton" class="btn btn-danger btn-delete" value="${cartItem.id}">삭제(구현X)</button></td>
                             </tr>
 			                    <input type="hidden" id="productId_${cartItem.id}" value="${cartItem.productId }"/>
                         </c:forEach>
