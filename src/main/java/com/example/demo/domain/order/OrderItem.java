@@ -25,10 +25,5 @@ public class OrderItem {
 //		orderItem.calculateTotalPrice();
 		return orderItem;
 	}
-
-	// 주문상품 전체 가격 조회
-//	public void calculateTotalPrice() {
-//		this.orderPrice = getOrderPrice() * getQuantity();
-//	}
 	
 }

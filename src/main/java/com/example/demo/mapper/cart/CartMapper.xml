@@ -4,7 +4,8 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.example.demo.mapper.cart.CartMapper">
-	<resultMap type="com.example.demo.domain.cart.CartItem" id="">
+	
+	<resultMap type="com.example.demo.domain.cart.CartItem" id="CartItemsMap">
 		<id column="id" property="id"/>		
 		<result column="cart_id" property="cartId"/>
 		<result column="product_id" property="productId"/>
@@ -12,4 +13,5 @@
 		<result column="product_price" property="productPrice"/>
 		<result column="productName" property="productName"/>
 	</resultMap>
+
 </mapper>

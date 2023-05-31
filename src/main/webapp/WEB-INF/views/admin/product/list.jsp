@@ -101,7 +101,7 @@
 						<td>${product.countryOfOrigin}</td>
 						<td>${product.stockQuantity}</td>
 						<td>${product.categoryName}</td>
-						<td>${product.price}</td>
+						<td>${product.price}원</td>
 						<td>
 							<input type="checkbox" name="openIds" ${product.pub eq 1 ? 'checked' : ''} value="${product.productId}">
 							공개

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.example.demo.mapper.wishlist.WishListMapper">
+	<resultMap type="com.example.demo.domain.WishListView"
+		id="WishListViewMap">
+		<id column="id" property="id" />
+		<result column="member_id" property="memberId" />
+		<result column="product_id" property="productId" />
+		<result column="product_name" property="productName" />
+		<result column="country_of_origin" property="countryOfOrigin" />
+		<result column="price" property="price" />
+		<result column="stock_quantity" property="stockQuantity" />
+		<result column="pub" property="pub" />
+		<result column="category_id" property="categoryId" />
+		<result column="category_name" property="categoryName" />
+		<result column="description" property="description" />
+		<collection property="fileName" ofType="string">
+			<result column="file_name" />
+		</collection>
+	</resultMap>
+
+	<select id="getAllView" resultMap="WishListViewMap"
+		parameterType="String">
+		SELECT * FROM wishlistview
+		WHERE member_id = #{memberId}
+	</select>
+
+	<delete id="deleteList">
+		DELETE FROM wishlist
+		WHERE member_id = #{memberId}
+		AND product_id = #{productId}
+	</delete>
+</mapper>
+

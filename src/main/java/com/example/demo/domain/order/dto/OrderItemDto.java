@@ -17,4 +17,6 @@ public class OrderItemDto {
     private Double price;
     private Integer productId;
     private Integer quantity;
+    
+    private boolean fromCart;
 }

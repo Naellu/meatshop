@@ -1,16 +1,19 @@
 package com.example.demo.service.order;
 
-import com.example.demo.domain.Product;
-import com.example.demo.domain.order.Order;
-import com.example.demo.domain.order.OrderItem;
-import com.example.demo.mapper.order.OrderMapper;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.demo.domain.order.Order;
+import com.example.demo.domain.order.OrderItem;
+import com.example.demo.domain.order.dto.OrderItemDto;
+import com.example.demo.mapper.order.OrderMapper;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -38,29 +41,37 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	@Override
-	public int makeOrderOfMultipleProduct(String memberId, List<Integer> productIdList, List<Integer> quantities) {
-
+	@Transactional
+	public int makeOrderOfMultipleProduct(String memberId, List<OrderItemDto> orderItemDtos) {
 		List<OrderItem> orderItems = new ArrayList<>();
-		for (int i = 0; i < productIdList.size(); i++) {
-			int productId = productIdList.get(i);
-			int quantity = quantities.get(i);
-
-			double price = orderMapper.findPrice(productId);
-			int orderPrice = (int) price;
-
-			OrderItem orderItem = OrderItem.createOrderItem(productId, orderPrice, quantity);
+		
+		for(OrderItemDto orderItemDto : orderItemDtos) {
+			OrderItem orderItem = OrderItem.createOrderItem(
+					orderItemDto.getProductId(), 
+					orderItemDto.getPrice().intValue(),
+					orderItemDto.getQuantity());
 			orderItems.add(orderItem);
 		}
-
+		
+		
 		Order order = Order.createOrder(memberId, orderItems);
-
 		orderMapper.saveOrder(order);
-
-		for (OrderItem orderItem : order.getOrderItems()) {
+		
+		for (OrderItem orderItem : orderItems) {
 			orderItem.setOrderId(order.getId());
 			orderMapper.saveOrderItems(orderItem);
 		}
-
+		
+		List<Integer> productIds = orderItemDtos.stream()
+				.filter(OrderItemDto::isFromCart)
+				.map(OrderItemDto::getProductId)
+				.collect(Collectors.toList());
+		
+		if(!productIds.isEmpty()) {
+			// 장바구니에서 상품을 주문했다면 장바구니에서 항목 삭제
+			orderMapper.deleteItemsFromCart(productIds, memberId);
+		}
+		
 		return order.getId();
 	}
 
@@ -69,6 +80,8 @@ public class OrderServiceImpl implements OrderService{
 		//  결제 완료
 		return true;
 	}
+	
+	
 
 
 	@Override
@@ -92,6 +105,10 @@ public class OrderServiceImpl implements OrderService{
 		// TODO Auto-generated method stub
 		//  주문 취소
 	}
+
+	
+
+	
 	
 	
 

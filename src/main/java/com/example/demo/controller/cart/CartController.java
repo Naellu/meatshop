@@ -51,16 +51,33 @@ public class CartController {
 
 		// 장바구니에서 cartitem를 리스트로 가져오기
 		List<CartItem> cartItems = cartService.findAllItems(memberCart);
-		log.info("cartItems={}", cartItems);
+//		log.info("cartItems IN CONTROLLER={}", cartItems);
 
 		// List<CartItem>을 뷰에 전달
 		model.addAttribute("cartItems", cartItems);
+		model.addAttribute("memberId", memberId);
 
 		return "cart/list";
 	}
 	
 	
-
-
+	// 장바구니 항목 삭제
+	@PostMapping("/delete")
+	@ResponseBody
+	public String deleteCartItem(@RequestBody CartItemDto cartItemDto) {
+		
+		log.info("cartItemDto DELETE IN CONTROLLER={}", cartItemDto);
+		Integer cartItemId = cartItemDto.getId();
+		
+		boolean isdeleted = cartService.deleteCartItem(cartItemDto);
+		log.info("isdeleted IN CONTROLLER={}",isdeleted);
+		
+		if (isdeleted) {
+			return "장바구니에서 상품을 삭제하였습니다";
+		} else {
+			return "장바구니에서 상품을 삭제하지 못했습니다";
+		}
+	}
+	
 	
 }
