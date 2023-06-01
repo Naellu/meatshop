@@ -24,45 +24,42 @@
 	<div class="container-lg">
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-8">
-			
-				<%--<form id="orderDetailForm" action="/order/detail" method="post" style="text-align: center;"> --%>
-					
-					<%-- <input type="hidden" name="memberId" value="${member.id}" /> --%>
-
-					<table class="table">
-				        <thead>
-				            <tr>
-				                <th>상품명</th>
-				                <th>상품가격</th>
-				                <th>수량</th>
-				            </tr>
-				        </thead>
-				        <tbody>
-			        		<c:forEach var="orderItemDto" varStatus="status" items="${orderItemDtos}">
-					          <tr>
-					              <td>${productNames[status.index] }</td>
-					              <td>${orderItemDto.price }</td>
-					              <td>${orderItemDto.quantity }</td>
-				              		<td>
-										<input type="hidden" name="memberId" value="${orderItemDto.memberId }" />
-				                        <input type="hidden" id="productId" name="productId" value="${orderItemDto.productId}" />
-					                    <input type="hidden" id="quantity" name="quantity" value="${orderItemDto.quantity }" />
-					                    <input type="hidden" id="price" name="price" value="${orderItemDto.price }" />
-					                    <input type="hidden" id="fromCart" name="fromCart" value="${orderItemDto.fromCart }" />
-				                  	</td>
-					          </tr>
-				          	</c:forEach>
-				        </tbody>
-				    </table>
-				    
-			        <button id="paymentButton" type="submit" class="btn btn-primary">결제하기</button>
-			    <%-- </form> --%>
+				<table class="table">
+			        <thead>
+			            <tr>
+			                <th>상품명</th>
+			                <th>상품가격</th>
+			                <th>수량</th>
+			            </tr>
+			        </thead>
+			        <tbody>
+		        		<c:forEach var="orderItemDto" varStatus="status" items="${orderItemDtos}">
+				          <tr>
+				              <td>${productNames[status.index] }</td>
+				              <td>${orderItemDto.price }</td>
+				              <td>${orderItemDto.quantity }</td>
+			              		<td>
+									<input type="hidden" name="memberId" value="${orderItemDto.memberId }" />
+			                        <input type="hidden" id="productId" name="productId" value="${orderItemDto.productId}" />
+				                    <input type="hidden" id="quantity" name="quantity" value="${orderItemDto.quantity }" />
+				                    <input type="hidden" id="price" name="price" value="${orderItemDto.price }" />
+				                    <input type="hidden" id="fromCart" name="fromCart" value="${orderItemDto.fromCart }" />
+			                  	</td>
+				          </tr>
+			          	</c:forEach>
+			        </tbody>
+			    </table>
+			    <div id="totalPriceDisplay" class="float-right">
+			    	총 주문금액: <span id="totalPrice">0</span>₩
+			    </div>
+			    
+		        <button id="paymentButton" type="submit" class="btn btn-primary">결제하기</button>
 			
 			</div>
 		</div>	
 	</div>
 
-
+	<my:footer></my:footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

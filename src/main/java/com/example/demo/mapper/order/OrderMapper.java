@@ -72,6 +72,7 @@ public interface OrderMapper {
 	List<Order> findAllByMemberId(String memberId);
 
 
+	// 전체 주문목록 보기
 	@Select("""
    			SELECT 
    				id,
@@ -83,7 +84,8 @@ public interface OrderMapper {
 			""")
 	List<Order> findAll();
 
-	
+
+	// 장바구니에 담아둔 상품 삭제
 	@Delete("""
 			<script>
 			DELETE FROM cartitems

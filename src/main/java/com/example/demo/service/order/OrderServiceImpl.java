@@ -90,6 +90,7 @@ public class OrderServiceImpl implements OrderService{
 		return orderItemList;
 	}
 
+	// 전체 주문목록 보기
 	public List<Order> showAllOrders() {
 		List<Order> orders = orderMapper.findAll();
 		return orders;
