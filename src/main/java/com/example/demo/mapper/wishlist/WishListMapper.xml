@@ -25,7 +25,9 @@
 	<select id="getAllView" resultMap="WishListViewMap"
 		parameterType="String">
 		SELECT * FROM wishlistview
-		WHERE member_id = #{memberId}
+		WHERE member_id = #{memberId} 
+		AND added_date >= DATE_SUB(NOW(), INTERVAL 6 MONTH)
+		ORDER BY added_date DESC, id DESC;
 	</select>
 
 	<delete id="deleteList">

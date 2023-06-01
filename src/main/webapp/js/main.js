@@ -44,7 +44,7 @@ function listView() {
 						</div>
 						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 							<div class="text-center">
-								<button onclick="location.href='/product/info/${product.productId}'" class="btn btn-secondary mt-auto" ${product.stockQuantity === 0 ? 'disabled' : ''}>상품 상세 보기</button>
+								<button onclick="location.href='/product/info/${product.productId}'" class="btn btn-secondary mt-auto" ${product.stockQuantity === 0 ? 'disabled' : ''}>${product.stockQuantity === 0 ? '상품준비중' : '상품 상세 보기'}</button>
 							</div>
 						</div>
 					</div>

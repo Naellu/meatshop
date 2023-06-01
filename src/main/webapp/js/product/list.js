@@ -1,5 +1,6 @@
 listView();
 const bucketUrl = $("#bucketUrl").val();
+const memberId = $("#memberId").val();
 
 // jQuery 코드: 각 링크 클릭 시 현재 URL의 파라미터 유지하고 category 파라미터 추가
 const currentUrl = window.location.href; // 현재 URL 가져오기
@@ -46,7 +47,7 @@ function listView() {
 			type: type,
 			search: search
 		},
-		success : function(result) {
+		success: function(result) {
 			const pageInfo = result.pageInfo;
 			const productList = result.productList;
 			$("#productView").empty();
@@ -56,7 +57,7 @@ function listView() {
 						<div class="card h-100">
 							<div>
 								<img class="card-img-top" src="${bucketUrl}/product/1.png" alt="사진준비중!" />
-								<i class="fa-regular fa-star fa-2x" style="position: absolute; top: 0; right: 0;"></i>
+								 <i class="fa-regular fa-star fa-2x wish-icon" style="position: absolute; top: 0; right: 0;" data-productid="${product.productId}"></i>
 							</div>
 							<div class="card-body p-4">
 								<div class="text-center">
@@ -79,8 +80,14 @@ function listView() {
 				`;
 				$("#productView").append(productHtml);
 			});
+			
 			$("#pageUl").empty();
 			createPagination(pageInfo);
+			
+			$('.wish-icon').click(function() {
+				let productId = $(this).data('productid');
+				alert(productId, memberId);
+			});
 		}
 	});
 }
@@ -188,4 +195,5 @@ function createPagination(pageInfo) {
 		$("#pageUl").append(lastPageItem);
 	}
 }
+
 

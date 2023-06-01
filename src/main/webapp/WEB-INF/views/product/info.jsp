@@ -78,8 +78,8 @@
 						<input type="hidden" id="productId" value="${product.productId}" />
 						<input type="hidden" id="stockQuantity" value="${product.stockQuantity }" />
 						<input type="hidden" id="price" value="${product.price }" />
-						<button class="btn btn-success me-3" id="orderButton">바로주문하기</button>
-						<button class="btn btn-danger" id="goToCartBtn">장바구니로가기</button>
+						<button class="btn btn-success me-3" id="orderButton"><i class="fa-solid fa-credit-card"></i> 바로주문하기</button>
+						<button class="btn btn-danger" id="goToCartBtn"><i class="fa-solid fa-cart-shopping"></i> 장바구니로가기</button>
 					</div>
 				</div>
 			</div>
@@ -88,7 +88,6 @@
 
 	<div class="container mt-4">
 		<ul class="nav nav-tabs">
-
 			<li class="nav-item">
 				<a class="nav-link active" data-toggle="tab" href="#details">상품상세</a>
 			</li>
