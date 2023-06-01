@@ -142,6 +142,9 @@ $(document).ready(function() {
 	
 	            // 가격 갱신
 	            updateTotalPrice();
+	            
+	            // 주문 버튼 클릭 시 전송되는 상품 가격도 업데이트
+            	$('.item-check[value=' + cartItemId + ']').data('total-price', newTotalPrice);
 			},
 			error: function(xhr, status, error) {
 				console.log(error);
