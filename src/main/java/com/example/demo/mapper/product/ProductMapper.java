@@ -57,4 +57,8 @@ public interface ProductMapper {
 
 	//고객 상품 개수 pub = 1만
 	public Integer countCustomerAll(Integer categoryId, String type, String search);
+
+	//메인페이지
+	//top3의 상품 가져오기
+	public List<ProductView> getTopView();
 }

@@ -10,4 +10,5 @@ public interface ProductService {
 	
 	public ProductView getOneView(Integer id);
 
+	public Map<String, Object> getTopView();
 }

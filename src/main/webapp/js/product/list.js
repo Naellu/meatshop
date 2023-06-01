@@ -46,7 +46,7 @@ function listView() {
 			type: type,
 			search: search
 		},
-		success(result) {
+		success : function(result) {
 			const pageInfo = result.pageInfo;
 			const productList = result.productList;
 			$("#productView").empty();

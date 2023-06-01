@@ -36,7 +36,7 @@ public class CustomConfig {
 	public void init() {
 		application.setAttribute("bucketUrl", bucketUrl);
 	}
-  
+
 	@Bean
 	public S3Client S3Client() {
 		AwsCredentials credentials = AwsBasicCredentials.create(accessKey, secretKey);
@@ -49,22 +49,23 @@ public class CustomConfig {
 				.build();
 
 		return s3client;
-  }
-  
+	}
 
-  @Bean
+	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
+
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf().disable();
 //		http.formLogin(Customizer.withDefaults());   기본 설정( 안하면 페이지마다 로그인)
-		http.formLogin().loginPage("/member/login"); // 해당 로그인 페이지 만들어야함 
-		http.logout().logoutUrl("/member/logout");//로그아웃 페이지 변경(새로 만들어야함)
+		http.formLogin()
+				.loginPage("/member/login"); // 해당 로그인 페이지 만들어야함
+		
+		http.logout()
+				.logoutUrl("/member/logout")
+				.logoutSuccessUrl("/");// 로그아웃 페이지 변경(새로 만들어야함)
 		return http.build();
-
 	}
-
 }
