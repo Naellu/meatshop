@@ -2,18 +2,26 @@ package com.example.demo.service.customer;
 
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.*;
 
 import com.example.demo.domain.*;
 import com.example.demo.mapper.product.*;
 
 import lombok.*;
+import software.amazon.awssdk.services.s3.*;
+import software.amazon.awssdk.services.s3.model.*;
 
 @Service("customerProductServiceImpl")
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
+	@Value("${aws.s3.bucketName}")
+	private String bucketName;
+
 	private final ProductMapper productMapper;
+
+	private final S3Client s3;
 
 	@Override
 	public Map<String, Object> getViewList(Integer page, Integer categoryId, String type, String search) {
@@ -55,13 +63,39 @@ public class ProductServiceImpl implements ProductService {
 		pageInfo.put("prevPageNumber", prevPageNumber);
 		pageInfo.put("nextPageNumber", nextPageNumber);
 
-		List<ProductView> productList = productMapper.selectCustomerAllPaging(pageSize, startIndex, categoryId, type, search);
+		List<ProductView> productList = productMapper.selectCustomerAllPaging(pageSize, startIndex, categoryId, type,
+				search);
 		return Map.of("pageInfo", pageInfo, "productList", productList);
 	}
 
 	@Override
 	public ProductView getOneView(Integer id) {
 		return productMapper.getCustomerViewById(id);
+	}
+
+	// 메인페이지 top 3 가져오기
+	@Override
+	public Map<String, Object> getTopView() {
+
+		String prefix = "meatshop/main/carousel/"; // 원하는 경로
+
+		// ListObjectsV2Request를 사용하여 S3 버킷의 객체 목록을 가져옴
+		ListObjectsV2Request listRequest = ListObjectsV2Request.builder()
+				.bucket(bucketName)
+				.prefix(prefix)
+				.build();
+
+		// 객체 목록 요청 실행
+		ListObjectsV2Response listResponse = s3.listObjectsV2(listRequest);
+
+		// 파일 개수 출력
+		int fileCount = (int) listResponse.contents().stream()
+				.filter(s3Object -> !s3Object.key().endsWith("/"))
+				.count();
+
+		// S3 클라이언트 종료
+		List<ProductView> productList = productMapper.getTopView();
+		return Map.of("fileCount", fileCount, "productList", productList);
 	}
 
 }

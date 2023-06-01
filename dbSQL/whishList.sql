@@ -15,7 +15,8 @@ SELECT * FROM wishlistview WHERE member_id = 'admin0';
 
 SELECT * FROM wishlist;
 
-INSERT INTO wishlist VALUES ('admin0', 98);
-
+INSERT INTO wishlist (member_id, product_id) VALUES ('admin0', 98);
+INSERT INTO wishlist (member_id, product_id) VALUES ('admin0', 97);
+INSERT INTO wishlist (member_id, product_id) VALUES ('admin0', 96);
 
 

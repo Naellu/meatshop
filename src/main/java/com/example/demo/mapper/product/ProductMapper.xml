@@ -254,5 +254,22 @@
 		</where>
 	</select>
 
+	<resultMap type="com.example.demo.domain.MainItem"
+		id="mainItemView">
+		<id column="product_id" property="productId" />
+		<result column="product_name" property="productName" />
+		<result column="country_of_origin" property="countryOfOrigin" />
+		<result column="price" property="price" />
+		<result column="stock_quantity" property="stockQuantity" />
+		<result column="pub" property="pub" />
+		<result column="category_id" property="categoryId" />
+		<result column="category_name" property="categoryName" />
+		<result column="sold" property="sold" />
+	</resultMap>
+
+	<select id="getTopView" resultMap="mainItemView">
+		SELECT * FROM mainitemview
+	</select>
+
 </mapper>
 
