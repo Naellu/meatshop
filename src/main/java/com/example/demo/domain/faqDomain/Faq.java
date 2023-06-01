@@ -9,4 +9,6 @@ public class Faq {
 	private String title;
 	private String category;
 	private String content;
+	private String writer;
+	private String adminId;
 }

@@ -3,6 +3,7 @@ package com.example.demo.controller.faqController;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.security.access.prepost.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,6 @@ public class FaqController {
 
 	@GetMapping("list")
 	public String list(Model model) {
-
 		List<Faq> faq = service.getList();
 		model.addAttribute("faq", faq);
 
@@ -28,6 +28,7 @@ public class FaqController {
 	}
 
 	@PostMapping("remove")
+	@PreAuthorize("hasAuthority('admin')")
 	public String remove(Integer id, RedirectAttributes rttr) {
 
 		boolean ok = service.remove(id);
@@ -42,6 +43,7 @@ public class FaqController {
 	}
 
 	@GetMapping("/modify/{id}")
+	@PreAuthorize("hasAuthority('admin')")
 	public String modifyForm(Model model, @PathVariable("id") Integer id) {
 
 		model.addAttribute("faq", service.getOneList(id));
@@ -50,6 +52,7 @@ public class FaqController {
 	}
 
 	@PostMapping("/modify/{id}")
+	@PreAuthorize("hasAuthority('admin')")
 	public String modifyProcess(Faq faq, RedirectAttributes rttr) {
 
 		boolean ok = service.modify(faq);
@@ -64,11 +67,13 @@ public class FaqController {
 	}
 
 	@GetMapping("add")
+	@PreAuthorize("hasAuthority('admin')")
 	public void addForm() {
 
 	}
 
 	@PostMapping("add")
+	@PreAuthorize("hasAuthority('admin')")
 	public String addProcess(Faq faq, RedirectAttributes rttr) {
 
 		boolean ok = service.addFaq(faq);

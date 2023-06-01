@@ -3,6 +3,7 @@ package com.example.demo.controller.noticeBoardController;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.security.access.prepost.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,7 @@ public class NoticeBoardController {
 	}
 	
 	@GetMapping("/modify/{id}")
+	@PreAuthorize("hasAuthority('admin')")
 	public String modifyForm(@PathVariable("id") Integer id, Model model) {
 		model.addAttribute("nboard", service.getNoticeBoard(id));
 		
@@ -48,6 +50,7 @@ public class NoticeBoardController {
 	}
 	
 	@PostMapping("/modify/{id}")
+	@PreAuthorize("hasAuthority('admin')")
 	public String modifyProcess(NoticeBoard nboard, 
 			@RequestParam(value = "files", required = false) MultipartFile[] addFiles,
 			@RequestParam(value = "removeFiles", required = false) List<String> removeFileNames,
@@ -65,6 +68,7 @@ public class NoticeBoardController {
 	}
 	
 	@PostMapping("remove")
+	@PreAuthorize("hasAuthority('admin')")
 	public String remove(Integer id, RedirectAttributes rttr) {
 		
 		boolean ok = service.remove(id);
@@ -79,11 +83,13 @@ public class NoticeBoardController {
 	}
 	
 	@GetMapping("add")
+	@PreAuthorize("hasAuthority('admin')")
 	public void addForm() {
 		
 	}
 	
 	@PostMapping("add")
+	@PreAuthorize("hasAuthority('admin')")
 	public String addProcess(@RequestParam("files") MultipartFile[] files,
 			NoticeBoard nboard,
 			RedirectAttributes rttr) throws Exception {

@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.*;
 import org.springframework.security.core.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ public class AnswerController {
 	private AnswerService service;
 
 	@PutMapping("update")
+	@PreAuthorize("hasAuthority('admin')")
 	public ResponseEntity<Map<String, Object>> update(@RequestBody Answer answer) {
 		Map<String, Object> res = service.update(answer);
 		
@@ -32,6 +34,7 @@ public class AnswerController {
 	}
 
 	@DeleteMapping("id/{id}")
+	@PreAuthorize("hasAuthority('admin')")
 	public ResponseEntity<Map<String, Object>> remove(@PathVariable("id") Integer id) {
 		Map<String, Object> res = service.remove(id);
 		
@@ -39,6 +42,7 @@ public class AnswerController {
 	}
 	
 	@PostMapping("add")
+	@PreAuthorize("hasAuthority('admin')")
 	public ResponseEntity<Map<String, Object>> add (
 			@RequestBody Answer answer,
 			Authentication authentication) {
