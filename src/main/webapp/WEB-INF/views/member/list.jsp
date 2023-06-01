@@ -52,7 +52,7 @@
 					<tbody>
 						<c:forEach items="${memberList}" var="member">
 							<tr>
-								<c:url value="/member/mypage" var="memberInfoLink">
+								<c:url value="/member/info" var="memberInfoLink">
 									<c:param name="id" value="${member.id}" />
 								</c:url>
 								<td><a href="${memberInfoLink}">${member.id}</a>

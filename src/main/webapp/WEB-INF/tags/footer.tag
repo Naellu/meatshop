@@ -34,7 +34,7 @@
 			</div>
 
 			<div class="col-xs-6 col-md-3">
-				<h6>고객</h6>
+				<h6>Customer</h6>
 				<ul class="footer-links">
 					<li>
 						<a href="/noticeBoard/list">공지사항</a>
