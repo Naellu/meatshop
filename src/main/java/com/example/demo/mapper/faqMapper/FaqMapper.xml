@@ -9,6 +9,8 @@
 		<result column="title" property="title" />
 		<result column="content" property="content" />
 		<result column="category" property="category" />
+		<result column="writer" property="writer" />
+		<result column="admin_id" property="adminId" />
 	</resultMap>
 
 </mapper>
