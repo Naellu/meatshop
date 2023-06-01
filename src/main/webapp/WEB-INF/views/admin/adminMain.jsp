@@ -36,7 +36,7 @@
 		관리자 메인 페이지
 	</my:header>
 	
-	<a class="btn btn-secondary" href="/wish/list/admin0">찜목록</a>
+
 	
 	<my:footer/>
 	

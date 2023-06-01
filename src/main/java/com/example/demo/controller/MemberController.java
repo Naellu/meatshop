@@ -87,9 +87,9 @@ public class MemberController {
 		
 	
 // 마이페이지 (내정보 확인란)
-	@GetMapping("mypage")
+	@GetMapping("info")
 //	@PreAuthorize("isAuthenticated() and (authentication.name eq #id) or hasAuthority('admin')") 
-	public void mypage(String id,Model model) {
+	public void info(String id,Model model) {
 		
 		   Members member = service.get(id);
 		   model.addAttribute("member", member);
@@ -194,7 +194,13 @@ public class MemberController {
 	}
 	
 	
-	
+	@GetMapping("mypage")
+//	@PreAuthorize("isAuthenticated() and (authentication.name eq #id) or hasAuthority('admin')") 
+	public void mypage(String id,Model model) {
+		
+		   Members member = service.get(id);
+		   model.addAttribute("member", member);
+	}
 	
 	
 	
