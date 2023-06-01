@@ -59,13 +59,13 @@ public class QuestionService {
 		return cnt == 1;
 	}
 
-	public Map<String, Object> getList(Integer page, String search, String type) {
+	public Map<String, Object> getList(Integer page, String search) {
 
 		Integer rowPerPage = 10;
 
 		Integer startIndex = (page - 1) * rowPerPage;
 
-		Integer numOfRecords = mapper.countAll(search, type);
+		Integer numOfRecords = mapper.countAll(search);
 
 		Integer lastPageNumber = (numOfRecords - 1) / rowPerPage + 1;
 
@@ -76,37 +76,17 @@ public class QuestionService {
 		Integer rightPageNum = leftPageNum + 9;
 
 		rightPageNum = Math.min(rightPageNum, lastPageNumber);
-
+		
 		Map<String, Object> pageInfo = new HashMap<>();
 		pageInfo.put("rightPageNum", rightPageNum);
 		pageInfo.put("leftPageNum", leftPageNum);
 		pageInfo.put("currentPageNum", page);
 		pageInfo.put("lastPageNum", lastPageNumber);
 
-		List<Question> list = mapper.selectAllPaging(startIndex, rowPerPage, search, type);
+		List<Question> list = mapper.selectAllPaging(startIndex, rowPerPage, search);
 
 		return Map.of("pageInfo", pageInfo, "questionList", list);
 	}
 
-	public Map<String, Object> getAllQuestionsMap() {
-		List<Question> questions = mapper.getAllQuestions();
-		Map<String, Object> result = new HashMap<>();
-		result.put("questions", questions);
-		return result;
-	}
-
-	public Map<String, Object> getAnsweredQuestionsMap() {
-		List<Question> questions = mapper.getAnsweredQuestions();
-		Map<String, Object> result = new HashMap<>();
-		result.put("questions", questions);
-		return result;
-	}
-
-	public Map<String, Object> getUnansweredQuestionsMap() {
-		List<Question> questions = mapper.getUnansweredQuestions();
-		Map<String, Object> result = new HashMap<>();
-		result.put("questions", questions);
-		return result;
-	}
 
 }
