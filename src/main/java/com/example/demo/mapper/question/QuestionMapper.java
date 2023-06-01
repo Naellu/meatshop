@@ -39,19 +39,6 @@ public interface QuestionMapper {
 	@ResultMap("questionResultMap")
 	Question selectById(Integer id);
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@Select("""
 			<script>
 			<bind name="pattern" value="'%' + search + '%'" />
@@ -59,20 +46,17 @@ public interface QuestionMapper {
 			FROM question
 
 			<where>
-				<if test="(type eq 'all') or (type eq 'title')">
-				   title  LIKE #{pattern}
+				<if test="(search eq 'answered')">
+					answered IS NOT NULL
 				</if>
-				<if test="(type eq 'all') or (type eq 'content')">
-				OR content   LIKE #{pattern}
-				</if>
-				<if test="(type eq 'all') or (type eq 'writer')">
-				OR writer LIKE #{pattern}
+				<if test="(search eq 'unanswered')">
+					answered IS NULL
 				</if>
 			</where>
 
 			</script>
 			""")
-	Integer countAll(String search, String type);
+	Integer countAll(String search);
 
 	@Select("""
 			<script>
@@ -86,23 +70,20 @@ public interface QuestionMapper {
 			FROM question q LEFT JOIN qfile f ON q.id = f.q_id
 
 			<where>
-				<if test="(type eq 'all') or (type eq 'title')">
-				   title  LIKE #{pattern}
+				<if test="(search eq 'answered')">
+					answered IS NOT NULL
 				</if>
-				<if test="(type eq 'all') or (type eq 'content')">
-				OR content   LIKE #{pattern}
-				</if>
-				<if test="(type eq 'all') or (type eq 'writer')">
-				OR writer LIKE #{pattern}
+				<if test="(search eq 'unanswered')">
+					answered IS NULL
 				</if>
 			</where>
-
+			
 			GROUP BY q.id
 			ORDER BY q.id DESC
 			LIMIT #{startIndex}, #{rowPerPage}
 			</script>
 			""")
-	List<Question> selectAllPaging(Integer startIndex, Integer rowPerPage, String search, String type);
+	List<Question> selectAllPaging(Integer startIndex, Integer rowPerPage, String search);
 
 	@Insert("""
 			INSERT INTO question (title, content)
@@ -130,12 +111,12 @@ public interface QuestionMapper {
 	List<Question> getAllQuestions();
 
 	@Select("""
-			SELECT * FROM question WHERE answered = true
+			SELECT * FROM question WHERE answered IS NOT NULL
 			""")
 	List<Question> getAnsweredQuestions();
 
 	@Select("""
-			SELECT * FROM question WHERE answered = false
+			SELECT * FROM question WHERE answered IS NULL
 			""")
 	List<Question> getUnansweredQuestions();
 
