@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +16,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.demo.domain.Members;
 import com.example.demo.service.MemberService;
+import com.example.demo.service.mail.MailService;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.websocket.server.PathParam;
 
 @Controller
 @RequestMapping("member")
 public class MemberController {
 
+	
+	@Autowired
+	private MailService mailService;
 	@Autowired
 	private MemberService service;
 	
@@ -202,6 +204,14 @@ public class MemberController {
 		   model.addAttribute("member", member);
 	}
 	
+	@PostMapping("/mailCheck")
+	@ResponseBody
+	String mailConfirm(@RequestParam("email") String email) throws Exception {
+
+	   String authCode = mailService.sendEmail(email);
+	 
+	   return authCode;
+	}
 	
 	
 	
