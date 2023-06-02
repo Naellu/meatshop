@@ -1,23 +1,26 @@
 package com.example.demo.controller.order;
 
-import com.example.demo.domain.Product;
-import com.example.demo.domain.order.Order;
-import com.example.demo.domain.order.dto.OrderItemDto;
-import com.example.demo.service.order.OrderService;
-import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.demo.domain.order.Order;
+import com.example.demo.domain.order.dto.OrderItemDto;
+import com.example.demo.service.order.OrderService;
+
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
@@ -29,17 +32,25 @@ public class OrderController {
 
 	// 상품 상세에서 order/detail POST 요청 처리하는 메서드
 	@PostMapping("/detail")
-	@ResponseBody
-	public List<OrderItemDto> initOrderUseJSON(@RequestBody List<OrderItemDto> orderItemDtos, HttpSession session) {
-	    // JSON 데이터 세션에 저장
-	    session.setAttribute("orderItemDtos", orderItemDtos);
-	    // OrderItemDto의 리스트를 GET 메서드에 반환해줘야함
-	    return orderItemDtos;
+	public ResponseEntity<List<OrderItemDto>> initOrderUseJSON(@RequestBody List<OrderItemDto> orderItemDtos, HttpSession session, Authentication authentication) {
+		// 회원 인증정보 확인
+		if(authentication == null || !authentication.isAuthenticated() ) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		}
+		
+		session.setAttribute("orderItemDtos", orderItemDtos);
+		
+		if(orderItemDtos == null) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body(orderItemDtos);
+		}
 	}
 
 	
 	@GetMapping("/detail")
-	public String checkOrderDetail(HttpSession session, Model model) {
+	@PreAuthorize("isAuthenticated()")
+	public String checkOrderDetail(HttpSession session, Authentication authentication, Model model) {
 		
 		List<OrderItemDto> orderItemDtos = (List<OrderItemDto>) session.getAttribute("orderItemDtos");
 		List<String> ProductNames = new ArrayList();
@@ -47,7 +58,7 @@ public class OrderController {
 		for(OrderItemDto orderItemDto : orderItemDtos) {
 			Integer productId = orderItemDto.getProductId();
 			
-			String memberId = "user22"; // 임시 회원id
+			String memberId = authentication.getName();
 			orderItemDto.setMemberId(memberId);
 
 			String productName = orderService.findOneOfProduct(productId);
@@ -64,11 +75,9 @@ public class OrderController {
 	// 주문 상세에서 결제버튼 누르면 
 	// 실제 주문 들어가는 POST 메서드
 	@PostMapping("/payed")
-	public ResponseEntity payedOrder(@RequestBody List<OrderItemDto> orderItemDtos) {
-		
-		String memberId = "user22"; // Authentication으로 받아와야 하는 회원id
-		// String memberId = authentication.getName();
-		
+	@PreAuthorize("isAuthenticated()")
+	public ResponseEntity payedOrder(@RequestBody List<OrderItemDto> orderItemDtos, Authentication authentication) {
+		String memberId = authentication.getName();
 		int orderId = orderService.makeOrderOfMultipleProduct(memberId, orderItemDtos);
 		
 		return ResponseEntity.ok(orderId);
@@ -78,6 +87,7 @@ public class OrderController {
 
 	// 전체 주문내역보기
 	@GetMapping("/list")
+	@PreAuthorize("isAuthenticated()")
 	public String submitOrder(Model model) {
 		List<Order> orders = orderService.showAllOrders();
 		model.addAttribute("orders", orders);
