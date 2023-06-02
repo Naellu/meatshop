@@ -26,14 +26,7 @@ public class CartServiceImpl implements CartService{
 	public int makeOrderByCartItems(String memberId, Integer productId, Integer quantity, Double price) {
 
 		// 회원id로 장바구니 조회
-		Cart cart = cartMapper.findByMemberId(memberId);
-
-		// 없으면 장바구니 생성
-		if (cart == null) {
-			cart = Cart.createCart(memberId);
-			cartMapper.saveCart(cart);
-		}
-
+		Cart cart = findCartByMemberId(memberId);
 		CartItem cartItem = cartMapper.findByCartIdAndProductId(cart.getId(), productId);
 
 		// 장바구니에 해당 cartitem이 없다면
@@ -55,9 +48,17 @@ public class CartServiceImpl implements CartService{
 		return 1;
 	}
 
+	// 회원id로 장바구니 가져오기
 	@Override
 	public Cart findCartByMemberId(String memberId) {
-		return cartMapper.findByMemberId(memberId);
+		Cart cart = cartMapper.findByMemberId(memberId);
+		
+		// 없으면 장바구니 생성
+		if (cart == null) {
+			cart = Cart.createCart(memberId);
+			cartMapper.saveCart(cart);
+		}
+		return cart;
 	}
 
 

@@ -41,7 +41,13 @@ $("#orderButton").click(function() {
 			//값을 가지고
 			// orderdteatil/ odreid로 이동
 			//다른페이지로이동
+			// 상태코드 200
 			window.location.href = "/order/detail";
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			// 상태코드 400, 401
+			// 로그인 이동
+			window.location.href = "/member/login";
 		}
 	});
 })
@@ -66,7 +72,11 @@ $("#goToCartBtn").click(function() {
 			//값을 가지고
 			// orderdteatil/ odreid로 이동
 			//다른페이지로이동
-			alert(message);
+			window.location.href="/cart";
+			alert(message); // alert말고 다른걸로 수정할 예정
+		},
+		error: function(jqXHR, textStatus, errorThrown) {
+			window.location.href = "/member/login";
 		}
 	});
 })
