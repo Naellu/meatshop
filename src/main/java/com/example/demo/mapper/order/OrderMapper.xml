@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.example.demo.mapper.order.OrderMapper">
+	<resultMap type="com.example.demo.domain.order.dto.OrderDto" id="OrderItemMap">
+		<id column="id" property="id"/>		
+		<result column="product_id" property="productId"/>
+		<result column="created" property="created"/>
+		<result column="total_price" property="totalPrice"/>
+		<result column="status" property="status"/>
+		<collection property="productName" ofType="string">
+			<result column="productName"/>
+		</collection>
+	</resultMap>
+</mapper>

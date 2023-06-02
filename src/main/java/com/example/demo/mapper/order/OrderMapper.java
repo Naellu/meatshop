@@ -7,11 +7,14 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.example.demo.domain.Members;
 import com.example.demo.domain.order.Order;
 import com.example.demo.domain.order.OrderItem;
+import com.example.demo.domain.order.dto.OrderDto;
 
 @Mapper
 public interface OrderMapper {
@@ -32,12 +35,21 @@ public interface OrderMapper {
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	Integer saveOrder(Order order);
 
+	// 회원id로 주문id 찾기
 	@Select("""
    			SELECT id
    			FROM order
    			WHERE member_id = #{memberId}
 			""")
 	Integer findOne(String memberId);
+	
+	// 주문id로 주문정보 가져오기
+	@Select("""
+			SELECT *
+			FROM orders
+			WHERE id = #{id}
+			""")
+	OrderDto findById(Integer id);
 	
 	// 회원 모든정보
 	@Select("""
@@ -65,11 +77,20 @@ public interface OrderMapper {
 
 	// 회원의 모든 주문내역
 	@Select("""
-   			SELECT *
-   			FROM orders
-   			WHERE id = #{memberId}
+   			SELECT 
+				o.id,
+			    o.member_id,
+			    p.product_name productName,
+			    o.total_price,
+			    DATE(o.created) created,
+			    o.status status
+			FROM orders as o
+			LEFT JOIN orderitems as oi ON o.id = oi.order_id
+			INNER JOIN products as p ON p.product_id = oi.product_id
+			WHERE o.member_id = #{memberId};
 			""")
-	List<Order> findAllByMemberId(String memberId);
+	@ResultMap("OrderItemMap")
+	List<OrderDto> findAllByMemberId(String memberId);
 
 
 	// 전체 주문목록 보기
@@ -98,4 +119,12 @@ public interface OrderMapper {
 			""")
 	void deleteItemsFromCart(@Param("productIds") List<Integer> productIds, @Param("memberId") String memberId);
 
+	
+	@Update("""
+			UPDATE orders 
+			SET 
+				status = #{status}
+			WHERE id = #{orderId};
+			""")
+	Integer cancel(Integer orderId, String status);
 }
