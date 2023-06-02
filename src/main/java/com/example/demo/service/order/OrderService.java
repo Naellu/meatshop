@@ -3,6 +3,7 @@ package com.example.demo.service.order;
 import java.util.List;
 
 import com.example.demo.domain.order.Order;
+import com.example.demo.domain.order.dto.OrderDto;
 import com.example.demo.domain.order.dto.OrderItemDto;
 
 public interface OrderService {
@@ -14,7 +15,7 @@ public interface OrderService {
 	int makeOrderOfMultipleProduct(String memberId, List<OrderItemDto> orderItemDtos);
 
 	// 회원 주문목록
-	List<Order> showOrderList(String memberId);
+	List<OrderDto> showOrderList(String memberId);
 
 	// 전체 주문목록
 	List<Order> showAllOrders();
@@ -23,6 +24,6 @@ public interface OrderService {
 	String findOneOfProduct(Integer productId);
 
 	// 주문 취소
-	void orderCancel();
+	void cancel(Integer orderId);
 	
 }

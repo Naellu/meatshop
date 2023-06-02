@@ -14,6 +14,7 @@
 	<my:navBar/>
 	<a class="btn btn-secondary" href="/member/info?id=${member.id}">내정보</a>
 	<a class="btn btn-secondary" href="/wish/list/${member.id}">찜목록</a>
+	<a class="btn btn-secondary" href="/order/list/${member.id}">내 주문목록</a>
 	
 	
 	<my:footer/>

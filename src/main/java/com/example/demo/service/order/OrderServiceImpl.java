@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.domain.order.Order;
 import com.example.demo.domain.order.OrderItem;
+import com.example.demo.domain.order.Status;
+import com.example.demo.domain.order.dto.OrderDto;
 import com.example.demo.domain.order.dto.OrderItemDto;
 import com.example.demo.mapper.order.OrderMapper;
 
@@ -84,13 +86,14 @@ public class OrderServiceImpl implements OrderService{
 	
 
 
+	// 특정 회원 주문목록 보기
 	@Override
-	public List<Order> showOrderList(String memberId) {
-		List<Order> orderItemList = orderMapper.findAllByMemberId(memberId);
+	public List<OrderDto> showOrderList(String memberId) {
+		List<OrderDto> orderItemList = orderMapper.findAllByMemberId(memberId);
 		return orderItemList;
 	}
 
-	// 전체 주문목록 보기
+	// 전체 회원 주문목록 보기
 	public List<Order> showAllOrders() {
 		List<Order> orders = orderMapper.findAll();
 		return orders;
@@ -101,10 +104,16 @@ public class OrderServiceImpl implements OrderService{
 		return orderMapper.selectByProductId(productId);
 	}
 
+	// 주문 취소
 	@Override
-	public void orderCancel() {
-		// TODO Auto-generated method stub
-		//  주문 취소
+	public void cancel(Integer orderId) {
+		OrderDto order = orderMapper.findById(orderId);
+		log.info("order IN SERVICE={}", order);
+		if(order.getStatus().equals(Status.CREATED.name())) {
+			orderMapper.cancel(orderId, Status.CANCEL.name());
+		} else {
+			throw new IllegalStateException("주문상태가 CREATED가 아닙니다");
+		}
 	}
 
 	

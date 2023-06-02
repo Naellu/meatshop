@@ -10,11 +10,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.demo.domain.order.Order;
+import com.example.demo.domain.order.dto.OrderDto;
 import com.example.demo.domain.order.dto.OrderItemDto;
 import com.example.demo.service.order.OrderService;
 
@@ -86,27 +88,37 @@ public class OrderController {
 
 
 	// 전체 주문내역보기
-	@GetMapping("/list")
-	@PreAuthorize("isAuthenticated()")
-	public String submitOrder(Model model) {
-		List<Order> orders = orderService.showAllOrders();
-		model.addAttribute("orders", orders);
-		log.info("model={}",model);
-		return "order/list";
-	}
+//	@GetMapping("/list")
+//	@PreAuthorize("isAuthenticated()")
+//	public String submitOrder(Model model) {
+//		List<Order> orders = orderService.showAllOrders();
+//		model.addAttribute("orders", orders);
+//		log.info("model={}",model);
+//		return "order/list";
+//	}
 
 
 	// 회원의 주문내역보기
-//	@GetMapping("/list/{memberId}")
-//	public void getOrderPage(@PathVariable String memberId, Model model) {
-//		List<Order> orderList = orderService.showOrderList(memberId);
-//		model.addAttribute("orderList", orderList);
-//	}
+	@GetMapping("/list/{memberId}")
+	public String getOrderPage(@PathVariable String memberId, Model model) {
+		List<OrderDto> orderList = orderService.showOrderList(memberId);
+		model.addAttribute("orderList", orderList);
+		return "order/list";
+	}
 
 	@GetMapping("/success")
 	public void successOrder() {
 		// 결제 완료 시
 		
+	}
+	
+	// 주문 취소
+	@PostMapping("/cancel")
+	@ResponseBody
+	@PreAuthorize("isAuthenticated()")
+	public String cancelOrder(@RequestBody OrderDto orderDto) {
+		orderService.cancel(orderDto.getId());
+		return "주문이 취소되었습니다";
 	}
 	
 }
