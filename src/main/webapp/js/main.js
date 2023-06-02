@@ -39,12 +39,13 @@ function listView() {
 								${product.price}원
 								<br />
 								남은수량 : ${product.stockQuantity}
+								<span class="badge text-bg-warning ${product.stockQuantity <= 10 && product.stockQuantity > 0 ? '' : 'd-none'}">마감임박</span>
 								<span class="badge text-bg-danger ${product.stockQuantity === 0 ? '' : 'd-none'}">품절</span>
 							</div>
 						</div>
 						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 							<div class="text-center">
-								<button onclick="location.href='/product/info/${product.productId}'" class="btn btn-secondary mt-auto" ${product.stockQuantity === 0 ? 'disabled' : ''}>상품 상세 보기</button>
+								<button onclick="location.href='/product/info/${product.productId}'" class="btn btn-secondary mt-auto" ${product.stockQuantity === 0 ? 'disabled' : ''}>${product.stockQuantity === 0 ? '상품준비중' : '상품 상세 보기'}</button>
 							</div>
 						</div>
 					</div>

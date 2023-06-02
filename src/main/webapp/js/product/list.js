@@ -1,5 +1,7 @@
 listView();
 const bucketUrl = $("#bucketUrl").val();
+const memberId = $("#memberId").val();
+const toastLiveExample = $("#liveToast");
 
 // jQuery 코드: 각 링크 클릭 시 현재 URL의 파라미터 유지하고 category 파라미터 추가
 const currentUrl = window.location.href; // 현재 URL 가져오기
@@ -46,17 +48,18 @@ function listView() {
 			type: type,
 			search: search
 		},
-		success : function(result) {
+		success: function(result) {
 			const pageInfo = result.pageInfo;
 			const productList = result.productList;
 			$("#productView").empty();
 			productList.forEach(function(product, index) {
+				const starShape = product.liked ? 'fa-solid' : 'fa-regular';
 				const productHtml = `
 				<div class="col mb-5">
 						<div class="card h-100">
 							<div>
 								<img class="card-img-top" src="${bucketUrl}/product/1.png" alt="사진준비중!" />
-								<i class="fa-regular fa-star fa-2x" style="position: absolute; top: 0; right: 0;"></i>
+								<i class="${starShape} fa-star fa-2x wish-icon" style="position: absolute; top: 0; right: 0;" data-productid="${product.productId}"></i>
 							</div>
 							<div class="card-body p-4">
 								<div class="text-center">
@@ -66,6 +69,7 @@ function listView() {
 									${product.price}원
 									<br />
 									남은수량 : ${product.stockQuantity}
+									<span class="badge text-bg-warning ${product.stockQuantity <= 10 && product.stockQuantity > 0 ? '' : 'd-none'}">마감임박</span>
 									<span class="badge text-bg-danger ${product.stockQuantity === 0 ? '' : 'd-none'}">품절</span>
 								</div >
 							</div >
@@ -79,8 +83,41 @@ function listView() {
 				`;
 				$("#productView").append(productHtml);
 			});
+
 			$("#pageUl").empty();
 			createPagination(pageInfo);
+
+			$('.wish-icon').click(function() {
+				let productId = $(this).data('productid');
+
+				const data = {
+					"productId": productId
+				};
+
+				const self = $(this);
+
+				$.ajax("/wish/like", {
+					method: "post",
+					contentType: "application/json",
+					data: JSON.stringify(data),
+					success: function(response) {
+						if (response.like) {
+							self.addClass("fa-solid");
+							self.removeClass("fa-regular");
+						} else {
+							self.removeClass("fa-solid");
+							self.addClass("fa-regular");
+						}
+					},
+					error: function(response) {
+						const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+						$(".toast-body").text(response.responseJSON.message);
+						toastBootstrap.show();
+					}
+				});
+
+
+			});
 		}
 	});
 }
@@ -188,4 +225,5 @@ function createPagination(pageInfo) {
 		$("#pageUl").append(lastPageItem);
 	}
 }
+
 

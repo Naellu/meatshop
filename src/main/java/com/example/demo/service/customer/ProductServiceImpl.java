@@ -3,10 +3,12 @@ package com.example.demo.service.customer;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
 
 import com.example.demo.domain.*;
 import com.example.demo.mapper.product.*;
+import com.example.demo.mapper.wishlist.*;
 
 import lombok.*;
 import software.amazon.awssdk.services.s3.*;
@@ -21,10 +23,13 @@ public class ProductServiceImpl implements ProductService {
 
 	private final ProductMapper productMapper;
 
+	private final WishListMapper wishListMapper;
+
 	private final S3Client s3;
 
 	@Override
-	public Map<String, Object> getViewList(Integer page, Integer categoryId, String type, String search) {
+	public Map<String, Object> getViewList(Integer page, Integer categoryId, String type, String search,
+			Authentication authentication) {
 		// 0~10 10~20 20~30
 		Integer pageSize = 8; // 8 16 24
 		Integer startIndex = (page - 1) * pageSize; // 0 8 16
@@ -65,6 +70,16 @@ public class ProductServiceImpl implements ProductService {
 
 		List<ProductView> productList = productMapper.selectCustomerAllPaging(pageSize, startIndex, categoryId, type,
 				search);
+
+		// 현재 로그인 한 사람이 좋아요한 목록 가져오기
+		if (authentication != null) {
+			Set<Integer> likedProductIds = wishListMapper.getLikedProductId(authentication.getName());
+			for (ProductView product : productList) {
+				if (likedProductIds.contains(product.getProductId())) {
+					product.setLiked(true);
+				}
+			}
+		}
 		return Map.of("pageInfo", pageInfo, "productList", productList);
 	}
 

@@ -35,11 +35,24 @@
 	<my:header>
 		관리자 메인 페이지
 	</my:header>
-	
 
-	
-	<my:footer/>
-	
+
+
+	<my:footer />
+
+	<h1>안녕하세요</h1>
+	<p>
+		NiceToMeatYou입니다.
+		<br />
+		다음은 인증번호입니다.
+	</p>
+	<div style='font-size: 130%'>
+		CODE :
+		<strong>ePw</strong>
+	</div>
+
+
+
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>

@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.*;
+import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
@@ -34,9 +35,10 @@ public class ProductController {
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
 			@RequestParam(value = "category", required = false) Integer categoryId,
 			@RequestParam(value = "type", required = false) String type,
-			@RequestParam(value = "search", defaultValue = "") String search) {
+			@RequestParam(value = "search", defaultValue = "") String search,
+			Authentication authentication) {
 
-		Map<String, Object> result = productService.getViewList(page, categoryId, type, search);
+		Map<String, Object> result = productService.getViewList(page, categoryId, type, search, authentication);
 		return ResponseEntity.ok(result);
 	}
 
@@ -48,4 +50,7 @@ public class ProductController {
 		model.addAttribute("product", product);
 		return "product/info";
 	}
+	
+	
+	
 }

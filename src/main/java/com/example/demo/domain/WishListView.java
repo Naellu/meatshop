@@ -19,4 +19,5 @@ public class WishListView {
 	private Integer pub;
 
 	private List<String> fileName;
+	
 }

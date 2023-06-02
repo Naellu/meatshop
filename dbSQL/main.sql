@@ -26,6 +26,7 @@ LIMIT 3;
 
 SELECT * FROM mainitemview;
 
+
 SELECT p.*, COUNT(o.product_id) sold, c.category_name
 FROM products p
 JOIN categories c ON p.category_id = c.category_id
@@ -37,5 +38,5 @@ FROM products p
 JOIN categories c ON p.category_id = c.category_id
 LEFT JOIN orderitems o ON p.product_id = o.product_id
 WHERE pub = 1
-GROUP BY p.product_id;
-ORDER BY sold DESC, price DESC;
+GROUP BY p.product_id
+ORDER BY sold DESC, price DESC LIMIT 3;
