@@ -39,6 +39,7 @@ function listView() {
 								${product.price}원
 								<br />
 								남은수량 : ${product.stockQuantity}
+								<span class="badge text-bg-warning ${product.stockQuantity <= 10 && product.stockQuantity > 0 ? '' : 'd-none'}">마감임박</span>
 								<span class="badge text-bg-danger ${product.stockQuantity === 0 ? '' : 'd-none'}">품절</span>
 							</div>
 						</div>

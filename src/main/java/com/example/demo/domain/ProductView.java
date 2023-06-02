@@ -17,4 +17,6 @@ public class ProductView {
 	private Integer pub;
 	
 	private List<String> fileName;
+	
+	private Boolean liked;
 }

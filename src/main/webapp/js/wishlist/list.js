@@ -58,3 +58,5 @@ function handleDeleteButtonClick(productId) {
 		}
 	});
 }
+
+

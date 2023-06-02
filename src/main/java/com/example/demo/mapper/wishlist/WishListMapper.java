@@ -12,4 +12,8 @@ public interface WishListMapper {
 	public List<WishListView> getAllView(String memberId);
 
 	public Integer deleteList(WishList wishList);
+
+	public Integer insert(WishList wishList);
+
+	public Set<Integer> getLikedProductId(String memberId);
 }
