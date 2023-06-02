@@ -1,6 +1,7 @@
 package com.example.demo.config;
 
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -9,12 +10,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import jakarta.annotation.*;
-import jakarta.servlet.*;
-import lombok.extern.slf4j.Slf4j;
-import software.amazon.awssdk.auth.credentials.*;
-import software.amazon.awssdk.regions.*;
-import software.amazon.awssdk.services.s3.*;
+import jakarta.annotation.PostConstruct;
+import jakarta.servlet.ServletContext;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.AwsCredentials;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
 
 @Configuration
 @EnableMethodSecurity
@@ -31,11 +34,14 @@ public class CustomConfig {
 
 	@Value("${aws.bucketUrl}")
 	private String bucketUrl;
+	
+	
 
 	@PostConstruct
 	public void init() {
 		application.setAttribute("bucketUrl", bucketUrl);
 	}
+	
 
 	@Bean
 	public S3Client S3Client() {
