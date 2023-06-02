@@ -36,9 +36,6 @@ function enableSubmit() {
 		$("#signupSubmit").attr("disabled", "");
 	}
 }
-
-
-
 //---------------------- 아이디 중복 체크 버튼 관련 스크립트 ----------------------
 $("#checkIdBtn").click(function() {
 	const userid = $("#inputId").val();
@@ -73,37 +70,7 @@ $("#inputId").keyup(function() {
 	// submit 버튼 비활성화
 	enableSubmit();
 });
-
 //---------------------- 아이디 중복 확인 관련 스크립트 끝 ----------------------
-//---------------------- 이메일 중복 확인 관련 스크립트 시작 ----------------------
-
-$("#checkEmailBtn").click(function() {
-	const useremail = $("#inputEmail").val();
-	// 입력한 Email을 ajax 요청 보내서
-	$.ajax("/member/checkEmail/" + useremail, {
-		success: function(data) {
-			// `{"available": true}` 
-
-			if (data.available) {
-				// 사용가능하다는 메세지 출력
-				$("#availableEmailMessage").removeClass("d-none");
-				$("#notAvailableEmailMessage").addClass("d-none");
-				checkEmail = true;
-			} else {
-				// 사용가능하지 않다는 메세지 출력
-				$("#availableEmailMessage").addClass("d-none");
-				$("#notAvailableEmailMessage").removeClass("d-none");
-				checkEmail = false;
-			}
-		},
-		complete: enableSubmit
-	})
-});
-//---------------------- 이메일 중복 확인 관련 스크립트 끝 ----------------------
-
-
-
-
 
 // --------------------  주소칸 반드시 입력해야하는 스크립트 시작 -------
 
@@ -114,18 +81,11 @@ $("#inputAddress").keyup(function() {
 	if (ad != "") {
 		checkAddress = true;
 	}
-
-
-
-
-
-
 	// submit 버튼 비활성화
 	enableSubmit();
 
 });
 // --------------------  주소칸 반드시 입력해야하는 스크립트 끝-------
-
 
 $("#inputName").keyup(function() {
 	// 주소 입력란에 새로운 입력이 들어왔을시
@@ -138,9 +98,6 @@ $("#inputName").keyup(function() {
 	enableSubmit();
 });
 
-
-
-
 $("#inputPhoneNumber").keyup(function() {
 	// 전화번호 재입력시 
 	checkPhoneNumber = false;
@@ -152,21 +109,7 @@ $("#inputPhoneNumber").keyup(function() {
 	enableSubmit();
 });
 
-
-
-$("#inputEmail").keyup(function() {
-	// 이메일 입력란에 새로운 입력이 들어 왔을시 
-	checkEmail = false;
-	$("#availableEmailMessage").addClass("d-none")
-	$("#notAvailableEmailMessage").addClass("d-none")
-
-	// submit 버튼 비활성화
-	enableSubmit();
-});
-
-
 // 확인할 것
-
 $("#inputPassword, #inputPasswordCheck").keyup(function() {
 	// 패스워드에 입력한 값
 	const pw1 = $("#inputPassword").val();
@@ -196,25 +139,44 @@ $("#inputPassword, #inputPasswordCheck").keyup(function() {
 	enableSubmit();
 })
 
+//---------------------- 이메일 중복 확인 관련 스크립트 시작 ----------------------
 const mailconfirm = $("#mailconfirm");
 const emailconfirmTxt = $("#emailconfirmTxt");
-
 
 $('#mail-Check-Btn').click(function() {
 	const email = $("#userEmail1").val();
 	const site = $("#userEmail2").val();
 	const fullEmail = email + site;
-
-	$.ajax("/member/mailCheck", {
-		type: "POST",
-		data: {
-			"email": fullEmail
-		},
+	$("#emailInput").val(fullEmail);
+	// 입력한 Email을 ajax 요청 보내서
+	$.ajax("/member/checkEmail/" + fullEmail, {
 		success: function(data) {
-			alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
-			console.log(data);
-			chkEmailConfirm(data, mailconfirm, emailconfirmTxt);
-		}
+			// `{"available": true}` 
+			if (data.available) {
+				// 사용가능하다는 메세지 출력
+				$("#availableEmailMessage").removeClass("d-none");
+				$("#notAvailableEmailMessage").addClass("d-none");
+				checkEmail = true;
+
+				$.ajax("/member/mailCheck", {
+					type: "POST",
+					data: {
+						"email": fullEmail
+					},
+					success: function(data) {
+						alert("해당 이메일로 인증번호 발송이 완료되었습니다. \n 확인부탁드립니다.")
+						//메일확인하러가기 힘들어서 설정 나중에 삭제필요
+						console.log(data);
+						chkEmailConfirm(data, mailconfirm, emailconfirmTxt);
+					}
+				});
+			} else {
+				// 사용가능하지 않다는 메세지 출력
+				$("#availableEmailMessage").addClass("d-none");
+				$("#notAvailableEmailMessage").removeClass("d-none");
+				checkEmail = false;
+			}
+		},
 	})
 });
 
@@ -223,11 +185,20 @@ function chkEmailConfirm(data, mailconfirm, emailconfirmTxt) {
 	mailconfirm.on("keyup", function() {
 		if (data != mailconfirm.val()) { //
 			emailConfirmChk = false;
-			emailconfirmTxt.html("<span id='emconfirmchk'>인증번호가 잘못되었습니다</span>")
-			//console.log("중복아이디");
+			emailconfirmTxt.html(`
+				<div class="form-text text-danger" id="emconfirmchk">
+					<i class="fa-solid fa-check"></i>
+					인증 번호가 틀립니다
+				</div>`)
 		} else { // 아니면 중복아님
 			emailConfirmChk = true;
-			emailconfirmTxt.html("<span id='emconfirmchk'>인증번호 확인 완료</span>")
+			emailconfirmTxt.html(`
+				<div class="form-text text-primary" id="emconfirmchk">
+					<i class="fa-solid fa-check"></i>
+					인증 완료 되었습니다
+				</div>`)
+			enableSubmit();
 		}
 	})
 }
+//---------------------- 이메일 중복 확인 관련 스크립트 끝 ----------------------

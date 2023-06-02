@@ -27,13 +27,19 @@ public class MailServiceImpl implements MailService {
 		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
 		helper.setTo(email);
-		helper.setSubject("nicetomeatyou 회원가입 이메일 인증");
+		helper.setSubject("NiceToMeatYou 회원가입 이메일 인증");
 
-		String msg = "<h1>안녕하세요</h1>\n" + "<p>\n" + "NiceToMeatYou입니다.\n" + "<br />\n" + "다음은 인증번호입니다.\n" + "</p>\n"
-				+ "<div style='font-size: 130%'>\n" + "CODE : <strong>" + authCode + "</strong>\n" + "</div>";
-
+		String msg = "<h1>안녕하세요</h1>\n"
+				+ "<p>\n"
+				+ "NiceToMeatYou입니다.\n"
+				+ "<br />\n"
+				+ "다음은 인증번호입니다.\n"
+				+ "</p>\n"
+				+ "<div style='font-size: 130%'>\n"
+				+ "CODE : <strong>${autoCode} </strong>\n"
+				+ "</div>";
 		helper.setText(msg, true);
-		helper.setFrom(new InternetAddress("rlagkals3135@naver.com", "hm"));
+		helper.setFrom(new InternetAddress("admin@nicetomeatyou.com", "관리자"));
 
 		return message;
 	}
@@ -56,12 +62,12 @@ public class MailServiceImpl implements MailService {
 
 		MimeMessage message = createEmail(email); // 메일 발송
 		try {// 예외처리
- 			emailSender.send(message);
+			//메일보내기
+			emailSender.send(message);
 		} catch (MailException e) {
 			e.printStackTrace();
 			throw new IllegalArgumentException();
 		}
-
 		return authCode; // 메일로 보냈던 인증 코드를 서버로 반환
 	}
 }

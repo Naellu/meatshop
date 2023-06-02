@@ -29,3 +29,6 @@ SELECT wl.id, p.product_id, p.product_name, p.country_of_origin, p.price, p.stoc
 FROM products p JOIN categories c ON p.category_id = c.category_id
 LEFT JOIN productfilename f ON p.product_id = f.product_id
 LEFT JOIN wishlist wl ON wl.product_id = p.product_id;
+
+SELECT * FROM wishlist WHERE member_id = 'admin0'; 
+
