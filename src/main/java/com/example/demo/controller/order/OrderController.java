@@ -86,18 +86,6 @@ public class OrderController {
 		
 	}
 
-
-	// 전체 주문내역보기
-//	@GetMapping("/list")
-//	@PreAuthorize("isAuthenticated()")
-//	public String submitOrder(Model model) {
-//		List<Order> orders = orderService.showAllOrders();
-//		model.addAttribute("orders", orders);
-//		log.info("model={}",model);
-//		return "order/list";
-//	}
-
-
 	// 회원의 주문내역보기
 	@GetMapping("/list/{memberId}")
 	public String getOrderPage(@PathVariable String memberId, Model model) {

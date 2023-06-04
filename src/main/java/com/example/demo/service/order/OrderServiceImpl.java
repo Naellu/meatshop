@@ -11,6 +11,7 @@ import com.example.demo.domain.order.Order;
 import com.example.demo.domain.order.OrderItem;
 import com.example.demo.domain.order.Status;
 import com.example.demo.domain.order.dto.OrderDto;
+import com.example.demo.domain.order.dto.OrderDtoTest;
 import com.example.demo.domain.order.dto.OrderItemDto;
 import com.example.demo.mapper.order.OrderMapper;
 
@@ -77,15 +78,6 @@ public class OrderServiceImpl implements OrderService{
 		return order.getId();
 	}
 
-	public boolean payingOrder() {
-		// TODO Auto-generated method stub
-		//  결제 완료
-		return true;
-	}
-	
-	
-
-
 	// 특정 회원 주문목록 보기
 	@Override
 	public List<OrderDto> showOrderList(String memberId) {
@@ -94,8 +86,8 @@ public class OrderServiceImpl implements OrderService{
 	}
 
 	// 전체 회원 주문목록 보기
-	public List<Order> showAllOrders() {
-		List<Order> orders = orderMapper.findAll();
+	public List<OrderDtoTest> showAllOrders() {
+		List<OrderDtoTest> orders = orderMapper.findAllOrders();
 		return orders;
 	}
 

@@ -2,8 +2,8 @@ package com.example.demo.service.order;
 
 import java.util.List;
 
-import com.example.demo.domain.order.Order;
 import com.example.demo.domain.order.dto.OrderDto;
+import com.example.demo.domain.order.dto.OrderDtoTest;
 import com.example.demo.domain.order.dto.OrderItemDto;
 
 public interface OrderService {
@@ -18,7 +18,7 @@ public interface OrderService {
 	List<OrderDto> showOrderList(String memberId);
 
 	// 전체 주문목록
-	List<Order> showAllOrders();
+	List<OrderDtoTest> showAllOrders();
 
 	// 상품 이름 찾기
 	String findOneOfProduct(Integer productId);

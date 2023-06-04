@@ -15,6 +15,7 @@ import com.example.demo.domain.Members;
 import com.example.demo.domain.order.Order;
 import com.example.demo.domain.order.OrderItem;
 import com.example.demo.domain.order.dto.OrderDto;
+import com.example.demo.domain.order.dto.OrderDtoTest;
 
 @Mapper
 public interface OrderMapper {
@@ -104,6 +105,22 @@ public interface OrderMapper {
    			FROM orders
 			""")
 	List<Order> findAll();
+
+	// 전체 주문목록 보기
+	@Select("""
+   			SELECT 
+				o.id,
+			    o.member_id,
+			    p.product_name productName,
+			    (oi.quantity * oi.order_price) as totalPrice,
+			    DATE(o.created) created,
+			    o.status status
+			FROM orders as o
+			LEFT JOIN orderitems as oi ON o.id = oi.order_id
+			INNER JOIN products as p ON p.product_id = oi.product_id
+			""")
+	@ResultMap("OrderItemMapTest")
+	List<OrderDtoTest> findAllOrders();
 
 
 	// 장바구니에 담아둔 상품 삭제
