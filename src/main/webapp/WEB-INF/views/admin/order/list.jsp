@@ -30,6 +30,21 @@
 		<div class="row justify-content-center">
 			<div class="col-12">
 			
+			<form action="/admin/order/list" class="d-flex" role="search">
+				<div class="input-group">
+					<select class="form-select flex-grow-0" style="width: 100px;" name="type" id="">
+						<option value="all">전체</option>
+						<option value="member" ${param.type eq 'title' ? 'selected' : '' }>회원</option>
+						<option value="product" ${param.type eq 'body' ? 'selected' : '' }>상품명</option>
+					</select>
+
+					<input value="${param.search }" name="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+					<button class="btn btn-outline-success" type="submit">
+						<i class="fa-solid fa-magnifying-glass"></i>
+					</button>
+				</div>
+			</form>
+			
 				<table class="table">
 			       <thead>
                        <tr>
@@ -53,17 +68,14 @@
 								</td>
 					            <td>${order.totalPrice }</td>
 					            <td>${order.created }</td>
-					            <td>${order.status }</td>
-					            <td> <!-- 주문상태 -->
-					            	<c:choose>
-					            		<c:when test="${order.status != 'CANCEL' }">
-								            <button type="button" id="cancelOrderButton" class="btn btn-outline-danger cancelOrderButton" data-order-id="${order.id}">취소</button>
-					            		</c:when>
-					            		<c:otherwise>
-					            			<!-- empty -->
-					            		</c:otherwise>
-					            	</c:choose>
-					            </td>
+					            <td>
+									<select class="form-select status-select" data-order-id="${order.id}">
+										<option value="CREATED" ${order.status eq 'CREATED' ? 'selected' : '' }>CREATED</option>
+										<option value="DELIVERY" ${order.status eq 'DELIVERY' ? 'selected' : '' }>DELIVERY</option>
+										<option value="PAYMENT" ${order.status eq 'PAYMENT' ? 'selected' : '' }>PAYMENT</option>
+										<option value="CANCEL" ${order.status eq 'CANCEL' ? 'selected' : '' }>CANCEL</option>
+									</select>
+								</td>
 					        </tr>
 					    </c:forEach>
 					</tbody>
@@ -73,11 +85,44 @@
 		</div>	
 	</div>
 	
+	<div class="container-lg">
+		<div class="row">
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-center">
+
+					<!-- 이전 버튼 -->
+					<c:if test="${pageInfo.currentPageNum gt 1 }">
+						<my:adminOrderPageInfo pageNum="${pageInfo.currentPageNum - 1 }">
+							<i class="fa-solid fa-angle-left"></i>
+						</my:adminOrderPageInfo>
+					</c:if>
+
+					<c:forEach begin="${pageInfo.leftPageNum }" end="${pageInfo.rightPageNum }" var="pageNum">
+						<my:adminOrderPageInfo pageNum="${pageNum }">
+							${pageNum }
+						</my:adminOrderPageInfo>
+					</c:forEach>
+
+					<!-- 다음 버튼 -->
+					<c:if test="${pageInfo.currentPageNum lt pageInfo.lastPageNum }">
+						<%-- 페이지 번호 : ${pageInfo.currentPageNum + 1 } --%>
+						<my:adminOrderPageInfo pageNum="${pageInfo.currentPageNum + 1 }">
+							<i class="fa-solid fa-angle-right"></i>
+						</my:adminOrderPageInfo>
+					
+					</c:if>
+
+				</ul>
+			</nav>
+		</div>
+	</div>
+	
+	
 
 	<my:footer/>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src=""></script>
+<script src="/js/admin/order/list.js"></script>
 </body>
 </html>

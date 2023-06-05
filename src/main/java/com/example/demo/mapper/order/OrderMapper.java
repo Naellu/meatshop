@@ -106,8 +106,11 @@ public interface OrderMapper {
 			""")
 	List<Order> findAll();
 
-	// 전체 주문목록 보기
+	// 관리자 전체 주문목록 보기
 	@Select("""
+			<script>
+			<bind name="pattern" value="'%' + search + '%'" />
+			
    			SELECT 
 				o.id,
 			    o.member_id,
@@ -118,10 +121,45 @@ public interface OrderMapper {
 			FROM orders as o
 			LEFT JOIN orderitems as oi ON o.id = oi.order_id
 			INNER JOIN products as p ON p.product_id = oi.product_id
+			
+			<where>
+				<if test="(type eq 'all') or (type eq 'member')">
+					member_id LIKE #{pattern}
+				</if>
+				<if test="(type eq 'all') or (type eq 'product')">
+					OR p.product_name LIKE #{pattern}
+				</if>
+			</where>
+			
+			ORDER BY o.id DESC
+			LIMIT #{startIndex}, #{rowPerPage}
+			
+			</script>
 			""")
 	@ResultMap("OrderItemMapTest")
-	List<OrderDtoTest> findAllOrders();
+	List<OrderDtoTest> findAllOrders(Integer startIndex, Integer rowPerPage, String search, String type);
 
+	// 페이징을 위한 총 주문 개수
+	@Select("""
+			<script>
+			<bind name="pattern" value="'%' + search + '%'" />
+			SELECT COUNT(*)
+			FROM orders as o
+			LEFT JOIN orderitems as oi ON o.id = oi.order_id
+			INNER JOIN products as p ON p.product_id = oi.product_id
+			
+			<where>
+				<if test="(type eq 'all') or (type eq 'member')">
+					member_id LIKE #{pattern}
+				</if>
+				<if test="(type eq 'all') or (type eq 'product')">
+					OR p.product_name LIKE #{pattern}
+				</if>
+			</where>
+			
+			</script>
+			""")
+	Integer countAll(String search, String type);
 
 	// 장바구니에 담아둔 상품 삭제
 	@Delete("""
@@ -143,5 +181,9 @@ public interface OrderMapper {
 				status = #{status}
 			WHERE id = #{orderId};
 			""")
-	Integer cancel(Integer orderId, String status);
+	boolean updateStatus(Integer orderId, String status);
+
+	
+	
+	
 }
