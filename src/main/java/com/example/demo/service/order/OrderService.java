@@ -1,8 +1,8 @@
 package com.example.demo.service.order;
 
 import java.util.List;
+import java.util.Map;
 
-import com.example.demo.domain.order.Order;
 import com.example.demo.domain.order.dto.OrderDto;
 import com.example.demo.domain.order.dto.OrderItemDto;
 
@@ -18,7 +18,7 @@ public interface OrderService {
 	List<OrderDto> showOrderList(String memberId);
 
 	// 전체 주문목록
-	List<Order> showAllOrders();
+	Map<String, Object> showAllOrders(Integer page, String search, String type);
 
 	// 상품 이름 찾기
 	String findOneOfProduct(Integer productId);
@@ -26,4 +26,6 @@ public interface OrderService {
 	// 주문 취소
 	void cancel(Integer orderId);
 	
+	// 주문 상태 변경
+	boolean updateStatus(Integer orderId, String status);
 }

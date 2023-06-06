@@ -26,6 +26,11 @@
 					<li class="nav-item">
 						<a class="nav-link" href="/admin/product/list">상품목록</a>
 					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="/admin/order/list">주문목록</a>
+					</li>
+					
 				</ul>
 
 			</div>

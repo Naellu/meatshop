@@ -1,7 +1,9 @@
 package com.example.demo.service.order;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import com.example.demo.domain.order.Order;
 import com.example.demo.domain.order.OrderItem;
 import com.example.demo.domain.order.Status;
 import com.example.demo.domain.order.dto.OrderDto;
+import com.example.demo.domain.order.dto.OrderDtoTest;
 import com.example.demo.domain.order.dto.OrderItemDto;
 import com.example.demo.mapper.order.OrderMapper;
 
@@ -77,15 +80,6 @@ public class OrderServiceImpl implements OrderService{
 		return order.getId();
 	}
 
-	public boolean payingOrder() {
-		// TODO Auto-generated method stub
-		//  결제 완료
-		return true;
-	}
-	
-	
-
-
 	// 특정 회원 주문목록 보기
 	@Override
 	public List<OrderDto> showOrderList(String memberId) {
@@ -93,10 +87,41 @@ public class OrderServiceImpl implements OrderService{
 		return orderItemList;
 	}
 
-	// 전체 회원 주문목록 보기
-	public List<Order> showAllOrders() {
-		List<Order> orders = orderMapper.findAll();
-		return orders;
+	// 관리자 전체 회원 주문목록 보기
+	@Override
+	public Map<String, Object> showAllOrders(Integer page, String search, String type) {
+		// 페이지당 행의 수
+		Integer rowPerPage = 10;
+
+		// 쿼리 LIMIT 절에 사용할 시작 인덱스
+		Integer startIndex = (page - 1) * rowPerPage;
+
+		// 페이지네이션이 필요한 정보
+		// 전체 레코드 수
+		Integer numOfRecords = orderMapper.countAll(search, type);
+		// 마지막 페이지 번호
+		Integer lastPageNumber = (numOfRecords - 1) / rowPerPage + 1;
+		// 페이지네이션 왼쪽번호
+		Integer leftPageNum = page - 5;
+		// 1보다 작을 수 없음
+		leftPageNum = Math.max(leftPageNum, 1);
+
+		// 페이지네이션 오른쪽번호
+		Integer rightPageNum = leftPageNum + 9;
+		// 마지막페이지보다 클 수 없음
+		rightPageNum = Math.min(rightPageNum, lastPageNumber);
+
+		Map<String, Object> pageInfo = new HashMap<>();
+		pageInfo.put("rightPageNum", rightPageNum);
+		pageInfo.put("leftPageNum", leftPageNum);
+		pageInfo.put("currentPageNum", page);
+		pageInfo.put("lastPageNum", lastPageNumber);
+		
+		List<OrderDto> orders = orderMapper.findAllOrders(startIndex, rowPerPage, search, type);
+		log.info("orders size IN SERVICE = {}",orders.size());
+		
+		return Map.of("pageInfo", pageInfo, 
+				"orderList", orders);
 	}
 
 	@Override
@@ -110,10 +135,16 @@ public class OrderServiceImpl implements OrderService{
 		OrderDto order = orderMapper.findById(orderId);
 		log.info("order IN SERVICE={}", order);
 		if(order.getStatus().equals(Status.CREATED.name())) {
-			orderMapper.cancel(orderId, Status.CANCEL.name());
+			orderMapper.updateStatus(orderId, Status.CANCEL.name());
 		} else {
 			throw new IllegalStateException("주문상태가 CREATED가 아닙니다");
 		}
+	}
+	
+	// 관리자의 주문 상태 변경
+	@Override
+	public boolean updateStatus(Integer orderId, String status) {
+		return orderMapper.updateStatus(orderId, status);
 	}
 
 	

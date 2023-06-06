@@ -6,6 +6,7 @@
 <mapper namespace="com.example.demo.mapper.order.OrderMapper">
 	<resultMap type="com.example.demo.domain.order.dto.OrderDto" id="OrderItemMap">
 		<id column="id" property="id"/>		
+		<result column="member_id" property="memberId"/>
 		<result column="product_id" property="productId"/>
 		<result column="created" property="created"/>
 		<result column="total_price" property="totalPrice"/>
@@ -14,4 +15,16 @@
 			<result column="productName"/>
 		</collection>
 	</resultMap>
+	
+	<resultMap type="com.example.demo.domain.order.dto.OrderDtoTest" id="OrderItemMapTest">
+		<id column="id" property="id"/>		
+		<result column="member_id" property="memberId"/>
+		<result column="product_id" property="productId"/>
+		<result column="created" property="created"/>
+		<result column="totalPrice" property="totalPrice"/>
+		<result column="status" property="status"/>
+		<result column="productName" property="productName"/>
+	</resultMap>
+	
+	
 </mapper>

@@ -45,7 +45,7 @@
 			                    
 			                    <td id="productPrice_${cartItem.id}" data-unit-price="${cartItem.productPrice}">${cartItem.productPrice}</td>
                                 <td>
-	                                <button type="button" id="deleteButton" class="btn btn-danger btn-delete" value="${cartItem.id}">
+	                                <button type="button" id="deleteButton" class="btn btn-outline-danger btn-delete" value="${cartItem.id}">
 	                                	<i class="fa-solid fa-xmark"></i>
 	                                </button>
                                 </td>
@@ -55,7 +55,7 @@
 			                    <input type="hidden" name="memberId" id="memberId" value="${memberId }"/>
                     </tbody>
                 </table>
-		            <button id="orderButton" class="btn btn-primary">주문하러가기</button>
+		            <button id="orderButton" class="btn btn-outline-dark">주문하러가기</button>
 		            <span id="totalPrice"></span>
             </div>
         </div>

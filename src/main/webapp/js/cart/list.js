@@ -47,7 +47,8 @@ $(document).ready(function() {
 			data: JSON.stringify(data),
 			success: function(response) {
 				// alert(response);
-				window.location.replace("/cart");
+				//window.location.replace("/cart");
+				location.reload();
 				updateTotalPrice();
 			},
             error: function (xhr, status, error) {
