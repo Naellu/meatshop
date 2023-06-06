@@ -1,13 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 <%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+    	.table thead th {
+			text-align: left;
+		}
+
+		.table tbody td {
+			text-align: left;
+		}
+
+		.table tbody p {
+			text-align: left;
+		}
+		.accordion-button {
+			padding: 0 !important;
+		}
+		.accordion-body {
+			padding-left: 0 !important;
+			padding-right: 0 !important;	
+		}
+    </style>
 <title>주문 목록</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -30,6 +51,7 @@
 		<div class="row justify-content-center">
 			<div class="col-12">
 			
+			<!-- 검색 -->
 			<form action="/admin/order/list" class="d-flex" role="search">
 				<div class="input-group">
 					<select class="form-select flex-grow-0" style="width: 100px;" name="type" id="">
@@ -45,6 +67,7 @@
 				</div>
 			</form>
 			
+			<!-- 주문 정보 -->
 				<table class="table">
 			       <thead>
                        <tr>
@@ -62,10 +85,30 @@
 					            <td>${order.id }</td>
 					            <td>${order.memberId }</td>
 					            <td>
-					            <c:forEach var="product" items="${order.productName}">
-									<p>${product}</p>
-								</c:forEach>
-								</td>
+					                <c:choose>
+								        <c:when test="${fn:length(order.productName) == 1}">
+								            <p>${order.productName[0]}</p>
+								        </c:when>
+								        <c:otherwise>
+								            <div class="accordion accordion-flush" id="accordion${order.id}">
+								                <div class="accordion-item">
+								                    <div class="accordion-header" id="headingOne${order.id}">
+								                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne${order.id}" aria-expanded="true" aria-controls="collapseOne${order.id}">
+								                            ${order.productName[0]}
+								                        </button>
+								                    </div>
+								                    <div id="collapseOne${order.id}" class="accordion-collapse collapse" aria-labelledby="headingOne${order.id}" data-bs-parent="#accordion${order.id}">
+								                        <div class="accordion-body">
+								                            <c:forEach var="product" begin="1" items="${order.productName}">
+								                                <p>${product}</p>
+								                            </c:forEach>
+								                        </div>
+								                    </div>
+								                </div>
+								            </div>
+								        </c:otherwise>
+								    </c:choose>
+					            </td>
 					            <td>${order.totalPrice }</td>
 					            <td>${order.created }</td>
 					            <td>
@@ -85,6 +128,8 @@
 		</div>	
 	</div>
 	
+	
+	<!-- 페이지네이션 -->
 	<div class="container-lg">
 		<div class="row">
 			<nav aria-label="Page navigation example">

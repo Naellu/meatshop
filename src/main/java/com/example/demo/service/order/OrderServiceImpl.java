@@ -117,7 +117,7 @@ public class OrderServiceImpl implements OrderService{
 		pageInfo.put("currentPageNum", page);
 		pageInfo.put("lastPageNum", lastPageNumber);
 		
-		List<OrderDtoTest> orders = orderMapper.findAllOrders(startIndex, rowPerPage, search, type);
+		List<OrderDto> orders = orderMapper.findAllOrders(startIndex, rowPerPage, search, type);
 		log.info("orders size IN SERVICE = {}",orders.size());
 		
 		return Map.of("pageInfo", pageInfo, 

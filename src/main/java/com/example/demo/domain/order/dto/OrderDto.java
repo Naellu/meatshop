@@ -17,11 +17,4 @@ public class OrderDto {
 	private String status;
 	
 	private List<String> productName; // 주문에 들어있는 주문상품들
-	
-//	public String bringStatus() {
-//		if(this.status != null) {
-//			return this.status.name();
-//		}
-//		return null;
-//	}
 }

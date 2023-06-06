@@ -115,7 +115,7 @@ public interface OrderMapper {
 				o.id,
 			    o.member_id,
 			    p.product_name productName,
-			    (oi.quantity * oi.order_price) as totalPrice,
+			    o.total_price,
 			    DATE(o.created) created,
 			    o.status status
 			FROM orders as o
@@ -136,8 +136,8 @@ public interface OrderMapper {
 			
 			</script>
 			""")
-	@ResultMap("OrderItemMapTest")
-	List<OrderDtoTest> findAllOrders(Integer startIndex, Integer rowPerPage, String search, String type);
+	@ResultMap("OrderItemMap")
+	List<OrderDto> findAllOrders(Integer startIndex, Integer rowPerPage, String search, String type);
 
 	// 페이징을 위한 총 주문 개수
 	@Select("""
