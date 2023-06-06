@@ -10,6 +10,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+    	.table thead th {
+			text-align: left;
+		}
+
+		.table tbody td {
+			text-align: left;
+		}
+
+		.table tbody p {
+			text-align: left;
+		}
+		.accordion-button {
+			padding: 0 !important;
+		}
+		.accordion-body {
+			padding-left: 0 !important;
+			padding-right: 0 !important;	
+		}
     </style>
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -34,7 +52,7 @@
 			
 				<table class="table">
 			       <thead>
-                       <tr>
+                       <tr id="table-row">
 	                       <th>주문번호</th>
 	                       <th>상품명</th>
 	       				   <th>총 결제금액</th>
