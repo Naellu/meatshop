@@ -2,7 +2,7 @@ const mapContainer = document.getElementById('map'); // 지도를 표시할 div
 
 const x = 37.566208784133494;
 const y = 126.90195514818544;
-
+var mapTypeControl = new kakao.maps.MapTypeControl();
 mapOption = {
 	// 위치할 위도 경도
 	center: new kakao.maps.LatLng(x, y), // 지도의 중심좌표
@@ -11,6 +11,14 @@ mapOption = {
 };
 
 const map = new kakao.maps.Map(mapContainer, mapOption);
+
+// kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
+map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+
+// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+var zoomControl = new kakao.maps.ZoomControl();
+map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
 
 // 마커 표시 위치 생성
 const markerPosition = new kakao.maps.LatLng(x, y);
