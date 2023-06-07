@@ -4,7 +4,8 @@ import com.example.demo.exception.*;
 
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 public class Product {
 	private Integer productId;
 	private String productName;

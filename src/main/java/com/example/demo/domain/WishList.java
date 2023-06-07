@@ -2,7 +2,8 @@ package com.example.demo.domain;
 
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 public class WishList {
 	private Integer id;
 	private String memberId;

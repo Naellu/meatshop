@@ -53,7 +53,7 @@ public class ProductController {
 
 	// 상품 상세 페이지
 	@GetMapping("detail/{id}")
-	//@PreAuthorize("hasAuthority('admin')")
+	// @PreAuthorize("hasAuthority('admin')")
 	public String detail(Model model, @PathVariable("id") Integer id) {
 		ProductView product = productService.getOneView(id);
 		model.addAttribute("product", product);
@@ -97,31 +97,32 @@ public class ProductController {
 			@RequestParam(value = "removeFiles", required = false) List<String> removeFileNames,
 			@RequestParam(value = "files", required = false) MultipartFile[] files,
 			RedirectAttributes rttr) {
+		Integer productId = product.getProductId();
+		rttr.addAttribute("productId", productId);
 		try {
 			boolean ok = productService.modify(product, removeFileNames, files);
 			if (ok) {
-				rttr.addFlashAttribute("message", product.getProductId() + "번 상품이 수정되었습니다.");
-				return "redirect:/admin/product/detail/" + product.getProductId();
-			} else {
-				// 수정폼으로 리디렉션
-				rttr.addFlashAttribute("message", "게시물이 수정되지 않았습니다.");
+				rttr.addFlashAttribute("message", productId + "번 상품이 수정되었습니다.");
+				return "redirect:/admin/product/detail/{productId}";
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return "redirect:/admin/product/modify/" + product.getProductId();
+		rttr.addFlashAttribute("message", "게시물이 수정되지 않았습니다.");
+		return "redirect:/admin/product/modify/{productId}";
 	}
 
 	// 상품 삭제 처리
 	@PostMapping("remove")
 	public String removeProc(@RequestParam Integer id, RedirectAttributes rttr) {
 		Boolean ok = productService.remove(id);
+		rttr.addAttribute("id", id);
 		if (ok) {
 			rttr.addFlashAttribute("message", "상품이 삭제되었습니다.");
 			return "redirect:/admin/product/list";
 		} else {
 			rttr.addFlashAttribute("message", "상품 삭제를 실패하였습니다.");
-			return "redirect:/admin/product/detail?id=" + id;
+			return "redirect:/admin/product/detail/{id}";
 		}
 	}
 }
