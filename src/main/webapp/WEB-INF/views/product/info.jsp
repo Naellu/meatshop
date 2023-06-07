@@ -99,9 +99,7 @@
 			</li>
 		</ul>
 		<div class="tab-content mt-2">
-			<div id="detailContent" class="tab-pane fade show active">여기에 상품상세 표시될 예정</div>
-			<div id="inquiryContent" class="tab-pane fade show active d-none">여기에 상품문의 표시될 예정</div>
-			<div id="reviewContent" class="tab-pane fade show active d-none">여기에 상품리뷰 표시될 예정</div>
+			<div id="content" class="tab-pane fade show active">여기에 상품상세/상품문의/상품리뷰 표시될 예정</div>
 		</div>
 	</div>
 

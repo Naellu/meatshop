@@ -6,6 +6,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <sec:authentication property="name" var="userid" />
+
 <button class="btn btn-primary" id="addReview"
 	data-product-id="${review.productId}" data-customer-id="${userid }">리뷰작성하기</button>
 <br />

@@ -34,12 +34,12 @@ $("#addReview").click(function() {
 					data: JSON.stringify(data),
 					success: function(data) {
 						alert(data.message)
-						loadReviewPage(productId, customerName)
+						loadReviewPage(productId, customerId)
 
 					},
 					error: function() {
 						alert("문의를 등록하지 못했습니다.")
-						loadReviewPage(productId, customerName)
+						loadReviewPage(productId, customerId)
 
 					}
 				})
@@ -70,8 +70,8 @@ for (var pageButton of pageButtons) {
 		$.ajax("/product/review/list", {
 			data: data,
 			success: function(answerPage) {
-				$("#reviewContent").empty();
-				$("#reviewContent").html(answerPage)
+				$("#content").empty();
+				$("#content").html(answerPage)
 			}
 		})
 

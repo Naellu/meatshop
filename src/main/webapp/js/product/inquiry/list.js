@@ -365,8 +365,8 @@ for (var pageButton of pageButtons) {
 		$.ajax("/product/inquiry/list", {
 			data: data,
 			success: function(inquiryPage) {
-				$("#inquiryContent").empty();
-				$("#inquiryContent").html(inquiryPage)
+				$("#content").empty();
+				$("#content").html(inquiryPage)
 			}
 		})
 

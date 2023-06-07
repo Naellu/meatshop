@@ -86,10 +86,12 @@ $("#productdetail").click(function() { //상품문의를 누르면
 	$("a.nav-link").removeClass("active"); // "nav-link"클래스를 가지오 있는 모든 a엘리멘트의 "active" 클래스를 제거 후
 	$(this).addClass("active"); // 현재(상품문의)에만 "active"클래스를 추가한다
 	
+	$("#content").empty();
+	/*
 	$("#detailContent").removeClass("d-none");
 	$("#inquiryContent").addClass("d-none");
 	$("#reviewContent").addClass("d-none");
-	
+	*/
 })
 
 
@@ -97,10 +99,13 @@ $("#productdetail").click(function() { //상품문의를 누르면
 $("#productReview").click(function() { //상품문의를 누르면
 	$("a.nav-link").removeClass("active"); // "nav-link"클래스를 가지오 있는 모든 a엘리멘트의 "active" 클래스를 제거 후
 	$(this).addClass("active"); // 현재(상품문의)에만 "active"클래스를 추가한다
-	
+	/*
 	$("#inquiryContent").addClass("d-none");
 	$("#detailContent").addClass("d-none");
 	$("#reviewContent").removeClass("d-none");
+	*/
+	
+	$("#content").empty();
 	
 	const productId = $(this).data('productId');
 	const customerId = $(this).data('customerId');
@@ -111,6 +116,7 @@ $("#productReview").click(function() { //상품문의를 누르면
 // 상품리뷰 출력 함수
 
 function loadReviewPage(productId, customerId){
+	$("#content").empty();
 	
 	const data = {
 		productId: productId,
@@ -131,11 +137,11 @@ function loadReviewPage(productId, customerId){
 $("#productInquiry").click(function() { //상품문의를 누르면
 	$("a.nav-link").removeClass("active"); // "nav-link"클래스를 가지오 있는 모든 a엘리멘트의 "active" 클래스를 제거 후
 	$(this).addClass("active"); // 현재(상품문의)에만 "active"클래스를 추가한다
-	
+	/*
 	$("#inquiryContent").removeClass("d-none");
 	$("#detailContent").addClass("d-none");
 	$("#reviewContent").addClass("d-none");
-
+*/
 	const productId = $(this).data('productId');
 	const customerId = $(this).data('customerId');
 	
@@ -154,10 +160,12 @@ function loadInquiryPage(productId, customerId){
 	$.ajax("/product/inquiry/list", { //data의 값을 파라미터 형식으로 전달
 		data: data,
 		success: function(inquiryPage) {
+			$("#content").empty();
 			$("#inquiryContent").html(inquiryPage); // jsp 페이지를 HTML 형태로 삽입
 
 
 		}
+		
 	});
 
 }
