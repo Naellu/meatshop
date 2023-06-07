@@ -34,13 +34,24 @@ public class WishListController {
 		return null;
 	}
 
+	/*
+	 * @GetMapping("view") public ResponseEntity<List<WishListView>>
+	 * viewWishlist(@RequestParam("memberId") String memberId) { // memberId를 사용하여
+	 * 해당 멤버의 찜 목록을 조회하는 로직 작성 List<WishListView> productList =
+	 * wishService.getViewList(memberId);
+	 * 
+	 * // productList를 JSON 형태로 응답 return ResponseEntity.ok(productList); }
+	 */
+
+	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("view")
-	public ResponseEntity<List<WishListView>> viewWishlist(@RequestParam("memberId") String memberId) {
+	@ResponseBody
+	public List<WishListView> viewWishlist(@RequestParam("memberId") String memberId) {
 		// memberId를 사용하여 해당 멤버의 찜 목록을 조회하는 로직 작성
 		List<WishListView> productList = wishService.getViewList(memberId);
 
 		// productList를 JSON 형태로 응답
-		return ResponseEntity.ok(productList);
+		return productList;
 	}
 
 	@PostMapping("like")
@@ -55,5 +66,16 @@ public class WishListController {
 			return ResponseEntity.ok(res);
 		}
 	}
-
+	
+	/*
+	 * @PostMapping("like")
+	 * 
+	 * @ResponseBody public Map<String, Object> like(@RequestBody WishList wishList,
+	 * Authentication authentication, HttpServletResponse response) { if
+	 * (authentication == null) {
+	 * response.setStatus(HttpServletResponse.SC_FORBIDDEN); return
+	 * Map.of("message", "로그인 후 가능합니다."); } else { Map<String, Object> res =
+	 * wishService.like(authentication, wishList);
+	 * response.setStatus(HttpServletResponse.SC_OK); return res; } }
+	 */
 }
