@@ -36,7 +36,7 @@ public class MailServiceImpl implements MailService {
 				+ "다음은 인증번호입니다.\n"
 				+ "</p>\n"
 				+ "<div style='font-size: 130%'>\n"
-				+ "CODE : <strong>${autoCode} </strong>\n"
+				+ "CODE : <strong>" + authCode + "</strong>\n"
 				+ "</div>";
 		helper.setText(msg, true);
 		helper.setFrom(new InternetAddress("admin@nicetomeatyou.com", "관리자"));
