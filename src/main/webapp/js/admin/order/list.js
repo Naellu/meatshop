@@ -3,6 +3,13 @@ $(document).ready(function(){
 		var orderId = $(this).data("order-id");
 		var status = $(this).val();
 		
+		var requestURL;
+		if(status == "CANCEL" || status === "CANCEL") {
+			requestURL = "/admin/order/cancel"
+		} else {
+			requestURL = "/admin/order/update"
+		}
+		
 		const data = {
 			id: orderId,
 			status: status
@@ -10,7 +17,7 @@ $(document).ready(function(){
 
 		$.ajax({
 			type: "POST",
-			url: "/admin/order/update",
+			url: requestURL,
 			contentType:"application/json", 
 			data: JSON.stringify(data),
 			success: function(response) {

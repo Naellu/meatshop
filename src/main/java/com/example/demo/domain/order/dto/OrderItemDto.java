@@ -6,13 +6,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-public class OrderItemDto {
+public class OrderItemDto{
     private String memberId;
     private Double price;
     private Integer productId;

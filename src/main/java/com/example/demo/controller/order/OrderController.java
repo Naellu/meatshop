@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.domain.order.dto.OrderDto;
 import com.example.demo.domain.order.dto.OrderItemDto;
+import com.example.demo.exception.NotEnoughStockException;
 import com.example.demo.service.order.OrderService;
 
 import jakarta.servlet.http.HttpSession;
@@ -78,7 +79,7 @@ public class OrderController {
 	// 실제 주문 들어가는 POST 메서드
 	@PostMapping("/payed")
 	@PreAuthorize("isAuthenticated()")
-	public ResponseEntity payedOrder(@RequestBody List<OrderItemDto> orderItemDtos, Authentication authentication) {
+	public ResponseEntity payedOrder(@RequestBody List<OrderItemDto> orderItemDtos, Authentication authentication) throws NotEnoughStockException {
 		String memberId = authentication.getName();
 		int orderId = orderService.makeOrderOfMultipleProduct(memberId, orderItemDtos);
 		

@@ -9,12 +9,13 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.demo.domain.Product;
 import com.example.demo.domain.order.Order;
 import com.example.demo.domain.order.OrderItem;
 import com.example.demo.domain.order.Status;
 import com.example.demo.domain.order.dto.OrderDto;
-import com.example.demo.domain.order.dto.OrderDtoTest;
 import com.example.demo.domain.order.dto.OrderItemDto;
+import com.example.demo.exception.NotEnoughStockException;
 import com.example.demo.mapper.order.OrderMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -47,7 +48,7 @@ public class OrderServiceImpl implements OrderService{
 
 	@Override
 	@Transactional
-	public int makeOrderOfMultipleProduct(String memberId, List<OrderItemDto> orderItemDtos) {
+	public int makeOrderOfMultipleProduct(String memberId, List<OrderItemDto> orderItemDtos) throws NotEnoughStockException {
 		List<OrderItem> orderItems = new ArrayList<>();
 		
 		for(OrderItemDto orderItemDto : orderItemDtos) {
@@ -56,6 +57,11 @@ public class OrderServiceImpl implements OrderService{
 					orderItemDto.getPrice().intValue(),
 					orderItemDto.getQuantity());
 			orderItems.add(orderItem);
+
+			// 주문 전에 재고수량 감소
+			Product product = orderMapper.selectAllByProductId(orderItem.getProductId());
+			product.removeStock(orderItem.getQuantity());
+			orderMapper.updateProductQuantity(product.getProductId(), product.getStockQuantity());
 		}
 		
 		
@@ -64,7 +70,7 @@ public class OrderServiceImpl implements OrderService{
 		
 		for (OrderItem orderItem : orderItems) {
 			orderItem.setOrderId(order.getId());
-			orderMapper.saveOrderItems(orderItem);
+			orderMapper.saveOrderItems(orderItem);  
 		}
 		
 		List<Integer> productIds = orderItemDtos.stream()
@@ -133,14 +139,23 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public void cancel(Integer orderId) {
 		OrderDto order = orderMapper.findById(orderId);
-		log.info("order IN SERVICE={}", order);
 		if(order.getStatus().equals(Status.CREATED.name())) {
-			orderMapper.updateStatus(orderId, Status.CANCEL.name());
+			log.info("Status update is={}",orderMapper.updateStatus(orderId, Status.CANCEL.name()));
+			
+			// 취소 시 주문한 상품들의 재고수량 증가
+			List<OrderItem> orderItems = orderMapper.findAllOrderItemByOrderId(orderId);
+			for(OrderItem orderItem : orderItems) {
+				Product product = orderMapper.selectAllByProductId(orderItem.getProductId());
+				product.addStock(orderItem.getQuantity());
+				orderMapper.updateProductQuantity(product.getProductId(), product.getStockQuantity());
+			}
+			
+			
 		} else {
 			throw new IllegalStateException("주문상태가 CREATED가 아닙니다");
 		}
 	}
-	
+
 	// 관리자의 주문 상태 변경
 	@Override
 	public boolean updateStatus(Integer orderId, String status) {
