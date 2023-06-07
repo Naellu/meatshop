@@ -12,10 +12,10 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.example.demo.domain.Members;
+import com.example.demo.domain.Product;
 import com.example.demo.domain.order.Order;
 import com.example.demo.domain.order.OrderItem;
 import com.example.demo.domain.order.dto.OrderDto;
-import com.example.demo.domain.order.dto.OrderDtoTest;
 
 @Mapper
 public interface OrderMapper {
@@ -75,6 +75,36 @@ public interface OrderMapper {
 			WHERE product_id = #{product_id}
 			""")
 	double findPrice(Integer productId);
+	
+	@Select("""
+			SELECT 
+				product_id productId,
+				stock_quantity stockQuantity
+			FROM products
+			WHERE product_id = #{productId}
+			""")
+	Product selectAllByProductId(Integer productId);
+	
+	// 상품 개수 반영
+	@Update("""
+			UPDATE products
+			SET
+				stock_quantity = #{quantity}
+			WHERE product_id = #{productId}
+			""")
+	Integer updateProductQuantity(Integer productId, Integer quantity);
+	
+	@Select("""
+			SELECT 
+				id,
+				product_id productId,
+				order_id orderId,
+				quantity,
+				order_price orderPrice
+			FROM orderitems
+			WHERE order_id = #{orderId};
+			""")
+	List<OrderItem> findAllOrderItemByOrderId(Integer orderId);
 
 	// 회원의 모든 주문내역
 	@Select("""
@@ -88,7 +118,8 @@ public interface OrderMapper {
 			FROM orders as o
 			LEFT JOIN orderitems as oi ON o.id = oi.order_id
 			INNER JOIN products as p ON p.product_id = oi.product_id
-			WHERE o.member_id = #{memberId};
+			WHERE o.member_id = #{memberId}
+			ORDER BY o.id DESC;
 			""")
 	@ResultMap("OrderItemMap")
 	List<OrderDto> findAllByMemberId(String memberId);

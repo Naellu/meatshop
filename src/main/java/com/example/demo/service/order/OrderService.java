@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.example.demo.domain.order.dto.OrderDto;
 import com.example.demo.domain.order.dto.OrderItemDto;
+import com.example.demo.exception.NotEnoughStockException;
 
 public interface OrderService {
 
@@ -12,7 +13,7 @@ public interface OrderService {
 	int makeOrderOfSingleProduct(String memberId, Integer productId, int quantity, Double price);
 
 	// 여러 상품 주문
-	int makeOrderOfMultipleProduct(String memberId, List<OrderItemDto> orderItemDtos);
+	int makeOrderOfMultipleProduct(String memberId, List<OrderItemDto> orderItemDtos) throws NotEnoughStockException;
 
 	// 회원 주문목록
 	List<OrderDto> showOrderList(String memberId);
