@@ -74,16 +74,15 @@ $("#inputId").keyup(function() {
 
 // --------------------  주소칸 반드시 입력해야하는 스크립트 시작 -------
 
-$("#inputAddress").keyup(function() {
+$("#detailAddress").keyup(function() {
 	// 주소 중복확인 다시
 	checkAddress = false;
-	const ad = $("#inputAddress").val();
+	const ad = $("#address").val();
 	if (ad != "") {
 		checkAddress = true;
 	}
 	// submit 버튼 비활성화
 	enableSubmit();
-
 });
 // --------------------  주소칸 반드시 입력해야하는 스크립트 끝-------
 

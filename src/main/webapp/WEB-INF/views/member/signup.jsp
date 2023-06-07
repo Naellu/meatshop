@@ -55,12 +55,19 @@
 
 					<div class="mb-3">
 						<label for="inputAddress" class="form-label">주소</label>
-						<input id="inputAddress" type="text" class="form-control" name="address" />
+						<div class="col-sm-6 mb-1">
+							<div class="input-group">
+								<input type="text" id="postCode" class="form-control input-sm" placeholder="우편번호" readonly>
+								<button class="btn btn-outline-secondary" type="button" id="searchAddress">주소검색</button>
+							</div>
+						</div>
+						<input id="inputAddress" type="text" class="form-control mb-1" readonly placeholder="도로명 주소" />
+						<input id="detailAddress" type="text" class="form-control mb-1" placeholder="상세주소" />
+						<input type="hidden" class="form-control" id="address" name="address" />
 					</div>
 
-
 					<div class="mb-3">
-						<label for="inputaddress" class="form-label">전화번호</label>
+						<label for="inputPhoneNumber" class="form-label">전화번호</label>
 						<input id="inputPhoneNumber" type="text" class="form-control" name="phoneNumber" />
 					</div>
 
@@ -125,5 +132,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<!--jquery-->
 	<script src="/js/member/signup.js"></script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="/js/member/address.js"></script>
 </body>
 </html>
