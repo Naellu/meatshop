@@ -4,7 +4,8 @@ import java.util.*;
 
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 public class ProductView {
 	private Integer productId;
 	private String productName;

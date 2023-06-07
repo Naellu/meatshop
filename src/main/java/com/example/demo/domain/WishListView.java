@@ -4,7 +4,8 @@ import java.util.*;
 
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 public class WishListView {
 	private Integer id;
 	private String memberId;

@@ -4,7 +4,8 @@ import java.util.*;
 
 import lombok.*;
 
-@Data
+@Getter
+@Setter
 public class PubRequest {
 	private List<String> openIds;
 	private List<String> ids;
