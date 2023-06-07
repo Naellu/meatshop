@@ -89,17 +89,19 @@
 	<div class="container mt-4">
 		<ul class="nav nav-tabs">
 			<li class="nav-item">
-				<a class="nav-link active" data-toggle="tab" href="#details">상품상세</a>
+				<a class="nav-link active" data-toggle="tab" id="productdetail">상품상세</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" data-toggle="tab" id="productInquiry" data-product-id="${product.productId}" data-customer-id="${userid }">상품문의</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" id="productReview" data-productId="${product.productId}">상품리뷰</a>
+				<a class="nav-link" data-toggle="tab" id="productReview" data-product-id="${product.productId}" data-customer-id="${userid }">상품리뷰</a>
 			</li>
 		</ul>
 		<div class="tab-content mt-2">
-			<div id="content" class="tab-pane fade show active">여기에 상품상세/상품문의/상품리퓨 표시될 예정</div>
+			<div id="detailContent" class="tab-pane fade show active">여기에 상품상세 표시될 예정</div>
+			<div id="inquiryContent" class="tab-pane fade show active d-none">여기에 상품문의 표시될 예정</div>
+			<div id="reviewContent" class="tab-pane fade show active d-none">여기에 상품리뷰 표시될 예정</div>
 		</div>
 	</div>
 

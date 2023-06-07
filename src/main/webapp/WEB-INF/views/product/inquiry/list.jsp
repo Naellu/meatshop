@@ -67,7 +67,7 @@
 							data-customer-id="${userid }" data-bs-toggle="modal"
 							data-bs-target="#deleteInquiryConfirmModal"
 							data-product-id="${product.productId}"
-							data-customer-id="${userid }">${inquiry.inquiryId}삭제</button>
+							data-customer-id="${userid }">삭제</button>
 
 					</td>
 				</tr>

@@ -18,11 +18,6 @@ public class ProductInquiryController {
 	@Autowired
 	private ProductInquiryService service;
 
-	@GetMapping("test")
-	public void test() {
-
-	}
-
 	@GetMapping("list")
 	public String getListByProductId(
 			ProductInquiry productInquiry,
