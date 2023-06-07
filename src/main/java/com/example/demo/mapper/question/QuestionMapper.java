@@ -63,6 +63,7 @@ public interface QuestionMapper {
 			<bind name="pattern" value="'%' + search + '%'" />
 			SELECT
 				q.id,
+				q.customer_id customerId,
 				q.title,
 				q.inserted,
 				q.answered,
@@ -86,8 +87,8 @@ public interface QuestionMapper {
 	List<Question> selectAllPaging(Integer startIndex, Integer rowPerPage, String search);
 
 	@Insert("""
-			INSERT INTO question (title, content)
-			VALUES (#{title}, #{content})
+			INSERT INTO question (title, content, customer_id)
+			VALUES (#{title}, #{content}, #{customerId})
 			""")
 	@Options(useGeneratedKeys = true, keyProperty = "id")
 	int insert(Question question);
