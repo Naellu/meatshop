@@ -83,7 +83,7 @@ public class MemberController {
 		boolean ok = service.modify(member, oldPassword);
 		if (ok) {
 			rttr.addFlashAttribute("message", "회원 정보가 수정되었습니다.");
-			return "redirect:/member/mypage?id=" + member.getId();
+			return "redirect:/member/info?id=" + member.getId();
 		} else {
 			rttr.addFlashAttribute("message", "회원 정보 수정시 문제가 발생하였습니다.");
 			return "redirect:/";

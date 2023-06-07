@@ -1,5 +1,6 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <link rel="stylesheet" href="/css/footer.css">
 
 <footer class="site-footer mt-5">
@@ -46,8 +47,12 @@
 						<a href="/faq/list">FAQ</a>
 					</li>
 					<li>
-						<a href="#">마이페이지</a>
+						<a class="nav-link" href="/member/mypage?id=<sec:authentication property="name" />">마이페이지</a>
 					</li>
+					<li>
+						<a href="/location">찾아오시는길</a>
+					</li>
+
 				</ul>
 			</div>
 		</div>

@@ -16,7 +16,7 @@
 <body>
 <my:navBar></my:navBar>
 
-
+<my:alert />
 
 <div class="container-lg">
 		<div class="row justify-content-center">
