@@ -114,7 +114,7 @@ public class ProductController {
 
 	// 상품 삭제 처리
 	@PostMapping("remove")
-	public String removeProc(Integer id, RedirectAttributes rttr) {
+	public String removeProc(@RequestParam Integer id, RedirectAttributes rttr) {
 		Boolean ok = productService.remove(id);
 		if (ok) {
 			rttr.addFlashAttribute("message", "상품이 삭제되었습니다.");
