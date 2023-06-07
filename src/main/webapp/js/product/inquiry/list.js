@@ -1,6 +1,6 @@
 // 문의 답변 내용, 답변 from, 삭제/수정버튼 출력
 function listAnswer(inquiryId) {
-	$.ajax("/product/answer/get?inquiryId=" + inquiryId, {
+	$.ajax("/product/inquiryAnswer/get?inquiryId=" + inquiryId, {
 		success: function(productAnswer) {
 			const answerTextboxId = "#answerContainer" + inquiryId;
 			const answer = productAnswer.answer;
@@ -41,7 +41,7 @@ function listAnswer(inquiryId) {
 				$("#deleteAnswerModalButton").attr("data-inquiry-id", inquiryId);
 			});
 			
-			$(".answerUpdateBtn").click(function() {
+			$(".answerUpdateButton").click(function() {
 				var inquiryId = $(this).attr("data-inquiry-id");
 				var answer = $(this).attr("data-answer");
 
@@ -50,7 +50,7 @@ function listAnswer(inquiryId) {
 					inquiryId: inquiryId
 				};
 
-				$.ajax("/product/answer/modify", {
+				$.ajax("/product/inquiryAnswer/modify", {
 					data: data,
 					contentType: 'application/json',
 					success: function(answerModifyPage) {
@@ -70,7 +70,7 @@ function listAnswer(inquiryId) {
 								answer: answer
 							}
 
-							$.ajax("/product/answer/modify", {
+							$.ajax("/product/inquiryAnswer/modify", {
 								method: "post",
 								contentType: 'application/json',
 								data: JSON.stringify(modifyData),
@@ -96,7 +96,7 @@ function listAnswer(inquiryId) {
 // 문의 답변 수정 
 // 문서 로드 후 실행
 
-var answerUpdateBtns = document.getElementsByName("answerUpdateBtn");
+/*var answerUpdateBtns = document.getElementsByName("answerUpdateBtn");
 for (var answerUpdateBtn of answerUpdateBtns) {
     answerUpdateBtn.addEventListener("click", function() {
         var inquiryId = this.dataset.inquiryId;
@@ -107,13 +107,13 @@ for (var answerUpdateBtn of answerUpdateBtns) {
         // 예를 들면 AJAX 요청을 보내거나 다른 함수를 호출할 수 있습니다.
     });
 }
-
+*/
 /*const inquiryId = this.getAttribute('data-inquiry-id');
 		const data = {
 			inquiryId: inquiryId
 		};
 
-		$.ajax("/product/answer/modify", {
+		$.ajax("/product/inquiryAnswer/modify", {
 			data: data,
 			contentType: 'application/json',
 			success: function(answerModifyPage) {
@@ -133,7 +133,7 @@ for (var answerUpdateBtn of answerUpdateBtns) {
 						answer: answer
 					}
 
-					$.ajax("/product/answer/modify", {
+					$.ajax("/product/inquiryAnswer/modify", {
 						method: "post",
 						contentType: 'application/json',
 						data: JSON.stringify(modifyData),
@@ -154,7 +154,7 @@ for (var answerUpdateBtn of answerUpdateBtns) {
 $("#deleteAnswerModalButton").click(function() {
 	var inquiryid = $(this).data("inquiryId");
 	
-	$.ajax("/product/answer/delete/" + inquiryid, {
+	$.ajax("/product/inquiryAnswer/delete/" + inquiryid, {
 		method: "delete",
 		complete: function(jqXHR) {
 			alert(jqXHR.responseJSON.message);
@@ -176,7 +176,7 @@ for (var sendAnswerButton of sendAnswerButtons) {
 		const answer = $(answerContentId).val();
 		const data = { inquiryId, answer };
 
-		$.ajax("/product/answer/add", {
+		$.ajax("/product/inquiryAnswer/add", {
 			method: "post",
 			contentType: "application/json",
 			data: JSON.stringify(data),

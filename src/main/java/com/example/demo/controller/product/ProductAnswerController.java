@@ -12,7 +12,8 @@ import com.example.demo.domain.*;
 import com.example.demo.service.product.inquiry.*;
 
 @Controller
-@RequestMapping("product/answer")
+@RequestMapping("product/inquiryAnswer")
+
 public class ProductAnswerController {
 	
 	@Autowired
@@ -49,7 +50,7 @@ public class ProductAnswerController {
 		model.addAttribute("productInquiry", productInquiry);
 		model.addAttribute("productAnswer", productAnswer);
 		
-		return "product/answer/modify";
+		return "product/inquiryAnswer/modify";
 		
 	}
 	
