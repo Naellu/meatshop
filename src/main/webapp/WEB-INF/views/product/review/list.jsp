@@ -30,12 +30,12 @@
 					<td>${review.rating}</td>
 					<td>
 						<button class="btn btn-primary" name="modifyReview"
-							data-inquiry-id="${review.reviewId}"
+							data-review-id="${review.reviewId}"
 							data-customer-id="${userid }">${review.reviewId }수정</button>
 					</td>
 					<td>
 						<button class="btn btn-danger" name="removereview"
-							data-inquiry-id="${review.reviewId}"
+							data-review-id="${review.reviewId}"
 							data-product-id="${review.productId}"
 							data-customer-id="${userid }" data-bs-toggle="modal"
 							data-bs-target="#deleteReviewConfirmModal"
@@ -45,11 +45,35 @@
 					</td>
 					<td>${review.createdAt}</td>
 				</tr>
+				<tr>
+					<td colspan=6>그림파일 목록 위치</td>
+				</tr>
+				<tr>
+					<td colspan=6>
+						<div class="mb-3" id="answerContainer${review.reviewId }">
+							<!-- 답변이 표시될 구역 -->
+
+
+						</div> <!-- 관리자만 보이게 할 예정 -->
+						<div class="mb-3">
+
+							<div class="input-group">
+								<div class="form-floating">
+									<textarea style="height: 97px" class="form-control"
+										id="reveiwAnswerTextArea${review.reviewId }"></textarea>
+								</div>
+								<button name="sendAnswerButton" class="btn btn-outline-primary"
+									data-review-id="${review.reviewId}">답변하기(${review.reviewId })</button>
+							</div>
+						</div>
+					</td>
+				</tr>
+
 			</c:forEach>
 		</tbody>
 	</table>
-	
-	
+
+
 	<!-- 페이지네이션 -->
 	<nav aria-label="Page navigation example">
 		<ul class="pagination justify-content-center">
@@ -57,8 +81,7 @@
 
 			<!-- 맨앞 -->
 			<c:if test="${pageInfo.currentPageNumber > 1 }">
-				<my:review pageNumber="1"
-					productId="${reviewInfo.productId }"
+				<my:review pageNumber="1" productId="${reviewInfo.productId }"
 					customerId="${reviewInfo.customerId }">
 					<i class="fa-solid fa-angles-left"></i>
 				</my:review>
