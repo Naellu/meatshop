@@ -7,6 +7,7 @@
 
 <sec:authentication property="name" var="userid" />
 
+${pageInfo }
 <button class="btn btn-primary" id="addReview"
 	data-product-id="${review.productId}" data-customer-id="${userid }">리뷰작성하기</button>
 <br />

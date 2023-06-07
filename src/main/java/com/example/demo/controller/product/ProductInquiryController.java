@@ -25,7 +25,7 @@ public class ProductInquiryController {
 			Model model) {
 		Map<String, Object> result = service.showInquiryListByProductId(productInquiry, page);
 		model.addAllAttributes(result);
-
+		
 		return "product/inquiry/list";
 	}
 

@@ -54,14 +54,9 @@ public interface ProductInquiryMapper {
 	int modifyInquiry(ProductInquiry productInquiry);
 
 	@Select("""
-			<script>
 			SELECT COUNT(*) FROM productinquiry
 			WHERE 
 				product_id = #{productId}
-			<if test="customerId != 'anonymousUser'">
-				AND customer_id = #{customerId}
-			</if> 
-			</script>
 			""")
 	Integer size(ProductInquiry productInquiry);
 

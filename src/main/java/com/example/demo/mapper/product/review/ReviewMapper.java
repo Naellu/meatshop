@@ -10,14 +10,9 @@ import com.example.demo.domain.*;
 public interface ReviewMapper {
 
 	@Select("""
-			<script>
 			SELECT COUNT(*) FROM review
 			WHERE 
 				product_id = #{productId}
-			<if test="customerId != 'anonymousUser'">
-				AND customer_id = #{customerId}
-			</if> 
-			</script>
 			""")
 	Integer size(Review review);
 
