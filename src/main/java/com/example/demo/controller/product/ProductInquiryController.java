@@ -18,11 +18,6 @@ public class ProductInquiryController {
 	@Autowired
 	private ProductInquiryService service;
 
-	@GetMapping("test")
-	public void test() {
-
-	}
-
 	@GetMapping("list")
 	public String getListByProductId(
 			ProductInquiry productInquiry,
@@ -30,7 +25,7 @@ public class ProductInquiryController {
 			Model model) {
 		Map<String, Object> result = service.showInquiryListByProductId(productInquiry, page);
 		model.addAllAttributes(result);
-
+		
 		return "product/inquiry/list";
 	}
 

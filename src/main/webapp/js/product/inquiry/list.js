@@ -231,12 +231,12 @@ $("#addInquiry").click(function() {
 					data: JSON.stringify(data),
 					success: function(data) {
 						alert(data.message)
-						loadInquiryPage(productId, customerName)
+						loadInquiryPage(productId, customerId)
 
 					},
 					error: function() {
 						alert("문의를 등록하지 못했습니다.")
-						loadInquiryPage(productId, customerName)
+						loadInquiryPage(productId, customerId)
 
 					}
 				})
@@ -262,7 +262,7 @@ for (var modifyInquiry of modifyInquirys) {
 			data: data,
 			contentType: 'application/json',
 			success: function(inquiryModifyPage) {
-				$("#content").html(inquiryModifyPage);
+				$("#inquiryContent").html(inquiryModifyPage);
 
 
 				$("#modifyInquiryBtn").click(function() {
@@ -330,9 +330,9 @@ for (var removeInquiry of removeInquirys) {
 }
 
 // 상품문의 출력 함수
-function loadInquiryPage(productId, customerId) {
+/*function loadInquiryPage(productId, customerId) {
 
-	$("#content").empty();
+	$("#inquiryContent").empty();
 	const data = {
 		productId: productId,
 		customerId: customerId,
@@ -341,16 +341,16 @@ function loadInquiryPage(productId, customerId) {
 	$.ajax("/product/inquiry/list", { //data의 값을 파라미터 형식으로 전달
 		data: data,
 		success: function(inquiryPage) {
-			$("#content").html(inquiryPage); // jsp 페이지를 HTML 형태로 삽입
+			$("#inquiryContent").html(inquiryPage); // jsp 페이지를 HTML 형태로 삽입
 
 
 		}
 	});
 
-}
+}*/
 
 // 페이지버튼 클릭시 페이지이동 내용 ajax 출력
-var pageButtons = document.getElementsByName("pageBtn");
+var pageButtons = document.getElementsByName("inquiryPageBtn");
 for (var pageButton of pageButtons) {
 	pageButton.addEventListener("click", function() {
 		var productId = $(this).data('productId');

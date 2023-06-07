@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.product.review.ReviewMapper">
+	
+	<resultMap type="com.example.demo.domain.Review" id="showListByProductId">
+		<id column="review_id" property="reviewId"/>
+		<result column="customer_id" property="customerId"/>
+		<result column="product_id" property="productId"/>
+		<result column="content" property="content"/>
+		<result column="rating" property="rating"/>
+		<result column="created_at" property="createdAt"/>		
+	</resultMap>
+	
+
+</mapper>
+

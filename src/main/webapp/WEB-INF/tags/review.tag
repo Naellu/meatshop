@@ -4,14 +4,14 @@
 <%@ attribute name="productId" %>
 <%@ attribute name="customerId" %>
 
-<c:url value="/product/inquiry/list" var="pageLink">
+<c:url value="/product/review/list" var="pageLink">
 	<c:param name="page" value="${pageNumber }"></c:param>
 	<c:param name="productId" value="${productId}"></c:param>
 	<c:param name="customerId" value="${customerId}"></c:param>
 	
 </c:url>
 <li class="page-item">
-	<a name="inquiryPageBtn" class="page-link ${pageNumber eq pageInfo.currentPageNumber ? 'active' : '' }"
+	<a name="reviewPageBtn" class="page-link ${pageNumber eq pageInfo.currentPageNumber ? 'active' : '' }"
 		data-product-id="${productId}"
 		data-customer-id="${customerId }"
 		data-page="${pageNumber }"

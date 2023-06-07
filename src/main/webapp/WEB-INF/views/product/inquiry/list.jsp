@@ -24,6 +24,7 @@
 <sec:authentication property="name" var="userid" />
 
 
+
 <button class="btn btn-primary" id="addInquiry"
 	data-product-id="${productInquiry.productId}"
 	data-customer-id="${userid }">문의하기</button>
@@ -67,7 +68,7 @@
 							data-customer-id="${userid }" data-bs-toggle="modal"
 							data-bs-target="#deleteInquiryConfirmModal"
 							data-product-id="${product.productId}"
-							data-customer-id="${userid }">${inquiry.inquiryId}삭제</button>
+							data-customer-id="${userid }">삭제</button>
 
 					</td>
 				</tr>
