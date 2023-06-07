@@ -23,7 +23,6 @@
 
 <sec:authentication property="name" var="userid" />
 
-${pageInfo }
 
 
 <button class="btn btn-primary" id="addInquiry"

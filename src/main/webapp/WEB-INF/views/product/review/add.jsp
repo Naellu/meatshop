@@ -9,8 +9,8 @@
 <hr />
 <form action="/product/review/add" method="post"
 	enctype="multipart/form-data">
-	<input type="hidden" id="productId" name="productId" value="${review.productId}" />
-	<input type="hidden" id="customerId" name="customerId" value="${review.customerId}" />
+	<input type="hidden" id="productId" value="${review.productId}" />
+	<input type="hidden" id="customerId" value="${review.customerId}" />
 	<div class="mb-3 form-floating">
 		별점 
 		<select name="rating" id="rating">
@@ -21,7 +21,7 @@
 			<option value="5">★★★★★</option>
 		</select> <br />
 		리뷰 내용 <br />
-		<textarea class="form-control" id="content" rows="10" name="content"></textarea>
+		<textarea class="form-control" id="reviewContent" rows="10" ></textarea>
 		<br />
 	</div>
 	<input class="btn btn-primary" type="button" value="등록" id="addReview" />

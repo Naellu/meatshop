@@ -11,14 +11,14 @@ $("#addReview").click(function() {
 		data: data,
 		contentType: 'application/json',
 		success: function(reviewAddPage) {
-			$("#reviewContent").empty(); // 컨텐트 박스 비우고
-			$("#reviewContent").html(reviewAddPage); // reviewAddform 출력
+			$("#content").empty(); // 컨텐트 박스 비우고
+			$("#content").html(reviewAddPage); // reviewAddform 출력
 
 			$("#addReview").click(function() { //문의하기 누르면
 				const productId = $("#productId").val();
 				const customerId = $("#customerId").val();
 				const rating = $("#rating").val();
-				const content = $("#content").val();
+				const content = $("#reviewContent").val();
 
 
 				const data = {

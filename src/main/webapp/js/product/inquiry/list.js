@@ -206,8 +206,8 @@ $("#addInquiry").click(function() {
 		data: data,
 		contentType: 'application/json',
 		success: function(inquiryAddPage) {
-			$("#inquiryContent").empty(); // 컨텐트 박스 비우고
-			$("#inquiryContent").html(inquiryAddPage); // inquiryAddform 출력
+			$("#content").empty(); // 컨텐트 박스 비우고
+			$("#content").html(inquiryAddPage); // inquiryAddform 출력
 
 			$("#addInquiry").click(function() { //문의하기 누르면
 				const productId = $("#productId").val();
