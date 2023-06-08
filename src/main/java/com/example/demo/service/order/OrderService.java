@@ -21,6 +21,9 @@ public interface OrderService {
 
 	// 전체 주문목록
 	Map<String, Object> showAllOrders(Integer page, String search, String type);
+	
+	// 전체 주문목록(조건X)
+	List<OrderDto> findAllOrders();
 
 	// 상품 이름 찾기
 	String findOneOfProduct(Integer productId);

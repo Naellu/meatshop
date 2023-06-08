@@ -1,8 +1,7 @@
 package com.example.demo.domain.order;
 
-import org.apache.ibatis.type.MappedTypes;
-
-import lombok.ToString;
+import java.util.ArrayList;
+import java.util.List;
 
 public enum Status{
 	CREATED("주문완료"),
@@ -29,5 +28,13 @@ public enum Status{
 			}
 		}
 		throw new IllegalArgumentException("enum 상수가 아닙니다 " + Status.class.getCanonicalName() + "." + title);
+	}
+	
+	public static List<String> fromName(Status[] names) {
+		List<String> titles = new ArrayList();
+		for(Status status : names) {
+			titles.add(status.getTitle());
+		}
+		return titles;
 	}
 }

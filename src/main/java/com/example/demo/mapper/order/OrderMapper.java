@@ -128,15 +128,20 @@ public interface OrderMapper {
 
 	// 전체 주문목록 보기
 	@Select("""
-   			SELECT 
-   				id,
-   				member_Id memberId,
-   				status,
-   				created,
-   				total_price totalPrice
-   			FROM orders
+  			SELECT 
+				o.id,
+			    o.member_id,
+			    p.product_name productName,
+			    o.total_price,
+			    DATE(o.created) created,
+			    o.status status
+			FROM orders as o
+			LEFT JOIN orderitems as oi ON o.id = oi.order_id
+			INNER JOIN products as p ON p.product_id = oi.product_id
+			GROUP BY o.id
 			""")
-	List<Order> findAll();
+	@ResultMap("OrderItemMap")
+	List<OrderDto> findAll();
 
 	// 관리자 전체 주문목록 보기
 	@Select("""

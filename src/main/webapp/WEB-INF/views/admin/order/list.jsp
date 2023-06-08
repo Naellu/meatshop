@@ -28,6 +28,17 @@
 			padding-left: 0 !important;
 			padding-right: 0 !important;	
 		}
+		.custom-list-item {
+		    max-width: 200px;
+		    overflow: hidden;
+		    text-overflow: ellipsis;
+		    white-space: nowrap;
+		}
+		
+		#statusCount {
+		    width: fit-content; /* 요소의 너비를 내용에 맞게 조절합니다. */
+		    margin: 0 auto;      /* 좌우 마진을 자동으로 설정하여 가운데 정렬합니다. */
+		}
     </style>
 <title>주문 목록</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
@@ -47,9 +58,13 @@
 	
 	<br>
 	
+	
+	<br>
+	
 	<div class="container-lg">
 		<div class="row justify-content-center">
-			<div class="col-12">
+
+			<div class="col">
 			
 			<!-- 검색 -->
 			<form action="/admin/order/list" class="d-flex" role="search">
@@ -77,9 +92,10 @@
 	       				   <th>총 결제금액</th>
 	                       <th>주문일자</th>
 	                       <th>주문상태</th>
+	                       <th></th>
                        </tr>
                    </thead>
-                   <tbody>
+                   <tbody class="table-group-divider">
 				    	<c:forEach var="order" items="${orderList }">
 					        <tr>
 					            <td>${order.id }</td>
@@ -123,9 +139,21 @@
 								</td>
 					        </tr>
 					    </c:forEach>
+
 					</tbody>
 			    </table>
-
+			</div>
+			<div class="col-auto">
+				<div id="statusCount">
+					<ul class="list-group">
+					    <c:forEach var="entry" items="${statusCount}">
+					        <li class="list-group-item d-flex justify-content-between align-items-center custom-list-item">
+					            ${entry.key}
+					            <span class="badge bg-dark rounded-pill">${entry.value}</span>
+					        </li>
+					    </c:forEach>
+					</ul>
+				</div>
 			</div>
 		</div>	
 	</div>

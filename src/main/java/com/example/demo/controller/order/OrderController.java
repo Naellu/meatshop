@@ -1,7 +1,9 @@
 package com.example.demo.controller.order;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.domain.order.Status;
 import com.example.demo.domain.order.dto.OrderDto;
 import com.example.demo.domain.order.dto.OrderItemDto;
 import com.example.demo.exception.NotEnoughStockException;
@@ -91,8 +94,24 @@ public class OrderController {
 	@GetMapping("/list/{memberId}")
 	public String getOrderPage(@PathVariable String memberId, Model model) {
 		List<OrderDto> orderList = orderService.showOrderList(memberId);
+		
+		Map<String, Integer> statusCount = new HashMap();
+		List<String> titleArray = Status.fromName(Status.values());
+		
+		for(String title : titleArray) {
+			statusCount.put(title, 0);
+		}
+		
+		
+		for (OrderDto order : orderList) {
+			String status = order.getStatus().getTitle();
+			statusCount.put(status, statusCount.getOrDefault(status, 0) + 1);
+		}
+		
 		model.addAttribute("orderList", orderList);
+		model.addAttribute("statusCount", statusCount);
 		log.info("orderList={}",orderList);
+		log.info("statusCount={}",statusCount);
 		return "order/list";
 	}
 

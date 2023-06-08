@@ -1,5 +1,7 @@
 package com.example.demo.controller.admin;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,7 +38,21 @@ public class OrderController {
 			Model model) {
 		
 		Map<String, Object> result = orderService.showAllOrders(page, search, type);
+		List<OrderDto> orderList = orderService.findAllOrders();
+		
+		Map<String, Integer> statusCount = new HashMap();
+		List<String> titleArray = Status.fromName(Status.values());
+		
+		for(String title : titleArray) {
+			statusCount.put(title, 0);
+		}
+		for (OrderDto order : orderList) {
+			String status = order.getStatus().getTitle();
+			statusCount.put(status, statusCount.getOrDefault(status, 0) + 1);
+		}
+		
 		model.addAllAttributes(result);
+		model.addAttribute("statusCount", statusCount);
 		
 		return "admin/order/list";
 	}
