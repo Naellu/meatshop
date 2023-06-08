@@ -29,8 +29,6 @@ public class QuestionController {
 		Map<String, Object> result = service.getList(page, search);
 		model.addAllAttributes(result);
 		
-		System.out.println(result);
-		
 		return "question/list";
 	}
 

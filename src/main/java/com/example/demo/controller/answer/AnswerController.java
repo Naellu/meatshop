@@ -28,11 +28,6 @@ public class AnswerController {
 		return ResponseEntity.ok().body(res);
 	}
 	
-	@GetMapping("id/{id}")
-	public Answer get(@PathVariable("id") Integer id) {
-		return service.get(id);
-	}
-
 	@DeleteMapping("id/{id}")
 	@PreAuthorize("hasAuthority('admin')")
 	public ResponseEntity<Map<String, Object>> remove(@PathVariable("id") Integer id) {
@@ -40,6 +35,12 @@ public class AnswerController {
 		
 		return ResponseEntity.ok().body(res);
 	}
+	
+	@GetMapping("id/{id}")
+	public Answer get(@PathVariable("id") Integer id) {
+		return service.get(id);
+	}
+
 	
 	@PostMapping("add")
 	@PreAuthorize("hasAuthority('admin')")
@@ -53,7 +54,7 @@ public class AnswerController {
 	@GetMapping("list")
 	public List<Answer> list(@RequestParam("question") Integer questionId, Authentication authentication) {
 
-		return service.list(questionId);
+		return service.list(questionId, authentication);
 	}
 	
 }

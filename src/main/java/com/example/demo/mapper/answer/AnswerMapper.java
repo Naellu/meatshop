@@ -40,14 +40,12 @@ public interface AnswerMapper {
 			WHERE
 				id = #{id}
 			""")
-	@ResultMap("answerResultMap")
 	Integer update(Answer answer);
 
 	@Delete("""
 			DELETE FROM answer
 			WHERE id = #{id}
 			""")
-	@ResultMap("answerResultMap")
 	Integer deleteById(Integer id);
 	
     @Update("""

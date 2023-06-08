@@ -34,7 +34,7 @@ public class QuestionService {
 		}
 		return list;
 	}
-
+	
 	public Question getQuestion(Integer id) {
 		Question q = mapper.selectById(id);
 		return q;
@@ -84,7 +84,7 @@ public class QuestionService {
 		pageInfo.put("lastPageNum", lastPageNumber);
 
 		List<Question> list = mapper.selectAllPaging(startIndex, rowPerPage, search);
-		System.out.println(list);
+
 		return Map.of("pageInfo", pageInfo, "questionList", list);
 	}
 
