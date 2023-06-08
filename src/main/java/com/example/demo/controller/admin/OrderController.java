@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.demo.domain.order.Status;
 import com.example.demo.domain.order.dto.OrderDto;
 import com.example.demo.service.order.OrderService;
 

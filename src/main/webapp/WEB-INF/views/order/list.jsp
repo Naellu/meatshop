@@ -91,10 +91,10 @@
 					            </td>
 					            <td>${order.totalPrice }</td>
 					            <td>${order.created }</td>
-					            <td>${order.status }</td>
+					            <td>${order.status.title }</td>
 					            <td> <!-- 주문상태 -->
 					            	<c:choose>
-					            		<c:when test="${order.status != 'CANCEL' }">
+					            		<c:when test="${order.status == 'CREATED' }">
 								            <button type="button" id="cancelOrderButton" class="btn btn-outline-danger cancelOrderButton" data-order-id="${order.id}">취소</button>
 					            		</c:when>
 					            		<c:otherwise>

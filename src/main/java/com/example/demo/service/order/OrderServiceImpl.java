@@ -66,6 +66,7 @@ public class OrderServiceImpl implements OrderService{
 		
 		
 		Order order = Order.createOrder(memberId, orderItems);
+		log.info("order Status IN SERVICE = {}", order.getStatus());
 		orderMapper.saveOrder(order);
 		
 		for (OrderItem orderItem : orderItems) {
@@ -125,6 +126,7 @@ public class OrderServiceImpl implements OrderService{
 		
 		List<OrderDto> orders = orderMapper.findAllOrders(startIndex, rowPerPage, search, type);
 		log.info("orders size IN SERVICE = {}",orders.size());
+		log.info("orders info IN SERVICE = {}",orders);
 		
 		return Map.of("pageInfo", pageInfo, 
 				"orderList", orders);
@@ -139,8 +141,8 @@ public class OrderServiceImpl implements OrderService{
 	@Override
 	public void cancel(Integer orderId) {
 		OrderDto order = orderMapper.findById(orderId);
-		if(order.getStatus().equals(Status.CREATED.name())) {
-			log.info("Status update is={}",orderMapper.updateStatus(orderId, Status.CANCEL.name()));
+		if(order.getStatus().equals(Status.CREATED)) {
+			log.info("Status update is={}",orderMapper.updateStatus(orderId, Status.CANCEL));
 			
 			// 취소 시 주문한 상품들의 재고수량 증가
 			List<OrderItem> orderItems = orderMapper.findAllOrderItemByOrderId(orderId);
@@ -152,13 +154,13 @@ public class OrderServiceImpl implements OrderService{
 			
 			
 		} else {
-			throw new IllegalStateException("주문상태가 CREATED가 아닙니다");
+			throw new IllegalStateException("주문을 취소할 수 있는 상태가 아닙니다");
 		}
 	}
 
 	// 관리자의 주문 상태 변경
 	@Override
-	public boolean updateStatus(Integer orderId, String status) {
+	public boolean updateStatus(Integer orderId, Status status) {
 		return orderMapper.updateStatus(orderId, status);
 	}
 

@@ -32,7 +32,7 @@ public class Order {
 	public static Order createOrder(String memberId, OrderItem orderItem) {
 		Order order = new Order();
 		order.setMemberId(memberId);
-		order.setStatus(Status.CREATED); // 주문생성 시 결제상태는 무조건 CREATED(결제전)
+		order.setStatus(Status.CREATED);
 		order.addOrderItem(orderItem);
 		order.calculateTotalPrice();
 		return order;
