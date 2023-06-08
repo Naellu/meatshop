@@ -30,11 +30,10 @@
 					<td>${review.rating}</td>
 					<td>
 						<button class="btn btn-primary" name="modifyReview"
-							data-review-id="${review.reviewId}"
-							data-customer-id="${userid }">${review.reviewId }수정</button>
+							data-review-id="${review.reviewId}" data-customer-id="${userid }">${review.reviewId }수정</button>
 					</td>
 					<td>
-						<button class="btn btn-danger" name="removereview"
+						<button class="btn btn-danger" name="removeReview"
 							data-review-id="${review.reviewId}"
 							data-product-id="${review.productId}"
 							data-customer-id="${userid }" data-bs-toggle="modal"
@@ -46,7 +45,15 @@
 					<td>${review.createdAt}</td>
 				</tr>
 				<tr>
-					<td colspan=6>그림파일 목록 위치</td>
+					<td colspan=6>
+						<div class="mb-3">
+							<c:forEach items="${review.fileNames }" var="fileName">
+								<img class="img-thumbnail img-fluid"
+									src="${bucketUrl }/review/${review.reviewId }/${fileName}"
+									alt="" />
+							</c:forEach>
+						</div>
+					</td>
 				</tr>
 				<tr>
 					<td colspan=6>
@@ -129,6 +136,34 @@
 			</c:if>
 		</ul>
 	</nav>
+</div>
+
+<div class="d-none">
+	<form action="/product/review/remove" method="post" id="removeForm">
+		<input type="text" id="removeReviewById" name="reviewId" value="" />
+		<input type="text" name="productId" value="${review.productId}" />
+	</form>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteReviewConfirmModal" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+				<button type="button" class="btn-outline-close"
+					data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">삭제하시겠습니까?</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-outline-danger"
+					form="removeForm">삭제</button>
+				<button type="button" class="btn btn-outline-secondary"
+					data-bs-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script src="/js/product/review/list.js"></script>

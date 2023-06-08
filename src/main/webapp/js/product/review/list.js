@@ -1,3 +1,35 @@
+// 리뷰 수정
+var modifyReviews = document.getElementsByName("modifyReview");
+for (var modifyReview of modifyReviews) {
+	modifyReview.addEventListener("click", function() {
+		const reviewId = $(this).data('reviewId');
+		const data = {
+			reviewId: reviewId
+		}
+		$.ajax("/product/review/modify", {
+			data: data,
+			contentType: 'application/json',
+			success: function(reviewModifyPage) {
+				$("#content").empty();
+				$("#content").html(reviewModifyPage);
+
+				}
+		})
+	})
+}
+
+
+
+// 리뷰 삭제
+var removeReviews = document.getElementsByName("removeReview");
+for (var removeReview of removeReviews) {
+	removeReview.addEventListener("click", function() {
+		var reviewId = $(this).data('reviewId')
+		$("#removeReviewById").attr("value", reviewId);
+
+	})
+}
+
 
 // 리뷰 등록
 $("#addReview").click(function() {
@@ -14,44 +46,10 @@ $("#addReview").click(function() {
 			$("#content").empty(); // 컨텐트 박스 비우고
 			$("#content").html(reviewAddPage); // reviewAddform 출력
 
-			$("#addReview").click(function() { //문의하기 누르면
-				const productId = $("#productId").val();
-				const customerId = $("#customerId").val();
-				const rating = $("#rating").val();
-				const content = $("#reviewContent").val();
-
-
-				const data = {
-					productId: productId,
-					customerId: customerId,
-					rating: rating,
-					content: content
-				}
-
-				$.ajax("/product/review/add", {
-					method: "post",
-					contentType: 'application/json',
-					data: JSON.stringify(data),
-					success: function(data) {
-						alert(data.message)
-						loadReviewPage(productId, customerId)
-
-					},
-					error: function() {
-						alert("문의를 등록하지 못했습니다.")
-						loadReviewPage(productId, customerId)
-
-					}
-				})
-
-			})
-
 		}
 	})
 
 })
-
-
 
 
 // 페이지버튼 클릭시 페이지이동 내용 ajax 출력
