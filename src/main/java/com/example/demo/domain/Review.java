@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import java.sql.*;
+import java.util.*;
 
 import lombok.*;
 
@@ -13,4 +14,6 @@ public class Review {
 	private String content;
 	private Float rating;
 	private Timestamp createdAt;
+	
+	private List<String> fileNames;
 }

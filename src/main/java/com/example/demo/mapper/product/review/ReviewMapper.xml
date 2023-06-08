@@ -4,15 +4,19 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.product.review.ReviewMapper">
 	
-	<resultMap type="com.example.demo.domain.Review" id="showListByProductId">
+	<resultMap type="com.example.demo.domain.Review" id="showReviewList">
 		<id column="review_id" property="reviewId"/>
 		<result column="customer_id" property="customerId"/>
 		<result column="product_id" property="productId"/>
 		<result column="content" property="content"/>
 		<result column="rating" property="rating"/>
 		<result column="created_at" property="createdAt"/>		
+		<collection property="fileNames" ofType="String">
+			<result column="file_name"/>
+		</collection>
 	</resultMap>
 	
-
+	
 </mapper>
+
 
