@@ -1,12 +1,12 @@
 package com.example.demo.domain.order;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -15,7 +15,7 @@ public class Order {
 	private Integer id;
 	private String memberId;
 	private List<OrderItem> orderItems = new ArrayList<>();
-	private LocalDateTime created;
+	private LocalDate created;
 	private Status status; // 주문상태
 	private Long totalPrice;
 

@@ -131,6 +131,11 @@ public class OrderServiceImpl implements OrderService{
 		return Map.of("pageInfo", pageInfo, 
 				"orderList", orders);
 	}
+	
+	@Override
+	public List<OrderDto> findAllOrders() {
+		return orderMapper.findAll();
+	}
 
 	@Override
 	public String findOneOfProduct(Integer productId) {
