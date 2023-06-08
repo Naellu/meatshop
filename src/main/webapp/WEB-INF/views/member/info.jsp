@@ -38,7 +38,7 @@
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="">패스워드</label>
-					<input class="form-control" type="text" value="${member.password }" readonly/>
+					<input class="form-control" type="password" value="${member.password }" readonly/>
 				</div>
 				
 				<div class="mb-3">
