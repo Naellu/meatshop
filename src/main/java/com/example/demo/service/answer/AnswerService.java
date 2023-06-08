@@ -18,8 +18,14 @@ public class AnswerService {
 	@Autowired
 	private AnswerMapper mapper;
 	
-	public List<Answer> list(Integer questionId) {
+	public List<Answer> list(Integer questionId, Authentication authentication) {
 		List<Answer> answers = mapper.selectAllByQuestionId(questionId);
+		if (authentication != null) {
+			for (Answer answer : answers) {
+				answer.setIsAdmin(authentication.getAuthorities().stream()
+	                    .anyMatch(auth -> auth.getAuthority().equals("admin")));
+			}
+		}
 		return answers;
 	}
 
@@ -47,9 +53,9 @@ public class AnswerService {
 		
 		int cnt = mapper.update(answer);
 		if (cnt == 1) {
-			res.put("message", "댓글이 수정되었습니다.");
+			res.put("message", "답변이 수정되었습니다.");
 		} else {
-			res.put("message", "댓글이 수정되지 않았습니다.");
+			res.put("message", "답변이 수정되지 않았습니다.");
 		}
 		
 		return res;
@@ -60,9 +66,9 @@ public class AnswerService {
 		
 		int cnt = mapper.deleteById(id);
 		if (cnt == 1) {
-			res.put("message", "댓글이 삭제되었습니다.");
+			res.put("message", "답변이 삭제되었습니다.");
 		} else {
-			res.put("message", "댓글이 삭제되지 않았습니다.");
+			res.put("message", "답변이 삭제되지 않았습니다.");
 		}
 		
 		return res;

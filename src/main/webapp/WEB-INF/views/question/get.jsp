@@ -47,18 +47,22 @@
 							</h1>
 						</div>
 						<div class="mb-3">
-							<h1 id="titleInput">${question.title }</h1>
 							<a href="/question/list">목록 보기</a>
+							<h1 id="titleInput">${question.title }</h1>
 						</div>
 						<hr class="long-hr">
 
 						<!-- 그림 파일 출력 -->
 						<div class="mb-3">
+							<h4>문의 내용:</h4>
 							<c:forEach items="${question.fileName }" var="fileName">
 								<div class="mb-3">
 									<img class="img-thumbnail img-fluid" src="${bucketUrl }/question/${question.id }/${fileName}" alt="" />
 								</div>
 							</c:forEach>
+						</div>
+						<div class="mb-3">
+							<h2>${question.content }</h2>
 						</div>
 
 						<div class="mb-3">
@@ -66,14 +70,9 @@
 							<input type="text" id="insertedInput" readonly class="form-control" value="${question.inserted }" />
 						</div>
 
-						<div class="mb-3">
-							본문:
-							<h3>${question.content }</h3>
-						</div>
 
 
 						<div id="answerContainer">
-							<h1>답변</h1>
 							<sec:authorize access="hasAuthority('admin')">
 								<div class="mb-3" id="addAnswerContainer">
 									<div class="input-group">
@@ -84,6 +83,7 @@
 										<button class="btn btn-outline-primary" id="sendAnswerBtn"><i class="fa-regular fa-paper-plane"></i></button>
 									</div>
 								</div>
+
 							</sec:authorize>
 
 							<ul class="list-group" id="answerListContainer">
@@ -96,7 +96,49 @@
 		</div>
 	</div>
 
-	<my:footer/>
+	<sec:authorize access="hasAuthority('admin')">
+
+		<!-- 댓글 삭제 Modal -->
+		<div class="modal fade" id="deleteAnswerConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5">답변 삭제 확인</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">삭제 하시겠습니까?</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						<button id="deleteAnswerModalButton" data-bs-dismiss="modal" type="submit" class="btn btn-danger">삭제</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<%-- 댓글 수정 모달 --%>
+		<div class="modal fade" id="answerUpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5">답변 수정</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div id="updateAnswerContainer">
+							<input type="hidden" id="answerUpdateIdInput" />
+							<textarea class="form-control" id="answerUpdateTextArea"></textarea>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+						<button type="button" class="btn btn-primary" id="updateAnswerBtn" data-bs-dismiss="modal">수정</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</sec:authorize>
+
+	<my:footer />
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

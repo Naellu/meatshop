@@ -1,6 +1,7 @@
 package com.example.demo.domain.NoticeBoardDomain;
 
 import java.time.*;
+import java.time.format.*;
 import java.util.*;
 
 import lombok.*;
@@ -15,4 +16,8 @@ public class NoticeBoard {
 	private LocalDateTime inserted;
 	
 	private List<String> fileName;
+	
+	public String getInserted() {
+		return inserted.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+	}
 }

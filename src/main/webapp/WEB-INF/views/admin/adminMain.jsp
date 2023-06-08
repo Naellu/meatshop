@@ -31,6 +31,10 @@
 						<a class="nav-link" href="/admin/order/list">주문목록</a>
 					</li>
 					
+					<li class="nav-item">
+						<a class="nav-link" href="/question/list">문의목록</a>
+					</li>
+					
 				</ul>
 
 			</div>

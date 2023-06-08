@@ -23,7 +23,6 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th>#</th>
 					<th>제목</th>
 					<th>작성자</th>
 					<th>작성일시</th>
@@ -32,7 +31,6 @@
 			<tbody>
 				<c:forEach items="${noticeBoardList }" var="nboard">
 					<tr>
-						<td>${nboard.id }</td>
 						<td>
 							<a href="/noticeBoard/id/${nboard.id }"> ${nboard.title } </a>
 						</td>

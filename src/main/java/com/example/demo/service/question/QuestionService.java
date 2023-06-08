@@ -34,7 +34,7 @@ public class QuestionService {
 		}
 		return list;
 	}
-
+	
 	public Question getQuestion(Integer id) {
 		Question q = mapper.selectById(id);
 		return q;

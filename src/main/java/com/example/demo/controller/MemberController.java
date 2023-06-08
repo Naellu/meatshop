@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.*;
 
 import com.example.demo.domain.*;
+import com.example.demo.domain.question.*;
 import com.example.demo.service.*;
 import com.example.demo.service.mail.*;
+import com.example.demo.service.question.*;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -22,6 +24,9 @@ public class MemberController {
 
 	@Autowired
 	private MailService mailService;
+	
+	@Autowired
+	private QuestionService questionService;
 	
 	@Autowired
 	private MemberService service;
@@ -64,6 +69,7 @@ public class MemberController {
 	public void info(String id, Model model) {
 
 		Members member = service.get(id);
+		
 		model.addAttribute("member", member);
 	}
 

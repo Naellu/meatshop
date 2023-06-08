@@ -25,7 +25,7 @@
 		<div class="row justify-content-center"></div>
 			<div class="col-12 col-md-8 col-lg-6"></div>
 			
-			<h1>${member.id }님 회원정보</h1>
+			<h1>${member.name }님 회원정보</h1>
 		
 	<div class="container-lg">
 		<div class="row justify-content-center">
