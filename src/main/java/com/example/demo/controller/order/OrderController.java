@@ -92,6 +92,7 @@ public class OrderController {
 	public String getOrderPage(@PathVariable String memberId, Model model) {
 		List<OrderDto> orderList = orderService.showOrderList(memberId);
 		model.addAttribute("orderList", orderList);
+		log.info("orderList={}",orderList);
 		return "order/list";
 	}
 

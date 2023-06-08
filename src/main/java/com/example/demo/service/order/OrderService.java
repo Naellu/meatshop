@@ -3,6 +3,7 @@ package com.example.demo.service.order;
 import java.util.List;
 import java.util.Map;
 
+import com.example.demo.domain.order.Status;
 import com.example.demo.domain.order.dto.OrderDto;
 import com.example.demo.domain.order.dto.OrderItemDto;
 import com.example.demo.exception.NotEnoughStockException;
@@ -28,5 +29,5 @@ public interface OrderService {
 	void cancel(Integer orderId);
 	
 	// 주문 상태 변경
-	boolean updateStatus(Integer orderId, String status);
+	boolean updateStatus(Integer orderId, Status status);
 }

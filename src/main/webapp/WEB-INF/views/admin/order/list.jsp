@@ -113,10 +113,12 @@
 					            <td>${order.created }</td>
 					            <td>
 									<select class="form-select status-select" data-order-id="${order.id}">
-										<option value="CREATED" ${order.status eq 'CREATED' ? 'selected' : '' }>CREATED</option>
-										<option value="DELIVERY" ${order.status eq 'DELIVERY' ? 'selected' : '' }>DELIVERY</option>
-										<option value="PAYMENT" ${order.status eq 'PAYMENT' ? 'selected' : '' }>PAYMENT</option>
-										<option value="CANCEL" ${order.status eq 'CANCEL' ? 'selected' : '' }>CANCEL</option>
+										<option value="CREATED" ${order.status eq 'CREATED' ? 'selected' : '' }>주문완료</option>
+										<option value="PREPARE" ${order.status eq 'PREPARE' ? 'selected' : '' }>배송준비</option>
+										<option value="DELIVERY" ${order.status eq 'DELIVERY' ? 'selected' : '' }>배송중</option>
+										<option value="COMPLETE" ${order.status eq 'COMPLETE' ? 'selected' : '' }>배송완료</option>
+										<option value="CONFIRM_PURCHASE" ${order.status eq 'CONFIRM_PURCHASE' ? 'selected' : '' }>구매확정</option>
+										<option value="CANCEL" ${order.status eq 'CANCEL' ? 'selected' : '' }>주문취소</option>
 									</select>
 								</td>
 					        </tr>

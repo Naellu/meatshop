@@ -15,6 +15,7 @@ import com.example.demo.domain.Members;
 import com.example.demo.domain.Product;
 import com.example.demo.domain.order.Order;
 import com.example.demo.domain.order.OrderItem;
+import com.example.demo.domain.order.Status;
 import com.example.demo.domain.order.dto.OrderDto;
 
 @Mapper
@@ -212,7 +213,7 @@ public interface OrderMapper {
 				status = #{status}
 			WHERE id = #{orderId};
 			""")
-	boolean updateStatus(Integer orderId, String status);
+	boolean updateStatus(Integer orderId, Status status);
 
 	
 	
