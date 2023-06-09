@@ -14,9 +14,17 @@
 		<collection property="fileNames" ofType="String">
 			<result column="file_name"/>
 		</collection>
+		<collection property="responses" ofType="com.example.demo.domain.ReviewResponse">
+			<result column="response_id" property="responseId"/>
+			<result column="review_id" property="reviewId"/>
+			<result column="response" property="response"/>
+			<result column="created_at" property="createdAt"/>
+		</collection>
+		
 	</resultMap>
-	
-	
+		
+		
 </mapper>
+
 
 

@@ -54,8 +54,8 @@ public class ReviewService {
 		pageInfo.put("num", 10);
 
 		List<Review> reviewList = reviewMapper.showListByProductId(review, startIndex);
-
-		System.out.println(reviewList);
+		
+		
 
 		Map<String, Object> reviewInfo = new HashMap<>();
 		reviewInfo.put("productId", review.getProductId());
@@ -109,6 +109,7 @@ public class ReviewService {
 			s3.deleteObject(dor);
 		}
 
+		
 		Integer removeCheck = reviewMapper.deleteReviewByReviewId(reviewId);
 
 		return removeCheck == 1;

@@ -14,7 +14,7 @@ import com.example.demo.service.product.review.*;
 
 @Controller
 @RequestMapping("/product/review")
-public class ProductReviewController {
+public class ReviewController {
 	
 	
 	@Autowired
@@ -82,11 +82,6 @@ public class ProductReviewController {
 			RedirectAttributes rttr
 			) throws Exception {
 		
-		System.out.println(review);
-		System.out.println(removeFileNames);
-		for(MultipartFile file : addFiles) {
-			System.out.println(file.getOriginalFilename());
-		}
 		boolean ok = service.modify(review, addFiles, removeFileNames);
 
 		if (ok) {

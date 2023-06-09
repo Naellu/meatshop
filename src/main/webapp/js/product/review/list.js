@@ -1,3 +1,45 @@
+// 리뷰 답변
+var sendReviewResponseButtons = document.getElementsByName('sendReviewResponseButton');
+for (var sendReviewResponseButton of sendReviewResponseButtons){
+	sendReviewResponseButton.addEventListener("click", function(){
+		const reviewId = $(this).data('reviewId');
+		const textAreaId = "#reveiwResponseTextArea" + reviewId;
+		const response = $(textAreaId).val();
+		
+		console.log(reviewId);
+		console.log(response);
+		
+		const data = {
+			reviewId: reviewId,
+			response: response
+		}
+		$.ajax("/product/reviewResponse/add",{
+			method: "post",
+			contentType:"application/json",
+			data: JSON.stringify(data),
+			success: function(response){
+				alert(response.message)
+				$(textAreaId).val(null);
+				
+			},
+			error:function(){
+				alert("에러~~")
+			}
+		})
+		
+	})
+}
+
+// 리뷰 삭제
+var removeResponses = document.getElementsByName("removeResponse");
+for (var removeResponse of removeResponses){
+	removeResponse.addEventListener("click",function(){
+		const responseId = $(this).data('responseId');
+		$("#removeResponseById").attr("value",responseId);
+	})
+}
+
+
 // 리뷰 수정
 var modifyReviews = document.getElementsByName("modifyReview");
 for (var modifyReview of modifyReviews) {
