@@ -16,4 +16,6 @@ public interface WishListMapper {
 	public Integer insert(WishList wishList);
 
 	public Set<Integer> getLikedProductId(String memberId);
+
+	public List<String> getLikedMemberId(Integer productId);
 }

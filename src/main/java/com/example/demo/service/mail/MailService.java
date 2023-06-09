@@ -8,9 +8,14 @@ import jakarta.mail.internet.MimeMessage;
 public interface MailService {
 
 	MimeMessage createEmail(String email) throws MessagingException, UnsupportedEncodingException;
-	
+
 	String createKey();
 
 	String sendEmail(String email) throws Exception;
+
+	void sendNotifyEmail(Integer productId);
+
+	MimeMessage createNotifyEmail(String[] emails, String productName)
+			throws MessagingException, UnsupportedEncodingException;
 
 }

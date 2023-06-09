@@ -53,5 +53,13 @@
 		#{memberId}
 	</select>
 
+	<select id="getLikedMemberId" resultType="String"
+		parameterType="Integer">
+		SELECT member_id
+		FROM
+		wishlist
+		WHERE product_id =
+		#{productId}
+	</select>
 </mapper>
 

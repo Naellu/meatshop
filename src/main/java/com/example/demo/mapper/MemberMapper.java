@@ -176,4 +176,12 @@ public interface MemberMapper {
 	@ResultMap("memberMap")
 	List<Members> selectAllPaging(Integer startIndex, Integer rowPerPage, String search, String type);
 
+	// 멤버 id로 이메일 가져오기
+	@Select("""
+			SELECT member_email
+			FROM members
+			WHERE
+			id = #{memberId}
+			""")
+	String getMemberEamil(String memberId);
 }

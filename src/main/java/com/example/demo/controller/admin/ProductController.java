@@ -11,11 +11,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.*;
 import org.springframework.web.servlet.mvc.support.*;
 
+import com.example.demo.MainController;
 import com.example.demo.domain.*;
 import com.example.demo.service.admin.*;
+import com.example.demo.service.mail.*;
 
 import lombok.*;
+import lombok.extern.slf4j.*;
 
+@Slf4j
 @Controller("adminProductController")
 @RequestMapping("/admin/product/")
 @RequiredArgsConstructor
@@ -23,6 +27,8 @@ import lombok.*;
 public class ProductController {
 
 	private final ProductService productService;
+
+	private final MailService mailService;
 
 	// 상품 목록 페이지
 	@GetMapping("list")
@@ -125,4 +131,13 @@ public class ProductController {
 			return "redirect:/admin/product/detail/{id}";
 		}
 	}
+
+	@PostMapping("notify")
+	@ResponseBody
+	String mailNotify(@RequestParam Integer productId) throws Exception {
+		//log.info(" info log={}", productId);
+		mailService.sendNotifyEmail(productId);
+		return null;
+	}
+
 }
