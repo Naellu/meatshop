@@ -1,23 +1,24 @@
-$(document).ready(function() {
-	const stockQuantity = $("#stockQuantity").val(); // 재고 수량 설정
-	// + 버튼 클릭 이벤트 핸들러
-	$(".plus-btn").click(function() {
-		const input = $(this).siblings(".number-input");
-		const currentValue = parseInt(input.val());
-		if (currentValue < stockQuantity) {
-			input.val(currentValue + 1);
-		}
-	});
+const categoryId = $("#categoryId").val();
+const bucketUrl = $("#bucketUrl").val();
 
-	// - 버튼 클릭 이벤트 핸들러
-	$(".minus-btn").click(function() {
-		const input = $(this).siblings(".number-input");
-		const currentValue = parseInt(input.val());
+const stockQuantity = $("#stockQuantity").val(); // 재고 수량 설정
+// + 버튼 클릭 이벤트 핸들러
+$(".plus-btn").click(function() {
+	const input = $(this).siblings(".number-input");
+	const currentValue = parseInt(input.val());
+	if (currentValue < stockQuantity) {
+		input.val(currentValue + 1);
+	}
+});
 
-		if (currentValue > 1) {
-			input.val(currentValue - 1);
-		}
-	});
+// - 버튼 클릭 이벤트 핸들러
+$(".minus-btn").click(function() {
+	const input = $(this).siblings(".number-input");
+	const currentValue = parseInt(input.val());
+
+	if (currentValue > 1) {
+		input.val(currentValue - 1);
+	}
 });
 
 $("#orderButton").click(function() {
@@ -72,7 +73,7 @@ $("#goToCartBtn").click(function() {
 			//값을 가지고
 			// orderdteatil/ odreid로 이동
 			//다른페이지로이동
-			window.location.href="/cart";
+			window.location.href = "/cart";
 			alert(message); // alert말고 다른걸로 수정할 예정
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
@@ -85,8 +86,13 @@ $("#goToCartBtn").click(function() {
 $("#productdetail").click(function() { //상품문의를 누르면
 	$("a.nav-link").removeClass("active"); // "nav-link"클래스를 가지오 있는 모든 a엘리멘트의 "active" 클래스를 제거 후
 	$(this).addClass("active"); // 현재(상품문의)에만 "active"클래스를 추가한다
-	
+
 	$("#content").empty();
+
+	const detailImage = `<img src="${bucketUrl}/product/detail/${categoryId}.jpg" alt="사진준비중">`;
+
+	$("#content").html(detailImage);
+
 	/*
 	$("#detailContent").removeClass("d-none");
 	$("#inquiryContent").addClass("d-none");
@@ -104,19 +110,19 @@ $("#productReview").click(function() { //상품문의를 누르면
 	$("#detailContent").addClass("d-none");
 	$("#reviewContent").removeClass("d-none");
 	*/
-	
+
 	$("#content").empty();
-	
+
 	const productId = $(this).data('productId');
-	
+
 	loadReviewPage(productId)
 })
 
 // 상품리뷰 출력 함수
 
-function loadReviewPage(productId){
+function loadReviewPage(productId) {
 	$("#content").empty();
-	
+
 	const data = {
 		productId: productId,
 		page: 1
@@ -126,7 +132,7 @@ function loadReviewPage(productId){
 		success: function(reviewPage) {
 			$("#content").html(reviewPage); // jsp 페이지를 HTML 형태로 삽입
 		}
-		
+
 	});
 }
 
@@ -141,14 +147,14 @@ $("#productInquiry").click(function() { //상품문의를 누르면
 	$("#reviewContent").addClass("d-none");
 */
 	const productId = $(this).data('productId');
-	
+
 	loadInquiryPage(productId)
-	
+
 })
 
 // 상품문의 출력 함수
-function loadInquiryPage(productId){
-	
+function loadInquiryPage(productId) {
+
 	const data = {
 		productId: productId,
 		page: 1
@@ -161,7 +167,7 @@ function loadInquiryPage(productId){
 
 
 		}
-		
+
 	});
 
 }
