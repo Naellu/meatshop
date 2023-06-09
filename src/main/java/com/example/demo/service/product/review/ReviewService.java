@@ -55,8 +55,6 @@ public class ReviewService {
 
 		List<Review> reviewList = reviewMapper.showListByProductId(review, startIndex);
 		
-		
-
 		Map<String, Object> reviewInfo = new HashMap<>();
 		reviewInfo.put("productId", review.getProductId());
 		reviewInfo.put("customerId", review.getCustomerId());

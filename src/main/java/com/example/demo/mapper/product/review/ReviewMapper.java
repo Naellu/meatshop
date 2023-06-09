@@ -84,7 +84,7 @@ public interface ReviewMapper {
 			ON r.review_id = rf.review_id 
 			WHERE r.review_id = #{reviewId} 
 			""")
-	@ResultMap("showReviewList")
+	@ResultMap("getReviewList")
 	Review getReviewByReviewId(Integer reviewId);
 
 	@Delete("""

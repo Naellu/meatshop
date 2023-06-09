@@ -30,14 +30,14 @@
 					<td>${review.rating}</td>
 					<td>
 						<button class="btn btn-primary" name="modifyReview"
-							data-review-id="${review.reviewId}" data-customer-id="${userid }">${review.reviewId }수정</button>
+							data-review-id="${review.reviewId}" data-customer-id="${userid }">리뷰수정</button>
 					</td>
 					<td>
 						<button class="btn btn-danger" name="removeReview"
 							data-review-id="${review.reviewId}"
 							data-bs-toggle="modal"
 							data-bs-target="#deleteReviewConfirmModal"
-							>${review.reviewId}삭제</button>
+							>리뷰삭제</button>
 
 					</td>
 					<td>${review.createdAt}</td>
@@ -56,20 +56,22 @@
 				<tr>
 					<td colspan=5>
 						<div class="mb-3">
+							<h3>관리자 답변</h3>
 							<c:forEach items="${review.responses }" var="response">
 								<textarea style="height: 97px" class="form-control"> ${response.response }
 								</textarea>
 								${response.createdAt }
-								<button class="btn btn-primary" name="modifyReviewResponse"
+								<button class="btn btn-primary" name="modifyResponse"
 									data-response-id="${response.responseId}"
-									>${response.responseId}수정</button>
+									data-product-id="${review.productId }"
+									>답변수정</button>
 									
 								<button class="btn btn-danger" name="removeResponse"
 									data-response-id="${response.responseId}"
 									data-bs-toggle="modal"
 									data-bs-target="#deleteReviewResponseConfirmModal"
 									data-product-id="${product.productId}"
-									data-customer-id="${userid }">${response.responseId}삭제</button>
+									data-customer-id="${userid }">답변삭제</button>
 
 								<br />
 								<br />
@@ -84,7 +86,10 @@
 								</div>
 								<button name="sendReviewResponseButton"
 									class="btn btn-outline-primary"
-									data-review-id="${review.reviewId}">답변하기(${review.reviewId })</button>
+									data-review-id="${review.reviewId}"
+									data-product-id="${review.productId}"
+									>답변하기</button>
+									
 							</div>
 						</div>
 					</td>

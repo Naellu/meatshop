@@ -4,7 +4,14 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.product.review.ReviewResponseMapper">
 	
-	
+	<resultMap type="com.example.demo.domain.ReviewResponse" id="getResponse">
+    <id column="response_id" property="responseId"/>
+    <result column="review_id" property="reviewId"/>
+    <result column="response" property="response"/>
+    <result column="created_at" property="createdAt"/> 
+   
+</resultMap>
+		
 	
 	
 </mapper>

@@ -22,4 +22,14 @@ public class ReviewResponseService {
 		return removeCheck == 1;
 	}
 
+
+	public ReviewResponse getResponse(Integer responseId) {
+		return mapper.getResponseByResponseId(responseId);
+	}
+
+	public boolean modifyResponse(ReviewResponse reviewResponse) {
+		int modifyCheck = mapper.modifyResponse(reviewResponse);
+		return modifyCheck == 1;
+	}
+
 }
