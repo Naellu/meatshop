@@ -30,16 +30,14 @@
 					<td>${review.rating}</td>
 					<td>
 						<button class="btn btn-primary" name="modifyReview"
-							data-review-id="${review.reviewId}" data-customer-id="${userid }">${review.reviewId }수정</button>
+							data-review-id="${review.reviewId}" data-customer-id="${userid }">리뷰수정</button>
 					</td>
 					<td>
 						<button class="btn btn-danger" name="removeReview"
 							data-review-id="${review.reviewId}"
-							data-product-id="${review.productId}"
-							data-customer-id="${userid }" data-bs-toggle="modal"
+							data-bs-toggle="modal"
 							data-bs-target="#deleteReviewConfirmModal"
-							data-product-id="${product.productId}"
-							data-customer-id="${userid }">${review.reviewId}삭제</button>
+							>리뷰삭제</button>
 
 					</td>
 					<td>${review.createdAt}</td>
@@ -56,21 +54,42 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan=6>
-						<div class="mb-3" id="answerContainer${review.reviewId }">
-							<!-- 답변이 표시될 구역 -->
+					<td colspan=5>
+						<div class="mb-3">
+							<h3>관리자 답변</h3>
+							<c:forEach items="${review.responses }" var="response">
+								<textarea style="height: 97px" class="form-control"> ${response.response }
+								</textarea>
+								${response.createdAt }
+								<button class="btn btn-primary" name="modifyResponse"
+									data-response-id="${response.responseId}"
+									data-product-id="${review.productId }"
+									>답변수정</button>
+									
+								<button class="btn btn-danger" name="removeResponse"
+									data-response-id="${response.responseId}"
+									data-bs-toggle="modal"
+									data-bs-target="#deleteReviewResponseConfirmModal"
+									data-product-id="${product.productId}"
+									data-customer-id="${userid }">답변삭제</button>
 
-
+								<br />
+								<br />
+							</c:forEach>
 						</div> <!-- 관리자만 보이게 할 예정 -->
 						<div class="mb-3">
 
 							<div class="input-group">
 								<div class="form-floating">
 									<textarea style="height: 97px" class="form-control"
-										id="reveiwAnswerTextArea${review.reviewId }"></textarea>
+										id="reveiwResponseTextArea${review.reviewId }"></textarea>
 								</div>
-								<button name="sendAnswerButton" class="btn btn-outline-primary"
-									data-review-id="${review.reviewId}">답변하기(${review.reviewId })</button>
+								<button name="sendReviewResponseButton"
+									class="btn btn-outline-primary"
+									data-review-id="${review.reviewId}"
+									data-product-id="${review.productId}"
+									>답변하기</button>
+									
 							</div>
 						</div>
 					</td>
@@ -138,14 +157,16 @@
 	</nav>
 </div>
 
+
+
+<!-- 리뷰 삭제 Modal -->
 <div class="d-none">
-	<form action="/product/review/remove" method="post" id="removeForm">
+	<form action="/product/review/remove" method="post" id="removeReviewForm">
 		<input type="text" id="removeReviewById" name="reviewId" value="" />
 		<input type="text" name="productId" value="${review.productId}" />
 	</form>
 </div>
 
-<!-- Modal -->
 <div class="modal fade" id="deleteReviewConfirmModal" tabindex="-1"
 	aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -158,7 +179,36 @@
 			<div class="modal-body">삭제하시겠습니까?</div>
 			<div class="modal-footer">
 				<button type="submit" class="btn btn-outline-danger"
-					form="removeForm">삭제</button>
+					form="removeReviewForm">삭제</button>
+				<button type="button" class="btn btn-outline-secondary"
+					data-bs-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- 리뷰 답변 삭제 Modal -->
+<div class="d-none">
+	<form action="/product/reviewResponse/remove" method="post" id="removeResponseForm">
+		<input type="text" id="removeResponseById" name="responseId" value="" />
+		<input type="text" name="productId" value="${review.productId}" />
+	</form>
+</div>
+
+<div class="modal fade" id="deleteReviewResponseConfirmModal" tabindex="-1"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel">삭제 확인</h1>
+				<button type="button" class="btn-outline-close"
+					data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">삭제하시겠습니까?</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-outline-danger"
+					form="removeResponseForm">삭제</button>
 				<button type="button" class="btn btn-outline-secondary"
 					data-bs-dismiss="modal">닫기</button>
 			</div>

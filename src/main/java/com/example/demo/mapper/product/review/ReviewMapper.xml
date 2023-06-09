@@ -4,19 +4,42 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.product.review.ReviewMapper">
 	
-	<resultMap type="com.example.demo.domain.Review" id="showReviewList">
-		<id column="review_id" property="reviewId"/>
-		<result column="customer_id" property="customerId"/>
-		<result column="product_id" property="productId"/>
-		<result column="content" property="content"/>
-		<result column="rating" property="rating"/>
-		<result column="created_at" property="createdAt"/>		
-		<collection property="fileNames" ofType="String">
-			<result column="file_name"/>
-		</collection>
-	</resultMap>
-	
-	
+<resultMap type="com.example.demo.domain.Review" id="showReviewList">
+    <id column="review_id" property="reviewId"/>
+    <result column="customer_id" property="customerId"/>
+    <result column="product_id" property="productId"/>
+    <result column="content" property="content"/>
+    <result column="rating" property="rating"/>
+    <result column="created_at" property="createdAt"/> <!-- Review 테이블의 created_at 컬럼 -->
+    <collection property="fileNames" ofType="String">
+        <result column="file_name"/>
+    </collection>
+    <collection property="responses" ofType="com.example.demo.domain.ReviewResponse">
+        <id column="response_id" property="responseId"/>
+        <result column="rr.review_id" property="reviewId"/> <!-- ReviewResponse 테이블의 review_id 컬럼 -->
+        <result column="response" property="response"/>
+        <collection property="createdAt" ofType="java.sql.Timestamp">
+            <result column="rr.created_at"/> <!-- ReviewResponse 테이블의 created_at 컬럼 -->
+        </collection>
+    </collection>
+</resultMap>
+
+
+<resultMap type="com.example.demo.domain.Review" id="getReviewList">
+    <id column="review_id" property="reviewId"/>
+    <result column="customer_id" property="customerId"/>
+    <result column="product_id" property="productId"/>
+    <result column="content" property="content"/>
+    <result column="rating" property="rating"/>
+    <result column="r.created_at" property="createdAt"/> <!-- Review 테이블의 created_at 컬럼 -->
+    <collection property="fileNames" ofType="String">
+        <result column="file_name"/>
+    </collection>
+   
+</resultMap>
+		
+		
 </mapper>
+
 
 

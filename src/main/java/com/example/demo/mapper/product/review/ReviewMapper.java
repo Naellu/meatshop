@@ -28,6 +28,7 @@ public interface ReviewMapper {
 			) 
 			AS subquery ON r.review_id = subquery.review_id
 			LEFT JOIN reviewfile rf ON r.review_id = rf.review_id
+			LEFT JOIN reviewresponse rr ON r.review_id = rr.review_id
 			ORDER BY r.review_id DESC;
 			""")
 	@ResultMap("showReviewList")
@@ -83,7 +84,7 @@ public interface ReviewMapper {
 			ON r.review_id = rf.review_id 
 			WHERE r.review_id = #{reviewId} 
 			""")
-	@ResultMap("showReviewList")
+	@ResultMap("getReviewList")
 	Review getReviewByReviewId(Integer reviewId);
 
 	@Delete("""

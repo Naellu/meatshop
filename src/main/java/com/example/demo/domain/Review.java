@@ -16,4 +16,6 @@ public class Review {
 	private Timestamp createdAt;
 	
 	private List<String> fileNames;
+	
+	private List<ReviewResponse> responses;
 }
