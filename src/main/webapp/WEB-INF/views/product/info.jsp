@@ -78,8 +78,16 @@
 						<input type="hidden" id="productId" value="${product.productId}" />
 						<input type="hidden" id="stockQuantity" value="${product.stockQuantity }" />
 						<input type="hidden" id="price" value="${product.price }" />
-						<button class="btn btn-success me-3" id="orderButton"><i class="fa-solid fa-credit-card"></i> 바로주문하기</button>
-						<button class="btn btn-danger" id="goToCartBtn"><i class="fa-solid fa-cart-shopping"></i> 장바구니로가기</button>
+						<input type="hidden" id="categoryId" value="${product.categoryId }" />
+						<input type="hidden" id="bucketUrl" value="${bucketUrl}" />
+						<button class="btn btn-success me-3" id="orderButton">
+							<i class="fa-solid fa-credit-card"></i>
+							바로주문하기
+						</button>
+						<button class="btn btn-danger" id="goToCartBtn">
+							<i class="fa-solid fa-cart-shopping"></i>
+							장바구니로가기
+						</button>
 					</div>
 				</div>
 			</div>
@@ -99,7 +107,9 @@
 			</li>
 		</ul>
 		<div class="tab-content mt-2">
-			<div id="content" class="tab-pane fade show active">여기에 상품상세/상품문의/상품리뷰 표시될 예정</div>
+			<div id="content" class="tab-pane fade show active">
+				<img src="${bucketUrl}/product/detail/${product.categoryId}.jpg" alt="사진준비중">
+			</div>
 		</div>
 	</div>
 
