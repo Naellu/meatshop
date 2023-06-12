@@ -5,6 +5,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
@@ -13,20 +15,22 @@
 </head>
 <body>
 	<my:navBar current="faq" />
-
-	<h1>1:1 문의하기</h1>
-	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#questionModal">문의하기</button>
-
-	<sec:authorize access="hasAuthority('admin')">
-		<form action="/question/list" method="get">
-			<select id="searchSelect" name="search">
-				<option value="">전체</option>
-				<option value="answered">답변 완료</option>
-				<option value="unanswered">미답변</option>
-			</select>
-			<input type="submit" value="Filter">
-		</form>
-	</sec:authorize>
+	<div class="container-lg">
+	<div>
+		<h1>1:1 문의하기</h1>
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#questionModal">문의하기</button>
+		<sec:authorize access="hasAuthority('admin')">
+			<form action="/question/list" method="get">
+				<select id="searchSelect" name="search">
+					<option value="">전체</option>
+					<option value="answered">답변 완료</option>
+					<option value="unanswered">미답변</option>
+				</select>
+				<input type="submit" value="검색">
+			</form>
+		</sec:authorize>
+	</div>
+	</div>
 
 	<!-- 모달 -->
 

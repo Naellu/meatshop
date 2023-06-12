@@ -14,11 +14,11 @@
 <body>
 	<my:navBar current="nbList" />
 
-	<sec:authorize access="hasAuthority('admin')">
-		<a href="/noticeBoard/add">공지사항 작성</a>
-	</sec:authorize>
 	
 	<div class="container-lg">
+	<sec:authorize access="hasAuthority('admin')">
+		<button type="button" class="btn btn-primary" onclick="location.href='/noticeBoard/add'">공지사항 작성</button>
+	</sec:authorize>
 		<!-- table.table>thead>tr>th*4^^tbody -->
 		<table class="table">
 			<thead>
