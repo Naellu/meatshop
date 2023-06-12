@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*" %>
 <!DOCTYPE html>
 <html>
@@ -36,7 +37,7 @@
 		        		<c:forEach var="orderItemDto" varStatus="status" items="${orderItemDtos}">
 				          <tr>
 				              <td>${productNames[status.index] }</td>
-				              <td>${orderItemDto.price }</td>
+				              <td><fmt:formatNumber value="${orderItemDto.price}" pattern="#,###"/></td>
 				              <td>${orderItemDto.quantity }</td>
 			              		<td>
 									<input type="hidden" name="memberId" value="${orderItemDto.memberId }" />

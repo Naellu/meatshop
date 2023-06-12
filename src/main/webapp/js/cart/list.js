@@ -80,6 +80,11 @@ $(document).ready(function() {
             selectedCartItems.push(cartItem);
         });
 
+		if(selectedCartItems.length === 0) {
+			alert("장바구니가 비어있습니다");
+			return;
+		}
+		
         var jsonData = JSON.stringify(selectedCartItems);
 
         $.ajax({

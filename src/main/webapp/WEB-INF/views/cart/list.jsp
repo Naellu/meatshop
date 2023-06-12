@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 <%@ page import="java.util.*" %>
 <!DOCTYPE html>
@@ -43,7 +44,7 @@
 				                    <button type="button" class="btn btn-secondary btn-quantity-increase" value="${cartItem.id}">+</button>
 			                    </td>
 			                    
-			                    <td id="productPrice_${cartItem.id}" data-unit-price="${cartItem.productPrice}">${cartItem.productPrice}</td>
+			                    <td id="productPrice_${cartItem.id}" data-unit-price="${cartItem.productPrice}"><fmt:formatNumber value="${cartItem.productPrice}" pattern="#,###" /></td>
                                 <td>
 	                                <button type="button" id="deleteButton" class="btn btn-outline-danger btn-delete" value="${cartItem.id}">
 	                                	<i class="fa-solid fa-xmark"></i>

@@ -1,4 +1,11 @@
 $(document).ready(function(){
+	$(".status-select").each(function() {
+		if($(this).find("option:selected").val() === "CANCEL") {
+			$(this).prop("disabled", true);
+		}
+	})
+	
+	
 	$(".status-select").change(function(){
 		var orderId = $(this).data("order-id");
 		var status = $(this).val();
@@ -21,13 +28,16 @@ $(document).ready(function(){
 			contentType:"application/json", 
 			data: JSON.stringify(data),
 			success: function(response) {
-				console.log(response);
 				alert(response);
+				
+				if(status === "CANCEL") {
+					$(this).prop("disabled", true);
+				}
+				
 				location.reload();
 			},
-			error: function(error) {
-				console.log(error);
-				alert(response);
+			error: function(jqXHR, errorThrown) {
+				alert(jqXHR);
 				location.reload();
 			}
 		});
