@@ -24,3 +24,19 @@ $(document).ready(function() {
 		}) 
 	})
 })
+
+// 리뷰 작성
+var addReviewButtons = document.getElementsByName('addReviewButtons');
+for (var addReviewButton of addReviewButtons){
+	addReviewButton.addEventListener("click",function(){
+		var customerId = $(this).data('customerId');
+		var productName = $(this).data('productName');
+		var productId = productName.substr(2);
+		
+		var link = '/product/review/add?customerId=' + customerId + '&productId=' + productId;
+		
+		location.href = link;
+		
+		
+	})
+}

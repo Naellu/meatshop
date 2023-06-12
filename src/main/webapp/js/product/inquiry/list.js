@@ -79,6 +79,8 @@ function listAnswer(inquiryId) {
 								},
 								complete: function() {
 									window.location.reload()
+									// window.location.href = '/success-page';
+
 
 								}
 							})
