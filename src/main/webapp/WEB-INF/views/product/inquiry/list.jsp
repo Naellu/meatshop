@@ -85,6 +85,7 @@
 								<!-- 관리자만 보이게 할 예정 -->
 								<sec:authorize access="isAuthenticated()">
 									<sec:authentication property="name" var="userId" />
+									
 									<c:if test="${userId eq 'admin0' }">
 										<div class="mb-3">
 
