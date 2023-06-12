@@ -144,7 +144,7 @@ public class OrderServiceImpl implements OrderService{
 
 	// 주문 취소
 	@Override
-	public void cancel(Integer orderId) {
+	public String cancel(Integer orderId) {
 		OrderDto order = orderMapper.findById(orderId);
 		if(order.getStatus().equals(Status.CREATED)) {
 			log.info("Status update is={}",orderMapper.updateStatus(orderId, Status.CANCEL));
@@ -156,10 +156,10 @@ public class OrderServiceImpl implements OrderService{
 				product.addStock(orderItem.getQuantity());
 				orderMapper.updateProductQuantity(product.getProductId(), product.getStockQuantity());
 			}
-			
+			return "주문을 취소 하였습니다";
 			
 		} else {
-			throw new IllegalStateException("주문을 취소할 수 있는 상태가 아닙니다");
+			return "주문을 취소할 수 있는 상태가 아닙니다";
 		}
 	}
 

@@ -29,7 +29,7 @@ public interface OrderService {
 	String findOneOfProduct(Integer productId);
 
 	// 주문 취소
-	void cancel(Integer orderId);
+	String cancel(Integer orderId);
 	
 	// 주문 상태 변경
 	boolean updateStatus(Integer orderId, Status status);

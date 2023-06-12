@@ -22,7 +22,6 @@ public class OrderItem {
 		orderItem.setProductId(productId);
 		orderItem.setOrderPrice(orderPrice);
 		orderItem.setQuantity(quantity);
-//		orderItem.calculateTotalPrice();
 		return orderItem;
 	}
 	

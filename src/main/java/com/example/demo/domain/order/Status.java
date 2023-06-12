@@ -5,6 +5,7 @@ import java.util.List;
 
 public enum Status{
 	CREATED("주문완료"),
+	PAYMENT("결제완료"),
 	PREPARE("배송준비"),
 	DELIVERY("배송중"),
 	COMPLETE("배송완료"),

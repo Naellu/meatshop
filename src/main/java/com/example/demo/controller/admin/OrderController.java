@@ -74,8 +74,7 @@ public class OrderController {
 	@ResponseBody
 	@PreAuthorize("isAuthenticated()")
 	public String cancelOrder(@RequestBody OrderDto orderDto) {
-		orderService.cancel(orderDto.getId());
-		return "주문을 취소 하였습니다";
+		return orderService.cancel(orderDto.getId()); 
 	}
 	
 	
