@@ -202,49 +202,53 @@ $("#addInquiry").click(function() {
 		productId: productId,
 		customerId: customerId
 	};
-	$.ajax("/product/inquiry/add", {
-		data: data,
-		contentType: 'application/json',
-		success: function(inquiryAddPage) {
-			$("#content").empty(); // 컨텐트 박스 비우고
-			$("#content").html(inquiryAddPage); // inquiryAddform 출력
-
-			$("#addInquiry").click(function() { //문의하기 누르면
-				const productId = $("#productId").val();
-				const customerId = $("#customerId").val();
-				const customerName = $("#customerName").val();
-				const inquiryTitle = $("#inquiryTitle").val();
-				const inquiryText = $("#bodyTextarea").val();
-
-
-				const data = {
-					productId: productId,
-					customerId: customerId,
-					customerName: customerName,
-					inquiryTitle: inquiryTitle,
-					inquiryText: inquiryText
-				}
-
-				$.ajax("/product/inquiry/add", {
-					method: "post",
-					contentType: 'application/json',
-					data: JSON.stringify(data),
-					success: function(data) {
-						alert(data.message)
-						loadInquiryPage(productId, customerId)
-
-					},
-					error: function() {
-						alert("문의를 등록하지 못했습니다.")
-						loadInquiryPage(productId, customerId)
-
+	if(customerId != 'anonymousUser'){
+		$.ajax("/product/inquiry/add", {
+			data: data,
+			contentType: 'application/json',
+			success: function(inquiryAddPage) {
+				$("#content").empty(); // 컨텐트 박스 비우고
+				$("#content").html(inquiryAddPage); // inquiryAddform 출력
+	
+				$("#addInquiry").click(function() { //문의하기 누르면
+					const productId = $("#productId").val();
+					const customerId = $("#customerId").val();
+					const customerName = $("#customerName").val();
+					const inquiryTitle = $("#inquiryTitle").val();
+					const inquiryText = $("#bodyTextarea").val();
+	
+	
+					const data = {
+						productId: productId,
+						customerId: customerId,
+						customerName: customerName,
+						inquiryTitle: inquiryTitle,
+						inquiryText: inquiryText
 					}
+	
+					$.ajax("/product/inquiry/add", {
+						method: "post",
+						contentType: 'application/json',
+						data: JSON.stringify(data),
+						success: function(data) {
+							alert(data.message)
+							loadInquiryPage(productId, customerId)
+	
+						},
+						error: function() {
+							alert("문의를 등록하지 못했습니다.")
+							loadInquiryPage(productId, customerId)
+	
+						}
+					})
+	
 				})
-
-			})
-
-		}
-	})
+	
+			}
+		})
+	} else{
+		alert("로그인 후 이용할 수 있습니다.")
+	}
 
 })
 
@@ -262,7 +266,7 @@ for (var modifyInquiry of modifyInquirys) {
 			data: data,
 			contentType: 'application/json',
 			success: function(inquiryModifyPage) {
-				$("#inquiryContent").html(inquiryModifyPage);
+				$("#content").html(inquiryModifyPage);
 
 
 				$("#modifyInquiryBtn").click(function() {
@@ -289,6 +293,7 @@ for (var modifyInquiry of modifyInquirys) {
 						}
 					})
 				})
+				
 
 			}
 		})
@@ -329,25 +334,7 @@ for (var removeInquiry of removeInquirys) {
 	})
 }
 
-// 상품문의 출력 함수
-/*function loadInquiryPage(productId, customerId) {
 
-	$("#inquiryContent").empty();
-	const data = {
-		productId: productId,
-		customerId: customerId,
-		page: 1
-	};
-	$.ajax("/product/inquiry/list", { //data의 값을 파라미터 형식으로 전달
-		data: data,
-		success: function(inquiryPage) {
-			$("#inquiryContent").html(inquiryPage); // jsp 페이지를 HTML 형태로 삽입
-
-
-		}
-	});
-
-}*/
 
 // 페이지버튼 클릭시 페이지이동 내용 ajax 출력
 var pageButtons = document.getElementsByName("inquiryPageBtn");
