@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.domain.Members;
+import com.example.demo.domain.*;
 import com.example.demo.mapper.MemberMapper;
 
 @Component
@@ -19,6 +19,8 @@ public class CustomUserDetailsService implements UserDetailsService{
 
 	@Autowired
 	private MemberMapper mapper;
+	
+	
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -44,5 +46,8 @@ public class CustomUserDetailsService implements UserDetailsService{
 		System.out.println(user);
 		return user;
 	}
+	
+	
+
 	
 }

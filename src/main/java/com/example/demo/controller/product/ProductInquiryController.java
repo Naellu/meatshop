@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,7 @@ public class ProductInquiryController {
 	}
 
 	@GetMapping("add")
+	@PreAuthorize("isAuthenticated()")
 	public void addFrom(ProductInquiry productInquiry) {
 	}
 
@@ -48,6 +50,7 @@ public class ProductInquiryController {
 	}
 
 	@PostMapping("delete")
+	@PreAuthorize("isAuthenticated() and @customerSecurityChecker.checkInquiryWriter(authentication, #productInquiry.inquiryId)")
 	public ResponseEntity<Map<String, Object>> delete(@RequestBody ProductInquiry productInquiry) {
 
 		Map<String, Object> res = new HashMap<>();
@@ -65,6 +68,7 @@ public class ProductInquiryController {
 	}
 
 	@GetMapping("modify")
+	@PreAuthorize("isAuthenticated() and @customerSecurityChecker.checkInquiryWriter(authentication, #productInquiry.inquiryId)")
 	public String modifyFrom(Integer inquiryId, Model model) {
 	    ProductInquiry inquiry = service.getInquiry(inquiryId);
 

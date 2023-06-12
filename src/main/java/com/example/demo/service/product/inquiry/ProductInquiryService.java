@@ -23,10 +23,7 @@ public class ProductInquiryService {
 
 		Integer startIndex = (page - 1) * 10;
 
-		System.out.println(productInquiry.getProductId());
 		Integer size = inquiryMapper.size(productInquiry);
-		
-		System.out.println("size:" + size);
 
 		Integer leftPageNumber = Math.max(1, page - 5);
 		Integer rightPageNumber = Math.min(size, page + 5);
@@ -62,7 +59,6 @@ public class ProductInquiryService {
 		res.put("pageInfo", pageInfo);
 		res.put("inquiryInfo", inquiryInfo);
 		
-		System.out.println(res.get("pageInfo"));
 		
 		return res;
 	}

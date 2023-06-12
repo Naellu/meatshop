@@ -28,19 +28,10 @@
 <button class="btn btn-primary" id="addInquiry"
 	data-product-id="${productInquiry.productId}"
 	data-customer-id="${userid }">문의하기</button>
-<br />
+<hr />
 <div class="accordion " id="accordionExample">
 	<table class="table">
-		<thead>
-			<tr>
-				<th scope="col">고객이름</th>
-				<th scope="col">고객ID</th>
-				<th scope="col">제목</th>
-				<th scope="col">작성시각</th>
-				<th scope="col">수정</th>
-				<th scope="col">삭제</th>
-			</tr>
-		</thead>
+
 		<tbody>
 			<c:forEach items="${productInquiryList}" var="inquiry">
 				<tr>
@@ -52,25 +43,30 @@
 							type="button" data-bs-toggle="collapse"
 							data-bs-target="#collapse${inquiry.inquiryId}"
 							aria-expanded="false"
-							aria-controls="collapse${inquiry.inquiryId}">문의내용
-							보기</button>
+							aria-controls="collapse${inquiry.inquiryId}">문의내용 보기</button>
 					</td>
 					<td>${inquiry.createdAt}</td>
-					<td>
-						<button class="btn btn-primary" name="modifyInquiry"
-							data-inquiry-id="${inquiry.inquiryId}"
-							data-customer-id="${userid }">수정</button>
-					</td>
-					<td>
-						<button class="btn btn-danger" name="removeInquiry"
-							data-inquiry-id="${inquiry.inquiryId}"
-							data-product-id="${inquiry.productId}"
-							data-customer-id="${userid }" data-bs-toggle="modal"
-							data-bs-target="#deleteInquiryConfirmModal"
-							data-product-id="${product.productId}"
-							data-customer-id="${userid }">삭제</button>
+					<sec:authorize access="isAuthenticated()">
+						<sec:authentication property="name" var="userId" />
+						<c:if test="${userId eq inquiry.customerId }">
+							<td>
+								<button class="btn btn-primary" name="modifyInquiry"
+									data-inquiry-id="${inquiry.inquiryId}"
+									data-customer-id="${userid }">수정</button>
+							</td>
+							<td>
+								<button class="btn btn-danger" name="removeInquiry"
+									data-inquiry-id="${inquiry.inquiryId}"
+									data-product-id="${inquiry.productId}"
+									data-customer-id="${userid }" data-bs-toggle="modal"
+									data-bs-target="#deleteInquiryConfirmModal"
+									data-product-id="${product.productId}"
+									data-customer-id="${userid }">삭제</button>
 
-					</td>
+							</td>
+
+						</c:if>
+					</sec:authorize>
 				</tr>
 				<tr>
 					<td colspan="6">
@@ -84,21 +80,26 @@
 								<div class="mb-3" id="answerContainer${inquiry.inquiryId }">
 									<!-- 답변이 표시될 구역 -->
 
-									
+
 								</div>
 								<!-- 관리자만 보이게 할 예정 -->
-								<div class="mb-3">
+								<sec:authorize access="isAuthenticated()">
+									<sec:authentication property="name" var="userId" />
+									<c:if test="${userId eq 'admin0' }">
+										<div class="mb-3">
 
-									<div class="input-group" id="answerOfInquiry">
-										<div class="form-floating">
-											<textarea style="height: 97px" class="form-control"
-												id="answerTextArea${inquiry.inquiryId }"></textarea>
+											<div class="input-group" id="answerOfInquiry">
+												<div class="form-floating">
+													<textarea style="height: 97px" class="form-control"
+														id="answerTextArea${inquiry.inquiryId }"></textarea>
+												</div>
+												<button name="sendAnswerButton"
+													class="btn btn-outline-primary"
+													id="sendAnswerBtn${inquiry.inquiryId }">답변하기</button>
+											</div>
 										</div>
-										<button name="sendAnswerButton"
-											class="btn btn-outline-primary"
-											id="sendAnswerBtn${inquiry.inquiryId }">답변하기</button>
-									</div>
-								</div>
+									</c:if>
+								</sec:authorize>
 
 							</div>
 						</div>
@@ -187,11 +188,8 @@
 			</div>
 			<div class="modal-body">삭제하시겠습니까?</div>
 			<div class="modal-footer">
-				<button type="button" id="removeInquiryBtn"
-					data-inquiry-id=""
-					data-product-id=""
-					data-customer-id=""
-					data-bs-toggle="modal"
+				<button type="button" id="removeInquiryBtn" data-inquiry-id=""
+					data-product-id="" data-customer-id="" data-bs-toggle="modal"
 					class="btn btn-outline-danger" form="inquiryRemoveForm"
 					data-bs-dismiss="modal">삭제</button>
 				<button type="button" class="btn btn-outline-secondary"
@@ -213,9 +211,9 @@
 			</div>
 			<div class="modal-body">삭제 하시겠습니까?</div>
 			<div class="modal-footer">
-				<button type="button" id="deleteAnswerModalButton" data-bs-dismiss="modal"
-					data-inquiry-id=""
-					type="button" class="btn btn-danger">삭제</button>
+				<button type="button" id="deleteAnswerModalButton"
+					data-bs-dismiss="modal" data-inquiry-id="" type="button"
+					class="btn btn-danger">삭제</button>
 				<button type="button" class="btn btn-secondary"
 					data-bs-dismiss="modal">닫기</button>
 			</div>

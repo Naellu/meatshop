@@ -1,4 +1,4 @@
-// 리뷰 수정
+// 리뷰 답변 수정
 var modifyResponses = document.getElementsByName('modifyResponse');
 for (var modifyResponse of modifyResponses){
 	modifyResponse.addEventListener("click",function(){
