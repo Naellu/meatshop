@@ -24,6 +24,14 @@ GROUP BY p.product_id
 ORDER BY sold DESC, price DESC
 LIMIT 3;
 
+SELECT p.*, COUNT(o.product_id) AS sold, c.category_name
+FROM products p
+JOIN categories c ON p.category_id = c.category_id
+LEFT JOIN orderitems o ON p.product_id = o.product_id
+WHERE pub = 1
+GROUP BY p.product_id
+ORDER BY sold DESC, price DESC;
+
 SELECT * FROM mainitemview;
 
 
@@ -33,10 +41,16 @@ JOIN categories c ON p.category_id = c.category_id
 LEFT JOIN orderitems o ON p.product_id = o.product_id
 GROUP BY p.product_id ORDER BY sold DESC LIMIT 3;
 
-SELECT p.*, COUNT(o.product_id) AS sold, c.category_name
+CREATE View mainitemview
+AS
+SELECT p.*, COUNT(ol.product_id) AS sold, c.category_name
 FROM products p
 JOIN categories c ON p.category_id = c.category_id
-LEFT JOIN orderitems o ON p.product_id = o.product_id
+LEFT JOIN (SELECT oi.order_id, oi.product_id, o.status FROM orderitems oi JOIN orders o ON o.id = oi.order_id WHERE status != 'CANCEL') ol ON p.product_id = ol.product_id
 WHERE pub = 1
 GROUP BY p.product_id
 ORDER BY sold DESC, price DESC LIMIT 3;
+
+DROP View mainitemview;
+
+SELECT COUNT(product_id), product_id  FROM (SELECT oi.order_id, oi.product_id, o.status FROM orderitems oi JOIN orders o ON o.id = oi.order_id WHERE status != 'CANCEL') C GROUP BY product_id;
