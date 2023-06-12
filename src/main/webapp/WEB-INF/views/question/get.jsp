@@ -47,7 +47,7 @@
 							</h1>
 						</div>
 						<div class="mb-3">
-							<a href="/question/list">목록 보기</a>
+							<button type="button" class="btn btn-primary" onclick="location.href='/question/list'">목록 보기</button>
 							<h1 id="titleInput">${question.title }</h1>
 						</div>
 						<hr class="long-hr">
