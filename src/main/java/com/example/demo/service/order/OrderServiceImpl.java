@@ -15,6 +15,7 @@ import com.example.demo.domain.order.OrderItem;
 import com.example.demo.domain.order.Status;
 import com.example.demo.domain.order.dto.OrderDto;
 import com.example.demo.domain.order.dto.OrderItemDto;
+import com.example.demo.domain.payment.PaymentDto;
 import com.example.demo.exception.NotEnoughStockException;
 import com.example.demo.mapper.order.OrderMapper;
 
@@ -168,11 +169,13 @@ public class OrderServiceImpl implements OrderService{
 	public boolean updateStatus(Integer orderId, Status status) {
 		return orderMapper.updateStatus(orderId, status);
 	}
-
-	
-
 	
 	
+	// 결제에 필요한 데이터 가져오기
+	@Override
+	public PaymentDto findRequiredPaymentData(Integer orderId) {
+		return orderMapper.findPaymentDataByOrder(orderId);
+	};
 	
 
 }

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.domain.order.Status;
 import com.example.demo.domain.order.dto.OrderDto;
 import com.example.demo.domain.order.dto.OrderItemDto;
+import com.example.demo.domain.payment.PaymentDto;
 import com.example.demo.exception.NotEnoughStockException;
 import com.example.demo.service.order.OrderService;
 
@@ -84,12 +85,15 @@ public class OrderController {
 	// 실제 주문 들어가는 POST 메서드
 	@PostMapping("/payed")
 	@PreAuthorize("isAuthenticated()")
-	public ResponseEntity payedOrder(@RequestBody List<OrderItemDto> orderItemDtos, Authentication authentication) throws NotEnoughStockException {
+	public PaymentDto payedOrder(@RequestBody List<OrderItemDto> orderItemDtos, Authentication authentication) throws NotEnoughStockException {
 		String memberId = authentication.getName();
 		int orderId = orderService.makeOrderOfMultipleProduct(memberId, orderItemDtos);
+		log.info("orderId IN order/payed CONTROLLER ={}",orderId);
 		
-		return ResponseEntity.ok(orderId);
-		
+		// 결제 함수인 requestPay()에 필요한 데이터가 담긴 paymentDto를 보낼 예정
+		PaymentDto paymentDto = orderService.findRequiredPaymentData(orderId);
+		log.info("PaymentDto={}",paymentDto);
+		return paymentDto;
 	}
 
 	// 회원의 주문내역보기

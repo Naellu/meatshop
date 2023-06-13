@@ -4,6 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.example.demo.mapper.order.OrderMapper">
+	
 	<resultMap type="com.example.demo.domain.order.dto.OrderDto" id="OrderItemMap">
 		<id column="id" property="id"/>		
 		<result column="member_id" property="memberId"/>
@@ -16,16 +17,17 @@
 		</collection>
 	</resultMap>
 	
-	<resultMap type="com.example.demo.domain.order.dto.OrderDtoTest" id="OrderItemMapTest">
-		<id column="id" property="id"/>		
-		<result column="member_id" property="memberId"/>
-		<result column="product_id" property="productId"/>
-		<result column="created" property="created"/>
-		<result column="totalPrice" property="totalPrice"/>
-		<result column="status" property="status"/>
-		<result column="productName" property="productName"/>
+	<resultMap type="com.example.demo.domain.payment.PaymentDto" id="PaymentDtoMap">
+		<result column="id" property="orderId"/>
+		<result column="total_price" property="totalPrice"/>
+		<result column="member_email" property="email"/>
+		<result column="member_name" property="memberName"/>
+		<result column="member_phone_number" property="phoneNumber"/>
+		<result column="member_address" property="address"/>
+		<collection property="productName" ofType="string">
+			<result column="productName"/>
+		</collection>
 	</resultMap>
-	
 	
 </mapper>
 
