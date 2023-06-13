@@ -9,7 +9,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
+<title>내 장바구니</title>
+<style>
+	#buttonDiv {
+		display: flex;
+		justify-content: center; 
+		align-items: center; 
+		height: 10vh;
+	}
+</style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -44,7 +52,7 @@
 				                    <button type="button" class="btn btn-secondary btn-quantity-increase" value="${cartItem.id}">+</button>
 			                    </td>
 			                    
-			                    <td id="productPrice_${cartItem.id}" data-unit-price="${cartItem.productPrice}"><fmt:formatNumber value="${cartItem.productPrice}" pattern="#,###" /></td>
+			                    <td id="productPrice_${cartItem.id}" data-unit-price="${cartItem.productPrice}">${cartItem.productPrice}</td>
                                 <td>
 	                                <button type="button" id="deleteButton" class="btn btn-outline-danger btn-delete" value="${cartItem.id}">
 	                                	<i class="fa-solid fa-xmark"></i>
@@ -56,8 +64,9 @@
 			                    <input type="hidden" name="memberId" id="memberId" value="${memberId }"/>
                     </tbody>
                 </table>
-		            <button id="orderButton" class="btn btn-outline-dark">주문하러가기</button>
-		            <span id="totalPrice"></span>
+                <div id="buttonDiv">
+		            <button id="orderButton" class="btn btn-outline-dark">주문하기 <span id="totalPrice"></span></button>
+                </div>
             </div>
         </div>
     </div>

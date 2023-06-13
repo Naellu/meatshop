@@ -85,7 +85,7 @@ public class OrderController {
 	// 실제 주문 들어가는 POST 메서드
 	@PostMapping("/payed")
 	@PreAuthorize("isAuthenticated()")
-	public PaymentDto payedOrder(@RequestBody List<OrderItemDto> orderItemDtos, Authentication authentication) throws NotEnoughStockException {
+	public ResponseEntity<PaymentDto> payedOrder(@RequestBody List<OrderItemDto> orderItemDtos, Authentication authentication) throws NotEnoughStockException {
 		String memberId = authentication.getName();
 		int orderId = orderService.makeOrderOfMultipleProduct(memberId, orderItemDtos);
 		log.info("orderId IN order/payed CONTROLLER ={}",orderId);
@@ -93,7 +93,7 @@ public class OrderController {
 		// 결제 함수인 requestPay()에 필요한 데이터가 담긴 paymentDto를 보낼 예정
 		PaymentDto paymentDto = orderService.findRequiredPaymentData(orderId);
 		log.info("PaymentDto={}",paymentDto);
-		return paymentDto;
+		return new ResponseEntity<>(paymentDto, HttpStatus.OK);
 	}
 
 	// 회원의 주문내역보기
@@ -121,10 +121,12 @@ public class OrderController {
 		return "order/list";
 	}
 
+	// 결제 완료 시
 	@GetMapping("/success")
-	public void successOrder() {
-		// 결제 완료 시
-		
+	public String successOrder(Authentication authentication, Model model) {
+		String memberId = authentication.getName();
+		model.addAttribute("memberId", memberId);
+		return "order/success";
 	}
 	
 	// 주문 취소
