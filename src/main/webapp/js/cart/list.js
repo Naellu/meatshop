@@ -23,7 +23,11 @@ $(document).ready(function() {
 			total += Number($(this).data("total-price"));
 		})
 		
-		$("#totalPrice").text(total + "원");
+		if(total != 0) {
+			$("#totalPrice").text("/ 총 " + total + "원");
+		} else {
+			$("#totalPrice").text(null);
+		}
 	}
 
     // 장바구니에서 상품 삭제버튼 누를 시
@@ -79,9 +83,10 @@ $(document).ready(function() {
             };
             selectedCartItems.push(cartItem);
         });
+       	console.log(selectedCartItems);
 
 		if(selectedCartItems.length === 0) {
-			alert("장바구니가 비어있습니다");
+			alert("상품을 선택해주세요");
 			return;
 		}
 		

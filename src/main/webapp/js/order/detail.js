@@ -18,25 +18,40 @@ $(document).ready(function() {
 		});
 	});
 	console.log(data);
-		
-	$("#paymentButton").click(function() {
-		
-		
+	
+	// 결제없이 단순 주문
+	$("#simpleOrderButton").click(function() {
 		$.ajax({
 	        url: "/order/payed",
 	        type: "POST",
 	        data: JSON.stringify(data),
 	        contentType: "application/json",
 	        success: function(response) {
-	          console.log(response);
-	          window.location.href = "/order/success"; // 완료되면 주문완료 화면 보여주기
+	          console.log("success: " + response);
+	          window.location.href="/order/success";
 	        },
 	        error: function(jqXHR, textStatus, errorThrown) {
-	          console.log(textStatus, errorThrown);
-	
+	          console.log("error: " + textStatus, errorThrown);
 	        }
 	  	});
-  	
+	});	
+	
+	// 결제 버튼 누를 시 결제진행
+	$("#paymentButton").click(function() {
+		$.ajax({
+	        url: "/order/payed",
+	        type: "POST",
+	        data: JSON.stringify(data),
+	        contentType: "application/json",
+	        success: function(response) {
+	          console.log("success: " + response);
+	          // 주문이 생성되고 나면 주문데이터를 결제 함수인 requestPay()로 전달
+	          requestPay(response);
+	        },
+	        error: function(jqXHR, textStatus, errorThrown) {
+	          console.log("error: " + textStatus, errorThrown);
+	        }
+	  	});
 	});	
 	
 	// 총 주문금액 계산
@@ -59,7 +74,7 @@ $(document).ready(function() {
 
 
 $(document).ready(function() {
-    // 아임포트
+    // 아임포트 - 가맹점 식별코드
     var IMP = window.IMP;
 	IMP.init("imp51807046");
 })
@@ -72,24 +87,35 @@ $(document).ready(function() {
     var makeMerchantUid = hours +  minutes + seconds + milliseconds;
 	
 
-	// 아임포트
+	// 아임포트 - 결제 요청
 	function requestPay(orderData) {
+		console.log(orderData)
+		
+		let productNameList = orderData.productName;
+		let displayName = "";
+		
+		if(productNameList.length == 1) {
+			displayName = productNameList[0];
+		} else if (productNameList.length > 1) {
+			displayName = productNameList[0] + " 외 " + (productNameList.length - 1) + "건";
+		}
+		
     IMP.request_pay({
         pg : 'html5_inicis.INIpayTest', // 고정
         pay_method : 'card', // 고정
-        merchant_uid: "meat" + makeMerchantUid, // (가맹점)주문번호
-        name : '당근 10kg', // 1건보다 많을 시 대표 상품 외 n건
-        amount : $("#totalPrice").val(), // 가격은 totalPrice를 사용
-        buyer_email : 'Iamport@chai.finance', // member_email
-        buyer_name : '아임포트 기술지원팀', // member_name
-        buyer_tel : '010-1234-5678', // member_phone_number
-        buyer_addr : '서울특별시 강남구 삼성동', // member_address
-        buyer_postcode : '123-456' // 없으니 아무거나
+        merchant_uid: orderData.orderId, // (가맹점)주문번호 - order_id
+        name : displayName, // 1건보다 많을 시 대표 상품 외 n건 - productName
+        amount : 100, // 테스트 하는 동안에는 100원으로 설정, total_price
+        buyer_email : orderData.email, // member_email
+        buyer_name : orderData.memberName, // member_name
+        buyer_tel : orderData.phoneNumber, // member_phone_number
+        buyer_addr : orderData.address, // member_address
 	    }, function (rsp) { // callback
 	    console.log(rsp);
 	        if (rsp.success) {
 	      	// 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
     	  	// jQuery로 HTTP 요청
+    	  	/*
 		      $.ajax({
 		        url: "{서버의 결제 정보를 받는 가맹점 endpoint}", 
 		        method: "POST",
@@ -102,25 +128,15 @@ $(document).ready(function() {
 				  console.log(data);
 				  console.log(orderData);
 		        // 가맹점 서버 결제 API 성공시 로직
-		        	// requestPay에 들어온 orderData를 결제 성공, 검증성공 시 
-		        	// order/payed로 DB에 정보를 저장시켜야한다
+		        // 성공화면 보여주기 order/success
 		      })
+		      */
+			 console.log(rsp);
+			 // 주문상태를 주문완료에서 결제완료로 바꿔야함
+			 window.location.href="/order/success";
 		    } else {
 		      alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
 		    }
 	    });
 	}
-	
-	let prePaymentData = {
-		merchant_uid: "...", // 가맹점 주문번호
-	    amount: 420000, // 결제 예정금액
-	};
-	
-	$.ajax({
-	  url: "https://api.iamport.kr/payments/prepare",
-	  method: "post",
-	  ContentType: "application/json", 
-	  data: JSON.stringify(prePaymentData)
-	});
-
 	

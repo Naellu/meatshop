@@ -9,7 +9,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Insert title here</title>
+<title>주문 상세</title>
+<style>
+	#buttonDiv {
+		display: flex;
+		justify-content: center; 
+		align-items: center; 
+		height: 10vh;
+	}
+	
+	#showPriceDiv {
+		display: flex;
+		justify-content: center; 
+		align-items: center; 
+	}
+</style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -50,12 +64,16 @@
 			          	</c:forEach>
 			        </tbody>
 			    </table>
-			    <div id="totalPriceDisplay" class="float-right">
-			    	총 주문금액: <span id="totalPrice" value="">0</span>₩
-			    </div>
 			    
-		        <button id="paymentButton" type="submit" class="btn btn-primary">결제하기</button>
-		        <button onclick="requestPay()">iamport 테스트 결제버튼</button>
+			    <div id="showPriceDiv">
+				    <div id="totalPriceDisplay" class="float-right">
+				    	총 주문금액: <span id="totalPrice" value="">0</span>₩
+				    </div>
+				</div>
+				<div id="buttonDiv">
+			        <button id="simpleOrderButton" type="submit" class="btn btn-outline-dark">결제완료</button>
+			        <button id="paymentButton" type="submit" class="btn btn-outline-dark">결제 테스트하기</button>
+			    </div>
 			
 			</div>
 		</div>	

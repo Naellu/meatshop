@@ -6,6 +6,7 @@ import java.util.Map;
 import com.example.demo.domain.order.Status;
 import com.example.demo.domain.order.dto.OrderDto;
 import com.example.demo.domain.order.dto.OrderItemDto;
+import com.example.demo.domain.payment.PaymentDto;
 import com.example.demo.exception.NotEnoughStockException;
 
 public interface OrderService {
@@ -33,4 +34,7 @@ public interface OrderService {
 	
 	// 주문 상태 변경
 	boolean updateStatus(Integer orderId, Status status);
+	
+	// 결제 데이터 가져오기
+	PaymentDto findRequiredPaymentData(Integer orderId);
 }

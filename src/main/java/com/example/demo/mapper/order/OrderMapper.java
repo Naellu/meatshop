@@ -17,6 +17,7 @@ import com.example.demo.domain.order.Order;
 import com.example.demo.domain.order.OrderItem;
 import com.example.demo.domain.order.Status;
 import com.example.demo.domain.order.dto.OrderDto;
+import com.example.demo.domain.payment.PaymentDto;
 
 @Mapper
 public interface OrderMapper {
@@ -219,6 +220,26 @@ public interface OrderMapper {
 			WHERE id = #{orderId};
 			""")
 	boolean updateStatus(Integer orderId, Status status);
+	
+	
+	// 결제에 필요한 데이터 가져오기
+	@Select("""
+			SELECT
+				o.id,
+			    o.total_price,
+			    p.product_name productName,
+			    m.member_name,
+			    m.member_email,
+			    m.member_phone_number,
+			    m.member_address
+			FROM orders as o
+			LEFT JOIN members as m ON o.member_id = m.id
+			LEFT JOIN orderitems as oi ON oi.order_id = o.id
+			LEFT JOIN products as p ON p.product_id = oi.product_id
+			WHERE o.id = #{orderId}
+			""")
+	@ResultMap("PaymentDtoMap")
+	PaymentDto findPaymentDataByOrder(Integer orderId);
 
 	
 	
