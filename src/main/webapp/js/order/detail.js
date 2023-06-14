@@ -106,37 +106,50 @@ $(document).ready(function() {
         merchant_uid: orderData.orderId, // (가맹점)주문번호 - order_id
         name : displayName, // 1건보다 많을 시 대표 상품 외 n건 - productName
         amount : 100, // 테스트 하는 동안에는 100원으로 설정, total_price
-        buyer_email : orderData.email, // member_email
-        buyer_name : orderData.memberName, // member_name
-        buyer_tel : orderData.phoneNumber, // member_phone_number
-        buyer_addr : orderData.address, // member_address
+        buyer_email : orderData.email,
+        buyer_name : orderData.memberName,
+        buyer_tel : orderData.phoneNumber,
+        buyer_addr : orderData.address,
 	    }, function (rsp) { // callback
 	    console.log(rsp);
 	        if (rsp.success) {
 	      	// 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
     	  	// jQuery로 HTTP 요청
-    	  	/*
 		      $.ajax({
-		        url: "{서버의 결제 정보를 받는 가맹점 endpoint}", 
+		        url: "/payment/complete", // 결제 검증 요청(어떤 데이터를 보내 검증해야하는지?)
 		        method: "POST",
-		        headers: { "Content-Type": "application/json" },
-		        data: {
-		          imp_uid: rsp.imp_uid,            // 결제 고유번호
-		          merchant_uid: rsp.merchant_uid   // 주문번호
-		        }
-		      }).done(function (data) {
-				  console.log(data);
-				  console.log(orderData);
-		        // 가맹점 서버 결제 API 성공시 로직
-		        // 성공화면 보여주기 order/success
+		        contentType: "application/json",
+		        data: JSON.stringify({
+	          		imp_uid: rsp.imp_uid,            // 결제 고유번호
+	          		merchant_uid: rsp.merchant_uid   // 주문번호
+		        })
+		      }).done(function(data) {
+		          // 가맹점 서버 결제 API 성공시 로직
+				  // window.location.href="/order/success";
+				  
+				  // 반환된 결제 데이터를 가지고 가격검증
+				  verifyAmount(data);
 		      })
-		      */
-			 console.log(rsp);
-			 // 주문상태를 주문완료에서 결제완료로 바꿔야함
-			 window.location.href="/order/success";
 		    } else {
 		      alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
 		    }
 	    });
+	}
+	
+	function verifyAmount(paymentData) {
+		console.log(paymentData);
+		$.ajax({
+			url: "/payment/verify",
+			method: "POST",
+			contentType: "application/json",
+			data: JSON.stringify(paymentData),
+			success: function(response) {
+				console.log(response);
+				// 주문상태를 주문완료에서 결제완료로 바꿔야함
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				console.log("error: " + textStatus, errorThrown);
+			}
+		})
 	}
 	
