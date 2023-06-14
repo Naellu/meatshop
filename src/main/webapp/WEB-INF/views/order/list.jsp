@@ -95,9 +95,12 @@
 								<td><c:choose>
 										<c:when test="${fn:length(order.productName) == 1}">
 											<p>${order.productName[0]}
-												<button class="btn btn-outline-primary" type="button" name="addReviewButtons"
-													data-product-name="${order.productName[0] }"
-													data-customer-id="${memberId }">리뷰쓰기</button>
+												<c:if test="${order.status != 'CANCEL' }">
+													<button class="btn btn-outline-primary" type="button"
+														name="addReviewButtons"
+														data-product-name="${order.productName[0] }"
+														data-customer-id="${memberId }">리뷰쓰기</button>
+												</c:if>
 											</p>
 										</c:when>
 										<c:otherwise>
@@ -105,6 +108,7 @@
 												id="accordion${order.id}">
 												<div class="accordion-item">
 													<div class="accordion-header" id="headingOne${order.id}">
+
 														<button class="accordion-button collapsed" type="button"
 															data-bs-toggle="collapse"
 															data-bs-target="#collapseOne${order.id}"
@@ -121,9 +125,12 @@
 															<c:forEach var="product" begin="0"
 																items="${order.productName}">
 																<p>${product}
-																	<button class="btn btn-outline-primary" type="button" name="addReviewButtons"
-																		data-product-name="${product }"
-																		data-customer-id="${memberId }">리뷰쓰기</button>
+																	<c:if test="${order.status != 'CANCEL' }">
+																		<button class="btn btn-outline-primary" type="button"
+																			name="addReviewButtons"
+																			data-product-name="${product }"
+																			data-customer-id="${memberId }">리뷰쓰기</button>
+																	</c:if>
 																</p>
 															</c:forEach>
 														</div>
