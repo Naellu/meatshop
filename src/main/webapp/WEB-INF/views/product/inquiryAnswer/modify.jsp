@@ -15,20 +15,6 @@
 </head>
 <body>
  --%>
-<h1>답변수정</h1>
-<hr />
-문의 정보
-<br />
-상품 ID : ${productInquiry.productId}
-<br />
-고객명 : ${productInquiry.customerName}
-<br />
-문의제목: ${productInquiry.inquiryTitle}
-<br />
-문의내용: ${productInquiry.inquiryText}
-<br />
-<hr />
-답변 내용
 <form action="" method="post">
 	<input type="hidden" name="inquiryId" id="inquiryId"
 		value="${productAnswer.inquiryId }" />
@@ -37,6 +23,7 @@
 	<input type="hidden" name="productId"
 		value="${productInquiry.productId}" /> <input class="btn btn-primary"
 		type="button" id="modifyAnswerBtn" value="수정" />
+	<button class = "btn btn-secondary" type="button" onclick="window.location.reload()">취소</button>
 </form>
 
 <%--

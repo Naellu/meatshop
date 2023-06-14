@@ -14,6 +14,7 @@
 			name = "response">${response.response }</textarea>
 	</div>
 	<button class="btn btn-outline-primary">수정하기</button>
+	<button class = "btn btn-outline-secondary" type="button" onclick="window.location.reload()">취소</button>
 	</div>
 
 </form>

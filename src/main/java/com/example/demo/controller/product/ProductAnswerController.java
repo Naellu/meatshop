@@ -4,6 +4,7 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +25,7 @@ public class ProductAnswerController {
 
 	
 	@PostMapping("add")
+	@PreAuthorize("hasAuthority('admin')")
 	public ResponseEntity<Map<String, Object>> addAnswer(@RequestBody ProductAnswer productAnswer) {
 		Map<String, Object> res = new HashMap<>();
 		
@@ -44,6 +46,7 @@ public class ProductAnswerController {
 	}
 	
 	@GetMapping("modify")
+	@PreAuthorize("hasAuthority('admin')")
 	public String modifyForm(Integer inquiryId, Model model) {
 		ProductInquiry productInquiry = inquiryService.getInquiry(inquiryId);
 		ProductAnswer productAnswer = answerService.getAnswer(inquiryId);
@@ -73,6 +76,7 @@ public class ProductAnswerController {
 	}
 	
 	@DeleteMapping("delete/{inquiryid}")
+	@PreAuthorize("hasAuthority('admin')")
 	public ResponseEntity<Map<String, Object>>remove(@PathVariable("inquiryid") Integer inquiryid){
 		
 		Map<String, Object> res = answerService.remove(inquiryid);

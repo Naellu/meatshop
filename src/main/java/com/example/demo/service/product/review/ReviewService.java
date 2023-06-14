@@ -3,7 +3,9 @@ package com.example.demo.service.product.review;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 import org.springframework.web.multipart.*;
 
 import com.example.demo.domain.*;
@@ -14,6 +16,7 @@ import software.amazon.awssdk.services.s3.*;
 import software.amazon.awssdk.services.s3.model.*;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class ReviewService {
 
 	@Autowired
@@ -21,11 +24,17 @@ public class ReviewService {
 
 	@Autowired
 	private ReviewMapper reviewMapper;
+	
+	@Autowired
+	private ReviewLikeMapper likeMapper;
 
 	@Value("${aws.s3.bucketName}")
 	private String bucketName;
 
-	public Map<String, Object> showReviewListByProductId(Review review, Integer page) {
+	public Map<String, Object> showReviewListByProductId(
+			Review review, 
+			Integer page,
+			Authentication authentication) {
 
 		Integer startIndex = (page - 1) * 10;
 
@@ -55,14 +64,33 @@ public class ReviewService {
 
 		List<Review> reviewList = reviewMapper.showListByProductId(review, startIndex);
 		
+		
+		ReviewLike reviewLike = new ReviewLike();
+		reviewLike.setCustomerId(authentication.getName());
+		
+		
+		for (Review reviewElement : reviewList) {
+			reviewLike.setReviewId(reviewElement.getReviewId());
+			System.out.println(reviewLike);
+			reviewElement.setLikeCount(likeMapper.likeCount(reviewLike));
+			reviewElement.setLiked(likeMapper.likedByCustomerId(reviewLike) == 1);
+			
+		}
+		
 		Map<String, Object> reviewInfo = new HashMap<>();
 		reviewInfo.put("productId", review.getProductId());
 		reviewInfo.put("customerId", review.getCustomerId());
+		
+		
+		
+		
 
 		Map<String, Object> res = new HashMap<>();
 		res.put("reviewList", reviewList);
 		res.put("pageInfo", pageInfo);
 		res.put("reviewInfo", reviewInfo);
+		
+		
 		return res;
 	}
 
@@ -160,6 +188,27 @@ public class ReviewService {
 		
 		Integer modifyCheck = reviewMapper.updateReviewByReviewId(review);
 		return modifyCheck == 1;
+	}
+
+	public Map<String, Object> reviewLike(ReviewLike reviewLike, Authentication authentication) {
+		Map<String, Object> result = new HashMap<>();
+		
+		result.put("like", false);
+		reviewLike.setCustomerId(authentication.getName());
+		
+		Integer deleteCnt = likeMapper.deleteLike(reviewLike);
+		
+		if (deleteCnt != 1) {
+			result.put("like", true);
+			likeMapper.insertLike(reviewLike);
+		}
+		
+		Integer likeCount = likeMapper.likeCount(reviewLike);
+				
+		result.put("count", likeCount);
+		
+		
+		return result;
 	}
 
 }
