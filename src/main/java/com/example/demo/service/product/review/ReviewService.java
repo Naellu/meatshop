@@ -24,7 +24,7 @@ public class ReviewService {
 
 	@Autowired
 	private ReviewMapper reviewMapper;
-	
+
 	@Autowired
 	private ReviewLikeMapper likeMapper;
 
@@ -32,7 +32,7 @@ public class ReviewService {
 	private String bucketName;
 
 	public Map<String, Object> showReviewListByProductId(
-			Review review, 
+			Review review,
 			Integer page,
 			Authentication authentication) {
 
@@ -63,34 +63,32 @@ public class ReviewService {
 		pageInfo.put("num", 10);
 
 		List<Review> reviewList = reviewMapper.showListByProductId(review, startIndex);
-		
-		
+
 		ReviewLike reviewLike = new ReviewLike();
-		reviewLike.setCustomerId(authentication.getName());
-		
-		
+
 		for (Review reviewElement : reviewList) {
+			reviewElement.setLikeCount(0); // 초기값 설정
+			reviewElement.setLiked(false); // 초기값 설정
+
 			reviewLike.setReviewId(reviewElement.getReviewId());
-			System.out.println(reviewLike);
+
+			if (authentication != null) {
+				reviewLike.setCustomerId(authentication.getName());
+				reviewElement.setLiked(likeMapper.likedByCustomerId(reviewLike) == 1);
+			}
+
 			reviewElement.setLikeCount(likeMapper.likeCount(reviewLike));
-			reviewElement.setLiked(likeMapper.likedByCustomerId(reviewLike) == 1);
-			
 		}
-		
+
 		Map<String, Object> reviewInfo = new HashMap<>();
 		reviewInfo.put("productId", review.getProductId());
 		reviewInfo.put("customerId", review.getCustomerId());
-		
-		
-		
-		
 
 		Map<String, Object> res = new HashMap<>();
 		res.put("reviewList", reviewList);
 		res.put("pageInfo", pageInfo);
 		res.put("reviewInfo", reviewInfo);
-		
-		
+
 		return res;
 	}
 
@@ -127,7 +125,7 @@ public class ReviewService {
 		for (String file : files) {
 			String dirKey = "meatshop/review/" + reviewId;
 			String fileKey = dirKey + "/" + file;
-			
+
 			DeleteObjectRequest dor = DeleteObjectRequest.builder()
 					.bucket(bucketName)
 					.key(fileKey)
@@ -135,79 +133,75 @@ public class ReviewService {
 			s3.deleteObject(dor);
 		}
 
-		
 		Integer removeCheck = reviewMapper.deleteReviewByReviewId(reviewId);
 
 		return removeCheck == 1;
 	}
 
-	
 	public Review getReview(Integer reviewId) {
 		return reviewMapper.getReviewByReviewId(reviewId);
 	}
-	
 
 	public boolean modify(Review review, MultipartFile[] addFiles, List<String> removeFileNames) throws Exception {
 		String dirKey = "meatshop/review/" + review.getReviewId();
-		
-		if(removeFileNames != null && !removeFileNames.isEmpty()) {
+
+		if (removeFileNames != null && !removeFileNames.isEmpty()) {
 			for (String removeFileName : removeFileNames) {
-				
+
 				String fileKey = dirKey + "/" + removeFileName;
-				
+
 				DeleteObjectRequest dor = DeleteObjectRequest.builder()
 						.key(fileKey)
 						.bucket(bucketName)
 						.build();
 				s3.deleteObject(dor);
-				
+
 				reviewMapper.deleteFileByFileName(review.getReviewId(), removeFileName);
 			}
-			
+
 		}
-		
+
 		for (MultipartFile newFile : addFiles) {
-			if(newFile.getSize() > 0) {
+			if (newFile.getSize() > 0) {
 				reviewMapper.insertFileName(review.getReviewId(), newFile.getOriginalFilename());
-				
+
 				String fileName = newFile.getOriginalFilename();
 				String fileKey = dirKey + "/" + fileName;
-				
+
 				PutObjectRequest por = PutObjectRequest.builder()
 						.key(fileKey)
 						.acl(ObjectCannedACL.PUBLIC_READ)
 						.bucket(bucketName)
 						.build();
-				
+
 				RequestBody rb = RequestBody.fromInputStream(newFile.getInputStream(), newFile.getSize());
-				
+
 				s3.putObject(por, rb);
-				
+
 			}
 		}
-		
+
 		Integer modifyCheck = reviewMapper.updateReviewByReviewId(review);
 		return modifyCheck == 1;
 	}
 
 	public Map<String, Object> reviewLike(ReviewLike reviewLike, Authentication authentication) {
 		Map<String, Object> result = new HashMap<>();
-		
+
 		result.put("like", false);
 		reviewLike.setCustomerId(authentication.getName());
-		
+
 		Integer deleteCnt = likeMapper.deleteLike(reviewLike);
-		
+
 		if (deleteCnt != 1) {
 			result.put("like", true);
 			likeMapper.insertLike(reviewLike);
 		}
-		
+
 		Integer likeCount = likeMapper.likeCount(reviewLike);
-				
+
 		result.put("count", likeCount);
-		
-		
+
 		return result;
 	}
 

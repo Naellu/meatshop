@@ -17,53 +17,56 @@ import com.example.demo.service.product.review.*;
 @Controller
 @RequestMapping("/product/review")
 public class ReviewController {
-	
-	
+
 	@Autowired
 	private ReviewService service;
-	
+
 	@GetMapping("list")
 	public String getListByProductId(
 			Review review,
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
 			Authentication authentication,
 			Model model) {
-		Map<String, Object> result = service.showReviewListByProductId(review, page, authentication);
+
+		Map<String, Object> result;
+		if (authentication != null) {
+			result = service.showReviewListByProductId(review, page, authentication);
+		} else {
+			// 로그인하지 않은 사용자를 처리하는 방법을 정의합니다.
+			result = service.showReviewListByProductId(review, page, null);
+		}
 		model.addAllAttributes(result);
 
-		
 		return "product/review/list";
 	}
-	
+
 	@GetMapping("add")
 	public void addFrom(Review review) {
-		
-		
+
 	}
 
 	@PostMapping("add")
 	public String add(
-			Review review, 
+			Review review,
 			@RequestParam("files") MultipartFile[] files,
 			RedirectAttributes rttr) throws Exception {
-			
-		
+
 		boolean ok = service.addReview(review, files);
-		
-		if(ok) {
+
+		if (ok) {
 			rttr.addFlashAttribute("message", "리뷰가 등록되었습니다.");
 			return "redirect:/product/info/" + review.getProductId();
 		} else {
 			rttr.addFlashAttribute("message", "(오류) 리뷰가 등록되지 않았습니다.");
 			return "redirect:/product/info/" + review.getProductId();
 		}
-		
+
 	}
-	
+
 	@PostMapping("remove")
 	public String remove(Review review, RedirectAttributes rttr) {
 		boolean ok = service.remove(review.getReviewId());
-		if(ok) {
+		if (ok) {
 			rttr.addFlashAttribute("message", "리뷰가 삭제되었습니다..");
 			return "redirect:/product/info/" + review.getProductId();
 		} else {
@@ -71,21 +74,20 @@ public class ReviewController {
 			return "redirect:/product/info/" + review.getProductId();
 		}
 	}
-	
+
 	@GetMapping("modify")
 	public String modifyForm(Integer reviewId, Model model) {
 		model.addAttribute("review", service.getReview(reviewId));
 		return "product/review/modify";
 	}
-	
+
 	@PostMapping("modify")
 	public String modifyProcess(
 			Review review,
-			@RequestParam(value="files", required = false) MultipartFile[] addFiles,
-			@RequestParam(value="removeFiles", required = false) List<String> removeFileNames,
-			RedirectAttributes rttr
-			) throws Exception {
-		
+			@RequestParam(value = "files", required = false) MultipartFile[] addFiles,
+			@RequestParam(value = "removeFiles", required = false) List<String> removeFileNames,
+			RedirectAttributes rttr) throws Exception {
+
 		boolean ok = service.modify(review, addFiles, removeFileNames);
 
 		if (ok) {
@@ -100,23 +102,19 @@ public class ReviewController {
 			return "redirect:/product/info/" + review.getProductId();
 		}
 	}
-	
+
 	@PostMapping("like")
 	public ResponseEntity<Map<String, Object>> like(
 			@RequestBody ReviewLike reviewLike,
-			Authentication authentication
-			){
+			Authentication authentication) {
 		if (authentication != null) {
-			return ResponseEntity.ok().body(service.reviewLike(reviewLike,authentication));
-			
+			return ResponseEntity.ok().body(service.reviewLike(reviewLike, authentication));
+
 		} else {
-			return ResponseEntity.
-					status(403)
+			return ResponseEntity.status(403)
 					.body(Map.of("message", "좋아요를 누르기 전에 로그인 해주세요"));
 		}
-		
-				
+
 	}
-	
-	
+
 }
