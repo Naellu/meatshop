@@ -7,13 +7,14 @@ import lombok.extern.slf4j.*;
 
 @Controller
 @Slf4j
+@RequestMapping("/chat/")
 public class ChatController {
     
-    @GetMapping("/chat")
+    @GetMapping("customer")
     public String chatGET(){
 
         log.info("@ChatController, chat GET()");
         
-        return "chat";
+        return "chat/customerChat";
     }
 }

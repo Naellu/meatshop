@@ -60,7 +60,6 @@ public class ProductController {
 
 	// 상품 정보 페이지
 	@GetMapping("info/{id}")
-	// @PreAuthorize("isAuthenticated() and hasAuthority('admin')")
 	public String detail(Model model, @PathVariable("id") Integer id) {
 		ProductView product = productService.getOneView(id);
 		model.addAttribute("product", product);

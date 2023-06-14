@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.*;
 import org.springframework.web.multipart.*;
 
 import com.example.demo.domain.*;
+import com.example.demo.exception.*;
 import com.example.demo.mapper.product.*;
 
 import lombok.*;
@@ -87,11 +88,11 @@ public class ProductServiceImpl implements ProductService {
 
 	// 상품 추가
 	@Override
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional(rollbackFor = UpdateException.class)
 	public boolean add(Product product, MultipartFile[] files) throws IOException {
 		// 상품 등록
 		Integer cnt = productMapper.create(product);
-
+		
 		// 파일등록
 		for (MultipartFile file : files) {
 			if (file.getSize() > 0) {
@@ -108,6 +109,7 @@ public class ProductServiceImpl implements ProductService {
 
 				// db에 관련정보저장 (insert)
 				productMapper.insertFileName(product.getProductId(), file.getOriginalFilename());
+				throw new UpdateException();
 			}
 		}
 		return cnt == 1;
