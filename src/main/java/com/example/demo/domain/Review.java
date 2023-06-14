@@ -18,4 +18,10 @@ public class Review {
 	private List<String> fileNames;
 	
 	private List<ReviewResponse> responses;
+	
+	private Integer likeCount;
+	private Boolean liked;
+	
+	
+	
 }

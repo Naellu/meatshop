@@ -4,12 +4,14 @@ import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 
 import com.example.demo.domain.*;
 import com.example.demo.mapper.*;
 import com.example.demo.mapper.product.inquiry.*;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class ProductInquiryService {
 
 	@Autowired
@@ -17,6 +19,9 @@ public class ProductInquiryService {
 
 	@Autowired
 	private MemberMapper memberMapper;
+	
+	@Autowired
+	private ProductAnswerMapper answerMapper;
 
 	public Map<String, Object> showInquiryListByProductId(ProductInquiry productInquiry, Integer page) {
 
@@ -70,6 +75,7 @@ public class ProductInquiryService {
 	}
 
 	public boolean deleteInquiry(Integer inquiryId) {
+		answerMapper.removeAnswerByInquiryId(inquiryId);
 		int cnt = inquiryMapper.deleteInquiry(inquiryId);
 		return cnt == 1;
 	}

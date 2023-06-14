@@ -2,11 +2,13 @@ package com.example.demo.service.product.review;
 
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 
 import com.example.demo.domain.*;
 import com.example.demo.mapper.product.review.*;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class ReviewResponseService {
 	
 	@Autowired

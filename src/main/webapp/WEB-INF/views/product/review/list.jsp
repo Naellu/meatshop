@@ -16,15 +16,31 @@
 		<div class="row">
 			<div class="col-md-10">
 				<div class="card">
-					<div class="card-body">
-						<h5 class="card-title">구매자: ${review.customerId}</h5>
-						<p class="card-text">구매상품: ${review.productId}</p>
-						<p class="card-text">${review.content}</p>
-						<p class="card-text">평점: 
-						<c:forEach begin="1" end="${review.rating }" >
-							<i class="fa-solid fa-star"></i>
-						</c:forEach>
+					<div class="card-header d-flex justify-content-between align-items-center">
+						<p class="order-2 card-text">
+							<span name="likeIcons" id="likeIcon${review.reviewId }" 
+							data-review-id="${review.reviewId }"
+							data-customer-id="${userid }">
+								<c:if test="${review.liked }">
+									<i class="fa-solid fa-thumbs-up"></i>
+								</c:if> <c:if test="${not review.liked }">
+									<i class="fa-regular fa-thumbs-up"></i>
+								</c:if>
+							</span> 
+							<span id="likeNumber${review.reviewId}">${review.likeCount }</span>명에게 도움이되었어요!
 						</p>
+						<p class="order-1 card-text">구매상품: ${review.productId}</p>
+					</div>
+
+					<div class="card-body">
+						<h5 class="card-title">구매	자: ${review.customerId}</h5>
+						<p class="card-text">
+							평점:
+							<c:forEach begin="1" end="${review.rating }">
+								<i class="fa-solid fa-star"></i>
+							</c:forEach>
+						</p>
+						<p class="card-text">${review.content}</p>
 						<p class="card-text">
 							<c:forEach items="${review.fileNames}" var="fileName">
 								<img class="img-thumbnail img-fluid"
@@ -59,22 +75,25 @@
 													<div class="row">
 														<div class="col-md-10">
 															<div class="mb-3">
-																<textarea style="height: 97px" class="form-control">${response.response}</textarea>
+																<textarea style="height: 97px" class="form-control"
+																	readonly>${response.response}</textarea>
 															</div>
 															<div class="mb-3">
 																<p>${response.createdAt}</p>
 															</div>
-															<div class="mb-3">
-																<button class="btn btn-primary" name="modifyResponse"
-																	data-response-id="${response.responseId}"
-																	data-product-id="${review.productId}">답변수정</button>
-																<button class="btn btn-danger" name="removeResponse"
-																	data-response-id="${response.responseId}"
-																	data-bs-toggle="modal"
-																	data-bs-target="#deleteReviewResponseConfirmModal"
-																	data-product-id="${product.productId}"
-																	data-customer-id="${userid}">답변삭제</button>
-															</div>
+															<sec:authorize access="hasAuthority('admin')">
+																<div class="mb-3">
+																	<button class="btn btn-primary" name="modifyResponse"
+																		data-response-id="${response.responseId}"
+																		data-product-id="${review.productId}">답변수정</button>
+																	<button class="btn btn-danger" name="removeResponse"
+																		data-response-id="${response.responseId}"
+																		data-bs-toggle="modal"
+																		data-bs-target="#deleteReviewResponseConfirmModal"
+																		data-product-id="${product.productId}"
+																		data-customer-id="${userid}">답변삭제</button>
+																</div>
+															</sec:authorize>
 														</div>
 													</div>
 												</div>
@@ -87,33 +106,30 @@
 								</div>
 							</c:if>
 							<!-- 관리자만 보이게 할 예정 -->
-							<sec:authorize access="isAuthenticated()">
-								<sec:authentication property="name" var="userId" />
+							<sec:authorize access="hasAuthority('admin')">
 
-								<c:if test="${userId eq 'admin0' }">
-									<div class="mb-3">
+								<div class="mb-3">
 
-										<div class="input-group">
-											<div class="form-floating">
-												<textarea style="height: 97px" class="form-control"
-													id="reveiwResponseTextArea${review.reviewId }"></textarea>
-											</div>
-											<button name="sendReviewResponseButton"
-												class="btn btn-outline-primary"
-												data-review-id="${review.reviewId}"
-												data-product-id="${review.productId}">답변하기</button>
-
+									<div class="input-group">
+										<div class="form-floating">
+											<textarea style="height: 97px" class="form-control"
+												id="reveiwResponseTextArea${review.reviewId }"></textarea>
 										</div>
-									</div>
+										<button name="sendReviewResponseButton"
+											class="btn btn-outline-primary"
+											data-review-id="${review.reviewId}"
+											data-product-id="${review.productId}">답변하기</button>
 
-								</c:if>
+									</div>
+								</div>
+
 							</sec:authorize>
 						</p>
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 		<br />
 
 	</c:forEach>
@@ -230,3 +246,4 @@
 </div>
 
 <script src="/js/product/review/list.js"></script>
+<script src="/js/product/review/like.js"></script>

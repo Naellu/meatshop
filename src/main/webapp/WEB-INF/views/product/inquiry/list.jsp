@@ -74,6 +74,7 @@
 							class="accordion-collapse collapse"
 							data-bs-parent="#accordionExample">
 							<div class="accordion-body">
+								<h5 class="answer-title">문의 내용</h5>
 								<div style="white-space: pre-wrap;">
 									<textarea class="form-control" rows="5" readonly="readonly">${inquiry.inquiryText}</textarea>
 								</div>
@@ -83,11 +84,22 @@
 
 								</div>
 								<!-- 관리자만 보이게 할 예정 -->
-								<sec:authorize access="isAuthenticated()">
-									<sec:authentication property="name" var="userId" />
-									
-									<c:if test="${userId eq 'admin0' }">
+								<div id="adminButton${inquiry.inquiryId }">
+									<sec:authorize access="hasAuthority('admin')">
+										<button name="answerDeleteBtn"
+											class="answerDeleteButton btn btn-danger"
+											data-bs-toggle="modal"
+											data-bs-target="#deleteAnswerConfirmModal"
+											data-inquiry-id="${inquiry.inquiryId}">
+											<i class="fa-regular fa-trash-can" id="answecan"></i>
+										</button>
+										<button name="answerUpdateBtn"
+											class="answerUpdateButton btn btn-secondary"
+											data-inquiry-id="${inquiry.inquiryId}">
+											<i class="fa-regular fa-pen-to-square"></i>
+										</button>
 										<div class="mb-3">
+											<br />
 
 											<div class="input-group" id="answerOfInquiry">
 												<div class="form-floating">
@@ -99,9 +111,9 @@
 													id="sendAnswerBtn${inquiry.inquiryId }">답변하기</button>
 											</div>
 										</div>
-									</c:if>
-								</sec:authorize>
 
+									</sec:authorize>
+								</div>
 							</div>
 						</div>
 					</td>

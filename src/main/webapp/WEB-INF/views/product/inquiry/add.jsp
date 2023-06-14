@@ -44,6 +44,7 @@
 		</div>
 		<input class="btn btn-primary" type="button" value="등록"
 			id="addInquiry" />
+		<button class = "btn btn-secondary" type="button" onclick="window.location.reload()">취소</button>
 	</form>
 
 

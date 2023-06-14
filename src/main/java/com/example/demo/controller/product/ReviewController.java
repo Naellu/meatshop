@@ -3,6 +3,8 @@ package com.example.demo.controller.product;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.http.*;
+import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +26,12 @@ public class ReviewController {
 	public String getListByProductId(
 			Review review,
 			@RequestParam(value = "page", defaultValue = "1") Integer page,
+			Authentication authentication,
 			Model model) {
-		Map<String, Object> result = service.showReviewListByProductId(review, page);
+		Map<String, Object> result = service.showReviewListByProductId(review, page, authentication);
 		model.addAllAttributes(result);
 
+		
 		return "product/review/list";
 	}
 	
@@ -95,6 +99,23 @@ public class ReviewController {
 			rttr.addFlashAttribute("message", "(오류)리뷰가 수정되지 않았습니다.");
 			return "redirect:/product/info/" + review.getProductId();
 		}
+	}
+	
+	@PostMapping("like")
+	public ResponseEntity<Map<String, Object>> like(
+			@RequestBody ReviewLike reviewLike,
+			Authentication authentication
+			){
+		if (authentication != null) {
+			return ResponseEntity.ok().body(service.reviewLike(reviewLike,authentication));
+			
+		} else {
+			return ResponseEntity.
+					status(403)
+					.body(Map.of("message", "좋아요를 누르기 전에 로그인 해주세요"));
+		}
+		
+				
 	}
 	
 	

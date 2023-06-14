@@ -1,5 +1,7 @@
 // 문의 답변 내용, 답변 from, 삭제/수정버튼 출력
 function listAnswer(inquiryId) {
+	var adminButton = "#adminButton" + inquiryId;
+	$(adminButton).removeClass("d-none");
 	$.ajax("/product/inquiryAnswer/get?inquiryId=" + inquiryId, {
 		success: function(productAnswer) {
 			const answerTextboxId = "#answerContainer" + inquiryId;
@@ -13,29 +15,7 @@ function listAnswer(inquiryId) {
 			`;
 				$(answerTextboxId).append(answerDiv); // 답변 내용추가
 			}
-
-			const editButtons = `
-					<button 
-						name= "answerDeleteBtn" 
-						class="answerDeleteButton btn btn-danger"
-						data-bs-toggle="modal"
-						data-bs-target="#deleteAnswerConfirmModal"
-						data-inquiry-id="${inquiryId}"
-						>
-							<i class="fa-regular fa-trash-can id="answecan"></i>
-					</button>
-					<button
-						name="answerUpdateBtn"
-						class="answerUpdateButton btn btn-secondary"
-						data-inquiry-id="${inquiryId}"
-						data-answer="${productAnswer.answer}"
-						>
-							<i class="fa-regular fa-pen-to-square"></i>
-						</button>
-			`;
-
-			$(answerTextboxId).append(editButtons); // 삭제/수정버튼 추가
-
+		
 			$(".answerDeleteButton").click(function() {
 				var inquiryId = $(this).attr("data-inquiry-id");
 				$("#deleteAnswerModalButton").attr("data-inquiry-id", inquiryId);
@@ -43,7 +23,6 @@ function listAnswer(inquiryId) {
 			
 			$(".answerUpdateButton").click(function() {
 				var inquiryId = $(this).attr("data-inquiry-id");
-				var answer = $(this).attr("data-answer");
 
 
 				const data = {
@@ -54,9 +33,10 @@ function listAnswer(inquiryId) {
 					data: data,
 					contentType: 'application/json',
 					success: function(answerModifyPage) {
-						const answerContentId = "#answerContainer" + inquiryId;
 						$("#answerOfInquiry").empty();
-						$(answerContentId).html(answerModifyPage);
+						var viewModifyPage = "#answerContainer" + inquiryId;
+						$(viewModifyPage).html(answerModifyPage);
+						$(adminButton).addClass("d-none");
 
 						$("#modifyAnswerBtn").click(function() {
 							const inquiryId = $("#inquiryId").val();
@@ -95,61 +75,8 @@ function listAnswer(inquiryId) {
 
 }
 
-// 문의 답변 수정 
-// 문서 로드 후 실행
 
-/*var answerUpdateBtns = document.getElementsByName("answerUpdateBtn");
-for (var answerUpdateBtn of answerUpdateBtns) {
-    answerUpdateBtn.addEventListener("click", function() {
-        var inquiryId = this.dataset.inquiryId;
-        var customerId = this.dataset.customerId;
-        console.log("Clicked on answer update button. Inquiry ID: " + inquiryId + ", Customer ID: " + customerId);
-        
-        // 여기에 추가 동작을 수행하는 코드를 작성하세요.
-        // 예를 들면 AJAX 요청을 보내거나 다른 함수를 호출할 수 있습니다.
-    });
-}
-*/
-/*const inquiryId = this.getAttribute('data-inquiry-id');
-		const data = {
-			inquiryId: inquiryId
-		};
 
-		$.ajax("/product/inquiryAnswer/modify", {
-			data: data,
-			contentType: 'application/json',
-			success: function(answerModifyPage) {
-				const answerContentId = "#answerContainer" + inquiryId;
-				$("#answerOfInquiry").empty();
-				$(answerContentId).html(answerModifyPage);
-
-				$("#modifyAnswerBtn").click(function() {
-					const inquiryId = $("#inquiryId").val();
-					const answer = $("#bodyTextarea").val();
-
-					console.log(inquiryId)
-					console.log(answer)
-
-					const modifyData = {
-						inquiryId: inquiryId,
-						answer: answer
-					}
-
-					$.ajax("/product/inquiryAnswer/modify", {
-						method: "post",
-						contentType: 'application/json',
-						data: JSON.stringify(modifyData),
-						success: function(result) {
-							alert(result.message)
-						},
-						complete: function() {
-							listAnswer(inquiryId);
-						}
-					})
-				})
-
-			}
-		});*/
 
 
 // 문의답변 삭제 모달에서 삭제 버튼 클릭시 
