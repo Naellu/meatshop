@@ -105,7 +105,7 @@ $(document).ready(function() {
         pay_method : 'card', // 고정
         merchant_uid: orderData.orderId, // (가맹점)주문번호 - order_id
         name : displayName, // 1건보다 많을 시 대표 상품 외 n건 - productName
-        amount : 100, // 테스트 하는 동안에는 100원으로 설정, total_price
+        amount : orderData.totalPrice, // 테스트 하는 동안에는 100원으로 설정, total_price
         buyer_email : orderData.email,
         buyer_name : orderData.memberName,
         buyer_tel : orderData.phoneNumber,
@@ -128,6 +128,7 @@ $(document).ready(function() {
 				  // window.location.href="/order/success";
 				  
 				  // 반환된 결제 데이터를 가지고 가격검증
+				  console.log(data);
 				  verifyAmount(data);
 		      })
 		    } else {
@@ -145,9 +146,11 @@ $(document).ready(function() {
 			data: JSON.stringify(paymentData),
 			success: function(response) {
 				console.log(response);
-				// 주문상태를 주문완료에서 결제완료로 바꿔야함
+				// 주문상태를 주문완료에서 결제완료로 바꾸는 로직 필요
+				window.location.href="/order/success";
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
+				console.log("verify POST data= " + data);
 				console.log("error: " + textStatus, errorThrown);
 			}
 		})
