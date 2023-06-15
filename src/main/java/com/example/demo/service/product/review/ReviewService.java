@@ -27,6 +27,9 @@ public class ReviewService {
 
 	@Autowired
 	private ReviewLikeMapper likeMapper;
+	
+	@Autowired
+	private ReviewResponseMapper responseMaper;
 
 	@Value("${aws.s3.bucketName}")
 	private String bucketName;
@@ -93,6 +96,8 @@ public class ReviewService {
 	}
 
 	public boolean addReview(Review review, MultipartFile[] files) throws Exception {
+		
+		
 		int check = reviewMapper.addReview(review);
 
 		for (MultipartFile file : files) {
@@ -117,6 +122,10 @@ public class ReviewService {
 	}
 
 	public boolean remove(Integer reviewId) {
+		
+		responseMaper.removeResponsesByReviewId(reviewId);
+		
+		likeMapper.deleteLikesByReviewId(reviewId);
 
 		List<String> files = reviewMapper.selectFilesByReviewId(reviewId);
 

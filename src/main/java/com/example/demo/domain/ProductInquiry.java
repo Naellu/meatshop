@@ -9,9 +9,10 @@ import lombok.Data;
 public class ProductInquiry {
 	private Integer inquiryId;
 	private Integer productId;
-	private String customerName; 
 	private String customerId;
 	private String inquiryTitle;
 	private String inquiryText;
 	private Timestamp createdAt;
+	
+	private Boolean disclosure;
 }

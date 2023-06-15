@@ -142,17 +142,22 @@ $("#addInquiry").click(function() {
 				$("#addInquiry").click(function() { //문의하기 누르면
 					const productId = $("#productId").val();
 					const customerId = $("#customerId").val();
-					const customerName = $("#customerName").val();
 					const inquiryTitle = $("#inquiryTitle").val();
 					const inquiryText = $("#bodyTextarea").val();
+					let disclosure;
+					if ($("#disclosure").is(":checked")) {
+						disclosure = false;
+					} else{
+						disclosure = true;
+					}
 	
 	
 					const data = {
 						productId: productId,
 						customerId: customerId,
-						customerName: customerName,
 						inquiryTitle: inquiryTitle,
-						inquiryText: inquiryText
+						inquiryText: inquiryText,
+						disclosure: disclosure
 					}
 	
 					$.ajax("/product/inquiry/add", {
@@ -190,6 +195,8 @@ for (var modifyInquiry of modifyInquirys) {
 		const data = {
 			inquiryId: inquiryId
 		}
+		
+		console.log(data)
 
 		$.ajax("/product/inquiry/modify", {
 			data: data,
@@ -204,10 +211,18 @@ for (var modifyInquiry of modifyInquirys) {
 					const customerId = $("#customerId").val();
 					const inquiryTitle = $("#inquiryTitle").val();
 					const inquiryText = $("#bodyTextarea").val();
+					let disclosure;
+					if ($("#disclosure").is(":checked")) {
+						disclosure = false;
+					} else{
+						disclosure = true;
+					}
+					
 					const modifyData = {
 						inquiryId: inquiryId,
 						inquiryTitle: inquiryTitle,
-						inquiryText: inquiryText
+						inquiryText: inquiryText,
+						disclosure:disclosure
 					}
 
 					$.ajax("/product/inquiry/modify", {

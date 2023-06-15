@@ -22,7 +22,11 @@
 <body> --%>
 
 <sec:authentication property="name" var="userid" />
+<sec:authentication property="authorities" var="authorities" />
 
+<c:forEach items="${authorities }" var="authoritie">
+<h1>${authoritie }</h1>
+</c:forEach>
 
 
 <button class="btn btn-primary" id="addInquiry"
@@ -35,38 +39,68 @@
 		<tbody>
 			<c:forEach items="${productInquiryList}" var="inquiry">
 				<tr>
-					<td>${inquiry.customerName}</td>
-					<td>${inquiry.customerId}</td>
-					<td>${inquiry.inquiryTitle}
-						<button onclick="listAnswer('${inquiry.inquiryId}')"
-							style="background-color: #ffffff;" class="accordion-button"
-							type="button" data-bs-toggle="collapse"
-							data-bs-target="#collapse${inquiry.inquiryId}"
-							aria-expanded="false"
-							aria-controls="collapse${inquiry.inquiryId}">문의내용 보기</button>
+					<td>${inquiry.customerId} </td>
+					<td>
+						<c:choose>
+							<c:when test="${inquiry.disclosure == true}">
+								<button onclick="listAnswer('${inquiry.inquiryId}')"
+								        style="background-color: #ffffff;" class="accordion-button"
+								        type="button" data-bs-toggle="collapse"
+								        data-bs-target="#collapse${inquiry.inquiryId}"
+								        aria-expanded="false"
+								        aria-controls="collapse${inquiry.inquiryId}">
+								        ${inquiry.inquiryTitle}
+								</button>
+							</c:when>
+							<c:otherwise>
+								<c:choose>
+									<c:when test="${inquiry.customerId eq userid}">
+										<button onclick="listAnswer('${inquiry.inquiryId}')"
+									        style="background-color: #ffffff;" class="accordion-button"
+									        type="button" data-bs-toggle="collapse"
+									        data-bs-target="#collapse${inquiry.inquiryId}"
+									        aria-expanded="false"
+									        aria-controls="collapse${inquiry.inquiryId}">
+									        ${inquiry.inquiryTitle}
+										</button>
+									</c:when>
+									<c:otherwise>
+										<c:forEach items="${authorities}" var="authority">
+										  <c:choose>
+										    <c:when test="${authority eq 'admin'}">
+										      <button onclick="listAnswer('${inquiry.inquiryId}')"
+										        style="background-color: #ffffff;" class="accordion-button"
+										        type="button" data-bs-toggle="collapse"
+										        data-bs-target="#collapse${inquiry.inquiryId}"
+										        aria-expanded="false"
+										        aria-controls="collapse${inquiry.inquiryId}">
+										        ${inquiry.inquiryTitle}
+										      </button>
+										    </c:when>
+										    <c:otherwise>
+										    	<button 
+											        style="background-color: #ffffff;" class="accordion-button"
+											        type="button" data-bs-toggle="collapse"
+											        aria-expanded="false"
+											        aria-controls="collapse${inquiry.inquiryId}">
+											        <i class="fa-solid fa-lock">비밀문의입니다.</i>
+												</button>
+										    </c:otherwise>
+										  </c:choose>
+										</c:forEach>
+										<button 
+									        style="background-color: #ffffff;" class="accordion-button"
+									        type="button" data-bs-toggle="collapse"
+									        aria-expanded="false"
+									        aria-controls="collapse${inquiry.inquiryId}">
+									        <i class="fa-solid fa-lock">비밀문의입니다.</i>
+										</button>
+									</c:otherwise>
+								</c:choose>
+							</c:otherwise>
+						</c:choose>
 					</td>
 					<td>${inquiry.createdAt}</td>
-					<sec:authorize access="isAuthenticated()">
-						<sec:authentication property="name" var="userId" />
-						<c:if test="${userId eq inquiry.customerId }">
-							<td>
-								<button class="btn btn-primary" name="modifyInquiry"
-									data-inquiry-id="${inquiry.inquiryId}"
-									data-customer-id="${userid }">수정</button>
-							</td>
-							<td>
-								<button class="btn btn-danger" name="removeInquiry"
-									data-inquiry-id="${inquiry.inquiryId}"
-									data-product-id="${inquiry.productId}"
-									data-customer-id="${userid }" data-bs-toggle="modal"
-									data-bs-target="#deleteInquiryConfirmModal"
-									data-product-id="${product.productId}"
-									data-customer-id="${userid }">삭제</button>
-
-							</td>
-
-						</c:if>
-					</sec:authorize>
 				</tr>
 				<tr>
 					<td colspan="6">
@@ -78,6 +112,22 @@
 								<div style="white-space: pre-wrap;">
 									<textarea class="form-control" rows="5" readonly="readonly">${inquiry.inquiryText}</textarea>
 								</div>
+
+								<sec:authorize access="isAuthenticated()">
+									<c:if test="${userid eq inquiry.customerId }">
+										<button class="btn btn-primary" name="modifyInquiry"
+											data-inquiry-id="${inquiry.inquiryId}"
+											data-customer-id="${userid }">수정</button>
+										<button class="btn btn-danger" name="removeInquiry"
+											data-inquiry-id="${inquiry.inquiryId}"
+											data-product-id="${inquiry.productId}"
+											data-customer-id="${userid }" data-bs-toggle="modal"
+											data-bs-target="#deleteInquiryConfirmModal"
+											data-product-id="${product.productId}"
+											data-customer-id="${userid }">삭제</button>
+
+									</c:if>
+								</sec:authorize>
 								<div class="mb-3" id="answerContainer${inquiry.inquiryId }">
 									<!-- 답변이 표시될 구역 -->
 

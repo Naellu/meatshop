@@ -22,8 +22,8 @@ public interface ProductInquiryMapper {
 	List<ProductInquiry> showListByProductId(ProductInquiry productInquiry, Integer startIndex);
 
 	@Insert("""
-			INSERT INTO	productinquiry(product_id,customer_name,customer_id,inquiry_title,inquiry_text)
-			VALUES(#{productId},#{customerName},#{customerId},#{inquiryTitle},#{inquiryText})
+			INSERT INTO	productinquiry(product_id,customer_id,inquiry_title,inquiry_text,disclosure)
+			VALUES(#{productId},#{customerId},#{inquiryTitle},#{inquiryText},${disclosure})
 			""")
 	int addInquiry(ProductInquiry productInquiry);
 
@@ -47,7 +47,8 @@ public interface ProductInquiryMapper {
 			UPDATE productinquiry
 			SET 
 			inquiry_title = #{inquiryTitle},
-			inquiry_text = #{inquiryText}
+			inquiry_text = #{inquiryText},
+			disclosure = #{disclosure}
 			WHERE 
 			inquiry_id = #{inquiryId}
 			""")

@@ -42,4 +42,12 @@ public interface ReviewLikeMapper {
 			""")
 	Integer likedByCustomerId(ReviewLike reviewLike);
 
+	
+	@Delete("""
+			DELETE FROM reviewlike
+			WHERE 
+			review_id = #{reviewId}
+			""")
+	void deleteLikesByReviewId(Integer reviewId);
+
 }

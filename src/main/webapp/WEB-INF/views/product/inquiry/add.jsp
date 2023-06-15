@@ -29,22 +29,19 @@
 		<input type="hidden" id="productId" name="productId"
 			value="${productInquiry.productId}" /> <input type="hidden"
 			id="customerId" name="customerId"
-			value="${productInquiry.customerId}" /> <input type="hidden"
-			id="customerName" name="customerName"
-			value="${productInquiry.customerName}" />
+			value="${productInquiry.customerId}" />
 		<div class="mb-3">
-			제목 : <input class="form-control" type="text" id="inquiryTitle"
-				name="inquiryTitle" /><br />
-		</div>
-		<div class="mb-3 form-floating">
-			문의 내용 <br />
+			제목 <input class="form-control" type="text" id="inquiryTitle"
+				name="inquiryTitle" /><br /> 문의 내용
 			<textarea class="form-control" id="bodyTextarea" rows="10"
 				name="inquiryText"></textarea>
-			<br />
 		</div>
+		<i class="fa-solid fa-lock">비밀문의</i>
+		<input type="checkbox" id="disclosure" name="disclosure" checked="checked"><br /> <br /> 
 		<input class="btn btn-primary" type="button" value="등록"
 			id="addInquiry" />
-		<button class = "btn btn-secondary" type="button" onclick="window.location.reload()">취소</button>
+		<button class="btn btn-secondary" type="button"
+			onclick="window.location.reload()">취소</button>
 	</form>
 
 
