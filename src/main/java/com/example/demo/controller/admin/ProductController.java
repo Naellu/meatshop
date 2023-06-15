@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.*;
 import org.springframework.web.servlet.mvc.support.*;
 
-import com.example.demo.MainController;
 import com.example.demo.domain.*;
+import com.example.demo.exception.*;
 import com.example.demo.service.admin.*;
 import com.example.demo.service.mail.*;
 
@@ -75,18 +75,20 @@ public class ProductController {
 	// 상품 등록 처리
 	@PostMapping("reg")
 	public String regProc(Product product, @RequestParam("files") MultipartFile[] files, RedirectAttributes rttr) {
+
 		try {
 			boolean ok = productService.add(product, files);
 			if (ok) {
 				rttr.addFlashAttribute("message", "상품이 등록되었습니다.");
 				return "redirect:/admin/product/list";
-			} else {
-				rttr.addFlashAttribute("message", "상품 등록에 실패하였습니다.");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		rttr.addFlashAttribute("message", "상품 등록에 실패하였습니다.");
+
 		return "redirect:/admin/product/list";
+
 	}
 
 	// 상품 수정 페이지
@@ -135,7 +137,7 @@ public class ProductController {
 	@PostMapping("notify")
 	@ResponseBody
 	String mailNotify(@RequestParam Integer productId) throws Exception {
-		//log.info(" info log={}", productId);
+		// log.info(" info log={}", productId);
 		mailService.sendNotifyEmail(productId);
 		return null;
 	}

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
@@ -56,7 +57,8 @@
 					<div class="small mb-1">상품번호 - ${product.productId}</div>
 					<h1 class="display-5 fw-bolder">${product.productName}</h1>
 					<div class="fs-5 mb-5">
-						<span>${product.price}원</span>
+						<fmt:formatNumber value="${product.price}" type="number" pattern="0" var="formattedPrice" />
+						<span>${formattedPrice}원</span>
 					</div>
 					<p class="lead">
 						원산지 : ${product.countryOfOrigin }

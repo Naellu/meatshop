@@ -88,31 +88,34 @@ public class ProductServiceImpl implements ProductService {
 
 	// 상품 추가
 	@Override
-	@Transactional(rollbackFor = UpdateException.class)
+	@Transactional(rollbackFor = Exception.class)
 	public boolean add(Product product, MultipartFile[] files) throws IOException {
-		// 상품 등록
-		Integer cnt = productMapper.create(product);
-		
-		// 파일등록
-		for (MultipartFile file : files) {
-			if (file.getSize() > 0) {
-				String objectKey = "meatshop/product/" + product.getProductId() + "/" + file.getOriginalFilename();
+		try {
+			// 상품 등록
+			Integer cnt = productMapper.create(product);
 
-				// s3에 파일 업로드
-				PutObjectRequest por = PutObjectRequest.builder()
-						.bucket(bucketName).acl(ObjectCannedACL.PUBLIC_READ).key(objectKey)
-						.build();
-				RequestBody rb = RequestBody.fromInputStream(file.getInputStream(),
-						file.getSize());
+			// 파일등록
+			for (MultipartFile file : files) {
+				if (file.getSize() > 0) {
+					String objectKey = "meatshop/product/" + product.getProductId() + "/" + file.getOriginalFilename();
 
-				s3.putObject(por, rb);
+					// s3에 파일 업로드
+					PutObjectRequest por = PutObjectRequest.builder()
+							.bucket(bucketName).acl(ObjectCannedACL.PUBLIC_READ).key(objectKey)
+							.build();
+					RequestBody rb = RequestBody.fromInputStream(file.getInputStream(),
+							file.getSize());
 
-				// db에 관련정보저장 (insert)
-				productMapper.insertFileName(product.getProductId(), file.getOriginalFilename());
-				throw new UpdateException();
+					s3.putObject(por, rb);
+
+					// db에 관련정보저장 (insert)
+					productMapper.insertFileName(product.getProductId(), file.getOriginalFilename());
+				}
 			}
+			return cnt == 1;
+		} catch (Exception e) {
+			throw new TransactionException("상품 등록중에 문제가 발생했습니다");
 		}
-		return cnt == 1;
 	}
 
 	// 상품 수정
@@ -161,7 +164,7 @@ public class ProductServiceImpl implements ProductService {
 
 	// 상품 삭제 처리
 	@Override
-	@Transactional(rollbackFor = Exception.class)
+	@Transactional(rollbackFor = TransactionException.class)
 	public Boolean remove(Integer productId) {
 		// 상품에 설정된 이미지 파일 삭제
 		// 파일명 조회
