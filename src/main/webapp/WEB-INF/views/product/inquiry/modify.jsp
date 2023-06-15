@@ -26,8 +26,8 @@
 		</c:choose>
 		 <br /> 
 		</div>
-		<input class="btn btn-primary" type="button" id="modifyInquiryBtn" value="수정하기" />
-		<button class="btn btn-secondary" type="button" onclick="location.href='/product/info/${productInquiry.productId}'" >취소</button>
+		<input class="btn btn-outline-primary" type="button" id="modifyInquiryBtn" value="수정" />
+		<button class="btn btn-outline-secondary" type="button" onclick="location.href='/product/info/${productInquiry.productId}'" >취소</button>
 		
 	</form>
 

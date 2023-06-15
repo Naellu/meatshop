@@ -6,12 +6,17 @@
 	uri="http://www.springframework.org/security/tags"%>
 
 <sec:authentication property="name" var="userid" />
-<%-- 
-<button class="btn btn-primary" id="addReview"
-	data-product-id="${review.productId}" data-customer-id="${userid }">리뷰작성하기</button>
- --%>
 <br />
 <div class="container">
+	<h3>평점:
+	<c:forEach begin="1" end="${reviewInfo.starCount }">
+		<i class="fa-solid fa-star"></i>
+	</c:forEach>
+	${reviewInfo.starCount < reviewInfo.reviewAvg ? '<i class="fa-solid fa-star-half"></i>' : '' }
+    
+    ${reviewInfo.reviewAvg } / 5 (${reviewInfo.reviewCount})
+</h3>
+
 	<c:forEach items="${reviewList}" var="review">
 		<div class="row">
 			<div class="col-md-10">
@@ -54,10 +59,10 @@
 							<sec:authentication property="name" var="userId" />
 							<c:if test="${userId eq review.customerId}">
 								<p class="card-text">
-									<button class="btn btn-primary" name="modifyReview"
+									<button class="btn btn-outline-primary" name="modifyReview"
 										data-review-id="${review.reviewId}"
 										data-customer-id="${userid}">리뷰수정</button>
-									<button class="btn btn-danger" name="removeReview"
+									<button class="btn btn-outline-danger" name="removeReview"
 										data-review-id="${review.reviewId}" data-bs-toggle="modal"
 										data-bs-target="#deleteReviewConfirmModal">리뷰삭제</button>
 								</p>
@@ -83,10 +88,10 @@
 															</div>
 															<sec:authorize access="hasAuthority('admin')">
 																<div class="mb-3">
-																	<button class="btn btn-primary" name="modifyResponse"
+																	<button class="btn btn-outline-primary" name="modifyResponse"
 																		data-response-id="${response.responseId}"
 																		data-product-id="${review.productId}">답변수정</button>
-																	<button class="btn btn-danger" name="removeResponse"
+																	<button class="btn btn-outline-danger" name="removeResponse"
 																		data-response-id="${response.responseId}"
 																		data-bs-toggle="modal"
 																		data-bs-target="#deleteReviewResponseConfirmModal"

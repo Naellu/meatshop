@@ -24,12 +24,7 @@
 <sec:authentication property="name" var="userid" />
 <sec:authentication property="authorities" var="authorities" />
 
-<c:forEach items="${authorities }" var="authoritie">
-<h1>${authoritie }</h1>
-</c:forEach>
-
-
-<button class="btn btn-primary" id="addInquiry"
+<button class="btn btn-outline-primary" id="addInquiry"
 	data-product-id="${productInquiry.productId}"
 	data-customer-id="${userid }">문의하기</button>
 <hr />
@@ -78,23 +73,18 @@
 										      </button>
 										    </c:when>
 										    <c:otherwise>
-										    	<button 
-											        style="background-color: #ffffff;" class="accordion-button"
-											        type="button" data-bs-toggle="collapse"
-											        aria-expanded="false"
-											        aria-controls="collapse${inquiry.inquiryId}">
-											        <i class="fa-solid fa-lock">비밀문의입니다.</i>
-												</button>
 										    </c:otherwise>
 										  </c:choose>
 										</c:forEach>
-										<button 
-									        style="background-color: #ffffff;" class="accordion-button"
-									        type="button" data-bs-toggle="collapse"
-									        aria-expanded="false"
-									        aria-controls="collapse${inquiry.inquiryId}">
-									        <i class="fa-solid fa-lock">비밀문의입니다.</i>
-										</button>
+										<sec:authorize access="!hasAuthority('admin')">
+											<button onclick="alert('작성자만 확인 가능합니다.')" 
+										        style="background-color: #ffffff;" class="accordion-button"
+										        type="button" data-bs-toggle="collapse"
+										        aria-expanded="false"
+										        aria-controls="collapse${inquiry.inquiryId}">
+										        <i class="fa-solid fa-lock">비밀문의입니다.</i>
+											</button>
+										</sec:authorize>
 									</c:otherwise>
 								</c:choose>
 							</c:otherwise>
@@ -108,26 +98,30 @@
 							class="accordion-collapse collapse"
 							data-bs-parent="#accordionExample">
 							<div class="accordion-body">
-								<h5 class="answer-title">문의 내용</h5>
-								<div style="white-space: pre-wrap;">
-									<textarea class="form-control" rows="5" readonly="readonly">${inquiry.inquiryText}</textarea>
+								<div class="mb-3">
+									<h5 class="answer-title">문의 내용</h5>
+					    			<div class="answer-content">
+					    			<textarea readonly="readonly" class="form-control" rows="5">${inquiry.inquiryText}</textarea>
+					    			</div>
 								</div>
-
-								<sec:authorize access="isAuthenticated()">
-									<c:if test="${userid eq inquiry.customerId }">
-										<button class="btn btn-primary" name="modifyInquiry"
-											data-inquiry-id="${inquiry.inquiryId}"
-											data-customer-id="${userid }">수정</button>
-										<button class="btn btn-danger" name="removeInquiry"
-											data-inquiry-id="${inquiry.inquiryId}"
-											data-product-id="${inquiry.productId}"
-											data-customer-id="${userid }" data-bs-toggle="modal"
-											data-bs-target="#deleteInquiryConfirmModal"
-											data-product-id="${product.productId}"
-											data-customer-id="${userid }">삭제</button>
-
-									</c:if>
-								</sec:authorize>
+								<div>
+									<sec:authorize access="isAuthenticated()">
+										<c:if test="${userid eq inquiry.customerId }">
+											<button class="btn btn-outline-primary" name="modifyInquiry"
+												data-inquiry-id="${inquiry.inquiryId}"
+												data-customer-id="${userid }">수정</button>
+											<button class="btn btn-outline-danger" name="removeInquiry"
+												data-inquiry-id="${inquiry.inquiryId}"
+												data-product-id="${inquiry.productId}"
+												data-customer-id="${userid }" data-bs-toggle="modal"
+												data-bs-target="#deleteInquiryConfirmModal"
+												data-product-id="${product.productId}"
+												data-customer-id="${userid }">삭제</button>
+	
+										</c:if>
+									</sec:authorize>
+								</div>
+								<br />
 								<div class="mb-3" id="answerContainer${inquiry.inquiryId }">
 									<!-- 답변이 표시될 구역 -->
 
@@ -137,14 +131,14 @@
 								<div id="adminButton${inquiry.inquiryId }">
 									<sec:authorize access="hasAuthority('admin')">
 										<button name="answerDeleteBtn"
-											class="answerDeleteButton btn btn-danger"
+											class="answerDeleteButton btn btn-outline-danger"
 											data-bs-toggle="modal"
 											data-bs-target="#deleteAnswerConfirmModal"
 											data-inquiry-id="${inquiry.inquiryId}">
 											<i class="fa-regular fa-trash-can" id="answecan"></i>
 										</button>
 										<button name="answerUpdateBtn"
-											class="answerUpdateButton btn btn-secondary"
+											class="answerUpdateButton btn btn-outline-secondary"
 											data-inquiry-id="${inquiry.inquiryId}">
 											<i class="fa-regular fa-pen-to-square"></i>
 										</button>
@@ -269,15 +263,15 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h1 class="modal-title fs-5">댓글 삭제 확인</h1>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"
+				<button type="button" class="btn-outline-close" data-bs-dismiss="modal"
 					aria-label="Close"></button>
 			</div>
 			<div class="modal-body">삭제 하시겠습니까?</div>
 			<div class="modal-footer">
 				<button type="button" id="deleteAnswerModalButton"
 					data-bs-dismiss="modal" data-inquiry-id="" type="button"
-					class="btn btn-danger">삭제</button>
-				<button type="button" class="btn btn-secondary"
+					class="btn btn-outline-danger">삭제</button>
+				<button type="button" class="btn btn-outline-secondary"
 					data-bs-dismiss="modal">닫기</button>
 			</div>
 		</div>
