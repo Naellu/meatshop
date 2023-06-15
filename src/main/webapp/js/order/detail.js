@@ -44,7 +44,7 @@ $(document).ready(function() {
 	        data: JSON.stringify(data),
 	        contentType: "application/json",
 	        success: function(response) {
-	          console.log("success: " + response);
+	          console.log(response);
 	          // 주문이 생성되고 나면 주문데이터를 결제 함수인 requestPay()로 전달
 	          requestPay(response);
 	        },
@@ -79,64 +79,64 @@ $(document).ready(function() {
 	IMP.init("imp51807046");
 })
 	
-	var today = new Date();   
-    var hours = today.getHours(); // 시
-    var minutes = today.getMinutes();  // 분
-    var seconds = today.getSeconds();  // 초
-    var milliseconds = today.getMilliseconds();
-    var makeMerchantUid = hours +  minutes + seconds + milliseconds;
 	
 
 	// 아임포트 - 결제 요청
 	function requestPay(orderData) {
 		console.log(orderData)
 		
-		let productNameList = orderData.productName;
-		let displayName = "";
-		
-		if(productNameList.length == 1) {
-			displayName = productNameList[0];
-		} else if (productNameList.length > 1) {
-			displayName = productNameList[0] + " 외 " + (productNameList.length - 1) + "건";
+		preVerify(orderData).then(() => { // 결제 사전 검증, 성공해야 결제 진행
+			
+			let productNameList = orderData.productName;
+			let displayName = "";
+			
+			if(productNameList.length == 1) {
+				displayName = productNameList[0];
+			} else if (productNameList.length > 1) {
+				displayName = productNameList[0] + " 외 " + (productNameList.length - 1) + "건";
+			}
+			
+		    IMP.request_pay({
+		        pg : 'html5_inicis.INIpayTest', // 고정
+		        pay_method : 'card', // 고정
+		        merchant_uid: orderData.orderId, // (가맹점)주문번호 - order_id
+		        name : displayName, // 1건보다 많을 시 대표 상품 외 n건 - productName
+		        amount : orderData.totalPrice,
+		        buyer_email : orderData.email,
+		        buyer_name : orderData.memberName,
+		        buyer_tel : orderData.phoneNumber,
+		        buyer_addr : orderData.address,
+			    }, function (rsp) { // callback
+			    console.log(rsp);
+			        if (rsp.success) {
+			      	// 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
+		    	  	// jQuery로 HTTP 요청
+				      $.ajax({
+				        url: "/payment/complete", // 결제 사후 검증
+				        method: "POST",
+				        contentType: "application/json",
+				        data: JSON.stringify({
+			          		imp_uid: rsp.imp_uid,            // 결제 고유번호
+			          		merchant_uid: rsp.merchant_uid   // 주문번호
+				        })
+				      }).done(function(data) {
+						  
+						  // 반환된 결제 데이터를 가지고 가격검증
+						  console.log(data);
+						  verifyAmount(data);
+				      })
+				    } else {
+				      alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
+				    }
+			    });
+				
+			}).catch((error) => {
+				console.log(error);
+			})
+		    
 		}
-		
-    IMP.request_pay({
-        pg : 'html5_inicis.INIpayTest', // 고정
-        pay_method : 'card', // 고정
-        merchant_uid: orderData.orderId, // (가맹점)주문번호 - order_id
-        name : displayName, // 1건보다 많을 시 대표 상품 외 n건 - productName
-        amount : orderData.totalPrice, // 테스트 하는 동안에는 100원으로 설정, total_price
-        buyer_email : orderData.email,
-        buyer_name : orderData.memberName,
-        buyer_tel : orderData.phoneNumber,
-        buyer_addr : orderData.address,
-	    }, function (rsp) { // callback
-	    console.log(rsp);
-	        if (rsp.success) {
-	      	// 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
-    	  	// jQuery로 HTTP 요청
-		      $.ajax({
-		        url: "/payment/complete", // 결제 검증 요청(어떤 데이터를 보내 검증해야하는지?)
-		        method: "POST",
-		        contentType: "application/json",
-		        data: JSON.stringify({
-	          		imp_uid: rsp.imp_uid,            // 결제 고유번호
-	          		merchant_uid: rsp.merchant_uid   // 주문번호
-		        })
-		      }).done(function(data) {
-		          // 가맹점 서버 결제 API 성공시 로직
-				  // window.location.href="/order/success";
-				  
-				  // 반환된 결제 데이터를 가지고 가격검증
-				  console.log(data);
-				  verifyAmount(data);
-		      })
-		    } else {
-		      alert("결제에 실패하였습니다. 에러 내용: " + rsp.error_msg);
-		    }
-	    });
-	}
 	
+	// 사후 검증
 	function verifyAmount(paymentData) {
 		console.log(paymentData);
 		$.ajax({
@@ -150,9 +150,31 @@ $(document).ready(function() {
 				window.location.href="/order/success";
 			},
 			error: function(jqXHR, textStatus, errorThrown) {
-				console.log("verify POST data= " + data);
-				console.log("error: " + textStatus, errorThrown);
+				console.log(textStatus, errorThrown);
 			}
 		})
+	}
+	
+	// 사전 검증
+	function preVerify(orderData) {
+		return new Promise ((resolve, reject) => {
+			
+			$.ajax({
+				url: "/payments/prepare",
+				method: "POST",
+				contentType: "application/json", 
+				data: JSON.stringify({
+					merchantUid: orderData.orderId.toString(), // 가맹점 주문번호
+					amount: orderData.totalPrice, // 결제 예정금액
+				}),
+				success: function() {
+					resolve();
+				},
+				error: function(errorThrown) {
+					reject(errorThrown);
+				}
+			});	
+			
+		});
 	}
 	
