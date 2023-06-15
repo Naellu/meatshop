@@ -47,7 +47,7 @@
 
 <body>
 
-	<my:navBar />
+	<my:adminNavBar />
 
 	<my:alert />
 	
