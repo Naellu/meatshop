@@ -33,6 +33,7 @@ public class ProductInquiryController {
 	@GetMapping("add")
 	@PreAuthorize("isAuthenticated()")
 	public void addFrom(ProductInquiry productInquiry) {
+		
 	}
 
 	@PostMapping("add")
@@ -41,6 +42,7 @@ public class ProductInquiryController {
 		Map<String, Object> res = new HashMap<>();
 
 		boolean ok = service.addInquiry(productInquiry);
+		
 		if (ok) {
 			res.put("message", "문의가 등록되었습니다.");
 			return ResponseEntity.ok().body(res);
@@ -68,8 +70,9 @@ public class ProductInquiryController {
 	}
 
 	@GetMapping("modify")
-	@PreAuthorize("isAuthenticated() and @customerSecurityChecker.checkInquiryWriter(authentication, #productInquiry.inquiryId)")
+	@PreAuthorize("isAuthenticated() and @customerSecurityChecker.checkInquiryWriter(authentication, #inquiryId)")
 	public String modifyFrom(Integer inquiryId, Model model) {
+		
 	    ProductInquiry inquiry = service.getInquiry(inquiryId);
 
 	    model.addAttribute("productInquiry", inquiry);

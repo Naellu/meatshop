@@ -69,7 +69,7 @@ public class ProductInquiryService {
 	}
 
 	public boolean addInquiry(ProductInquiry productInquiry) {
-		productInquiry.setCustomerName(memberMapper.getCustomerNameById(productInquiry.getCustomerId()));
+//		productInquiry.setCustomerName(memberMapper.getCustomerNameById(productInquiry.getCustomerId()));
 		int cnt = inquiryMapper.addInquiry(productInquiry);
 		return cnt == 1;
 	}

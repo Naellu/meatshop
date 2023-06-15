@@ -35,4 +35,10 @@ public interface ReviewResponseMapper {
 			""")
 	int modifyResponse(ReviewResponse reviewResponse);
 
+	@Delete("""
+			DELETE FROM reviewresponse
+			WHERE review_id = #{reviewId}
+			""")
+	void removeResponsesByReviewId(Integer reviewId);
+
 }

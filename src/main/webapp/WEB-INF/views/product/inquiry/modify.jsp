@@ -12,11 +12,19 @@
 		</div>
 		<div class="mb-3">
 		제목 : <input class="form-control" type="text" name="inquiryTitle" id="inquiryTitle" value="${productInquiry.inquiryTitle }"/><br />
-		</div>
-		<div class="mb-3 form-floating " >
-		문의 내용 <br />
+		문의 내용
 		<textarea class="form-control" id="bodyTextarea" rows="10" name="inquiryText">${productInquiry.inquiryText }</textarea>
 		<br />
+		비공개 질문하기
+		<c:choose>
+			<c:when test="${productInquiry.disclosure }">
+			    <input type="checkbox" id="disclosure" name="disclosure">
+			</c:when>
+			<c:otherwise>
+			    <input type="checkbox" id="disclosure" name="disclosure" checked="checked">
+			</c:otherwise>
+		</c:choose>
+		 <br /> 
 		</div>
 		<input class="btn btn-primary" type="button" id="modifyInquiryBtn" value="수정하기" />
 		<button class="btn btn-secondary" type="button" onclick="location.href='/product/info/${productInquiry.productId}'" >취소</button>
