@@ -105,4 +105,18 @@ public interface ReviewMapper {
 			""")
 	Integer updateReviewByReviewId(Review review);
 
+	@Select("""
+			SELECT COUNT(*)
+			FROM review
+			WHERE product_id = #{productId}
+			""")
+	Integer reviewCount(Review review);
+
+	@Select("""
+			SELECT SUM(rating)
+			FROM review
+			WHERE product_id = #{productId}
+			""")
+	Double ratingSum(Review review);
+
 }

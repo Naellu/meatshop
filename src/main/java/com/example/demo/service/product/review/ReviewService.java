@@ -68,6 +68,7 @@ public class ReviewService {
 		List<Review> reviewList = reviewMapper.showListByProductId(review, startIndex);
 
 		ReviewLike reviewLike = new ReviewLike();
+		
 
 		for (Review reviewElement : reviewList) {
 			reviewElement.setLikeCount(0); // 초기값 설정
@@ -86,6 +87,17 @@ public class ReviewService {
 		Map<String, Object> reviewInfo = new HashMap<>();
 		reviewInfo.put("productId", review.getProductId());
 		reviewInfo.put("customerId", review.getCustomerId());
+		
+		Integer reviewCount = reviewMapper.reviewCount(review);
+		double reviewAvg =	Math.round(reviewMapper.ratingSum(review)/reviewMapper.reviewCount(review) * 10) / 10.0; 
+				
+		Integer starCount = (int) (reviewAvg / 1);
+		
+		reviewInfo.put("reviewCount", reviewCount);
+		reviewInfo.put("reviewAvg",reviewAvg );
+		reviewInfo.put("starCount", starCount);
+		
+		
 
 		Map<String, Object> res = new HashMap<>();
 		res.put("reviewList", reviewList);

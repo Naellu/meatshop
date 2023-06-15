@@ -56,6 +56,6 @@
 			id="formFileSm" type="file" name="files" multiple accept="image/*" />
 		<div class="form-text">파일당 1MB, 총합 10MB를 초과할 수 없습니다.</div>
 	</div>
-	<input class="btn btn-primary" type="submit" value="수정" id="addReview" />
-	<button class="btn btn-secondary" type="button" onclick="location.href='/product/info/${review.productId}'" >취소</button>
+	<input class="btn btn-outline-primary" type="submit" value="수정" id="addReview" />
+	<button class="btn btn-outline-secondary" type="button" onclick="location.href='/product/info/${review.productId}'" >취소</button>
 </form>
