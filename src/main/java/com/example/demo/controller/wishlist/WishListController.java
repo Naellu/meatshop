@@ -3,6 +3,7 @@ package com.example.demo.controller.wishlist;
 import java.util.*;
 
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.*;
 import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
@@ -21,6 +22,7 @@ public class WishListController {
 	private final WishListService wishService;
 
 	@GetMapping("list/{id}")
+	@PreAuthorize("isAuthenticated() and (authentication.name eq #memberId)")
 	public String wishList(Model model,
 			@PathVariable("id") String memberId,
 			Authentication authentication) {
@@ -28,6 +30,7 @@ public class WishListController {
 		return "wish/list";
 	}
 
+	
 	@PostMapping("delete")
 	public String wishDeleteProc(@RequestBody WishList wishList) {
 		boolean ok = wishService.remove(wishList);
