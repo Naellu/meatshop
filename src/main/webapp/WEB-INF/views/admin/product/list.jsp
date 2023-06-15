@@ -11,7 +11,7 @@
 <title>관리자 상품 관리</title>
 </head>
 <body>
-	<my:navBar />
+	<my:adminNavBar />
 
 	<my:alert />
 
@@ -24,7 +24,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Header-->
 	<my:header>
 		관리자 상품 관리
@@ -86,7 +86,10 @@
 					<th>재고</th>
 					<th>카테고리</th>
 					<th>가격</th>
-					<th><input type="checkbox" id="allCheck"/>공개</th>
+					<th>
+						<input type="checkbox" id="allCheck" />
+						공개
+					</th>
 					<th>상세페이지</th>
 				</tr>
 			</thead>
@@ -121,7 +124,7 @@
 		<div class="row">
 			<div class="d-flex justify-content-end">
 				<input id="pubBtn" type="button" class="btn btn-primary me-3" name="cmd" value="일괄공개">
-				<a class="btn btn-secondary"  href="/admin/product/list">검색취소</a>
+				<a class="btn btn-secondary" href="/admin/product/list">검색취소</a>
 			</div>
 		</div>
 	</div>
@@ -234,8 +237,8 @@
 		</div>
 	</div>
 
-	<my:footer/>
-	
+	<my:footer />
+
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	<script src="/js/admin/product/pub.js"></script>
