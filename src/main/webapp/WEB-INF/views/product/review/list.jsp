@@ -16,6 +16,7 @@
     
     ${reviewInfo.reviewAvg } / 5 (${reviewInfo.reviewCount})
 </h3>
+<br />
 
 	<c:forEach items="${reviewList}" var="review">
 		<div class="row">
