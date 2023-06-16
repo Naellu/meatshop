@@ -1,25 +1,20 @@
 package com.example.demo.security;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.*;
+import org.springframework.security.core.authority.*;
+import org.springframework.security.core.userdetails.*;
+import org.springframework.stereotype.*;
 
 import com.example.demo.domain.*;
-import com.example.demo.mapper.MemberMapper;
+import com.example.demo.mapper.*;
 
 @Component
 public class CustomUserDetailsService implements UserDetailsService{
 
 	@Autowired
 	private MemberMapper mapper;
-	
 	
 	
 	@Override
@@ -46,8 +41,5 @@ public class CustomUserDetailsService implements UserDetailsService{
 		System.out.println(user);
 		return user;
 	}
-	
-	
-
 	
 }

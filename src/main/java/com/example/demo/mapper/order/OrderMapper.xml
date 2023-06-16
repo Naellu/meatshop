@@ -15,6 +15,9 @@
 			<id column="product_id" property="productId"></id>
 			<result column="product_name" property="productName"/>
 		</collection>
+		<collection property="productIds" ofType="Integer">
+			<result column="productIds"/>
+		</collection>
 	</resultMap>
 	
 	<resultMap type="com.example.demo.domain.payment.PaymentDto" id="PaymentDtoMap">

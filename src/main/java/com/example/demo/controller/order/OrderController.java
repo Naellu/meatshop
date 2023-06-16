@@ -75,8 +75,6 @@ public class OrderController {
 		model.addAttribute("productNames", ProductNames);
 		model.addAttribute("orderItemDtos", orderItemDtos);
 		
-		session.removeAttribute("orderItemDtos");
-		
 		return "order/detail";
 	}
 	

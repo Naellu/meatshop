@@ -16,7 +16,8 @@ public class OrderDto {
 	private LocalDate created;
 	private Status status;
 	
-	private Integer productId;
-	
-	private List<Product> productInfoes; // 주문에 들어있는 주문상품들
+
+	private List<Integer> productIds;
+	private List<String> productName; // 주문에 들어있는 주문상품들
+
 }
