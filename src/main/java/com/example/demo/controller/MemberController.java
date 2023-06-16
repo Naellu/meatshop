@@ -1,22 +1,29 @@
 package com.example.demo.controller;
 
-import java.util.*;
+import java.io.UnsupportedEncodingException;
+import java.util.Map;
 
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.security.access.prepost.*;
-import org.springframework.stereotype.*;
-import org.springframework.ui.*;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.demo.domain.*;
-import com.example.demo.domain.question.*;
-import com.example.demo.service.*;
-import com.example.demo.service.mail.*;
-import com.example.demo.service.question.*;
+import com.example.demo.domain.Members;
+import com.example.demo.service.MemberService;
+import com.example.demo.service.mail.MailService;
+import com.example.demo.service.question.QuestionService;
 
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
+import jakarta.mail.MessagingException;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("member")
@@ -166,4 +173,74 @@ public class MemberController {
 		String authCode = mailService.sendEmail(email);
 		return authCode;
 	}
+	
+// ------------------------------ 아이디 찾기 로직 ----------------------------------	
+	
+	@GetMapping("searchId")
+	public void findId() {
+		
+	}
+		
+	@PostMapping("searchId/{checkEmail}")
+	@ResponseBody
+	public String resultId(@PathVariable("checkEmail")String email,HttpSession session) throws Exception {
+		
+	String authCode = mailService.sendEmail(email);
+	System.out.println(authCode);//전송되는 코드 번호
+		session.setAttribute("authCode", authCode); //다음 메소드에서 사용하기 위해 세션에 저장함
+		return null;
+	}
+	
+	
+	
+	
+	@PostMapping("checkCode/{userCode}")
+	@ResponseBody
+	public boolean checkCode(@PathVariable("userCode")String code,HttpSession session) throws Exception {
+		
+	String userCode = code;
+	String authCode = (String) session.getAttribute("authCode");
+
+	System.out.println(service.checkCode(userCode,authCode));
+	return service.checkCode(userCode,authCode);
+	
+	}
+	
+	
+	@PostMapping("findId")
+	@ResponseBody
+	public Members lookup(Members member,@RequestParam("email") String email) {
+		Members userId = service.getId(email);
+		System.out.println(userId);
+		return userId;
+	}
+	// ------------------------------ 아이디 찾기 로직 끝 ----------------------------------	
+	
+	@GetMapping("searchPassword")
+	public void findPassword() {
+		
+	}
+	
+	@PostMapping("searchPassword")
+	public void searchPassword(@RequestParam("email") String email,@RequestParam("birthday") String birthday) {
+		
+		String tempPwd = service.searchPassword(email, birthday);
+		
+		// email 보내는 서비스 쓸것
+		try {
+			mailService.sendTempPwd(email, tempPwd);
+		} catch (UnsupportedEncodingException | MessagingException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(tempPwd + "controller");
+		
+		return;
+	}
+	
+	
+	
+	
+	
+	
 }
