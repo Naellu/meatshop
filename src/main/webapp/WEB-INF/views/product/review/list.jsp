@@ -16,6 +16,7 @@
     
     ${reviewInfo.reviewAvg } / 5 (${reviewInfo.reviewCount})
 </h3>
+<br />
 
 	<c:forEach items="${reviewList}" var="review">
 		<div class="row">
@@ -27,9 +28,9 @@
 							data-review-id="${review.reviewId }"
 							data-customer-id="${userid }">
 								<c:if test="${review.liked }">
-									<i class="fa-solid fa-thumbs-up"></i>
+									<i class="fa-solid fa-thumbs-up fa-beat" style="color: #166fe3;"></i>
 								</c:if> <c:if test="${not review.liked }">
-									<i class="fa-regular fa-thumbs-up"></i>
+									<i class="fa-regular fa-thumbs-up" style="color: #166fe3;"></i>
 								</c:if>
 							</span> 
 							<span id="likeNumber${review.reviewId}">${review.likeCount }</span>명에게 도움이되었어요!
