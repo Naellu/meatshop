@@ -11,9 +11,8 @@
 		<result column="created" property="created"/>
 		<result column="total_price" property="totalPrice"/>
 		<result column="status" property="status"/>
-		<collection property="productInfoes" ofType="com.example.demo.domain.Product">
-			<id column="product_id" property="productId"></id>
-			<result column="product_name" property="productName"/>
+		<collection property="productName" ofType="String">
+			<result column="productName"/>
 		</collection>
 		<collection property="productIds" ofType="Integer">
 			<result column="productIds"/>

@@ -98,8 +98,8 @@
 												<c:if test="${order.status != 'CANCEL' }">
 													<button class="btn btn-outline-primary" type="button"
 														name="addReviewButtons"
-														<%-- data-product-id="${order.productId }" --%>
-														data-customer-id="${memberId }">${order }리뷰쓰기</button>
+														data-product-id="${order.productIds[0] }"
+														data-customer-id="${memberId }">리뷰쓰기</button>
 												</c:if>
 											</p>
 										</c:when>
@@ -122,14 +122,13 @@
 														aria-labelledby="headingOne${order.id}"
 														data-bs-parent="#accordion${order.id}">
 														<div class="accordion-body">
-															<c:forEach var="product" begin="0"
-																items="${order.productName}">
-																<p>${product}
+															<c:forEach begin="0" end="${fn:length(order.productName)-1}" var="i">
+																<p>${order.productName[i]}
 																	<c:if test="${order.status != 'CANCEL' }">
 																		<button class="btn btn-outline-primary" type="button"
 																			name="addReviewButtons"
-																			<%-- data-product-id="${order.productId }" --%>
-																			data-customer-id="${memberId }">${order}리뷰쓰기</button>
+																			data-product-id="${order.productIds[i] }"
+																			data-customer-id="${memberId }">리뷰쓰기</button>
 																	</c:if>
 																</p>
 															</c:forEach>

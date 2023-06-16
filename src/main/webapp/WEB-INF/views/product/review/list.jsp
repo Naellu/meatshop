@@ -8,13 +8,10 @@
 <sec:authentication property="name" var="userid" />
 <br />
 <div class="container">
-	<h3>평점:
-	<c:forEach begin="1" end="${reviewInfo.starCount }">
-		<i class="fa-solid fa-star"></i>
-	</c:forEach>
-	${reviewInfo.starCount < reviewInfo.reviewAvg ? '<i class="fa-solid fa-star-half"></i>' : '' }
-    
-    ${reviewInfo.reviewAvg } / 5 (${reviewInfo.reviewCount})
+	<h3>평균 평점:
+		<i class="fa-solid fa-star" style="color: #ffff00;"></i>
+	${reviewInfo.reviewAvg }
+    (${reviewInfo.reviewCount})
 </h3>
 <br />
 
@@ -43,7 +40,7 @@
 						<p class="card-text">
 							평점:
 							<c:forEach begin="1" end="${review.rating }">
-								<i class="fa-solid fa-star"></i>
+								<i class="fa-solid fa-star" style="color: #ffff00;"></i>
 							</c:forEach>
 						</p>
 						<p class="card-text">${review.content}</p>
