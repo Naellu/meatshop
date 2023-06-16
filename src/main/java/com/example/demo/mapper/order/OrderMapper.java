@@ -113,7 +113,8 @@ public interface OrderMapper {
    			SELECT 
 				o.id,
 			    o.member_id,
-			    p.product_name productName,
+			    p.product_id,
+			    p.product_name,
 			    o.total_price,
 			    DATE(o.created) created,
 			    o.status status

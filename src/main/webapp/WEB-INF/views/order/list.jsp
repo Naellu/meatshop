@@ -98,8 +98,8 @@
 												<c:if test="${order.status != 'CANCEL' }">
 													<button class="btn btn-outline-primary" type="button"
 														name="addReviewButtons"
-														data-product-name="${order.productName[0] }"
-														data-customer-id="${memberId }">리뷰쓰기</button>
+														<%-- data-product-id="${order.productId }" --%>
+														data-customer-id="${memberId }">${order }리뷰쓰기</button>
 												</c:if>
 											</p>
 										</c:when>
@@ -128,8 +128,8 @@
 																	<c:if test="${order.status != 'CANCEL' }">
 																		<button class="btn btn-outline-primary" type="button"
 																			name="addReviewButtons"
-																			data-product-name="${product }"
-																			data-customer-id="${memberId }">리뷰쓰기</button>
+																			<%-- data-product-id="${order.productId }" --%>
+																			data-customer-id="${memberId }">${order}리뷰쓰기</button>
 																	</c:if>
 																</p>
 															</c:forEach>
