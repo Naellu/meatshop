@@ -32,7 +32,6 @@ public class MailServiceImpl implements MailService {
 
 	private String authCode;
 
-	@Override
 	public MimeMessage createEmail(String email) throws MessagingException, UnsupportedEncodingException {
 		MimeMessage message = emailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -40,15 +39,8 @@ public class MailServiceImpl implements MailService {
 		helper.setTo(email);
 		helper.setSubject("NiceToMeatYou 회원가입 이메일 인증");
 
-		String msg = "<h1>안녕하세요</h1>\n"
-				+ "<p>\n"
-				+ "NiceToMeatYou입니다.\n"
-				+ "<br />\n"
-				+ "다음은 인증번호입니다.\n"
-				+ "</p>\n"
-				+ "<div style='font-size: 130%'>\n"
-				+ "CODE : <strong>" + authCode + "</strong>\n"
-				+ "</div>";
+		String msg = "<h1>안녕하세요</h1>\n" + "<p>\n" + "NiceToMeatYou입니다.\n" + "<br />\n" + "다음은 인증번호입니다.\n" + "</p>\n"
+				+ "<div style='font-size: 130%'>\n" + "CODE : <strong>" + authCode + "</strong>\n" + "</div>";
 		helper.setText(msg, true);
 		helper.setFrom(new InternetAddress("admin@nicetomeatyou.com", "관리자"));
 
@@ -56,7 +48,6 @@ public class MailServiceImpl implements MailService {
 	}
 
 	// 랜덤 인증 코드 전송
-	@Override
 	public String createKey() {
 		Random random = new Random();
 		int randomNumber = random.nextInt(90) + 10; // 10 이상 99 이하의 랜덤 숫자 생성
@@ -83,7 +74,6 @@ public class MailServiceImpl implements MailService {
 	}
 
 	// 재고알림 관련 이메일
-	@Override
 	public MimeMessage createNotifyEmail(String[] emails, String productName)
 			throws MessagingException, UnsupportedEncodingException {
 		MimeMessage message = emailSender.createMimeMessage();
@@ -92,12 +82,8 @@ public class MailServiceImpl implements MailService {
 		helper.setTo(emails);
 		helper.setSubject("NiceToMeatYou 상품재입고안내");
 
-		String msg = "<h1>안녕하세요</h1>\n"
-				+ "<p>\n"
-				+ "NiceToMeatYou입니다.\n"
-				+ "<br />\n"
-				+ "찜하신 " + productName + " 상품이 재입고 되었습니다"
-				+ "</p>\n";
+		String msg = "<h1>안녕하세요</h1>\n" + "<p>\n" + "NiceToMeatYou입니다.\n" + "<br />\n" + "찜하신 " + productName
+				+ " 상품이 재입고 되었습니다" + "</p>\n";
 		helper.setText(msg, true);
 		helper.setFrom(new InternetAddress("admin@nicetomeatyou.com", "관리자"));
 
@@ -125,4 +111,27 @@ public class MailServiceImpl implements MailService {
 			e.printStackTrace();
 		}
 	}
+
+	public MimeMessage createPwdEmail(String email, String tempPwd) throws MessagingException, UnsupportedEncodingException {
+		MimeMessage message = emailSender.createMimeMessage();
+		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+		helper.setTo(email);
+		helper.setSubject("비밀번호 변경 안내");
+
+		String msg = tempPwd + "비밀번호가 다음과 같으 변경되었으니 확인부탁드립니다";
+		helper.setText(msg, true);
+		helper.setFrom(new InternetAddress("admin@nicetomeatyou.com", "관리자"));
+
+		return message;
+	}
+
+	@Override
+	public void sendTempPwd(String email, String tempPwd) throws UnsupportedEncodingException, MessagingException {
+		MimeMessage message = createPwdEmail(email, tempPwd); // 메일 발송
+		emailSender.send(message);
+		
+	}
+
+
 }

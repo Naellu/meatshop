@@ -12,6 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.domain.Members;
 import com.example.demo.mapper.MemberMapper;
+import com.example.demo.service.mail.MailService;
+
+
+
+
+
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,6 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MemberService {
 
+	
+	@Autowired
+	private MailService mailService;
+	
+	
 	@Autowired
 	private MemberMapper mapper;
 
@@ -164,7 +175,7 @@ public class MemberService {
 	}
 // ----------------------------------------------------------------------------------------------------
 
-	public Integer searchPassword(String email, String birthday) {
+	public String searchPassword(String email, String birthday) {
 		// DB에서 이메일과 생일을 확인하여 일치하는 사용자가 있는지 검증하는 로직
 		// 일치하면 true, 일치하지 않으면 false 반환
 		boolean a = mapper.findPassword(email, birthday);
@@ -180,7 +191,7 @@ public class MemberService {
 			Integer x = mapper.updatePassword(passwordEncoder.encode(newPassword), email, birthday); // 새로운 비밀번호 암호화
 			System.out.println(newPassword);
 			System.out.println(x);
-			return x;
+			return newPassword;
 			
 			// 사용자가 입력한 이메일,생년월일 같으면 새로운 패스워드 새로 생성, 변경까지 완료
 			// 생성한 패스워드 암호화까지는 완료함 
@@ -218,7 +229,7 @@ public class MemberService {
 			char randomChar = characters.charAt(randomIndex);
 			sb.append(randomChar);
 		}
-		return characters;
+		return sb.toString();
 
 	}
 }

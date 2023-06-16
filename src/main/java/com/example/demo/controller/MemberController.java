@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.example.demo.service.MemberService;
 import com.example.demo.service.mail.MailService;
 import com.example.demo.service.question.QuestionService;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -222,11 +224,20 @@ public class MemberController {
 	@PostMapping("searchPassword")
 	public void searchPassword(@RequestParam("email") String email,@RequestParam("birthday") String birthday) {
 		
-		Integer a = service.searchPassword(email, birthday);
-		System.out.println(a + "controller");
+		String tempPwd = service.searchPassword(email, birthday);
+		
+		// email 보내는 서비스 쓸것
+		try {
+			mailService.sendTempPwd(email, tempPwd);
+		} catch (UnsupportedEncodingException | MessagingException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(tempPwd + "controller");
 		
 		return;
 	}
+	
 	
 	
 	
