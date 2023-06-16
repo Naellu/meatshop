@@ -8,12 +8,12 @@
 	<resultMap type="com.example.demo.domain.order.dto.OrderDto" id="OrderItemMap">
 		<id column="id" property="id"/>		
 		<result column="member_id" property="memberId"/>
-		<result column="product_id" property="productId"/>
 		<result column="created" property="created"/>
 		<result column="total_price" property="totalPrice"/>
 		<result column="status" property="status"/>
-		<collection property="productName" ofType="string">
-			<result column="productName"/>
+		<collection property="productInfoes" ofType="com.example.demo.domain.Product">
+			<id column="product_id" property="productId"></id>
+			<result column="product_name" property="productName"/>
 		</collection>
 		<collection property="productIds" ofType="Integer">
 			<result column="productIds"/>
