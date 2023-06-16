@@ -25,6 +25,22 @@ $(document).ready(function() {
 	})
 })
 
+function cancelPay(data) {
+    $.ajax({
+      // 예: http://www.myservice.com/payments/cancel
+      url: "/payment/complete", 
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({
+        merchant_uid: data.id, // 예: ORD20180131-0000011
+        cancel_request_amount: 2000, // 환불금액
+        reason: "회원이 주문을 취소하였습니다" // 환불사유
+      }),
+      dataType: "json"
+    });
+  }
+
+
 // 리뷰 작성
 var addReviewButtons = document.getElementsByName('addReviewButtons');
 for (var addReviewButton of addReviewButtons){

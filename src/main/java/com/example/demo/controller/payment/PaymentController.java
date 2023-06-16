@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.domain.payment.CancelDataDto;
 import com.example.demo.domain.payment.PaymentVerifyDto;
 import com.example.demo.service.order.OrderService;
+import com.example.demo.service.payment.PaymentService;
 import com.siot.IamportRestClient.IamportClient;
 import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.request.PrepareData;
 import com.siot.IamportRestClient.response.AccessToken;
 import com.siot.IamportRestClient.response.IamportResponse;
@@ -36,6 +39,8 @@ public class PaymentController {
 	private String apiSecret;
 	
 	private final OrderService orderService;
+	private final PaymentService paymentService;
+	
 	private IamportClient iamportClient;
 	
 	@PostConstruct
@@ -59,6 +64,9 @@ public class PaymentController {
 		// 결제 정보 가져오기
 		IamportResponse<Payment> paymentResponse = iamportClient.paymentByImpUid(imp_uid);
 		Payment paymentInfo = paymentResponse.getResponse();
+		
+		// 결제 정보 저장하기
+		paymentService.savePayment(paymentInfo);
 		
 		return new ResponseEntity<>(paymentInfo, HttpStatus.OK);
 	}
@@ -97,6 +105,13 @@ public class PaymentController {
 		} catch (IamportResponseException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	// 미완성 로직
+	@PostMapping("/payment/cancel")
+	public void cancelPayment(@RequestBody CancelDataDto cancelDataDto) throws IamportResponseException, IOException {
+		CancelData cancelData = new CancelData(cancelDataDto.getImpUid(), true);
+		iamportClient.cancelPaymentByImpUid(cancelData);
 	}
 	
 }
