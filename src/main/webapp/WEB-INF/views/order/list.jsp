@@ -98,13 +98,8 @@
 												<c:if test="${order.status != 'CANCEL' }">
 													<button class="btn btn-outline-primary" type="button"
 														name="addReviewButtons"
-<<<<<<< HEAD
 														data-product-id="${order.productIds[0] }"
 														data-customer-id="${memberId }">리뷰쓰기</button>
-=======
-														<%-- data-product-id="${order.productId }" --%>
-														data-customer-id="${memberId }">${order }리뷰쓰기</button>
->>>>>>> c286c6aeff47ff99546cd1fdea978b9b0577c979
 												</c:if>
 											</p>
 										</c:when>
@@ -132,13 +127,8 @@
 																	<c:if test="${order.status != 'CANCEL' }">
 																		<button class="btn btn-outline-primary" type="button"
 																			name="addReviewButtons"
-<<<<<<< HEAD
 																			data-product-id="${order.productIds[i] }"
 																			data-customer-id="${memberId }">리뷰쓰기</button>
-=======
-																			<%-- data-product-id="${order.productId }" --%>
-																			data-customer-id="${memberId }">${order}리뷰쓰기</button>
->>>>>>> c286c6aeff47ff99546cd1fdea978b9b0577c979
 																	</c:if>
 																</p>
 															</c:forEach>
