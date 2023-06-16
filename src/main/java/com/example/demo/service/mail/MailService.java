@@ -17,5 +17,10 @@ public interface MailService {
 
 	MimeMessage createNotifyEmail(String[] emails, String productName)
 			throws MessagingException, UnsupportedEncodingException;
-
+	
+	
+	
+	
+	
+	
 }

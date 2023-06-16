@@ -176,6 +176,7 @@ public interface MemberMapper {
 	@ResultMap("memberMap")
 	List<Members> selectAllPaging(Integer startIndex, Integer rowPerPage, String search, String type);
 
+	
 	// 멤버 id로 이메일 가져오기
 	@Select("""
 			SELECT member_email
@@ -184,4 +185,49 @@ public interface MemberMapper {
 			id = #{memberId}
 			""")
 	String getMemberEamil(String memberId);
+	
+	
+	
+	@Select("""
+			SELECT id
+			FROM members
+			WHERE
+			member_email = #{email}
+			""")
+	Members getMemberId(String email);
+
+	
+	// ----------------------------------  password 찾기 ---------------------------------------------------
+	
+	@Select("""
+			
+			SELECT member_password FROM members
+			 
+			 WHERE
+			 
+			 member_email = #{email}
+			and member_birthday = #{birthday}
+		
+			 """)
+	
+	boolean findPassword(String email, String birthday);
+	
+	
+	@Update("""
+		    UPDATE members
+		    SET member_password = #{newPassword}
+		    WHERE member_email = #{email} AND member_birthday = #{birthday}
+		    """)
+	
+		Integer updatePassword(String newPassword, String email, String birthday);
+	
+//	-----------------------------------------------------------------------------------------------------------------------
+	
+	
+	
+	
 }
+
+
+
+

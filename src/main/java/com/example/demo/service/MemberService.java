@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,8 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.domain.Members;
 import com.example.demo.mapper.MemberMapper;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
 @Transactional(rollbackFor = Exception.class)
+@Slf4j
 public class MemberService {
 
 	@Autowired
@@ -99,6 +103,14 @@ public class MemberService {
 		return Map.of("available", member == null);
 	}
 
+	// ----------------- 이메일로 아이디 찾기-----------------------------------
+	public Map<String, Object> findEmail(String id) {
+		Members member = mapper.selectEmail(id);
+		return Map.of("available", member == null);
+	}
+
+	// ----------------------------------------------------
+
 	// ------------------- memberList 페이지네이션 ------------------------
 	public Map<String, Object> listBoard(Integer page, String search, String type) {
 		// 페이지당 행의 수
@@ -133,5 +145,80 @@ public class MemberService {
 		List<Members> list = mapper.selectAllPaging(startIndex, rowPerPage, search, type);
 		System.out.println(list);
 		return Map.of("pageInfo", pageInfo, "memberList", list);
+	}
+
+	// ----------------- 아이디찾기 이메일 인증, Id 가져오는 메소드 -----------------------------
+	public boolean checkCode(String code, String authCode) {
+		log.info("authCode IN SERVICE={}", authCode);
+		if (code.equals(authCode)) {
+			return true;
+		} else {
+
+			return false;
+		}
+	}
+
+	public Members getId(String email) {
+		System.out.println(email);
+		return mapper.getMemberId(email);
+	}
+// ----------------------------------------------------------------------------------------------------
+
+	public Integer searchPassword(String email, String birthday) {
+		// DB에서 이메일과 생일을 확인하여 일치하는 사용자가 있는지 검증하는 로직
+		// 일치하면 true, 일치하지 않으면 false 반환
+		boolean a = mapper.findPassword(email, birthday);
+		System.out.println(a + "service");
+		System.out.println(email);
+		System.out.println(birthday);
+		
+		if (a == true) {
+			String newPassword = generateRandomPassword(); //새로운 비밀번호 생성
+			
+			
+			
+			Integer x = mapper.updatePassword(passwordEncoder.encode(newPassword), email, birthday); // 새로운 비밀번호 암호화
+			System.out.println(newPassword);
+			System.out.println(x);
+			return x;
+			
+			// 사용자가 입력한 이메일,생년월일 같으면 새로운 패스워드 새로 생성, 변경까지 완료
+			// 생성한 패스워드 암호화까지는 완료함 
+			
+			// 암호화 하기 전 패스워드 메일로 클라이언트에게 쏴줄것
+			// else 부분 마무리 하기 사용자가 잘못된 이메일,생년월일 입력하면 오류코드뜸
+			
+			
+			
+
+		} else {
+			// Handle the case when a is false
+			return null;
+		}
+
+		
+	}
+
+
+	//비밀번호 재설정 로직
+	public String generateRandomPassword() {
+		// Define the characters that can be used in the password
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+		// Set the desired length of the password
+		int length = 8;
+
+		// Create a StringBuilder to store the generated password
+		StringBuilder sb = new StringBuilder();
+
+		// Generate random characters from the defined set
+		Random random = new Random();
+		for (int i = 0; i < length; i++) {
+			int randomIndex = random.nextInt(characters.length());
+			char randomChar = characters.charAt(randomIndex);
+			sb.append(randomChar);
+		}
+		return characters;
+
 	}
 }

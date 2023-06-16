@@ -19,4 +19,5 @@ public class Members {
 //	private LocalDateTime inserted;
 	private String oldPassword;
 	private List<String> authority;
+	private String newPassword;
 }
