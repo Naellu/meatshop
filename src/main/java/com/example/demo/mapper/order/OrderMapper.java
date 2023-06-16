@@ -114,6 +114,7 @@ public interface OrderMapper {
 				o.id,
 			    o.member_id,
 			    p.product_name productName,
+			    p.product_id productIds,
 			    o.total_price,
 			    DATE(o.created) created,
 			    o.status status
