@@ -30,8 +30,7 @@ var addReviewButtons = document.getElementsByName('addReviewButtons');
 for (var addReviewButton of addReviewButtons){
 	addReviewButton.addEventListener("click",function(){
 		var customerId = $(this).data('customerId');
-		var productName = $(this).data('productName');
-		var productId = productName.substr(2);
+		var productId = $(this).data('productId');
 		
 		var link = '/product/review/add?customerId=' + customerId + '&productId=' + productId;
 		
