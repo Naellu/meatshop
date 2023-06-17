@@ -139,7 +139,7 @@
 	<!-- 페이징과 검색이 적용된 상품 목록 -->
 	<select id="selectAllPaging" resultMap="productViewMap">
 		<bind name="pattern" value="'%' + search + '%'" />
-		SELECT * FROM productview
+		SELECT * FROM listview
 
 		<where>
 			<if test="(pub eq 'open' or pub eq 'close') and type eq 'all'">
@@ -203,7 +203,7 @@
 	<!-- 상품 목록 -->
 	<select id="selectCustomerAllPaging" resultMap="productViewMap">
 		<bind name="pattern" value="'%' + search + '%'" />
-		SELECT * FROM (SELECT * FROM productview WHERE pub = 1) p
+		SELECT * FROM (SELECT * FROM listview WHERE pub = 1) p
 		<where>
 			<if test="type eq 'all'">
 				(product_name LIKE #{pattern} OR country_of_origin LIKE
@@ -279,8 +279,5 @@
 		ORDER BY sold DESC, price DESC LIMIT 3; -->
 		SELECT * FROM mainitemview
 	</select>
-
-
-
 </mapper>
 
