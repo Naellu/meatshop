@@ -31,8 +31,8 @@ CREATE TABLE productfilename (
 
 
 SELECT * FROM products;
-
-
+SELECT * FROM productfilename ORDER BY id DESC;
+SELECT * FROM  productview ORDER BY product_id DESC;
 DESC productview;
 
 CREATE View productview
@@ -56,3 +56,25 @@ INSERT INTO productfilename (product_id, file_name) VALUES (5, '1.png');
 
 TRUNCATE TABLE products;
 
+CREATE View customerview
+AS
+SELECT 
+    p.product_id AS product_id,
+    p.product_name AS product_name,
+    p.country_of_origin AS country_of_origin,
+    p.price AS price,
+    p.stock_quantity AS stock_quantity,
+    p.pub AS pub,
+    c.category_id AS category_id,
+    c.category_name AS category_name,
+    c.description AS description,
+    (
+        SELECT f.file_name
+        FROM productfilename f
+        WHERE f.product_id = p.product_id
+        AND f.file_name LIKE 'main.%'
+    ) AS file_name
+FROM
+    products p
+    JOIN categories c ON (p.category_id = c.category_id)
+ORDER BY p.product_id;

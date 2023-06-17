@@ -11,9 +11,11 @@ import com.example.demo.mapper.product.*;
 import com.example.demo.mapper.wishlist.*;
 
 import lombok.*;
+import lombok.extern.slf4j.*;
 import software.amazon.awssdk.services.s3.*;
 import software.amazon.awssdk.services.s3.model.*;
 
+@Slf4j
 @Service("customerProductServiceImpl")
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {

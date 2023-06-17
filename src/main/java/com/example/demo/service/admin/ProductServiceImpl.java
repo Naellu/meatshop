@@ -13,10 +13,12 @@ import com.example.demo.exception.*;
 import com.example.demo.mapper.product.*;
 
 import lombok.*;
+import lombok.extern.slf4j.*;
 import software.amazon.awssdk.core.sync.*;
 import software.amazon.awssdk.services.s3.*;
 import software.amazon.awssdk.services.s3.model.*;
 
+@Slf4j
 @Service("adminProductServiceImpl")
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
@@ -77,6 +79,7 @@ public class ProductServiceImpl implements ProductService {
 
 		List<ProductView> productList = productMapper.selectAllPaging(startIndex, pageSize, type, search, stockQuantity,
 				pub);
+		
 		return Map.of("pageInfo", pageInfo, "productList", productList);
 	}
 
@@ -164,7 +167,7 @@ public class ProductServiceImpl implements ProductService {
 
 	// 상품 삭제 처리
 	@Override
-	@Transactional(rollbackFor = TransactionException.class)
+	@Transactional(rollbackFor = Exception.class)
 	public Boolean remove(Integer productId) {
 		// 상품에 설정된 이미지 파일 삭제
 		// 파일명 조회

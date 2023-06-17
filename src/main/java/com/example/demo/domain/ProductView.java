@@ -6,6 +6,7 @@ import lombok.*;
 
 @Getter
 @Setter
+@ToString
 public class ProductView {
 	private Integer productId;
 	private String productName;
