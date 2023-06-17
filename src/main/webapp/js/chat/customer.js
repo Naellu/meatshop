@@ -4,76 +4,67 @@ if (customerId === 'anonymousUser') {
 	customerId = "guest";
 }
 
-//웹소켓 객체
-let ws;
-
-function wsOpen() {
-	try {
-		ws = new WebSocket("ws://" + location.host + "/chat");
-		wsEvt();
-	} catch (error) {
-		// 웹소켓 연결 실패 처리
-		$("#messageTextArea").append(`<p>웹소켓 연결에 오류가 발생했습니다...</p>`);
-	}
+window.onload = function() {
+	getRoom();
+	createRoom();
 }
 
-function wsEvt() {
-	//소켓이 열리면 초기화 세팅하기
-	ws.onopen = function(data) {
-		$("#messageTextArea").append(`<p>서버에 연결되었습니다...</p>`);
-	}
-
-	ws.onerror = function(event) {
-			$("#messageTextArea").append(`<p>오류가 발생했습니다...</p>`);
-	};
-
-	ws.onmessage = function(data) {
-		let msg = data.data;
-		if (msg != null && msg.trim() != '') {
-			let serverJson = JSON.parse(msg);
-			if (serverJson.type === "getId") {
-				let sId = serverJson.sessionId != null ? serverJson.sessionId : "";
-				if (sId != '') {
-					$("#sessionId").val(sId);
-				}
-			} else if (serverJson.type === "message") {
-				if (serverJson.sessionId === $("#sessionId").val()) {
-					$("#messageTextArea").append("<div class='me'>" + customerId + "님: " + serverJson.msg + "</div>");
-				} else {
-					$("#messageTextArea").append("<div class='admin'>관리자: " + serverJson.msg + "</div>");
-				}
-			} else {
-				console.warn("unknown type!")
-			}
-		}
-	}
-
-	ws.onclose = function(event) {
-	};
-
-	// enter눌리면 send() 실행
-	$(document).keypress(function(e) {
-		if (e.which == 13) {
-			e.preventDefault(); // 엔터 키의 기본 동작 방지
-			send();
-		}
-	});
-
-	$("#sendMessageBtn").click(function() {
-		send();
+function getRoom() {
+	commonAjax('/chat/getRoom', "", 'post', function(result) {
+		createChatingRoom(result);
 	});
 }
 
-function send() {
-	let data = {
-		type: "message",
-		sessionId: $("#sessionId").val(),
-		userName: customerId,
-		msg: $("#textMessage").val()
-	}
-	ws.send(JSON.stringify(data));
-	$('#textMessage').val("");
+function createRoom() {
+	$("#createRoom").click(function() {
+		var msg = {
+			roomName: customerId
+		};
+
+		commonAjax('/chat/createRoom', msg, 'post', function(result) {
+			createChatingRoom(result);
+		});
+	});
 }
 
-//초기화
-wsOpen();
+function goRoom(number, name) {
+	location.href = "/chat/moveChating?roomName=" + name + "&" + "roomNumber=" + number;
+}
+
+function createChatingRoom(res) {
+	if (res != null) {
+		var tag = "<tr><th class='num'>순서</th><th class='room'>방 이름</th><th class='go'></th></tr>";
+		res
+			.forEach(function(d, idx) {
+				var rn = d.roomName.trim();
+				var roomNumber = d.roomNumber;
+				tag += "<tr>"
+					+ "<td class='num'>"
+					+ (idx + 1)
+					+ "</td>"
+					+ "<td class='room'>"
+					+ rn
+					+ "</td>"
+					+ "<td class='go'><button type='button' onclick='goRoom(\""
+					+ roomNumber + "\", \"" + rn
+					+ "\")'>참여</button></td>" + "</tr>";
+			});
+		$("#roomList").empty().append(tag);
+	}
+}
+
+function commonAjax(url, parameter, type, calbak, contentType) {
+	$.ajax({
+		url: url,
+		data: parameter,
+		type: type,
+		contentType: contentType != null ? contentType : 'application/x-www-form-urlencoded; charset=UTF-8',
+		success: function(res) {
+			calbak(res);
+		},
+		error: function(err) {
+			console.log('error');
+			calbak(err);
+		}
+	});
+}

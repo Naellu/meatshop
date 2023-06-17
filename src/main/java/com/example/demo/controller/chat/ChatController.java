@@ -7,19 +7,27 @@ import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.domain.*;
+import com.example.demo.service.chat.*;
 
+import lombok.*;
 import lombok.extern.slf4j.*;
 
 @Controller
 @Slf4j
 @RequestMapping("/chat/")
+@RequiredArgsConstructor
 public class ChatController {
-	List<ChatRoom> roomList = new ArrayList<>();
-	static int roomNumber = 0;
 
-	@GetMapping("customer")
+	private final ChatService chatService;
+
+	@GetMapping("list")
 	public String chat() {
-		return "chat/customerchat";
+		return "chat/chatList";
+	}
+	
+	@GetMapping("customer")
+	public String customer() {
+		return "chat/customer";
 	}
 
 	// 방페이지
@@ -33,41 +41,26 @@ public class ChatController {
 	@ResponseBody
 	public List<ChatRoom> createRoom(@RequestParam HashMap<Object, Object> params) {
 		String roomName = (String) params.get("roomName");
-		if (roomName != null && !roomName.trim().equals("")) {
-			ChatRoom room = new ChatRoom();
-			room.setRoomNumber(++roomNumber);
-			room.setRoomName(roomName);
-			roomList.add(room);
-		}
-		return roomList;
+		return chatService.createRoom(roomName);
 	}
 
 	// 방 정보가져오기
 	@PostMapping("/getRoom")
 	@ResponseBody
 	public List<ChatRoom> getRoom(@RequestParam HashMap<Object, Object> params) {
-		log.info("log {}", roomList);
-		return roomList;
+		return chatService.getRoom();
 	}
 
-	// 채팅방
 	@GetMapping("/moveChating")
 	public String chating(Model model, @RequestParam HashMap<Object, Object> params) {
 		int roomNumber = Integer.parseInt((String) params.get("roomNumber"));
-		List<ChatRoom> newList = new ArrayList<>();
-		for (ChatRoom room : roomList) {
-			if (room.getRoomNumber() == roomNumber) {
-				newList.add(room);
-			}
-		}
+		List<ChatRoom> newList = chatService.getChatRoomsByRoomNumber(roomNumber);
 		if (newList != null && newList.size() > 0) {
 			model.addAttribute("roomName", params.get("roomName"));
-
 			model.addAttribute("roomNumber", params.get("roomNumber"));
-			return "chat/customerchat";
+			return "chat/chatList";
 		} else {
 			return "chat/room";
 		}
 	}
-
 }
