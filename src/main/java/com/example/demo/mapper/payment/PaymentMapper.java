@@ -3,6 +3,7 @@ package com.example.demo.mapper.payment;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.siot.IamportRestClient.response.Payment;
 
@@ -42,5 +43,17 @@ public interface PaymentMapper {
 				)
 			""")
 	Integer savePaymentInfo(Payment payment);
+	
+	
+	@Update("""
+			UPDATE payments
+			SET
+				status = #{status}
+			WHERE 
+				imp_uid = #{imp_uid} AND
+				merchant_uid = #{merchant_uid}
+			""")
+	Integer changePaymentStatus(Payment payment);
+
 	
 }

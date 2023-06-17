@@ -15,7 +15,7 @@ $(document).ready(function() {
 			contentType: "application/json; charset=utf-8",
 			data: JSON.stringify(data),
 			success: function(response) {
-				alert(response);
+				cancelPay(data);
 				location.reload();
 			},
 			error: function() {
@@ -25,18 +25,22 @@ $(document).ready(function() {
 	})
 })
 
+// 결제 취소
 function cancelPay(data) {
     $.ajax({
       // 예: http://www.myservice.com/payments/cancel
-      url: "/payment/complete", 
-      type: "POST",
+      url: "/payment/cancel", 
+      method: "POST",
       contentType: "application/json",
       data: JSON.stringify({
-        merchant_uid: data.id, // 예: ORD20180131-0000011
-        cancel_request_amount: 2000, // 환불금액
-        reason: "회원이 주문을 취소하였습니다" // 환불사유
+        merchantUid: data.id, // 예: ORD20180131-0000011
       }),
-      dataType: "json"
+      success: function() {
+		  alert("테스트 결제취소 성공");
+	  },
+	  error: function(jqXHR, errorThrown) {
+		  console.log(jqXHR, errorThrown);
+	  }
     });
   }
 

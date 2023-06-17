@@ -90,6 +90,7 @@ public class PaymentController {
 		return new ResponseEntity<>(false, HttpStatus.NOT_ACCEPTABLE);
 	}
 	
+	// 사전 검증
 	@PostMapping("/payments/prepare")
 	@Transactional
 	public void preVerify(@RequestBody PaymentVerifyDto paymentVerifyDto) {
@@ -109,9 +110,17 @@ public class PaymentController {
 	
 	// 미완성 로직
 	@PostMapping("/payment/cancel")
+	@Transactional
 	public void cancelPayment(@RequestBody CancelDataDto cancelDataDto) throws IamportResponseException, IOException {
-		CancelData cancelData = new CancelData(cancelDataDto.getImpUid(), true);
-		iamportClient.cancelPaymentByImpUid(cancelData);
+//		CancelData cancelData = new CancelData(cancelDataDto.getImpUid(), true);
+		CancelData cancelData = new CancelData(cancelDataDto.getMerchantUid(), false);
+		IamportResponse<Payment> result = iamportClient.cancelPaymentByImpUid(cancelData);
+		Payment canceledPayment = result.getResponse();
+		
+		if(canceledPayment.getStatus().equals("cancelled")) {
+			paymentService.changePaymentStatus(canceledPayment);
+		}
+		
 	}
 	
 }

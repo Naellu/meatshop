@@ -6,4 +6,6 @@ public interface PaymentService {
 	
 	Integer savePayment(Payment payment);
 	
+	Integer changePaymentStatus(Payment payment);
+	
 }

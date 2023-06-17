@@ -20,8 +20,17 @@ public class PaymentServiceImpl implements PaymentService{
 	// 결제 정보 저장
 	@Override
 	public Integer savePayment(Payment payment) {
+		log.info("payment IN SERVICE = {}",payment);
 		return paymentMapper.savePaymentInfo(payment);
 	}
+
+	@Override
+	public Integer changePaymentStatus(Payment payment) {
+		log.info("payment IN SERVICE by changeStatus = {}",payment);
+		return paymentMapper.changePaymentStatus(payment);
+	}
+	
+	
 	
 
 }
