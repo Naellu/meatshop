@@ -4,7 +4,6 @@ if (customerId === 'anonymousUser') {
 	customerId = "guest";
 }
 
-
 window.onload = function() {
 	getRoom();
 	createRoom();

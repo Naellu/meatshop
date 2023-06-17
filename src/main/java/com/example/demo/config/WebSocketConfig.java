@@ -12,11 +12,10 @@ import lombok.*;
 @EnableWebSocket
 public class WebSocketConfig implements WebSocketConfigurer {
 
-	private final ChatHandler chatHandler;
+	private final SocketHandler socketHandler;
 
 	@Override
 	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-
-		registry.addHandler(chatHandler, "ws/chat").setAllowedOrigins("*");
+		registry.addHandler(socketHandler, "/chat/{roomNumber}");
 	}
 }
