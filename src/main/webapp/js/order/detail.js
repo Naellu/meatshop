@@ -112,7 +112,7 @@ $(document).ready(function() {
 			      	// 결제 성공 시: 결제 승인 또는 가상계좌 발급에 성공한 경우
 		    	  	// jQuery로 HTTP 요청
 				      $.ajax({
-				        url: "/payment/complete", // 결제 사후 검증
+				        url: "/payment/complete", // 결제 정보 가져오기(동시에 DB에 저장됨)
 				        method: "POST",
 				        contentType: "application/json",
 				        data: JSON.stringify({

@@ -15,7 +15,7 @@ $(document).ready(function() {
 			contentType: "application/json; charset=utf-8",
 			data: JSON.stringify(data),
 			success: function(response) {
-				alert(response);
+				cancelPay(data);
 				location.reload();
 			},
 			error: function() {
@@ -24,6 +24,26 @@ $(document).ready(function() {
 		}) 
 	})
 })
+
+// 결제 취소
+function cancelPay(data) {
+    $.ajax({
+      // 예: http://www.myservice.com/payments/cancel
+      url: "/payment/cancel", 
+      method: "POST",
+      contentType: "application/json",
+      data: JSON.stringify({
+        merchantUid: data.id, // 예: ORD20180131-0000011
+      }),
+      success: function() {
+		  alert("테스트 결제취소 성공");
+	  },
+	  error: function(jqXHR, errorThrown) {
+		  console.log(jqXHR, errorThrown);
+	  }
+    });
+  }
+
 
 // 리뷰 작성
 var addReviewButtons = document.getElementsByName('addReviewButtons');
