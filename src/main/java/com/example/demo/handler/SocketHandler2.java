@@ -13,7 +13,7 @@ import lombok.extern.slf4j.*;
 
 @Slf4j
 @Component
-public class SocketHandler extends TextWebSocketHandler {
+public class SocketHandler2 extends TextWebSocketHandler {
 	// 웹소켓 세션을 담아둘 맵
 	// HashMap<String, WebSocketSession> sessionMap = new HashMap<>();
 	private List<HashMap<String, Object>> roomList = new ArrayList<>(); // 웹소켓 세션을 담아둘 리스트 ---roomListSessions
@@ -25,8 +25,8 @@ public class SocketHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		// 소켓 연결시 session의 id를 키로 세션저장
 		super.afterConnectionEstablished(session);
-
-		// url에서 roomNumber를 추출해서 roomList에담을것임.
+		
+		//url에서 roomNumber를 추출해서 roomList에담을것임.
 		boolean flag = false;
 		String url = session.getUri().toString();
 		String roomNumber = url.split("/chat/")[1];
