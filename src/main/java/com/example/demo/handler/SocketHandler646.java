@@ -12,8 +12,7 @@ import com.google.gson.*;
 import lombok.extern.slf4j.*;
 
 @Slf4j
-@Component
-public class SocketHandler extends TextWebSocketHandler {
+public class SocketHandler646 extends TextWebSocketHandler {
 	// 웹소켓 세션을 담아둘 맵
 	// HashMap<String, WebSocketSession> sessionMap = new HashMap<>();
 	private List<HashMap<String, Object>> roomList = new ArrayList<>(); // 웹소켓 세션을 담아둘 리스트 ---roomListSessions
@@ -29,26 +28,27 @@ public class SocketHandler extends TextWebSocketHandler {
 		// url에서 roomNumber를 추출해서 roomList에담을것임.
 		boolean flag = false;
 		String url = session.getUri().toString();
-		String roomNumber = url.split("/chat/")[1];
+		// String roomNumber = url.split("/chat/")[1];
+		String roomName = url.split("/chat/")[1];
 		int idx = roomList.size(); // 방의 사이즈를 조사한다.
-
+		
 		if (roomList.size() > 0) {
 			for (int i = 0; i < roomList.size(); i++) {
-				String roomNum = (String) roomList.get(i).get("roomNumber");
-				if (roomNum.equals(roomNumber)) {
+				String name = (String) roomList.get(i).get("roomName");
+				if (name.equals(roomName)) {
 					flag = true;
 					idx = i;
 					break;
 				}
 			}
 		}
-
+		
 		if (flag) { // 존재하는 방이라면 세션만 추가한다.
 			HashMap<String, Object> map = roomList.get(idx);
 			map.put(session.getId(), session);
 		} else { // 최초 생성하는 방이라면 방번호와 세션을 추가한다.
 			HashMap<String, Object> map = new HashMap<>();
-			map.put("roomNumber", roomNumber);
+			map.put("roomName", roomName);
 			map.put(session.getId(), session);
 			roomList.add(map);
 		}
@@ -69,13 +69,17 @@ public class SocketHandler extends TextWebSocketHandler {
 		// 메시지 발송
 		String msg = message.getPayload();
 		JsonObject obj = jsonToObjectParser(msg);
-		String roomNum = obj.get("roomNumber").getAsString();
+		log.info("lodjjjjjjjj: {}", msg);
+		
+		String roomName = obj.get("userName").getAsString();
 
+		log.info("lodjjjjjjjj: {}", roomList);
+		
 		HashMap<String, Object> temp = new HashMap<>();
 		if (roomList.size() > 0) {
 			for (int i = 0; i < roomList.size(); i++) {
-				String roomNumber = (String) roomList.get(i).get("roomNumber"); // 세션리스트의 저장된 방번호를 가져와서
-				if (roomNumber.equals(roomNum)) { // 같은값의 방이 존재한다면
+				String name = (String) roomList.get(i).get("roomName"); // 세션리스트의 저장된 방번호를 가져와서
+				if (name.equals(roomName)) { // 같은값의 방이 존재한다면
 					temp = roomList.get(i); // 해당 방번호의 세션리스트의 존재하는 모든 object값을 가져온다.
 					break;
 				}
@@ -83,7 +87,7 @@ public class SocketHandler extends TextWebSocketHandler {
 
 			// 해당 방의 세션들만 찾아서 메시지를 발송해준다.
 			for (String k : temp.keySet()) {
-				if (k.equals("roomNumber")) { // 다만 방번호일 경우에는 건너뛴다.
+				if (k.equals("roomName")) { // 다만 방번호일 경우에는 건너뛴다.
 					continue;
 				}
 

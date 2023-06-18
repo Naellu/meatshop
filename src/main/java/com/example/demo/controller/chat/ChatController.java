@@ -2,6 +2,7 @@ package com.example.demo.controller.chat;
 
 import java.util.*;
 
+import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
 import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,8 @@ public class ChatController {
 	}
 	
 	@GetMapping("customer")
-	public String customer() {
+	public String customer(Model model, Authentication authentication) {
+		model.addAttribute("name", authentication.getName());
 		return "chat/customer";
 	}
 

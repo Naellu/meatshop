@@ -4,6 +4,7 @@ import lombok.*;
 
 @Getter
 @Setter
+@ToString
 public class ChatRoom {
 	int roomNumber;
 	String roomName;

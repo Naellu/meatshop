@@ -2,6 +2,18 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <link rel="stylesheet" href="/css/footer.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<div id="fixedDiv" class="fixed-div">
+	<i class="fas fa-comments"></i>
+</div>
+
+<div id="modal" class="modal">
+	<div class="modal-content">
+		<span class="close">&times;</span>
+		<iframe id="customerFrame" frameborder="0"></iframe>
+	</div>
+</div>
 
 <footer class="site-footer mt-5">
 	<div class="container">
@@ -58,3 +70,16 @@
 		</div>
 	</div>
 </footer>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#fixedDiv").click(function() {
+			$("#modal").css("display", "block");
+		});
+
+		$(".close").click(function() {
+			$("#modal").css("display", "none");
+			$("#customerFrame").empty();
+		});
+	});
+</script>

@@ -6,6 +6,9 @@ import org.springframework.stereotype.*;
 
 import com.example.demo.domain.*;
 
+import lombok.extern.slf4j.*;
+
+@Slf4j
 @Service
 public class ChatServiceImpl implements ChatService {
 	private List<ChatRoom> roomList = new ArrayList<>();

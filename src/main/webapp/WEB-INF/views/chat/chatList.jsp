@@ -28,6 +28,7 @@
 		<input id="textMessage" type="text">
 		<!-- 서버로 메시지를 전송하는 버튼 -->
 		<input id="sendMessageBtn" value="전송" type="button">
+		<button id="closeBtn" type="button">닫기</button>
 	</form>
 	<div>
 		<div id="messageTextArea"></div>

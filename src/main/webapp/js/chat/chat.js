@@ -76,6 +76,13 @@ function send() {
 	ws.send(JSON.stringify(data));
 	$('#textMessage').val("");
 }
-
+$("#closeBtn").click(function() {
+	closeWebSocket();
+});
+function closeWebSocket() {
+	if (ws) {
+		ws.close();
+	}
+}
 //초기화
 wsOpen();
