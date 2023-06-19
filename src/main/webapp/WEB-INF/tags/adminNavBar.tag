@@ -31,6 +31,10 @@
 					<li class="nav-item">
 						<a class="nav-link" href="/chat/admin/room">채팅목록</a>
 					</li>
+
+					<li class="nav-item">
+						<a class="nav-link " href="/member/list">회원목록</a>
+					</li>
 				</ul>
 			</div>
 		</div>

@@ -4,9 +4,19 @@ let roomNumber = $("#roomNumber").val();
 //웹소켓 객체
 let ws;
 
+const connectionTime = 60 * 1000;
+
 function wsOpen() {
 	try {
 		ws = new WebSocket("ws://" + location.host + "/chat/" + roomNumber);
+
+		// 일정 시간이 지난 후에 연결을 닫음
+		setTimeout(function() {
+			if (ws.readyState === WebSocket.OPEN) {
+				ws.close();
+			}
+		}, connectionTime);
+
 		wsEvt();
 	} catch (error) {
 		// 웹소켓 연결 실패 처리
@@ -46,6 +56,7 @@ function wsEvt() {
 	}
 
 	ws.onclose = function(event) {
+		console.log("연결해제됨!!!");
 	};
 
 	// enter눌리면 send() 실행
