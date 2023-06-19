@@ -27,7 +27,8 @@ function wsOpen() {
 function wsEvt() {
 	//소켓이 열리면 초기화 세팅하기
 	ws.onopen = function(data) {
-		$("#messageTextArea").append(`<p>서버에 연결되었습니다...</p>`);
+		$("#messageTextArea").append(`<p>서버에 연결되었습니다... </br>
+		채팅에 응답이 없을시 1대1문의를 이용해주세요...!</p>`);
 	}
 
 	ws.onerror = function(event) {

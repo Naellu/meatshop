@@ -1,6 +1,6 @@
 var openIds = []; // openIds 배열 선언
 var ids = []; // ids 배열 선언
-const toastLiveExample = document.getElementById('liveToast')
+const toastLiveExample = document.getElementById('liveToast');
 
 $('#pubBtn').click(function() {
 	openIds = []; // openIds 배열 초기화

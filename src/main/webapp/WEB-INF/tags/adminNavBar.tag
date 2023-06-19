@@ -29,7 +29,7 @@
 						<a class="nav-link" href="/question/list">문의목록</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/chat/admin/room">채팅목록</a>
+						<a class="nav-link" href="/chat/admin/list">채팅목록</a>
 					</li>
 
 					<li class="nav-item">
