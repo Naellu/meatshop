@@ -74,7 +74,7 @@ public class OrderController {
 		
 		model.addAttribute("productNames", ProductNames);
 		model.addAttribute("orderItemDtos", orderItemDtos);
-		
+		log.info("orderItemDtos IN ORDERCONTROLLER={}",orderItemDtos);
 		return "order/detail";
 	}
 	
@@ -84,6 +84,7 @@ public class OrderController {
 	@PostMapping("/payed")
 	@PreAuthorize("isAuthenticated()")
 	public ResponseEntity<PaymentDto> payedOrder(@RequestBody List<OrderItemDto> orderItemDtos, Authentication authentication) throws NotEnoughStockException {
+		log.info("into order payed IN ORDERCONTROLLER={}", orderItemDtos);
 		String memberId = authentication.getName();
 		int orderId = orderService.makeOrderOfMultipleProduct(memberId, orderItemDtos);
 		log.info("orderId IN order/payed CONTROLLER ={}",orderId);

@@ -17,6 +17,64 @@
 		align-items: center; 
 		height: 10vh;
 	}
+	.table th:nth-child(2) {
+   	 	width: 40%;
+	}
+	
+	.table th:nth-child(3),
+	.table th:nth-child(4) {
+	    width: 20%;
+	}
+	
+	.table td {
+		padding-top: 30px;
+	}
+	
+	.quantity-input {
+	    width: 40px;
+	    border: none;
+	    text-align: center;
+	}
+	
+	.quantity-input::-webkit-inner-spin-button,
+	.quantity-input::-webkit-outer-spin-button {
+	    -webkit-appearance: none;
+	    margin: 0;
+	}
+	
+	.quantity-input[type="number"] {
+	    -moz-appearance: textfield;
+	}
+	
+	
+	.quantity-container {
+	    display: flex;
+	    border: 1px solid #dcdcdc;
+	    align-items: center;
+	    padding: 0;
+	    box-sizing: border-box; /* 추가 */
+	    max-width: 100px;
+	}
+	
+	.custom-counter-clickarea {
+	    display: inline-block;
+	    width: 30px;
+	    height: 30px;
+	    background-color: #ffffff;
+	    text-align: center;
+	    line-height: 30px;
+	    cursor: pointer;
+	    box-sizing: border-box; /* 추가 */
+	    margin: 0; /* 추가 */
+	    padding: 0; /* 추가 */
+	}
+	
+	.cartitems > tr {
+		margin-top: 10px;
+	}
+
+	
+	
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -28,31 +86,42 @@
 	
 	<h3 style="text-align: center;">장바구니</h3>
 	
+	<br>
+	
 	<div class="container-lg">
         <div class="row justify-content-center">
-            <div class="col-8 col-md-8">
-                <table class="table table-striped">
+            <div class="col-12 col-md-8">
+                <table class="table">
                     <thead>
                         <tr>
-                            <th scope="col"><input type="checkbox" id="checkAll"></th>
-                            <th scope="col">상품명</th>
-                            <th scope="col">구매수량</th>
-                            <th scope="col">상품가격</th>
+                            <th><input type="checkbox" id="checkAll"></th>
+                            <th>상품명</th>
+                            <th>상품가격</th>
+                            <th>구매수량</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="cartitems">
                         <c:forEach var="cartItem" items="${cartItems}">
                             <tr>
                                 <td><input type="checkbox" id="" class="item-check cartItemId" value="${cartItem.id}" data-total-price="${cartItem.productPrice * cartItem.quantity}"></td>
                                 <td id="productName_${cartItem.id}">${cartItem.productName}</td>
                                 
+			                    <td id="productPrice_${cartItem.id}" data-unit-price="${cartItem.productPrice}">${cartItem.productPrice}</td>
+			                    
 			                    <td>
-	                                <button type="button" class="btn btn-secondary btn-quantity-decrease" value="${cartItem.id}">-</button>
-				                    <input type="number" id="quantity_${cartItem.id}" class="quantity-input" value="${cartItem.quantity}" min="1" readonly>
-				                    <button type="button" class="btn btn-secondary btn-quantity-increase" value="${cartItem.id}">+</button>
+				                    <div class="quantity-container">
+		                                <div class="custom-counter-clickarea btn-quantity-decrease">
+		                                	<input type="hidden" class="decreaseInput" value="${cartItem.id}"/>
+									        <i class="fas fa-minus"></i>
+									    </div>
+									    <input type="number" id="quantity_${cartItem.id}" class="quantity-input" value="${cartItem.quantity}" min="1" readonly>
+									    <div class="custom-counter-clickarea btn-quantity-increase">
+									    	<input type="hidden" class="increaseInput" value="${cartItem.id}"/>
+									        <i class="fas fa-plus"></i>
+									    </div>
+								    </div>
 			                    </td>
 			                    
-			                    <td id="productPrice_${cartItem.id}" data-unit-price="${cartItem.productPrice}">${cartItem.productPrice}</td>
                                 <td>
 	                                <button type="button" id="deleteButton" class="btn btn-outline-danger btn-delete" value="${cartItem.id}">
 	                                	<i class="fa-solid fa-xmark"></i>

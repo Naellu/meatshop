@@ -109,7 +109,7 @@ $(document).ready(function() {
     
     // 수량 증가 버튼
      $('.btn-quantity-increase').click(function() {
-        var cartItemId = $(this).val();
+        var cartItemId = $(this).find('.increaseInput').val();
         var quantityInput = $('#quantity_' + cartItemId);
         var newQuantity = Number(quantityInput.val()) + 1;
         quantityInput.val(newQuantity);
@@ -118,7 +118,7 @@ $(document).ready(function() {
     
     // 수량 감소 버튼
      $('.btn-quantity-decrease').click(function() {
-        var cartItemId = $(this).val();
+        var cartItemId = $(this).find('.decreaseInput').val();
         var quantityInput = $('#quantity_' + cartItemId);
         var newQuantity = Number(quantityInput.val()) - 1;
         if (newQuantity >= 1) {
