@@ -18,6 +18,11 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+		<!-- Spring Security OAuth2 Client -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+		</dependency>
 		<!-- Gson라이브러리 -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
