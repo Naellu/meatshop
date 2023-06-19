@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.*;
 
 import com.example.demo.domain.kakaoLogin.*;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.*;
-
+// 40분 https://www.youtube.com/watch?v=WACDTFroYNI
 @Controller
+@JsonIgnoreProperties(ignoreUnknown=true)
 @RequestMapping("/auth")
 public class KakaoLoginController {
 //	@Value("${kakao.login.client.secret}")
@@ -50,7 +52,6 @@ public class KakaoLoginController {
 			e.printStackTrace();
 		}
 	    System.out.println("카카오 액세스 토큰: " + oauthToken.getAccess_token());
-
 	    RestTemplate rt2 = new RestTemplate();
 
 	    HttpHeaders headers2 = new HttpHeaders();
@@ -65,7 +66,11 @@ public class KakaoLoginController {
 	            kakaoProfileRequest2,
 	            String.class
 	    );
-	    return "카카오 토큰 요청 완료 : 토큰 요청에 대한 응답 : " + response.getBody();
+
+	    KakaoProfile kakaoProfile = new KakaoProfile();
+	    System.out.println("카카오 아이디(번호): " + kakaoProfile.getId());
+//	    System.out.println("카카오 이메일: " + kakaoProfile.getKakao_account().getEmail());
+	    return response2.getBody();
 	}
 
 	
