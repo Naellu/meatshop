@@ -1,3 +1,4 @@
+
 // 문의 답변 내용, 답변 from, 삭제/수정버튼 출력
 function listAnswer(inquiryId) {
 	var adminButton = "#adminButton" + inquiryId;
@@ -5,15 +6,35 @@ function listAnswer(inquiryId) {
 	$.ajax("/product/inquiryAnswer/get?inquiryId=" + inquiryId, {
 		success: function(productAnswer) {
 			const answerTextboxId = "#answerContainer" + inquiryId;
+			const answerEdit = "#answerEdit" + inquiryId;
 			const answer = productAnswer.answer;
 
 			$(answerTextboxId).empty(); // 답변내용 구역 비우고
+			$(answerEdit).empty();
 			if (answer !== undefined) {
 				const answerDiv = `
     				<h5 class="answer-title">관리자 답변</h5>
 				    <div id="answerContent" class="answer-content"><textarea readonly="readonly" class="form-control" rows="5">${answer}</textarea></div>
+				    <br />
+				    
 			`;
+			
+				const answerEditBtn= `
+					<button name="answerDeleteBtn"
+						class="answerDeleteButton btn btn-outline-danger"
+						data-bs-toggle="modal"
+						data-bs-target="#deleteAnswerConfirmModal"
+						data-inquiry-id="${inquiryId}">
+						<i class="fa-regular fa-trash-can" id="answecan"></i>
+					</button>
+					<button name="answerUpdateBtn"
+						class="answerUpdateButton btn btn-outline-secondary"
+						data-inquiry-id="${inquiryId}">
+						<i class="fa-regular fa-pen-to-square"></i>
+					</button>
+				`;
 				$(answerTextboxId).append(answerDiv); // 답변 내용추가
+				$(answerEdit).append(answerEditBtn);
 			}
 		
 			$(".answerDeleteButton").click(function() {

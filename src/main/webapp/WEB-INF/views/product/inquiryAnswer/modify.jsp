@@ -16,14 +16,13 @@
 <body>
  --%>
 <form action="" method="post">
-	<input type="hidden" name="inquiryId" id="inquiryId"
-		value="${productAnswer.inquiryId }" />
+	<input type="hidden" name="inquiryId" id="inquiryId" value="${productAnswer.inquiryId }" />
+	<input type="hidden" name="productId" value="${productInquiry.productId}" /> 
 	<textarea class="form-control" id="bodyTextarea" rows="10"
 		name="answerText">${productAnswer.answer }</textarea>
-	<input type="hidden" name="productId"
-		value="${productInquiry.productId}" /> <input class="btn btn-primary"
-		type="button" id="modifyAnswerBtn" value="수정" />
-	<button class = "btn btn-secondary" type="button" onclick="window.location.reload()">취소</button>
+	<br />
+	<input class="btn btn-outline-primary" type="button" id="modifyAnswerBtn" value="수정" />
+	<button class = "btn btn-outline-secondary" type="button" onclick="window.location.reload()">취소</button>
 </form>
 
 <%--

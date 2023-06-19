@@ -34,62 +34,58 @@
 		<tbody>
 			<c:forEach items="${productInquiryList}" var="inquiry">
 				<tr>
-					<td>${inquiry.customerId} </td>
-					<td>
-						<c:choose>
+					<td>${inquiry.customerId}</td>
+					<td><c:choose>
 							<c:when test="${inquiry.disclosure == true}">
 								<button onclick="listAnswer('${inquiry.inquiryId}')"
-								        style="background-color: #ffffff;" class="accordion-button"
-								        type="button" data-bs-toggle="collapse"
-								        data-bs-target="#collapse${inquiry.inquiryId}"
-								        aria-expanded="false"
-								        aria-controls="collapse${inquiry.inquiryId}">
-								        ${inquiry.inquiryTitle}
-								</button>
+									style="background-color: #ffffff;" class="accordion-button"
+									type="button" data-bs-toggle="collapse"
+									data-bs-target="#collapse${inquiry.inquiryId}"
+									aria-expanded="false"
+									aria-controls="collapse${inquiry.inquiryId}">
+									${inquiry.inquiryTitle}</button>
 							</c:when>
 							<c:otherwise>
 								<c:choose>
 									<c:when test="${inquiry.customerId eq userid}">
 										<button onclick="listAnswer('${inquiry.inquiryId}')"
-									        style="background-color: #ffffff;" class="accordion-button"
-									        type="button" data-bs-toggle="collapse"
-									        data-bs-target="#collapse${inquiry.inquiryId}"
-									        aria-expanded="false"
-									        aria-controls="collapse${inquiry.inquiryId}">
-									        ${inquiry.inquiryTitle}
-										</button>
+											style="background-color: #ffffff;" class="accordion-button"
+											type="button" data-bs-toggle="collapse"
+											data-bs-target="#collapse${inquiry.inquiryId}"
+											aria-expanded="false"
+											aria-controls="collapse${inquiry.inquiryId}">
+											${inquiry.inquiryTitle}</button>
 									</c:when>
 									<c:otherwise>
 										<c:forEach items="${authorities}" var="authority">
-										  <c:choose>
-										    <c:when test="${authority eq 'admin'}">
-										      <button onclick="listAnswer('${inquiry.inquiryId}')"
-										        style="background-color: #ffffff;" class="accordion-button"
-										        type="button" data-bs-toggle="collapse"
-										        data-bs-target="#collapse${inquiry.inquiryId}"
-										        aria-expanded="false"
-										        aria-controls="collapse${inquiry.inquiryId}">
-										        ${inquiry.inquiryTitle}
-										      </button>
-										    </c:when>
-										    <c:otherwise>
-										    </c:otherwise>
-										  </c:choose>
+											<c:choose>
+												<c:when test="${authority eq 'admin'}">
+													<button onclick="listAnswer('${inquiry.inquiryId}')"
+														style="background-color: #ffffff;"
+														class="accordion-button" type="button"
+														data-bs-toggle="collapse"
+														data-bs-target="#collapse${inquiry.inquiryId}"
+														aria-expanded="false"
+														aria-controls="collapse${inquiry.inquiryId}">
+														${inquiry.inquiryTitle}</button>
+												</c:when>
+												<c:otherwise>
+												</c:otherwise>
+											</c:choose>
 										</c:forEach>
 										<sec:authorize access="!hasAuthority('admin')">
-											<button onclick="alert('작성자만 확인 가능합니다.')" 
-										        style="background-color: #ffffff;" class="accordion-button"
-										        type="button" data-bs-toggle="collapse"
-										        aria-expanded="false"
-										        aria-controls="collapse${inquiry.inquiryId}">
-										        <i class="fa-solid fa-lock fa-beat">&nbsp</i>비밀문의입니다.
+											<button onclick="alert('작성자만 확인 가능합니다.')"
+												style="background-color: #ffffff;" class="accordion-button"
+												type="button" data-bs-toggle="collapse"
+												aria-expanded="false"
+												aria-controls="collapse${inquiry.inquiryId}">
+												<i class="fa-solid fa-lock fa-beat">&nbsp</i>비밀문의입니다.
 											</button>
 										</sec:authorize>
 									</c:otherwise>
 								</c:choose>
 							</c:otherwise>
-						</c:choose>
-					</td>
+						</c:choose></td>
 					<td>${inquiry.createdAt}</td>
 				</tr>
 				<tr>
@@ -100,9 +96,9 @@
 							<div class="accordion-body">
 								<div class="mb-3">
 									<h5 class="answer-title">문의 내용</h5>
-					    			<div class="answer-content">
-					    			<textarea readonly="readonly" class="form-control" rows="5">${inquiry.inquiryText}</textarea>
-					    			</div>
+									<div class="answer-content">
+										<textarea readonly="readonly" class="form-control" rows="5">${inquiry.inquiryText}</textarea>
+									</div>
 								</div>
 								<div>
 									<sec:authorize access="isAuthenticated()">
@@ -117,31 +113,23 @@
 												data-bs-target="#deleteInquiryConfirmModal"
 												data-product-id="${product.productId}"
 												data-customer-id="${userid }">삭제</button>
-	
+
 										</c:if>
 									</sec:authorize>
 								</div>
 								<br />
-								<div class="mb-3" id="answerContainer${inquiry.inquiryId }">
+								<div class="mb-3 answerContainers"
+									id="answerContainer${inquiry.inquiryId }">
 									<!-- 답변이 표시될 구역 -->
-
 
 								</div>
 								<!-- 관리자만 보이게 할 예정 -->
 								<div id="adminButton${inquiry.inquiryId }">
 									<sec:authorize access="hasAuthority('admin')">
-										<button name="answerDeleteBtn"
-											class="answerDeleteButton btn btn-outline-danger"
-											data-bs-toggle="modal"
-											data-bs-target="#deleteAnswerConfirmModal"
-											data-inquiry-id="${inquiry.inquiryId}">
-											<i class="fa-regular fa-trash-can" id="answecan"></i>
-										</button>
-										<button name="answerUpdateBtn"
-											class="answerUpdateButton btn btn-outline-secondary"
-											data-inquiry-id="${inquiry.inquiryId}">
-											<i class="fa-regular fa-pen-to-square"></i>
-										</button>
+										<div class="mb-3"
+											id="answerEdit${inquiry.inquiryId }">
+										</div>
+										
 										<div class="mb-3">
 											<br />
 
@@ -263,8 +251,8 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h1 class="modal-title fs-5">댓글 삭제 확인</h1>
-				<button type="button" class="btn-outline-close" data-bs-dismiss="modal"
-					aria-label="Close"></button>
+				<button type="button" class="btn-outline-close"
+					data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">삭제 하시겠습니까?</div>
 			<div class="modal-footer">
