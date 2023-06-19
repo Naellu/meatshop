@@ -1,6 +1,10 @@
 let customerId = $('#customerId').val();
 let roomNumber = $("#roomNumber").val();
 
+if (customerId === 'anonymousUser') {
+	customerId = "guest";
+}
+
 //웹소켓 객체
 let ws;
 
@@ -35,9 +39,9 @@ function wsEvt() {
 				}
 			} else if (serverJson.type === "message") {
 				if (serverJson.sessionId === $("#sessionId").val()) {
-					$("#messageTextArea").append("<div class='me'>" + customerId + "님: " + serverJson.msg + "</div>");
+					$("#messageTextArea").append("<div class='me'>관리자: " + serverJson.msg + "</div>");
 				} else {
-					$("#messageTextArea").append("<div class='admin'>관리자: " + serverJson.msg + "</div>");
+					$("#messageTextArea").append("<div class='admin'>고객님: " + serverJson.msg + "</div>");
 				}
 			} else {
 				console.warn("unknown type!")
@@ -72,5 +76,6 @@ function send() {
 	ws.send(JSON.stringify(data));
 	$('#textMessage').val("");
 }
+
 //초기화
 wsOpen();
