@@ -17,7 +17,6 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public List<ChatRoom> createRoom(String roomName) {
 		boolean isExistingRoom = false;
-
 		for (ChatRoom room : roomList) {
 			if (room.getRoomName().equals(roomName)) {
 				isExistingRoom = true;

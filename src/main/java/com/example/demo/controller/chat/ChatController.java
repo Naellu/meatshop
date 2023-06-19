@@ -24,7 +24,7 @@ public class ChatController {
 
 	@GetMapping("list")
 	public String chat() {
-		return "chat/chatList";
+		return "chat/room";
 	}
 
 	@GetMapping("customer")
@@ -40,10 +40,10 @@ public class ChatController {
 
 	// 방페이지
 	@PreAuthorize("hasAuthority('admin')")
-	@GetMapping("admin/room")
+	@GetMapping("admin/list")
 	public String room(Model model, Authentication authentication) {
 		model.addAttribute("name", authentication.getName());
-		return "admin/chat/room";
+		return "admin/chat/list";
 	}
 
 	// 방 생성하기
@@ -69,7 +69,7 @@ public class ChatController {
 		if (newList != null && newList.size() > 0) {
 			model.addAttribute("roomName", params.get("roomName"));
 			model.addAttribute("roomNumber", params.get("roomNumber"));
-			return "chat/chatList";
+			return "chat/room";
 		} else {
 			return "/";
 		}
@@ -83,9 +83,9 @@ public class ChatController {
 		if (newList != null && newList.size() > 0) {
 			model.addAttribute("roomName", params.get("roomName"));
 			model.addAttribute("roomNumber", params.get("roomNumber"));
-			return "admin/chat/chatList";
+			return "admin/chat/room";
 		} else {
-			return "chat/room";
+			return "chat/list";
 		}
 	}
 }

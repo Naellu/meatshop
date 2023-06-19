@@ -18,6 +18,7 @@
 	padding: 20px;
 	border: 1px solid #888;
 	width: 80%;
+	width: 30%;
 }
 
 #chatmodal > .close {
@@ -33,7 +34,7 @@
 	height: 100%;
 }
 
-.fixed-div {
+#myFooter .fixed-div {
 	position: fixed;
 	bottom: 20px;
 	right: 20px;
@@ -46,17 +47,17 @@
 	align-items: center;
 }
 
-.fixed-div i {
+#myFooter .fixed-div i {
 	color: #333;
 	font-size: 24px;
 	margin-right: 5px;
 }
 
-a {
+#myFooter a {
 	text-decoration: none;
 }
 
-.site-footer {
+#myFooter .site-footer {
 	background-color: #26272b;
 	padding: 20px 0 20px;
 	font-size: 15px;
@@ -64,16 +65,16 @@ a {
 	color: #737373;
 }
 
-.site-footer hr {
+#myFooter .site-footer hr {
 	border-top-color: #bbb;
 	opacity: 0.5
 }
 
-.site-footer hr.small {
+#myFooter .site-footer hr.small {
 	margin: 20px 0
 }
 
-.site-footer h6 {
+#myFooter .site-footer h6 {
 	color: #fff;
 	font-size: 16px;
 	text-transform: uppercase;
@@ -81,38 +82,38 @@ a {
 	letter-spacing: 2px
 }
 
-.site-footer a {
+#myFooter .site-footer a {
 	color: #737373;
 }
 
-.site-footer a:hover {
+#myFooter .site-footer a:hover {
 	color: #3366cc;
 	text-decoration: none;
 }
 
-.footer-links {
+#myFooter .footer-links {
 	padding-left: 0;
 	list-style: none
 }
 
-.footer-links li {
+#myFooter .footer-links li {
 	display: block
 }
 
-.footer-links a {
+#myFooter .footer-links a {
 	color: #737373
 }
 
-.footer-links a:active, .footer-links a:focus, .footer-links a:hover {
+#myFooter .footer-links a:active, .footer-links a:focus, .footer-links a:hover {
 	color: #3366cc;
 	text-decoration: none;
 }
 
-.footer-links.inline li {
+#myFooter .footer-links.inline li {
 	display: inline-block
 }
 
-.site-footer .social-icons {
+#myFooter .site-footer .social-icons {
 	text-align: right
 }
 
