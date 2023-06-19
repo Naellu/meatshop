@@ -4,8 +4,8 @@
 <link rel="stylesheet" href="/css/footer.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <style>
-.modal-content {
-	width: 60%; /* 원하는 가로 크기로 조정 */
+#chatmodal > .modal-content {
+	width: 30%; /* 원하는 가로 크기로 조정 */
 }
 </style>
 <input type="hidden" id="cId" value="<sec:authentication property="name" />" />
@@ -92,9 +92,13 @@
 </footer>
 
 <script type="text/javascript">
+	let cId = $('#cId').val();
+	
 	$(document).ready(function() {
+		
 		$("#fixedDiv").click(function() {
 			$("#chatmodal").css("display", "block");
+			createRoom();
 		});
 
 		$(".close").click(function() {
@@ -102,12 +106,6 @@
 			$("#customerFrame").empty();
 		});
 	});
-
-	let cId = $('#cId').val();
-
-	if (cId === 'anonymousUser') {
-		cId = "guest";
-	}
 
 	window.onload = function() {
 		getRoom();
@@ -156,7 +154,7 @@
 
 	function createChatingRoom(res) {
 		if (res != null) {
-			var tag = "<tr><th class='num'>순서</th><th class='room'>방 이름</th><th class='go'></th></tr>";
+			var tag = "";
 			var existingRNs = []; // 중복된 rn을 체크하기 위한 배열
 
 			var filteredRes = res.filter(function(d) {
@@ -168,17 +166,11 @@
 				var rn = d.roomName.trim();
 				var roomNumber = d.roomNumber;
 
-				// 중복 체크
-				if (existingRNs.includes(rn)) {
-					return; // 중복된 경우 다음 반복으로 넘어감
-				}
-				existingRNs.push(rn); // 중복되지 않은 경우 배열에 추가
-
 				tag += "<tr>" + "<td class='num'>" + (idx + 1) + "</td>"
 						+ "<td class='room'>" + rn + "</td>"
 						+ "<td class='go'>"
 						+ "<button type='button' onclick='goRoom(\""
-						+ roomNumber + "\", \"" + rn + "\")'>참여</button>"
+						+ roomNumber + "\", \"" + rn + "\")'>관리자와채팅하기</button>"
 						+ "</td>" + "</tr>";
 			});
 
