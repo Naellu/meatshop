@@ -82,7 +82,7 @@
 										        type="button" data-bs-toggle="collapse"
 										        aria-expanded="false"
 										        aria-controls="collapse${inquiry.inquiryId}">
-										        <i class="fa-solid fa-lock">비밀문의입니다.</i>
+										        <i class="fa-solid fa-lock fa-beat">&nbsp</i>비밀문의입니다.
 											</button>
 										</sec:authorize>
 									</c:otherwise>
