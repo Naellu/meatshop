@@ -35,8 +35,8 @@
 					<input class="btn btn-primary"  type="submit" value="로그인" />
 				</form>
 				<div>
-					<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=d7f3b956bef7e076113cc3f6f070b65b&redirect_uri=http://localhost:8080/auth/kakao/callback&response_type=code "> <img src="/img/kakao/kakao.png" style="height: 50px">
-					</a>
+				<!-- 	<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=d7f3b956bef7e076113cc3f6f070b65b&redirect_uri=http://localhost:8080/auth/kakao/callback&response_type=code "> <img src="/img/kakao/kakao.png" style="height: 50px">
+					</a> -->
 				</div>
 			</div>
 		</div>

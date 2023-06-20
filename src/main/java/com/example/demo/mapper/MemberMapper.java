@@ -21,7 +21,8 @@ public interface MemberMapper {
 			member_birthday,
 			member_email,
 			member_address,
-			member_phone_number)
+			member_phone_number,
+			oauth)
 			VALUES(
 			#{id},
 			#{password},
@@ -29,7 +30,8 @@ public interface MemberMapper {
 			#{birthday},
 			#{email},
 			#{address},
-			#{phoneNumber}
+			#{phoneNumber},
+			#{oauth}
 			)
 
 						""")

@@ -9,12 +9,16 @@ import org.springframework.stereotype.*;
 
 import com.example.demo.domain.*;
 import com.example.demo.mapper.*;
+import com.example.demo.service.*;
 
 @Component
 public class CustomUserDetailsService implements UserDetailsService{
 
 	@Autowired
 	private MemberMapper mapper;
+	
+	@Autowired
+	private MemberService service;
 	
 	
 	@Override
@@ -41,5 +45,4 @@ public class CustomUserDetailsService implements UserDetailsService{
 		System.out.println(user);
 		return user;
 	}
-	
 }

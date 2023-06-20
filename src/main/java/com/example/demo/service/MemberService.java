@@ -220,4 +220,8 @@ public class MemberService {
 
 	}
 // ------------------------------ 비밀번호 찾기 로직 끝 ----------------------------------	
+	
+	public Members findMember (String id) {
+		return mapper.getMemberId(id);
+	}
 }
