@@ -18,10 +18,10 @@
 <my:commonFont></my:commonFont>
 <title>로그인페이지</title>
 </head>
-<body>
+<body style="min-height: 100vh; display: flex; flex-direction: column;">
 	<my:navBar></my:navBar>
 
-	<div class="container-lg">
+	<div class="container-lg flex-grow-1">
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-8 col-lg-6">
 				<h1>로그인</h1>
@@ -57,7 +57,7 @@
 		</div>
 	</div>
 
-
+<my:footer />
 
 
 
