@@ -119,4 +119,11 @@ public interface ReviewMapper {
 			""")
 	Double ratingSum(Review review);
 
+	@Select("""
+			SELECT product_name
+			FROM products
+			WHERE product_id = #{productId}
+			""")
+	String getproductName(Review review);
+
 }

@@ -97,6 +97,9 @@ public class ReviewService {
 		reviewInfo.put("reviewAvg",reviewAvg );
 		reviewInfo.put("starCount", starCount);
 		
+		String productName = reviewMapper.getproductName(review);
+		reviewInfo.put("productName", productName);
+		
 		
 
 		Map<String, Object> res = new HashMap<>();
