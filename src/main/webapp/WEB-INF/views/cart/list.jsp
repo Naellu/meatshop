@@ -10,72 +10,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>내 장바구니</title>
-<style>
-	#buttonDiv {
-		display: flex;
-		justify-content: center; 
-		align-items: center; 
-		height: 10vh;
-	}
-	.table th:nth-child(2) {
-   	 	width: 40%;
-	}
-	
-	.table th:nth-child(3),
-	.table th:nth-child(4) {
-	    width: 20%;
-	}
-	
-	.table td {
-		padding-top: 30px;
-	}
-	
-	.quantity-input {
-	    width: 40px;
-	    border: none;
-	    text-align: center;
-	}
-	
-	.quantity-input::-webkit-inner-spin-button,
-	.quantity-input::-webkit-outer-spin-button {
-	    -webkit-appearance: none;
-	    margin: 0;
-	}
-	
-	.quantity-input[type="number"] {
-	    -moz-appearance: textfield;
-	}
-	
-	
-	.quantity-container {
-	    display: flex;
-	    border: 1px solid #dcdcdc;
-	    align-items: center;
-	    padding: 0;
-	    box-sizing: border-box; /* 추가 */
-	    max-width: 100px;
-	}
-	
-	.custom-counter-clickarea {
-	    display: inline-block;
-	    width: 30px;
-	    height: 30px;
-	    background-color: #ffffff;
-	    text-align: center;
-	    line-height: 30px;
-	    cursor: pointer;
-	    box-sizing: border-box; /* 추가 */
-	    margin: 0; /* 추가 */
-	    padding: 0; /* 추가 */
-	}
-	
-	.cartitems > tr {
-		margin-top: 10px;
-	}
-
-	
-	
-</style>
+<link rel="stylesheet" href="/css/cart/list.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
