@@ -70,6 +70,7 @@
 						<input id="detailAddress" type="text" class="form-control mb-1" placeholder="상세주소" />
 						<input type="hidden" class="form-control" id="address" name="address" />
 					</div>
+					
 					<c:if test="${empty members.oauth }">
 						<div class="mb-3">
 							<label for="inputPhoneNumber" class="form-label">전화번호</label>
@@ -142,5 +143,6 @@
 	<script src="/js/member/signup.js"></script>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script src="/js/member/address.js"></script>
+	
 </body>
 </html>
