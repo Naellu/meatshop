@@ -32,7 +32,7 @@
 							</span> 
 							<span id="likeNumber${review.reviewId}">${review.likeCount }</span>명에게 도움이되었어요!
 						</p>
-						<p class="order-1 card-text">구매상품: ${review.productId}</p>
+						<p class="order-1 card-text">구매상품: ${reviewInfo.productName}</p>
 					</div>
 
 					<div class="card-body">

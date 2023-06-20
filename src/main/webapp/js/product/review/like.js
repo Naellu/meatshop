@@ -8,7 +8,6 @@ for (var likeIcon of likeIcons) {
 		var likeId = "#likeIcon" + reviewId;
 		var likeNumber = "#likeNumber" + reviewId
 		const data = {reviewId, customerId};
-		console.log(data);
 		
 
 		$.ajax("/product/review/like", {
