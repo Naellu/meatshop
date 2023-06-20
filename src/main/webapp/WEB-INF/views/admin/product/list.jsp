@@ -27,9 +27,9 @@
 	</div>
 
 	<!-- Header-->
-	<my:header>
+	<my:adminHeader>
 		관리자 상품 관리
-	</my:header>
+	</my:adminHeader>
 
 	<div class="container-lg mt-3">
 		<div class="d-flex justify-content-center">

@@ -15,7 +15,7 @@
 <title>회원목록</title>
 </head>
 <body>
-<my:navBar></my:navBar>
+<my:adminNavBar></my:adminNavBar>
 
 <my:alert />
 

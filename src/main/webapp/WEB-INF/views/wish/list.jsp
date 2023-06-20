@@ -15,11 +15,11 @@
 
 	<my:navBar />
 
-	<my:header>
+	<my:mypageHeader>
 		${memberId}님의 찜 목 록
 			<input type="hidden" id="memberId" value="${memberId}" />
 			<input type="hidden" id="bucketUrl" value="${bucketUrl}" />
-	</my:header>
+	</my:mypageHeader>
 
 	<div class="container-lg mt-3">
 		<table id="viewTable" class="table">
