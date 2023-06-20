@@ -7,17 +7,18 @@ import lombok.*;
 @Data
 public class KakaoProfile {
 
-	public Integer id;
-	public String connected_at;
+	public Double id;
 	public Properties properties;
 	public KakaoAccount kakao_account;
 	
 	@Data
+	@JsonIgnoreProperties(ignoreUnknown=true)
 	public class Properties {
 		public String nickname;
 	}
 	
 	@Data
+	@JsonIgnoreProperties(ignoreUnknown=true)
 	public class KakaoAccount {
 		public Boolean profile_needs_agreement;
 		public Boolean has_email;

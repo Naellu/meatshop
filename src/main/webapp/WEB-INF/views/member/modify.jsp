@@ -31,11 +31,14 @@
 						<label class="form-label" for="inputId"> 아이디 </label>
 						<input id="inputId" class="form-control" type="text" name="id" value="${member.id }" readonly />
 					</div>
+					
+					<c:if test="${empty members.oauth }">
 					<div class="mb-3">
 						<label class="form-label" for="inputPassword"> New Password </label>
 						<input id="inputPassword" class="form-control" type="text" name="password" value="" />
 						<div class="form-text">변경하지 않을 시 기존의 패스워드로 설정됩니다.</div>
 					</div>
+					</c:if>
 
 					<div class="mb-3">
 						<label class="form-label" for="inputEmail"> 이메일 </label>

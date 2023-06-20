@@ -1,11 +1,13 @@
 package com.example.demo.domain;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.util.*;
 
-import lombok.Data;
+import lombok.*;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Members {
 	private String id;
 	private String password;
@@ -20,4 +22,7 @@ public class Members {
 	private String oldPassword;
 	private List<String> authority;
 	private String newPassword;
+	
+	// 카카오 여부
+	private String oauth;
 }

@@ -21,7 +21,7 @@
 <body>
 
 	<my:navBar></my:navBar>
-	
+
 	<my:alert />
 
 	<div class="container-lg">
@@ -30,31 +30,33 @@
 				<h3>회원 가입</h3>
 				<form method="post">
 					<!-- .mb-3*5>(label.form-label[for]+input.form-control[name]) -->
-					<div class="mb-3">
-						<label for="inputId" class="form-label">아이디</label>
-						<div class="input-group">
-							<input id="inputId" type="text" class="form-control" name="id" value="${members.id }" />
-							<button class="btn btn-outline-secondary" type="button" id="checkIdBtn">중복확인</button>
+					<c:if test="${empty members.oauth }">
+						<div class="mb-3">
+							<label for="inputId" class="form-label">아이디</label>
+							<div class="input-group">
+								<input id="inputId" type="text" class="form-control" name="id" value="${members.id }" />
+								<button class="btn btn-outline-secondary" type="button" id="checkIdBtn">중복확인</button>
+							</div>
+
+							<div class="d-none form-text text-primary" id="availableIdMessage">
+								<i class="fa-solid fa-check"></i>
+								사용 가능한 ID입니다.
+							</div>
+							<div class="d-none form-text text-danger" id="notAvailableIdMessage">
+								<i class="fa-solid fa-triangle-exclamation"></i>
+								사용 불가능한 ID입니다.
+							</div>
 						</div>
 
-						<div class="d-none form-text text-primary" id="availableIdMessage">
-							<i class="fa-solid fa-check"></i>
-							사용 가능한 ID입니다.
+						<div class="mb-3">
+							<label for="inputName" class="form-label">이름</label>
+							<input id="inputName" type="text" class="form-control" name="name" />
 						</div>
-						<div class="d-none form-text text-danger" id="notAvailableIdMessage">
-							<i class="fa-solid fa-triangle-exclamation"></i>
-							사용 불가능한 ID입니다.
+						<div class="mb-3">
+							<label for="inputbirthday" class="form-label">생일</label>
+							<input id="inputbirthday" type="date" class="form-control" name="birthday" />
 						</div>
-					</div>
-
-					<div class="mb-3">
-						<label for="inputName" class="form-label">이름</label>
-						<input id="inputName" type="text" class="form-control" name="name" />
-					</div>
-					<div class="mb-3">
-						<label for="inputbirthday" class="form-label">생일</label>
-						<input id="inputbirthday" type="date" class="form-control" name="birthday" />
-					</div>
+					</c:if>
 
 					<div class="mb-3">
 						<label for="inputAddress" class="form-label">주소</label>
@@ -68,60 +70,61 @@
 						<input id="detailAddress" type="text" class="form-control mb-1" placeholder="상세주소" />
 						<input type="hidden" class="form-control" id="address" name="address" />
 					</div>
-
-					<div class="mb-3">
-						<label for="inputPhoneNumber" class="form-label">전화번호</label>
-						<input id="inputPhoneNumber" type="text" class="form-control" name="phoneNumber" />
-					</div>
-
-					<div class="mb-3">
-						<label for="inputPassword" class="form-label">패스워드</label>
-						<input id="inputPassword" type="password" class="form-control" name="password" />
-					</div>
-
-					<div class="mb-3">
-						<label for="inputPasswordCheck" class="form-label">패스워드 확인</label>
-						<input id="inputPasswordCheck" type="password" class="form-control" />
-
-						<div id="passwordSuccessText" class="d-none form-text text-primary">
-							<i class="fa-solid fa-check"></i>
-							패스워드가 일치 합니다.
+					<c:if test="${empty members.oauth }">
+						<div class="mb-3">
+							<label for="inputPhoneNumber" class="form-label">전화번호</label>
+							<input id="inputPhoneNumber" type="text" class="form-control" name="phoneNumber" />
 						</div>
 
-						<div id="passwordFailText" class="d-none form-text text-danger">
-							<i class="fa-solid fa-triangle-exclamation"></i>
-							패스워드가 일치하지 않습니다.
+						<div class="mb-3">
+							<label for="inputPassword" class="form-label">패스워드</label>
+							<input id="inputPassword" type="password" class="form-control" name="password" />
 						</div>
-					</div>
 
-					<div class="form-group email-form">
-						<label for="email">이메일</label>
-						<div class="input-group mb-3">
-							<input type="text" class="form-control" name="userEamil1" id="userEmail1" placeholder="이메일">
-							<select class="form-control me-3" name="userEmail2" id="userEmail2">
-								<option value="@naver.com">@naver.com</option>
-								<option value="@daum.net">@daum.net</option>
-								<option value="@gmail.com">@gmail.com</option>
-							</select>
-							<input id="emailInput" name="email" type="hidden" />
-							<div class="input-group-addon">
-								<button type="button" class="btn btn-primary" id="mail-Check-Btn">본인인증</button>
+						<div class="mb-3">
+							<label for="inputPasswordCheck" class="form-label">패스워드 확인</label>
+							<input id="inputPasswordCheck" type="password" class="form-control" />
+
+							<div id="passwordSuccessText" class="d-none form-text text-primary">
+								<i class="fa-solid fa-check"></i>
+								패스워드가 일치 합니다.
+							</div>
+
+							<div id="passwordFailText" class="d-none form-text text-danger">
+								<i class="fa-solid fa-triangle-exclamation"></i>
+								패스워드가 일치하지 않습니다.
 							</div>
 						</div>
-						<div class="d-none form-text text-primary" id="availableEmailMessage">
-							<i class="fa-solid fa-check"></i>
-							사용 가능한 이메일입니다.
+
+						<div class="form-group email-form">
+							<label for="email">이메일</label>
+							<div class="input-group mb-3">
+								<input type="text" class="form-control" name="userEamil1" id="userEmail1" placeholder="이메일">
+								<select class="form-control me-3" name="userEmail2" id="userEmail2">
+									<option value="@naver.com">@naver.com</option>
+									<option value="@daum.net">@daum.net</option>
+									<option value="@gmail.com">@gmail.com</option>
+								</select>
+								<input id="emailInput" name="email" type="hidden" />
+								<div class="input-group-addon">
+									<button type="button" class="btn btn-primary" id="mail-Check-Btn">본인인증</button>
+								</div>
+							</div>
+							<div class="d-none form-text text-primary" id="availableEmailMessage">
+								<i class="fa-solid fa-check"></i>
+								사용 가능한 이메일입니다.
+							</div>
+							<div class="d-none form-text text-danger" id="notAvailableEmailMessage">
+								<i class="fa-solid fa-triangle-exclamation"></i>
+								사용 불가능한 이메일입니다.
+							</div>
+							<div class="mail-check-box mb-3">
+								<label>인증번호확인</label>
+								<input class="form-control mail-check-input" placeholder="인증번호 2자리를 입력해주세요!" maxlength="6" id="mailconfirm">
+							</div>
+							<div id="emailconfirmTxt mb-3"></div>
 						</div>
-						<div class="d-none form-text text-danger" id="notAvailableEmailMessage">
-							<i class="fa-solid fa-triangle-exclamation"></i>
-							사용 불가능한 이메일입니다.
-						</div>
-						<div class="mail-check-box mb-3">
-							<label>인증번호확인</label>
-							<input class="form-control mail-check-input" placeholder="인증번호 2자리를 입력해주세요!" maxlength="6" id="mailconfirm">
-						</div>
-						<div id="emailconfirmTxt mb-3"></div>
-					</div>
+					</c:if>
 					<div>
 						<input id="signupSubmit" type="submit" class="btn btn-primary" value="가입" disabled />
 					</div>
@@ -130,7 +133,7 @@
 		</div>
 	</div>
 
-<my:footer/>
+	<my:footer />
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<!-- 부트 스트랩 -->
