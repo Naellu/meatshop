@@ -215,29 +215,34 @@ public class MemberController {
 		return userId;
 	}
 	// ------------------------------ 아이디 찾기 로직 끝 ----------------------------------	
-	
+	// ------------------------------ 비밀번호 찾기 로직 시작 ----------------------------------
 	@GetMapping("searchPassword")
 	public void findPassword() {
 		
 	}
 	
-	@PostMapping("searchPassword")
-	public void searchPassword(@RequestParam("email") String email,@RequestParam("birthday") String birthday) {
+	
+	@PostMapping("/searchPassword")
+@ResponseBody
+	public String searchPassword(@RequestParam("email") String email,@RequestParam("birthday") String birthday) {
 		
 		String tempPwd = service.searchPassword(email, birthday);
-		
-		// email 보내는 서비스 쓸것
+		if(tempPwd == "false") {
+			return "false";
+		}
+		System.out.println(birthday);
 		try {
 			mailService.sendTempPwd(email, tempPwd);
 		} catch (UnsupportedEncodingException | MessagingException e) {
 			e.printStackTrace();
 		}
 		
+		// email 보내는 서비스 쓸것
 		System.out.println(tempPwd + "controller");
-		
-		return;
-	}
+		return "success";
 	
+	}
+//	------------------------------ 아이디 찾기 로직 끝 ----------------------------------
 	
 	
 	

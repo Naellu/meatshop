@@ -174,47 +174,34 @@ public class MemberService {
 		return mapper.getMemberId(email);
 	}
 // ----------------------------------------------------------------------------------------------------
-
+//	------------------------------ 비밀번호 찾기 로직 ----------------------------------
 	public String searchPassword(String email, String birthday) {
 		// DB에서 이메일과 생일을 확인하여 일치하는 사용자가 있는지 검증하는 로직
 		// 일치하면 true, 일치하지 않으면 false 반환
-		boolean a = mapper.findPassword(email, birthday);
+		String a = mapper.findPassword(email, birthday);
 		System.out.println(a + "service");
 		System.out.println(email);
 		System.out.println(birthday);
 		
-		if (a == true) {
+		if (a != null && a.length() >= 1) {
 			String newPassword = generateRandomPassword(); //새로운 비밀번호 생성
-			
-			
-			
+				
 			Integer x = mapper.updatePassword(passwordEncoder.encode(newPassword), email, birthday); // 새로운 비밀번호 암호화
 			System.out.println(newPassword);
 			System.out.println(x);
 			return newPassword;
-			
-			// 사용자가 입력한 이메일,생년월일 같으면 새로운 패스워드 새로 생성, 변경까지 완료
-			// 생성한 패스워드 암호화까지는 완료함 
-			
-			// 암호화 하기 전 패스워드 메일로 클라이언트에게 쏴줄것
-			// else 부분 마무리 하기 사용자가 잘못된 이메일,생년월일 입력하면 오류코드뜸
-			
-			
-			
 
+			// else 부분 마무리 하기 사용자가 잘못된 이메일,생년월일 입력하면 오류코드뜸
+	
 		} else {
 			// Handle the case when a is false
-			return null;
-		}
-
-		
+			return "false";
+		}	
 	}
-
-
 	//비밀번호 재설정 로직
 	public String generateRandomPassword() {
 		// Define the characters that can be used in the password
-		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 		// Set the desired length of the password
 		int length = 8;
@@ -232,4 +219,5 @@ public class MemberService {
 		return sb.toString();
 
 	}
+// ------------------------------ 비밀번호 찾기 로직 끝 ----------------------------------	
 }

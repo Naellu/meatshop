@@ -210,7 +210,7 @@ public interface MemberMapper {
 		
 			 """)
 	
-	boolean findPassword(String email, String birthday);
+	String findPassword(String email, String birthday);
 	
 	
 	@Update("""
