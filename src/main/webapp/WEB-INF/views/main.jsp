@@ -15,7 +15,7 @@
 <body>
 	<input type="hidden" id="bucketUrl" value="${bucketUrl}" />
 
-	<my:navBar />
+	<my:nonMarginNavBar />
 
 	<my:alert />
 

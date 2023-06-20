@@ -53,9 +53,9 @@
 	<my:alert />
 	
 	<!-- Header-->
-	<my:header>
+	<my:adminHeader>
 		관리자 주문 관리
-	</my:header>
+	</my:adminHeader>
 	
 	<br>
 	

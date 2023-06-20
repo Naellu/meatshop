@@ -52,9 +52,9 @@ input {
 <body>
 	<my:adminNavBar />
 
-	<my:header>
+	<my:adminHeader>
 		채팅
-	</my:header>
+	</my:adminHeader>
 
 	<div id="container" class="container mx-auto">
 		<div id="messageTextArea" class="chating"></div>

@@ -1,12 +1,17 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <!-- Header-->
-<header class="bg-dark py-5">
+<header class="bg-dark py-5" 
+	style="background-image: url('/img/product/list/close-up-of-raw-steak-pieces-garnished-with-salt-and-herbs.jpg'); 
+			background-size: cover; 
+			background-position: center;
+			height: 40vh">
 	<div class="container px-4 px-lg-5 my-5">
 		<div class="text-center text-white">
-			<h1 class="display-4 fw-bolder"><jsp:doBody/></h1>
-			<p class="lead fw-normal text-white-50 mb-0">Nice To Meat You!</p>
+			<h1 class="display-4 fw-bolder" style="text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.45)"><jsp:doBody/></h1>
+			<p class="lead fw-normal text-white-50 mb-0"></p>
 		</div>
 	</div>
 </header>

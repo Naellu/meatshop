@@ -62,11 +62,11 @@
 
 	<my:navBar></my:navBar>
 
-	<my:header>
+	<my:mypageHeader>
 		${memberId}님의 주문목록
 			<input type="hidden" id="memberId" value="${memberId}" />
 		<!-- <input type="hidden" id="bucketUrl" value="${bucketUrl}" />  -->
-	</my:header>
+	</my:mypageHeader>
 
 	<br>
 

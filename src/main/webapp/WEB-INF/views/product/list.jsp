@@ -12,7 +12,7 @@
 <title>상품목록</title>
 </head>
 <body>
-	<my:navBar />
+	<my:nonMarginNavBar />
 
 	<my:alert />
 

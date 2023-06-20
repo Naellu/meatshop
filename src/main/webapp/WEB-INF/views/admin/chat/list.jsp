@@ -16,9 +16,9 @@
 <body>
 	<my:adminNavBar/>
 	
-	<my:header>
+	<my:adminHeader>
 		채 팅 목 록
-	</my:header>
+	</my:adminHeader>
 	
 	<input type="hidden" id="customerId" value="${name }" />
 	<div class="container">
