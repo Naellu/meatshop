@@ -58,7 +58,7 @@ function listView() {
 				<div class="col mb-5">
 						<div class="card h-100">
 							<div>
-								<img class="card-img-top" src="${bucketUrl}/product/1.png" alt="사진준비중!" />
+								<img class="card-img-top" src="${bucketUrl}/product/${product.productId}/main.png" alt="사진준비중!" />
 								<i class="${starShape} fa-star fa-2x wish-icon" style="position: absolute; top: 0; right: 0;" data-productid="${product.productId}"></i>
 							</div>
 							<div class="card-body p-4">

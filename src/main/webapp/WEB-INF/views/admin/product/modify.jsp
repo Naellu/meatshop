@@ -39,7 +39,7 @@
 									</label>
 								</div>
 								<div class="mb-3">
-									<img class="img-thumbnail img-fluid " src="${bucketUrl}/product/1.png" " alt="${fileName}" />
+									<img class="img-thumbnail img-fluid " src="${bucketUrl}/product/${product.productId}/${fileName}" alt="${fileName}" />
 								</div>
 							</c:forEach>
 						</div>
@@ -52,9 +52,9 @@
 						<div class="mb-3">
 							<label for="" class="form-label">원산지</label>
 							<select class="form-select" aria-label="Default select example" name="countryOfOrigin">
-								<option value="원산지1" ${product.countryOfOrigin eq '원산지1' ? 'selected' : '' }>원산지1</option>
-								<option value="원산지2" ${product.countryOfOrigin eq '원산지2' ? 'selected' : '' }>원산지2</option>
-								<option value="원산지3" ${product.countryOfOrigin eq '원산지3' ? 'selected' : '' }>원산지3</option>
+								<option value="국내산" ${product.countryOfOrigin eq '국내산' ? 'selected' : '' }>국내산</option>
+								<option value="미국산" ${product.countryOfOrigin eq '미국산' ? 'selected' : '' }>미국산</option>
+								<option value="호주산" ${product.countryOfOrigin eq '호주산' ? 'selected' : '' }>호주산</option>
 							</select>
 						</div>
 

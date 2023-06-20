@@ -37,8 +37,7 @@
 					<div class="mb-3">
 						<c:forEach items="${product.fileName}" var="fileName">
 							<div>
-								<img alt="사진준비중" src="${bucketUrl}/product/1.png">
-								<%-- <img class="img-thumbnail img-fluid " src="${bucketUrl}/product/${product.productId}/${fileName}" alt="${fileName}" /> --%>
+								<img class="img-thumbnail img-fluid " src="${bucketUrl}/product/${product.productId}/${fileName}" alt="${fileName}" />
 							</div>
 						</c:forEach>
 					</div>

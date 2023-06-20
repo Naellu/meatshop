@@ -29,7 +29,7 @@ function listView() {
 				<div class="col mb-5">
 					<div class="card h-100">
 						<div>
-							<img class="card-img-top" src="${bucketUrl}/product/1.png" alt="사진준비중!" />
+							<img class="card-img-top" src="${bucketUrl}/product/${product.productId}/main.png" alt="사진준비중!" />
 						</div>
 						<div class="card-body p-4">
 							<div class="text-center">
