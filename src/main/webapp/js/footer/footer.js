@@ -64,7 +64,6 @@ function goRoom(number, name) {
 function createChatingRoom(res) {
 	if (res != null) {
 		var tag = "";
-		var existingRNs = []; // 중복된 rn을 체크하기 위한 배열
 
 		var filteredRes = res.filter(function(d) {
 			// 필터링 조건을 여기에 작성합니다
@@ -72,7 +71,7 @@ function createChatingRoom(res) {
 		});
 
 		filteredRes
-			.forEach(function(d, idx) {
+			.forEach(function(d) {
 				var rn = d.roomName.trim();
 				var roomNumber = d.roomNumber;
 

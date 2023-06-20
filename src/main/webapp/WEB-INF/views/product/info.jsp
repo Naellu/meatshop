@@ -52,7 +52,7 @@
 		<div class="container-lg px-4 px-lg-5 text-white">
 			<div class="row gx-4 gx-lg-5 align-items-center">
 				<div class="col">
-					<img class="card-img-top mb-5 mb-md-0" src="/img/product/2.png" alt="" width="600" height="600" />
+					<img class="card-img-top mb-5 mb-md-0" src="${bucketUrl}/product/${product.productId}/main.png" alt="" width="600" height="600" />
 				</div>
 				<div class="col-md-6">
 					<div class="small mb-1">상품번호 - ${product.productId}</div>

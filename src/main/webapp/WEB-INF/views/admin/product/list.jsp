@@ -99,8 +99,7 @@
 					<tr>
 						<td>${product.productId }</td>
 						<td>
-							<img alt="사진준비중" src="${bucketUrl}/product/1.png" width="100" height="100">
-							<!-- <img alt="사진준비중" src="${bucketUrl}/product/${product.productId}/main.png" width="100" height="100"> -->
+							<img alt="사진준비중" src="${bucketUrl}/product/${product.productId}/main.png" width="100" height="100">
 						</td>
 						<td>${product.productName}</td>
 						<td>${product.countryOfOrigin}</td>

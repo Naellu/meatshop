@@ -36,9 +36,9 @@
 						<div class="mb-3">
 							<label for="" class="form-label">원산지</label>
 							<select class="form-select" aria-label="Default select example" name="countryOfOrigin">
-								<option value="원산지1">원산지1</option>
-								<option value="원산지2">원산지2</option>
-								<option value="원산지3">원산지3</option>
+								<option value="국내산">국내산</option>
+								<option value="미국산">미국산</option>
+								<option value="호주산">호주산</option>
 							</select>
 						</div>
 
