@@ -27,6 +27,25 @@
 		text-align: center;
 	    font-weight: 800;
 	}
+	.product-item {
+	display: flex;
+	align-items: center;
+	}
+	
+	.product-image {
+		max-width: 80px;
+		max-height: 80px;
+		margin-right: 10px;
+	}
+	
+	.product-name {
+		margin: 0;
+	}
+	
+	.table td {
+	    vertical-align: middle;
+	}
+	
 </style>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -52,15 +71,20 @@
 			                <th>수량</th>
 			            </tr>
 			        </thead>
-			        <tbody>
+			        <tbody class="table-group-divider">
 		        		<c:forEach var="orderItemDto" varStatus="status" items="${orderItemDtos}">
 				          <tr>
-				              <td>${productNames[status.index] }</td>
+				              <td>
+				              	<div class="product-item">
+					              <img class="card-img-top mb-5 mb-md-0 product-image" src="${bucketUrl}/product/${orderItemDto.productId }/main.png" alt=""/>
+					              <p class="product-name">${productNames[status.index] }</p>
+				              	</div>
+				              </td>
 				              <td><fmt:formatNumber value="${orderItemDto.price}" pattern="#,###"/></td>
 				              <td>${orderItemDto.quantity }</td>
 			              		<td>
 									<input type="hidden" name="memberId" value="${orderItemDto.memberId }" />
-			                        <input type="hidden" id="productId" name="productId" value="${orderItemDto.productId}" />
+			                        <input type="hidden" id="productId" name="productId" value="${orderItemDto.productId }" />
 				                    <input type="hidden" id="quantity" name="quantity" value="${orderItemDto.quantity }" />
 				                    <input type="hidden" id="price" name="price" value="${orderItemDto.price }" />
 				                    <input type="hidden" id="fromCart" name="fromCart" value="${orderItemDto.fromCart }" />

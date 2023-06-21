@@ -24,8 +24,12 @@
 	text-align: left;
 }
 
+.table td {
+    vertical-align: middle;
+}
+	
 .accordion-button {
-	padding: 0 !important;
+	padding: 24px 0px !important;
 }
 
 .accordion-body {
@@ -43,6 +47,20 @@
 #statusCount {
 	width: fit-content; /* 요소의 너비를 내용에 맞게 조절합니다. */
 	margin: 0 auto; /* 좌우 마진을 자동으로 설정하여 가운데 정렬합니다. */
+}
+.product-item {
+	display: flex;
+	align-items: center;
+}
+
+.product-image {
+	max-width: 80px;
+	max-height: 80px;
+	margin-right: 10px;
+}
+
+.product-name {
+	margin: 0;
 }
 </style>
 <title>내 주문목록</title>
@@ -76,8 +94,6 @@
 
 	<div class="container-lg">
 		<div class="row justify-content-center">
-
-
 			<div class="col">
 				<table class="table">
 					<thead>
@@ -95,14 +111,17 @@
 								<td>${order.id }</td>
 								<td><c:choose>
 										<c:when test="${fn:length(order.productName) == 1}">
-											<p>${order.productName[0]}
-												<c:if test="${order.status != 'CANCEL' }">
-													<button class="btn btn-outline-primary" type="button"
-														name="addReviewButtons"
-														data-product-id="${order.productIds[0] }"
-														data-customer-id="${memberId }">리뷰쓰기</button>
-												</c:if>
-											</p>
+											<div class="product-item">
+												<img class="card-img-top mb-5 mb-md-0 product-image" src="${bucketUrl}/product/${order.productIds[0] }/main.png" alt=""/>
+													<p class="product-name">${order.productName[0]}
+														<c:if test="${order.status != 'CANCEL' }">
+															<button class="btn btn-outline-primary" type="button"
+																name="addReviewButtons"
+																data-product-id="${order.productIds[0] }"
+																data-customer-id="${memberId }">리뷰쓰기</button>
+														</c:if>
+													</p>
+											</div>
 										</c:when>
 										<c:otherwise>
 											<div class="accordion accordion-flush"
@@ -115,7 +134,7 @@
 															data-bs-target="#collapseOne${order.id}"
 															aria-expanded="true"
 															aria-controls="collapseOne${order.id}">
-															${order.productName[0]}외
+															${order.productName[0]} 외
 															${fn:length(order.productName)-1}건</button>
 													</div>
 													<div id="collapseOne${order.id}"
@@ -124,7 +143,9 @@
 														data-bs-parent="#accordion${order.id}">
 														<div class="accordion-body">
 															<c:forEach begin="0" end="${fn:length(order.productName)-1}" var="i">
-																<p>${order.productName[i]}
+															<div class="product-item">
+																<img class="card-img-top mb-5 mb-md-0 product-image" src="${bucketUrl}/product/${order.productIds[i] }/main.png" alt=""/>
+																<p class="product-name">${order.productName[i]}
 																	<c:if test="${order.status != 'CANCEL' }">
 																		<button class="btn btn-outline-primary" type="button"
 																			name="addReviewButtons"
@@ -132,6 +153,7 @@
 																			data-customer-id="${memberId }">리뷰쓰기</button>
 																	</c:if>
 																</p>
+															</div>
 															</c:forEach>
 														</div>
 													</div>
