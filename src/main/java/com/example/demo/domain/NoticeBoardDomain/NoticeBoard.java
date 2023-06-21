@@ -18,6 +18,6 @@ public class NoticeBoard {
 	private List<String> fileName;
 	
 	public String getInserted() {
-		return inserted.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		return inserted.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	}
 }
