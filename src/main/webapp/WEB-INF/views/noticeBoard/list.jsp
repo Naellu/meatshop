@@ -46,7 +46,6 @@
 			</c:forEach>
 		</div>
 	</div>
-	<!-- /.container -->
 
 	<%-- 	<a href="/noticeBoard/id/${nboard.id }"> ${nboard.title } </a>
 		<p class="title">${nboard.writer }</p>
