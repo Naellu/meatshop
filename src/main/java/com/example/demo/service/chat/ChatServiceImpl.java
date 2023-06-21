@@ -1,6 +1,7 @@
 package com.example.demo.service.chat;
 
 import java.util.*;
+import java.util.stream.*;
 
 import org.springframework.stereotype.*;
 
@@ -39,7 +40,7 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public List<ChatRoom> getChatRoomsByRoomNumber(int roomNumber) {
+	public List<ChatRoom> getChatRoomsByRoomNumber(Integer roomNumber) {
 		List<ChatRoom> newList = new ArrayList<>();
 		for (ChatRoom room : roomList) {
 			if (room.getRoomNumber() == roomNumber) {
@@ -47,5 +48,16 @@ public class ChatServiceImpl implements ChatService {
 			}
 		}
 		return newList;
+	}
+
+	@Override
+	public void removeRoom(int roomNumber) {
+		Iterator<ChatRoom> iterator = roomList.iterator();
+		while (iterator.hasNext()) {
+			ChatRoom room = iterator.next();
+			if (room.getRoomNumber() == roomNumber) {
+				iterator.remove();
+			}
+		}
 	}
 }

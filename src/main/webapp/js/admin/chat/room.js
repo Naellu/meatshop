@@ -6,7 +6,6 @@ if (customerId === 'anonymousUser') {
 
 window.onload = function() {
 	getRoom();
-	createRoom();
 }
 
 function getRoom() {
@@ -15,21 +14,8 @@ function getRoom() {
 	});
 }
 
-function createRoom() {
-	$("#createRoom").click(function() {
-		var msg = {
-			roomName: customerId
-		};
-
-		commonAjax('/chat/createRoom', msg, 'post', function(result) {
-			createChatingRoom(result);
-		});
-
-	});
-}
-
 function goRoom(number, name) {
-	location.href = "/chat/admin/moveChating?roomName=" + name + "&" + "roomNumber=" + number;
+		location.href = "/chat/admin/moveChating?roomName=" + name + "&" + "roomNumber=" + number;
 }
 
 function createChatingRoom(res) {

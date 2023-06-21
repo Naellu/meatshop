@@ -6,48 +6,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style type="text/css">
-.me {
-	color: ForestGreen;
-}
-
-.admin {
-	color: red;
-}
-
-* {
-	margin: 0;
-	padding: 0;
-}
-
-.container {
-	width: 500px;
-	margin: 0 auto;
-	padding: 25px
-}
-
-.chating {
-	background-color: #000;
-	width: 500px;
-	height: 500px;
-	overflow: auto;
-}
-
-.chating p {
-	color: #fff;
-	text-align: left;
-}
-
-input {
-	width: 330px;
-	height: 25px;
-}
-</style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="/css/admin/chatroom.css">
 </head>
 <body>
 	<my:adminNavBar />

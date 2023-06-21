@@ -2,6 +2,7 @@ package com.example.demo.controller.chat;
 
 import java.util.*;
 
+import org.springframework.http.*;
 import org.springframework.security.access.prepost.*;
 import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
@@ -28,13 +29,7 @@ public class ChatController {
 	}
 
 	@GetMapping("customer")
-	public String customerChat(Model model, Authentication authentication) {
-		if (authentication == null) {
-			model.addAttribute("name", "guest");
-		} else {
-			model.addAttribute("name", authentication.getName());
-		}
-
+	public String customerChat() {
 		return "chat/customer";
 	}
 
@@ -51,6 +46,9 @@ public class ChatController {
 	@ResponseBody
 	public List<ChatRoom> createRoom(@RequestParam HashMap<Object, Object> params) {
 		String roomName = (String) params.get("roomName");
+		if (roomName.equals("anonymousUser")) {
+			return null;
+		}
 		return chatService.createRoom(roomName);
 	}
 
@@ -62,9 +60,8 @@ public class ChatController {
 	}
 
 	@GetMapping("moveChating")
-	public String chating(Model model, @RequestParam HashMap<Object, Object> params) {
+	public String Chating(Model model, @RequestParam HashMap<Object, Object> params) {
 		int roomNumber = Integer.parseInt((String) params.get("roomNumber"));
-		log.info("요청옴!!!");
 		List<ChatRoom> newList = chatService.getChatRoomsByRoomNumber(roomNumber);
 		if (newList != null && newList.size() > 0) {
 			model.addAttribute("roomName", params.get("roomName"));
@@ -77,7 +74,7 @@ public class ChatController {
 
 	@GetMapping("admin/moveChating")
 	@PreAuthorize("hasAuthority('admin')")
-	public String adminchating(Model model, @RequestParam HashMap<Object, Object> params) {
+	public String adminChating(Model model, @RequestParam HashMap<Object, Object> params) {
 		int roomNumber = Integer.parseInt((String) params.get("roomNumber"));
 		List<ChatRoom> newList = chatService.getChatRoomsByRoomNumber(roomNumber);
 		if (newList != null && newList.size() > 0) {
@@ -85,7 +82,15 @@ public class ChatController {
 			model.addAttribute("roomNumber", params.get("roomNumber"));
 			return "admin/chat/room";
 		} else {
-			return "chat/list";
+			return "redirect:/chat/admin/list";
 		}
 	}
+
+	@ResponseStatus(HttpStatus.OK)
+	@PostMapping("deleteRoom")
+	@ResponseBody
+	public void deleteRoom(@RequestParam int roomNumber) {
+		chatService.removeRoom(roomNumber);
+	}
+
 }
