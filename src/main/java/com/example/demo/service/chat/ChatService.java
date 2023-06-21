@@ -10,6 +10,8 @@ public interface ChatService {
 
 	List<ChatRoom> getRoom();
 
-	List<ChatRoom> getChatRoomsByRoomNumber(int roomNumber);
+	List<ChatRoom> getChatRoomsByRoomNumber(Integer roomNumber);
+
+	void removeRoom(int roomNumber);
 
 }

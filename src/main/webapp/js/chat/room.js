@@ -1,9 +1,5 @@
 let customerId = $('#customerId').val();
 
-if (customerId === 'anonymousUser') {
-	customerId = "guest";
-}
-
 window.onload = function() {
 	getRoom();
 	createRoom();

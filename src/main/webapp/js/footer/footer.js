@@ -18,24 +18,26 @@ $(".close").click(function() {
 	$("#customerFrame").empty();
 });
 
-window.onload = function() {
-	getRoom();
-	createRoom();
-}
-
-function getRoom() {
-	commonAjax('/chat/getRoom', "", 'post', function(result) {
-		createChatingRoom(result);
-	});
-}
-
 function createRoom() {
 	var msg = {
 		roomName: cId
 	};
 
-	commonAjax('/chat/createRoom', msg, 'post', function(result) {
-		createChatingRoom(result);
+	$.ajax({
+		url: "/chat/customer",
+		type: "GET",
+		success: function(response) {
+			$(".chatcontainer").html(response);
+
+			commonAjax('/chat/createRoom', msg, 'post', function(result) {
+				createChatingRoom(result);
+			});
+		},
+		error: function() {
+			// Ajax 요청이 실패했을 때의 처리
+			window.location.href = "/";
+			alert("문제가 발생했습니다. 관리자에게 문의해주세요");
+		}
 	});
 }
 
@@ -105,3 +107,4 @@ function commonAjax(url, parameter, type, calbak, contentType) {
 		}
 	});
 }
+

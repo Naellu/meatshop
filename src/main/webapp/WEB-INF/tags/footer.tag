@@ -22,12 +22,9 @@
 	<div id="chatmodal" class="modal">
 		<div class="modal-content">
 			<div class="chatcontainer">
-				<div id="roomContainer" class="roomContainer">
-					<table id="roomList" class="roomList mx-auto"></table>
-				</div>
 			</div>
 			<iframe id="customerFrame" frameborder="0"></iframe>
-			<button class="close btn btn-danger">닫기</button>
+			<button id="chatCloseBtn" class="close btn btn-danger">닫기</button>
 		</div>
 	</div>
 
@@ -89,4 +86,5 @@
 </div>
 
 <script src="/js/footer/footer.js"></script>
+
 

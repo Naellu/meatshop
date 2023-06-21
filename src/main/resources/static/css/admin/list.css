@@ -21,16 +21,16 @@
 }
 
 .roomList th {
-	border: 1px solid #FFBB00;
+	border: 1px solid black;
 	background-color: #fff;
-	color: #FFBB00;
+	color: black;
 }
 
 .roomList td {
-	border: 1px solid #FFBB00;
+	border: 1px solid black;
 	background-color: #fff;
 	text-align: left;
-	color: #FFBB00;
+	color: black;
 }
 
 .roomList .num {
