@@ -14,13 +14,48 @@
 </head>
 <body>
 	<my:navBar current="nbList" />
-
-	
 	<div class="container-lg">
-	<sec:authorize access="hasAuthority('admin')">
-		<button type="button" class="btn btn-primary" onclick="location.href='/noticeBoard/add'">공지사항 작성</button>
-	</sec:authorize>
+		<sec:authorize access="hasAuthority('admin')">
+			<button type="button" class="btn btn-primary" onclick="location.href='/noticeBoard/add'">공지사항 작성</button>
+		</sec:authorize>
+		<div class="team-grid">
+			<div class="container">
+				<div class="intro">
+					<h2 class="text-center">공지사항</h2>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Page Content -->
+	<div class="container">
+		<div class="row">
+			<!-- Team Member 1 -->
+			<c:forEach items="${noticeBoardList }" var="nboard">
+				<div class="col-xl-3 col-md-6 mb-4">
+					<div class="card border-0 shadow">
+						<!-- <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="..."> -->
+						<div class="card-body text-center">
+							<h5 class="card-title mb-0">
+								<a href="/noticeBoard/id/${nboard.id }" style="text-decoration: none"> ${nboard.title } </a>
+							</h5>
+							<div class="card-text text-black-50">${nboard.inserted }</div>
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+	</div>
+	<!-- /.container -->
+
+	<%-- 	<a href="/noticeBoard/id/${nboard.id }"> ${nboard.title } </a>
+		<p class="title">${nboard.writer }</p>
+		<p class="title">${nboard.inserted }</p>
+		</div> --%>
+
+	<%-- 	<div class="container-lg">
 		<!-- table.table>thead>tr>th*4^^tbody -->
+
 		<table class="table">
 			<thead>
 				<tr>
@@ -41,7 +76,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
-	</div>
+	</div> --%>
 
 	<div class="container-lg">
 		<div class="row">
@@ -74,9 +109,9 @@
 			</nav>
 		</div>
 	</div>
-	
-	<my:footer/>
-	
+
+	<my:footer />
+
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
