@@ -17,10 +17,60 @@
 <!-- 부트 스트랩 -->
 <my:commonFont></my:commonFont>
 <title>로그인페이지</title>
+<style>
+body {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background-color: #f8f9fa;
+}
+
+.container-lg {
+	flex-grow: 1;
+}
+
+.row {
+	margin-top: 20px;
+}
+
+h1 {
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.form-label {
+	font-weight: bold;
+}
+
+.btn-primary {
+	background-color: #007bff;
+	border-color: #007bff;
+	width: 100%;
+	max-width: 100px;
+}
+
+.btn-primary:hover {
+	background-color: #0069d9;
+	border-color: #0062cc;
+}
+
+.btn-info {
+	background-color: #17a2b8;
+	border-color: #17a2b8;
+}
+
+.btn-info:hover {
+	background-color: #138496;
+	border-color: #117a8b;
+}
+
+.loginbutton {
+	width: 100%;
+}
+</style>
 </head>
 <body style="min-height: 100vh; display: flex; flex-direction: column;">
 	<my:navBar></my:navBar>
-
 	<div class="container-lg flex-grow-1">
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-8 col-lg-6">
@@ -32,32 +82,30 @@
 					<div class="mb-3">
 						<label for="inputPassword" class="form-label">암호</label> <input id="inputPassword" class="form-control" type="password" name="password" />
 					</div>
-					<input class="btn btn-primary"  type="submit" value="로그인" />
+					<div class="col-lg-6">
+						<input class="btn btn-primary loginbutton" type="submit" value="로그인" />
+					</div>
 				</form>
 				<div>
 				<!-- 	<a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=d7f3b956bef7e076113cc3f6f070b65b&redirect_uri=http://localhost:8080/auth/kakao/callback&response_type=code "> <img src="/img/kakao/kakao.png" style="height: 50px">
 					</a> -->
 				</div>
+
 			</div>
 		</div>
 	</div>
-
-
-
 	<hr>
 	<div class="container-lg">
 		<div class="row justify-content-center">
 			<div class="col-12 col-md-8 col-lg-6">
 				<div class="mb-3">
-					<a href="/member/signup" class="btn btn-info">회원가입</a>
-					 <a href="/member/searchId" class="btn btn-info">아이디 찾기</a>
-					  <a href="/member/searchPassword" class="btn btn-info">비밀번호찾기 찾기</a>
+					<a href="/member/signup" class="btn btn-secondary">회원가입</a> <a href="/member/searchId" class="btn btn-secondary">아이디 찾기</a> <a href="/member/searchPassword" class="btn btn-secondary">비밀번호찾기 찾기</a>
 				</div>
 			</div>
 		</div>
 	</div>
 
-<my:footer />
+	<my:footer />
 
 
 
