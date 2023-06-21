@@ -19,6 +19,25 @@
 	    text-align: center;
 	    font-weight: 800;
     }
+    .product-item {
+		display: flex;
+		align-items: center;
+	}
+	
+	.product-image {
+		max-width: 80px;
+		max-height: 80px;
+		margin-right: 10px;
+	}
+	
+	.product-name {
+		margin: 0;
+	}
+	
+	.table td {
+	    vertical-align: middle;
+	}
+	
 </style>
 </head>
 
@@ -42,11 +61,16 @@
                             <th>구매수량</th>
                         </tr>
                     </thead>
-                    <tbody class="cartitems">
+                    <tbody class="cartitems table-group-divider">
                         <c:forEach var="cartItem" items="${cartItems}">
                             <tr>
                                 <td><input type="checkbox" id="" class="item-check cartItemId" value="${cartItem.id}" data-total-price="${cartItem.productPrice * cartItem.quantity}"></td>
-                                <td id="productName_${cartItem.id}">${cartItem.productName}</td>
+                                <td id="productName_${cartItem.id}">
+                                	<div class="product-item">
+	                                	<img class="card-img-top mb-5 mb-md-0 product-image" src="${bucketUrl}/product/${cartItem.productId }/main.png" alt=""/>
+	                                	<p class="product-name">${cartItem.productName}</p>
+                                	</div>
+                                </td>
                                 
 			                    <td id="productPrice_${cartItem.id}" data-unit-price="${cartItem.productPrice}">${cartItem.productPrice}</td>
 			                    
