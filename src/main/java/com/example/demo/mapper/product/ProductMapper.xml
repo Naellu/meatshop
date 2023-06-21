@@ -55,12 +55,7 @@
 		VALUES (#{productId}, #{originalFilename})
 	</insert>
 
-	<!-- <resultMap type="java.util.ArrayList" id="fileNameMap"> <collection 
-		property="fileName" ofType="String"> <result column="file_name" /> </collection> 
-		</resultMap> 상품id로 파일 검색 -->
-	<!-- <select id="selectFileNamesByProductId" resultType="ArrayList"> SELECT 
-		file_name FROM productfilename WHERE product_id = #{productId} </select> -->
-
+	<!-- 상품id로 파일선택 -->
 	<select id="selectFileNamesByProductId" resultType="String"
 		parameterType="java.lang.Integer">
 		SELECT file_name
@@ -228,7 +223,6 @@
 		SELECT * FROM
 		productview
 		WHERE product_id = #{productId}
-
 	</select>
 
 	<!-- 고객 페이지 네이션 -->

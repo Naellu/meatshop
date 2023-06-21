@@ -51,7 +51,7 @@
 				<div class="mb-3">
 					<a href="/member/signup" class="btn btn-info">회원가입</a>
 					 <a href="/member/searchId" class="btn btn-info">아이디 찾기</a>
-					  <a href="/member/searchPassword" class="btn btn-info">비밀번호찾기 찾기</a>
+					  <a href="/member/searchPassword" class="btn btn-info">비밀번호찾기</a>
 				</div>
 			</div>
 		</div>

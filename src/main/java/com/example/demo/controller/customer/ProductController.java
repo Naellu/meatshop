@@ -44,20 +44,6 @@ public class ProductController {
 		return result;
 	}
 
-	/*
-	@GetMapping("listView")
-	public ResponseEntity<Map<String, Object>> listView(
-			@RequestParam(value = "page", defaultValue = "1") Integer page,
-			@RequestParam(value = "category", required = false) Integer categoryId,
-			@RequestParam(value = "type", required = false) String type,
-			@RequestParam(value = "search", defaultValue = "") String search,
-			Authentication authentication) {
-	
-		Map<String, Object> result = productService.getViewList(page, categoryId, type, search, authentication);
-		return ResponseEntity.ok(result);
-	}
-	*/
-
 	// 상품 정보 페이지
 	@GetMapping("info/{id}")
 	public String detail(Model model, @PathVariable("id") Integer id) {
@@ -65,5 +51,19 @@ public class ProductController {
 		model.addAttribute("product", product);
 		return "product/info";
 	}
-
 }
+
+/*
+@GetMapping("listView")
+public ResponseEntity<Map<String, Object>> listView(
+		@RequestParam(value = "page", defaultValue = "1") Integer page,
+		@RequestParam(value = "category", required = false) Integer categoryId,
+		@RequestParam(value = "type", required = false) String type,
+		@RequestParam(value = "search", defaultValue = "") String search,
+		Authentication authentication) {
+
+	Map<String, Object> result = productService.getViewList(page, categoryId, type, search, authentication);
+	return ResponseEntity.ok(result);
+}
+*/
+

@@ -24,7 +24,7 @@ public class MainController {
 	private String accessKey;
 
 	@GetMapping
-	public String mainPage() {
+	public String main() {
 		return "main";
 	}
 

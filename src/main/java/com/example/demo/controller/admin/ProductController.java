@@ -12,7 +12,6 @@ import org.springframework.web.multipart.*;
 import org.springframework.web.servlet.mvc.support.*;
 
 import com.example.demo.domain.*;
-import com.example.demo.exception.*;
 import com.example.demo.service.admin.*;
 import com.example.demo.service.mail.*;
 
@@ -38,12 +37,12 @@ public class ProductController {
 			@RequestParam(value = "search", defaultValue = "") String search,
 			@RequestParam(value = "stockQuantity", required = false) Integer stockQuantity,
 			@RequestParam(value = "pub", required = false) String pub) {
-		// List<ProductView> productList = productService.getViewList();
 		Map<String, Object> result = productService.getViewList(page, type, search, stockQuantity, pub);
 		model.addAllAttributes(result);
 		return "admin/product/list";
 	}
 
+	// 상품 공개 비공개 처리
 	@PostMapping("pub")
 	public ResponseEntity<Map<String, Object>> pubProc(@RequestBody PubRequest pub) {
 		boolean ok = productService.pubProductAll(pub);
@@ -59,8 +58,8 @@ public class ProductController {
 
 	// 상품 상세 페이지
 	@GetMapping("detail/{id}")
-	// @PreAuthorize("hasAuthority('admin')")
-	public String detail(Model model, @PathVariable("id") Integer id) {
+	public String detail(Model model,
+			@PathVariable("id") Integer id) {
 		ProductView product = productService.getOneView(id);
 		model.addAttribute("product", product);
 		return "admin/product/detail";
@@ -74,7 +73,9 @@ public class ProductController {
 
 	// 상품 등록 처리
 	@PostMapping("reg")
-	public String regProc(Product product, @RequestParam("files") MultipartFile[] files, RedirectAttributes rttr) {
+	public String regProc(Product product,
+			@RequestParam("files") MultipartFile[] files,
+			RedirectAttributes rttr) {
 
 		try {
 			boolean ok = productService.add(product, files);
@@ -86,20 +87,20 @@ public class ProductController {
 			e.printStackTrace();
 		}
 		rttr.addFlashAttribute("message", "상품 등록에 실패하였습니다.");
-
 		return "redirect:/admin/product/list";
 
 	}
 
 	// 상품 수정 페이지
 	@GetMapping("modify/{id}")
-	public String modify(@PathVariable("id") Integer id, Model model) {
+	public String modify(@PathVariable("id") Integer id,
+			Model model) {
 		ProductView product = productService.getOneView(id);
 		model.addAttribute("product", product);
 		return "admin/product/modify";
 	}
 
-	// 상품 수정 페이지
+	// 상품 수정 처리
 	@PostMapping("modify/{id}")
 	public String modifyProc(Product product,
 			@RequestParam(value = "removeFiles", required = false) List<String> removeFileNames,
@@ -136,10 +137,8 @@ public class ProductController {
 
 	@PostMapping("notify")
 	@ResponseBody
-	String mailNotify(@RequestParam Integer productId) throws Exception {
-		// log.info(" info log={}", productId);
+	public void mailNotify(@RequestParam Integer productId) {
 		mailService.sendNotifyEmail(productId);
-		return null;
 	}
 
 }
