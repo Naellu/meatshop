@@ -1,9 +1,8 @@
 
 let globalData;
 $('#emailButton').click(function() {
-	const email = $("#email_Check").val();
+	const email = $("#email").val();
 	const fullEmail = email;
-
 	$.ajax("/member/searchId/" + fullEmail, {
 		type: "POST",
 		data: {
@@ -41,7 +40,7 @@ $(document).ready(function() {
 				if (data) {
 					// 맞는 경우 처리 로직 작성
 					alert("인증번호가 확인되었습니다.");
-						$.ajax({
+					$.ajax({
 						type: "POST",
 						url: "/member/findId",
 						data: {
