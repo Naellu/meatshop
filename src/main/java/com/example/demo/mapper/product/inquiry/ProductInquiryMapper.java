@@ -61,5 +61,12 @@ public interface ProductInquiryMapper {
 			""")
 	Integer size(ProductInquiry productInquiry);
 
+	@Select("""
+			SELECT product_name
+			FROM products
+			WHERE product_id = #{productId}
+			""")
+	String getProductName(ProductInquiry productInquiry);
+
 
 }

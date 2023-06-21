@@ -162,8 +162,14 @@ public class ReviewService {
 		return removeCheck == 1;
 	}
 
-	public Review getReview(Integer reviewId) {
-		return reviewMapper.getReviewByReviewId(reviewId);
+	public Map<String, Object> getReview(Integer reviewId) {
+		Map<String, Object> result = new HashMap<>();
+		result.put("review", reviewMapper.getReviewByReviewId(reviewId));
+		
+		Review review = reviewMapper.getReviewByReviewId(reviewId);
+		result.put("productName", reviewMapper.getproductName(review));
+		
+		return result;
 	}
 
 	public boolean modify(Review review, MultipartFile[] addFiles, List<String> removeFileNames) throws Exception {
@@ -227,6 +233,11 @@ public class ReviewService {
 		result.put("count", likeCount);
 
 		return result;
+	}
+
+	public String getproductName(Review review) {
+		
+		return reviewMapper.getproductName(review);
 	}
 
 }
