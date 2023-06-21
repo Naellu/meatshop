@@ -123,7 +123,7 @@ public class NoticeBoardService implements NoticeBoardServiceInterface {
 	}
 	
 	public Map<String, Object> getList(Integer page, String search, String type) {
-		Integer rowPerPage = 10;
+		Integer rowPerPage = 16;
 		
 		Integer startIndex = (page -1) * rowPerPage;
 		

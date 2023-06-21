@@ -72,18 +72,18 @@
   <div class="form-title">
     <h3>Forgot ID</h3>
   </div>
-  <form>
+  
     <fieldset>
       <legend>아이디 찾기</legend>
       <div class="form-group">
-        <label class="form-label" for="email">가입 때 사용한 이메일을 입력하세요</label>
+        <label class="form-label" for="email" id ="email_Check">가입 때 사용한 이메일을 입력하세요</label>
         <input id="email" class="form-control" type="email" placeholder="Email" required>
       </div>
       <div class="form-group">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary " id = "emailButton">Submit</button>
       </div>
     </fieldset>
-  </form>
+
 </div>
 
 <div class="containers">
