@@ -31,34 +31,37 @@ public interface ProductMapper {
 	// 상품아이디로 파일 삭제
 	public void deleteFileNameByProductId(Integer productId);
 
-	//파일 이름과 상품아이디로 삭제
+	// 파일 이름과 상품아이디로 삭제
 	public void deleteFileNameByBoardIdAndFileName(Integer productId, String fileName);
 
+	// 업데이트 처리
 	public int update(Product product);
-	
-	//페이징 처리
-	public List<ProductView> selectAllPaging(Integer startIndex, Integer pageSize, String type, String search, Integer stockQuantity, String pub);
 
-	//전체 게시글 개수
+	// 페이징 처리
+	public List<ProductView> selectAllPaging(Integer startIndex, Integer pageSize, String type, String search,
+			Integer stockQuantity, String pub);
+
+	// 전체 게시글 개수
 	public Integer countAll(String type, String search, Integer stockQuantity, String pub);
 
-	//공개 비공개처리
+	// 공개 비공개처리
 	public Integer changeProductPub(List<String> openIds, List<String> ids);
 
-	//고객 페이지
+	// 고객 페이지
 	// 고객 상품 목록
 	public List<ProductView> getCustomerView();
 
-	//고객 상품 목록
-	public List<ProductView> selectCustomerAllPaging(Integer pageSize, Integer startIndex, Integer categoryId, String type, String search);
-	
-	//고객 상품 상세페이지
+	// 고객 상품 목록
+	public List<ProductView> selectCustomerAllPaging(Integer pageSize, Integer startIndex, Integer categoryId,
+			String type, String search);
+
+	// 고객 상품 상세페이지
 	public ProductView getCustomerViewById(Integer id);
 
-	//고객 상품 개수 pub = 1만
+	// 고객 상품 개수 pub = 1만
 	public Integer countCustomerAll(Integer categoryId, String type, String search);
 
-	//메인페이지
-	//top3의 상품 가져오기
+	// 메인페이지
+	// top3의 상품 가져오기
 	public List<ProductView> getTopView();
 }

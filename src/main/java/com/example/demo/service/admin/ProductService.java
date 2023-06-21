@@ -11,6 +11,7 @@ public interface ProductService {
 	// 상품 목록
 	public List<ProductView> getViewList();
 	
+	// 상품 목록 + 페이징
 	public Map<String, Object> getViewList(Integer page, String type, String search, Integer stockQuantity, String pub);
 	
 	//상품 상세 페이지

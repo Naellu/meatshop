@@ -29,10 +29,11 @@ public class ProductServiceImpl implements ProductService {
 
 	private final S3Client s3;
 
+	// 상품 목록
 	@Override
 	public Map<String, Object> getViewList(Integer page, Integer categoryId, String type, String search,
 			Authentication authentication) {
-		// 0~10 10~20 20~30
+		// 0~8 8~16 16~24
 		Integer pageSize = 8; // 8 16 24
 		Integer startIndex = (page - 1) * pageSize; // 0 8 16
 
@@ -85,6 +86,7 @@ public class ProductServiceImpl implements ProductService {
 		return Map.of("pageInfo", pageInfo, "productList", productList);
 	}
 
+	// 상품 상세 페이지
 	@Override
 	public ProductView getOneView(Integer id) {
 		return productMapper.getCustomerViewById(id);

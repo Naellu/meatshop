@@ -69,6 +69,7 @@ public class ProductServiceImpl implements ProductService {
 		// 다음 페이지
 		Integer nextPageNumber = leftPageNumber + 10;
 
+		// page관련 Map
 		Map<String, Object> pageInfo = new HashMap<>();
 		pageInfo.put("lastPageNumber", lastPage);
 		pageInfo.put("leftPageNumber", leftPageNumber);
@@ -77,9 +78,10 @@ public class ProductServiceImpl implements ProductService {
 		pageInfo.put("prevPageNumber", prevPageNumber);
 		pageInfo.put("nextPageNumber", nextPageNumber);
 
+		// 상품 목록 List
 		List<ProductView> productList = productMapper.selectAllPaging(startIndex, pageSize, type, search, stockQuantity,
 				pub);
-		
+
 		return Map.of("pageInfo", pageInfo, "productList", productList);
 	}
 
@@ -104,7 +106,9 @@ public class ProductServiceImpl implements ProductService {
 
 					// s3에 파일 업로드
 					PutObjectRequest por = PutObjectRequest.builder()
-							.bucket(bucketName).acl(ObjectCannedACL.PUBLIC_READ).key(objectKey)
+							.bucket(bucketName)
+							.acl(ObjectCannedACL.PUBLIC_READ) // 모두 열람 가능 설정
+							.key(objectKey)
 							.build();
 					RequestBody rb = RequestBody.fromInputStream(file.getInputStream(),
 							file.getSize());
@@ -124,7 +128,9 @@ public class ProductServiceImpl implements ProductService {
 	// 상품 수정
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public boolean modify(Product product, List<String> removeFileNames, MultipartFile[] files) throws IOException {
+	public boolean modify(Product product,
+			List<String> removeFileNames,
+			MultipartFile[] files) throws IOException {
 		if (removeFileNames != null && !removeFileNames.isEmpty()) {
 			for (String fileName : removeFileNames) {
 				// 파일 삭제
@@ -151,7 +157,9 @@ public class ProductServiceImpl implements ProductService {
 
 				// s3에 파일 업로드
 				PutObjectRequest por = PutObjectRequest.builder()
-						.bucket(bucketName).acl(ObjectCannedACL.PUBLIC_READ).key(objectKey)
+						.bucket(bucketName)
+						.acl(ObjectCannedACL.PUBLIC_READ)
+						.key(objectKey)
 						.build();
 				RequestBody rb = RequestBody.fromInputStream(file.getInputStream(),
 						file.getSize());
@@ -190,6 +198,7 @@ public class ProductServiceImpl implements ProductService {
 		return cnt == 1;
 	}
 
+	// 공개 비공개 처리
 	@Override
 	public boolean pubProductAll(PubRequest pub) {
 
