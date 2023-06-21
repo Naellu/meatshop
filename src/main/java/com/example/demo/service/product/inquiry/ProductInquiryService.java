@@ -58,6 +58,7 @@ public class ProductInquiryService {
 		Map<String, Object> inquiryInfo = new HashMap<>();
 		inquiryInfo.put("productId", productInquiry.getProductId());
 		inquiryInfo.put("customerId", productInquiry.getCustomerId());
+		inquiryInfo.put("productName", inquiryMapper.getProductName(productInquiry));
 		
 		Map<String, Object> res = new HashMap<>();
 		res.put("productInquiryList", productInquiryList);
@@ -88,6 +89,10 @@ public class ProductInquiryService {
 	public boolean modifyInquiry(ProductInquiry productInquiry) {
 		int cnt = inquiryMapper.modifyInquiry(productInquiry);
 		return cnt == 1;
+	}
+
+	public String getProductName(ProductInquiry productInquiry) {
+		return inquiryMapper.getProductName(productInquiry);
 	}
 
 }

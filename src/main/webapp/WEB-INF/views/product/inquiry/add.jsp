@@ -23,7 +23,7 @@
 <body>
 	<my:alert></my:alert>
 
-	<h1>${param.productId}번상품문의</h1>
+	<h1>상품명 : ${productName }</h1>
 	<hr />
 	<form action="/product/inquiry/add" method="post"
 		enctype="multipart/form-data">

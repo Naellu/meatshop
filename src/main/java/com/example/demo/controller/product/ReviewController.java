@@ -41,8 +41,13 @@ public class ReviewController {
 	}
 
 	@GetMapping("add")
-	public void addFrom(Review review) {
-
+	public void addFrom(Review review, Model model) {
+		String productName = service.getproductName(review);
+		
+		model.addAttribute("productName", productName);
+		model.addAttribute("review", review);
+		
+		
 	}
 
 	@PostMapping("add")
@@ -77,7 +82,8 @@ public class ReviewController {
 
 	@GetMapping("modify")
 	public String modifyForm(Integer reviewId, Model model) {
-		model.addAttribute("review", service.getReview(reviewId));
+		Map<String, Object> result = service.getReview(reviewId);
+		model.addAllAttributes(result);
 		return "product/review/modify";
 	}
 
@@ -92,12 +98,10 @@ public class ReviewController {
 
 		if (ok) {
 			// 해당 게시물 보기로 리디렉션
-//			rttr.addAttribute("success", "modify");
 			rttr.addFlashAttribute("message", "리뷰가 수정되었습니다.");
 			return "redirect:/product/info/" + review.getProductId();
 		} else {
 			// 수정 form 으로 리디렉션
-//			rttr.addAttribute("fail", "modify");
 			rttr.addFlashAttribute("message", "(오류)리뷰가 수정되지 않았습니다.");
 			return "redirect:/product/info/" + review.getProductId();
 		}

@@ -18,9 +18,9 @@ for (var likeIcon of likeIcons) {
 			success: function(data) {
 				
 				if (data.like) {
-					$(likeId).html(`<i class="fa-solid fa-thumbs-up"></i>`);
+					$(likeId).html(`<i class="fa-solid fa-thumbs-up fa-beat" style="color: #166fe3;"></i>`);
 				} else {
-					$(likeId).html(`<i class="fa-regular fa-thumbs-up"></i>`);
+					$(likeId).html(`<i class="fa-regular fa-thumbs-up" style="color: #166fe3;"></i>`);
 				}
 
 				$(likeNumber).text(data.count);

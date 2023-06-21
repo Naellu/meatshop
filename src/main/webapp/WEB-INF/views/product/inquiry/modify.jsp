@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="my" tagdir="/WEB-INF/tags"%>
+
+	<h1>상품명 : ${productName }</h1>
+	<hr />	
 	<form method="post" enctype="maultipart/form-date">
 		<div class="mb-3">
 		<input type="hidden" name="inquiryId" id="inquiryId" value="${productInquiry.inquiryId }"/>

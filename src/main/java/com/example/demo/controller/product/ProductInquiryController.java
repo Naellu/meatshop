@@ -32,8 +32,10 @@ public class ProductInquiryController {
 
 	@GetMapping("add")
 	@PreAuthorize("isAuthenticated()")
-	public void addFrom(ProductInquiry productInquiry) {
-		
+	public void addFrom(ProductInquiry productInquiry, Model model) {
+		String productName = service.getProductName(productInquiry);
+		model.addAttribute("productName",productName);
+		model.addAttribute("productInquiry",productInquiry);
 	}
 
 	@PostMapping("add")
@@ -74,9 +76,10 @@ public class ProductInquiryController {
 	public String modifyFrom(Integer inquiryId, Model model) {
 		
 	    ProductInquiry inquiry = service.getInquiry(inquiryId);
-
 	    model.addAttribute("productInquiry", inquiry);
 	    
+	    String productName = service.getProductName(inquiry);
+	    model.addAttribute("productName",productName);
 
 	    return "product/inquiry/modify";
 	}

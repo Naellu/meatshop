@@ -5,7 +5,7 @@
 
 <my:alert></my:alert>
 
-<h1>${review.productId}번상품리뷰</h1>
+<h1>상품명 : ${productName }</h1>
 <hr />
 <form action="/product/review/modify" method="post"
 	enctype="multipart/form-data">

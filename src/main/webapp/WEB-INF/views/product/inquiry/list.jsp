@@ -23,10 +23,15 @@
 
 <sec:authentication property="name" var="userid" />
 <sec:authentication property="authorities" var="authorities" />
+<br />
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h3 style="text-align: left;">${inquiryInfo.productName}</h3>
+    <button class="btn btn-outline-primary" id="addInquiry"
+            data-product-id="${productInquiry.productId}"
+            data-customer-id="${userid}"
+            style="text-align: right;">문의하기</button>
+</div>
 
-<button class="btn btn-outline-primary" id="addInquiry"
-	data-product-id="${productInquiry.productId}"
-	data-customer-id="${userid }">문의하기</button>
 <hr />
 <div class="accordion " id="accordionExample">
 	<table class="table">

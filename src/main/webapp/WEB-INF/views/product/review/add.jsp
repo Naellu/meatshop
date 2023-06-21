@@ -31,7 +31,7 @@
 	<my:alert></my:alert>
 
 	<div class="container">
-		<h1>${param.productId}번상품 리뷰</h1>
+		<h1>상품명 : ${productName }</h1>
 		<hr />
 		<form action="/product/review/add" method="post"
 			enctype="multipart/form-data">
