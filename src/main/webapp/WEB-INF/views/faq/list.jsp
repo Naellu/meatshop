@@ -6,6 +6,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+<style>
+    .faq-content {
+        white-space: pre-line;
+    }
+</style>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Insert title here</title>
@@ -58,7 +65,7 @@
 												</button>
 											</h2>
 											<div id="collapse-${faq.id}" class="accordion-collapse collapse" aria-labelledby="heading-${faq.id}">
-												<div class="accordion-body">${faq.content}</div>
+												<div class="accordion-body faq-content">${faq.content}</div>
 												<sec:authorize access="hasAuthority('admin')">
 													<!-- 수정, 삭제 -->
 													<a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a>
@@ -88,7 +95,7 @@
 												</button>
 											</h2>
 											<div id="collapse-${faq.id}" class="accordion-collapse collapse" aria-labelledby="heading-${faq.id}">
-												<div class="accordion-body">${faq.content}</div>
+												<div class="accordion-body faq-content">${faq.content}</div>
 												<sec:authorize access="hasAuthority('admin')">
 													<!-- 수정, 삭제 -->
 													<a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a>
@@ -118,7 +125,7 @@
 												</button>
 											</h2>
 											<div id="collapse-${faq.id}" class="accordion-collapse collapse" aria-labelledby="heading-${faq.id}">
-												<div class="accordion-body">${faq.content}</div>
+												<div class="accordion-body faq-content">${faq.content}</div>
 												<sec:authorize access="hasAuthority('admin')">
 													<!-- 수정, 삭제 -->
 													<a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a>
@@ -148,7 +155,7 @@
 												</button>
 											</h2>
 											<div id="collapse-${faq.id}" class="accordion-collapse collapse" aria-labelledby="heading-${faq.id}">
-												<div class="accordion-body">${faq.content}</div>
+												<div class="accordion-body faq-content">${faq.content}</div>
 												<sec:authorize access="hasAuthority('admin')">
 													<!-- 수정, 삭제 -->
 													<a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a>
@@ -173,7 +180,7 @@
 									<div class="accordion">
 										<div class="accordion-item">
 											<h2 class="accordion-header">
-												<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${faq.id}" aria-expanded="false" aria-controls="collapse-${faq.id}">
+												<button class="accordion-button faq-content" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${faq.id}" aria-expanded="false" aria-controls="collapse-${faq.id}">
 													<h3>Q</h3> <br />${faq.title}
 												</button>
 											</h2>
@@ -203,12 +210,12 @@
 									<div class="accordion">
 										<div class="accordion-item">
 											<h2 class="accordion-header">
-												<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${faq.id}" aria-expanded="false" aria-controls="collapse-${faq.id}">
+												<button class="accordion-button faq-content" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${faq.id}" aria-expanded="false" aria-controls="collapse-${faq.id}">
 													<h3>Q</h3> <br />${faq.title}
 												</button>
 											</h2>
 											<div id="collapse-${faq.id}" class="accordion-collapse collapse" aria-labelledby="heading-${faq.id}">
-												<div class="accordion-body">${faq.content}</div>
+												<div class="accordion-body faq-content">${faq.content}</div>
 												<sec:authorize access="hasAuthority('admin')">
 													<!-- 수정, 삭제 -->
 													<a class="btn btn-secondary" href="/faq/modify/${faq.id }">수정</a>
@@ -248,7 +255,7 @@
 			</div>
 		</div>
 	</div>
-	
+	<div style="margin-bottom : 150px"></div>
 	<my:footer/>
 
 

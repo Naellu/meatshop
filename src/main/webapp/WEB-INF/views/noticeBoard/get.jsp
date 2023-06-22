@@ -39,10 +39,12 @@
 							</c:forEach>
 						</div>
 
-						<div class="mb-3">
-							<label for="" class="form-label">본문</label>
-							<textarea class="form-control" readonly rows="10">${nboard.content }</textarea>
-						</div>
+						<c:if test="${not empty nboard.content }">
+							<div class="mb-3">
+								<label for="" class="form-label">본문</label>
+								<textarea class="form-control" readonly rows="15" cols="100">${nboard.content }</textarea>
+							</div>
+						</c:if>
 
 						<div class="mb-3">
 							<label for="" class="form-label">작성일시</label>
