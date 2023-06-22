@@ -72,7 +72,9 @@
                                 	</div>
                                 </td>
                                 
-			                    <td id="productPrice_${cartItem.id}" data-unit-price="${cartItem.productPrice}">${cartItem.productPrice}</td>
+			                    <td id="productPrice_${cartItem.id}" data-unit-price="${cartItem.productPrice}">
+			                    	<fmt:formatNumber value="${cartItem.productPrice}" maxFractionDigits="0"/>
+			                    </td>
 			                    
 			                    <td>
 				                    <div class="quantity-container">

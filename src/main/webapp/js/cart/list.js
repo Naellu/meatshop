@@ -24,7 +24,7 @@ $(document).ready(function() {
 		})
 		
 		if(total != 0) {
-			$("#totalPrice").text("/ 총 " + total + "원");
+			$("#totalPrice").text("/ 총 " + total.toLocaleString() + "원");
 		} else {
 			$("#totalPrice").text(null);
 		}
@@ -41,7 +41,7 @@ $(document).ready(function() {
             memberId: $('#memberId').val(),
             productId: $('#productId_' + cartItemId).val(),
             quantity: $('#quantity_' + cartItemId).text(),
-            price: $('#productPrice_' + cartItemId).text(),
+            price: $('#productPrice_' + cartItemId).data('unit-price'),
 		};
         
         $.ajax({
@@ -50,9 +50,10 @@ $(document).ready(function() {
 			contentType: 'application/json',
 			data: JSON.stringify(data),
 			success: function(response) {
-				// alert(response);
+				alert(response);
 				//window.location.replace("/cart");
-				location.reload();
+				//location.reload();
+			  	$('#productName_' + cartItemId).closest('tr').remove();
 				updateTotalPrice();
 			},
             error: function (xhr, status, error) {
@@ -78,7 +79,7 @@ $(document).ready(function() {
                 memberId: $('#memberId').val(),
                 productId: $('#productId_' + cartItemId).val(),
                 quantity: $('#quantity_' + cartItemId).val(),
-                price: $('#productPrice_' + cartItemId).text(),
+                price: $('#productPrice_' + cartItemId).data('unit-price'),
                 fromCart: true
             };
             selectedCartItems.push(cartItem);
