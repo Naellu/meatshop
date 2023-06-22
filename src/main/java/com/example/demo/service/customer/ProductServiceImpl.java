@@ -92,7 +92,7 @@ public class ProductServiceImpl implements ProductService {
 		return productMapper.getCustomerViewById(id);
 	}
 
-	// 메인페이지 top 3 가져오기
+	// 메인페이지 top 3와 캐러셀 이미지를 위한 파일개수넘기기
 	@Override
 	public Map<String, Object> getTopView() {
 

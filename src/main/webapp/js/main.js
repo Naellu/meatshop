@@ -52,7 +52,6 @@ function listView() {
 				</div>`
 				$("#productView").append(productHTML);
 			});
-
 		}
 	});
 };

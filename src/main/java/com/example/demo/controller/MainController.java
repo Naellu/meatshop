@@ -19,7 +19,7 @@ import lombok.extern.slf4j.*;
 @RequiredArgsConstructor
 public class MainController {
 	private final ProductService productService;
-	
+
 	@Value("${kakao.accessKey}")
 	private String accessKey;
 
@@ -30,14 +30,23 @@ public class MainController {
 
 	@GetMapping("listView")
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> listView() {
+	@ResponseStatus(HttpStatus.OK)
+	public Map<String, Object> listView() {
 		Map<String, Object> result = productService.getTopView();
-		return ResponseEntity.ok(result);
+		return result;
 	}
-	
+
 	@GetMapping("location")
 	public String location(Model model) {
 		model.addAttribute("kakaoMap", accessKey);
 		return "customer/location";
 	}
 }
+
+/*@GetMapping("listView")
+@ResponseBody
+public ResponseEntity<Map<String, Object>> listView() {
+	Map<String, Object> result = productService.getTopView();
+	return ResponseEntity.ok(result);
+}
+*/
