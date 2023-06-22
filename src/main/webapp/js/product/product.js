@@ -73,8 +73,8 @@ $("#goToCartBtn").click(function() {
 			//값을 가지고
 			// orderdteatil/ odreid로 이동
 			//다른페이지로이동
-			window.location.href = "/cart";
-			alert(message); // alert말고 다른걸로 수정할 예정
+			// window.location.href = "/cart";
+			alert(message);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
 			window.location.href = "/member/login";

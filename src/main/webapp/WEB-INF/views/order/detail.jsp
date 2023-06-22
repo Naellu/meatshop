@@ -80,7 +80,8 @@
 					              <p class="product-name">${productNames[status.index] }</p>
 				              	</div>
 				              </td>
-				              <td><fmt:formatNumber value="${orderItemDto.price}" pattern="#,###"/></td>
+				              <%--  <td><fmt:formatNumber value="${orderItemDto.price}" pattern="#,###"/></td> --%>
+				              <td><fmt:formatNumber value="${orderItemDto.price}" maxFractionDigits="0"/></td>
 				              <td>${orderItemDto.quantity }</td>
 			              		<td>
 									<input type="hidden" name="memberId" value="${orderItemDto.memberId }" />
