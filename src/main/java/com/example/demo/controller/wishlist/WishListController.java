@@ -2,6 +2,7 @@ package com.example.demo.controller.wishlist;
 
 import java.util.*;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.*;
 import org.springframework.security.core.*;
@@ -18,7 +19,7 @@ import lombok.*;
 @RequestMapping("/wish/")
 @RequiredArgsConstructor
 public class WishListController {
-
+	
 	private final WishListService wishService;
 
 	// 아이디별 wishList페이지

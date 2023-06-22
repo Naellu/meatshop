@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+#customerChatRoom .me {
+	color: ForestGreen;
+}
+
+#customerChatRoom .admin {
+	color: red;
+}
