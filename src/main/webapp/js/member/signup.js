@@ -101,10 +101,25 @@ $("#inputPhoneNumber").keyup(function() {
 	// 전화번호 재입력시 
 	checkPhoneNumber = false;
 	const pn = $("#inputPhoneNumber").val();
-	if (pn != "") {
-		checkPhoneNumber = true;
-	}
 
+	const phoneNumberRegex = /^\d{3}\d{3,4}\d{4}$/;
+	$("#phoneNumFailText").removeClass("d-none");
+	$("#phoneNumSuccessText").addClass("d-none");
+	if (phoneNumberRegex.test(pn)) {
+		checkPhoneNumber = true;
+		let formattedPhoneNumber = "";
+
+		$("#phoneNumSuccessText").removeClass("d-none");
+		$("#phoneNumFailText").addClass("d-none");
+
+		if (pn.length === 10) {
+			formattedPhoneNumber = pn.substring(0, 3) + "-" + pn.substring(3, 6) + "-" + pn.substring(6);
+		} else if (pn.length === 11) {
+			formattedPhoneNumber = pn.substring(0, 3) + "-" + pn.substring(3, 7) + "-" + pn.substring(7);
+		}
+
+		$("#phoneNumber").val(formattedPhoneNumber);
+	}
 	enableSubmit();
 });
 

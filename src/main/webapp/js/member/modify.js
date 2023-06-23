@@ -1,9 +1,10 @@
 let checkEmail = true;
 let checkNickName = true;
 let checkPassword = true;
+let checkPhoneNumber = true;
 
 function enableSubmit() {
-	if (checkEmail && checkNickName && checkPassword) {
+	if (checkEmail && checkNickName && checkPassword && checkPhoneNumber) {
 		$("#modifyButton").removeAttr("disabled");
 	} else {
 		$("#modifyButton").attr("disabled", "");
@@ -24,12 +25,39 @@ $("#inputNickName").keyup(function() {
 	enableSubmit();
 });
 
+$("#inputPhoneNumber").keyup(function() {
+	// 전화번호 재입력시 
+	checkPhoneNumber = false;
+	const pn = $("#inputPhoneNumber").val();
+	
+	const phoneNumberRegex = /^\d{3}\d{3,4}\d{4}$/;
+	$("#phoneNumFailText").removeClass("d-none");
+	$("#phoneNumSuccessText").addClass("d-none");
+	if (phoneNumberRegex.test(pn)) {
+		checkPhoneNumber = true;
+		let formattedPhoneNumber = "";
+
+		$("#phoneNumSuccessText").removeClass("d-none");
+		$("#phoneNumFailText").addClass("d-none");
+
+		if (pn.length === 10) {
+			formattedPhoneNumber = pn.substring(0, 3) + "-" + pn.substring(3, 6) + "-" + pn.substring(6);
+		} else if (pn.length === 11) {
+			formattedPhoneNumber = pn.substring(0, 3) + "-" + pn.substring(3, 7) + "-" + pn.substring(7);
+		}
+
+		$("#phoneNumber").val(formattedPhoneNumber);
+	}
+	enableSubmit();
+});
+
+
 // 이메일 중복확인 버튼이 클릭되면
 $("#checkEmailBtn").click(function() {
 	const email = $("#inputEmail").val();
 	$.ajax("/member/checkEmail/" + email, {
 		success: function(data) {
-			
+
 			if (data.available) {
 				$("#availableEmailMessage").removeClass("d-none");
 				$("#notAvailableEmailMessage").addClass("d-none");
@@ -48,7 +76,7 @@ $("#checkEmailBtn").click(function() {
 // 닉네임 중복확인버튼 클릭시
 $("#checkNickNameBtn").click(function() {
 	const nickName = $("#inputNickName").val();
-	
+
 	$.ajax("/member/checkNickName/" + nickName, {
 		success: function(data) {
 			// `{"available" : true}`
@@ -66,7 +94,7 @@ $("#checkNickNameBtn").click(function() {
 				checkNickName = false
 			}
 		},
-		complete: enableSubmit 
+		complete: enableSubmit
 	});
 });
 
