@@ -8,6 +8,7 @@ CREATE TABLE products (
 
 SELECT * FROM products ORDER BY product_id DESC;
 SELECT * FROM productfilename ORDER BY id DESC;
+SELECT * FROM customerview;
 
 DESC products;
 
@@ -54,9 +55,9 @@ INSERT INTO productfilename (product_id, file_name) VALUES (2, '1.png');
 INSERT INTO productfilename (product_id, file_name) VALUES (4, '1.png');
 INSERT INTO productfilename (product_id, file_name) VALUES (5, '1.png');
 
-TRUNCATE TABLE products;
+TRUNCATE TABLE productfilename;
 
-CREATE View customerview
+CREATE View listview
 AS
 SELECT 
     p.product_id AS product_id,
@@ -78,3 +79,5 @@ FROM
     products p
     JOIN categories c ON (p.category_id = c.category_id)
 ORDER BY p.product_id;
+
+SELECT COUNT(*) FROM listview WHERE file_name IS NULL ORDER BY product_id DESC;

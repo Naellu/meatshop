@@ -31,13 +31,13 @@
 						<label class="form-label" for="inputId"> 아이디 </label>
 						<input id="inputId" class="form-control" type="text" name="id" value="${member.id }" readonly />
 					</div>
-					
+
 					<c:if test="${empty members.oauth }">
-					<div class="mb-3">
-						<label class="form-label" for="inputPassword"> New Password </label>
-						<input id="inputPassword" class="form-control" type="text" name="password" value="" />
-						<div class="form-text">변경하지 않을 시 기존의 패스워드로 설정됩니다.</div>
-					</div>
+						<div class="mb-3">
+							<label class="form-label" for="inputPassword"> New Password </label>
+							<input id="inputPassword" class="form-control" type="text" name="password" value="" />
+							<div class="form-text">변경하지 않을 시 기존의 패스워드로 설정됩니다.</div>
+						</div>
 					</c:if>
 
 					<div class="mb-3">
@@ -61,7 +61,19 @@
 
 					<div class="mb-3">
 						<label class="form-label" for="inputEmail"> 번호수정 </label>
-						<input id="inputPhoneNumber" class="form-control" type="tel" name="phoneNumber" value="${member.phoneNumber }" required />
+						<div class="form-text">'-' 제외하고 입력</div>
+						<input id="inputPhoneNumber" type="text" class="form-control" value="${member.phoneNumber}" />
+						<input id="phoneNumber" name="phoneNumber" type="hidden" value="${member.phoneNumber}" />
+
+						<div id="phoneNumSuccessText" class="d-none form-text text-primary">
+							<i class="fa-solid fa-check"></i>
+							확인되었습니다.
+						</div>
+
+						<div id="phoneNumFailText" class="d-none form-text text-danger">
+							<i class="fa-solid fa-triangle-exclamation"></i>
+							전화번호를 확인해주세요.
+						</div>
 					</div>
 
 					<button id="modifyButton" type="button" data-bs-toggle="modal" data-bs-target="#confirmModal" class="btn btn-primary">수정</button>
@@ -97,5 +109,6 @@
 	<!--jquery-->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script src="/js/member/address.js"></script>
+	<script src="/js/member/modify.js"></script>
 </body>
 </html>

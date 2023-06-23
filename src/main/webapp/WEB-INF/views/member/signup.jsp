@@ -70,11 +70,23 @@
 						<input id="detailAddress" type="text" class="form-control mb-1" placeholder="상세주소" />
 						<input type="hidden" class="form-control" id="address" name="address" />
 					</div>
-					
+
 					<c:if test="${empty members.oauth }">
 						<div class="mb-3">
 							<label for="inputPhoneNumber" class="form-label">전화번호</label>
-							<input id="inputPhoneNumber" type="text" class="form-control" name="phoneNumber" />
+							<div class="form-text">'-' 제외하고 입력</div>
+							<input id="inputPhoneNumber" type="text" class="form-control" />
+							<input id="phoneNumber" name="phoneNumber" type="hidden" />
+							
+							<div id="phoneNumSuccessText" class="d-none form-text text-primary">
+								<i class="fa-solid fa-check"></i>
+								확인되었습니다.
+							</div>
+
+							<div id="phoneNumFailText" class="d-none form-text text-danger">
+								<i class="fa-solid fa-triangle-exclamation"></i>
+								전화번호를 확인해주세요.
+							</div>
 						</div>
 
 						<div class="mb-3">
@@ -143,6 +155,6 @@
 	<script src="/js/member/signup.js"></script>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script src="/js/member/address.js"></script>
-	
+
 </body>
 </html>
