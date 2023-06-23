@@ -76,6 +76,8 @@
 			</tbody>
 		</table>
 	</div> --%>
+	
+	<div style="margin-bottom: 30px"></div>
 
 	<div class="container-lg">
 		<div class="row">
@@ -109,6 +111,7 @@
 		</div>
 	</div>
 
+	
 	<my:footer />
 
 	<!-- <script src="/js/noticeBoard/list.js"></script> -->
