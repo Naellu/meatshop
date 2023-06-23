@@ -255,7 +255,7 @@
 			</div>
 		</div>
 	</div>
-	<div style="margin-bottom : 150px"></div>
+	<div style="margin-bottom : 100px"></div>
 	<my:footer/>
 
 
