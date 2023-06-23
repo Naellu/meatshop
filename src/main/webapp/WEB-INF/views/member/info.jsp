@@ -61,7 +61,7 @@
 						<label class="form-label" for="inputEmail"> 번호 </label> <input id="inputPhoneNumber" class="form-control" type="text" name="phoneNumber" value="${member.phoneNumber }" readonly />
 					</div>
 
-					<!-- <sec:authorize access="authentication.name eq #member.id">  -->
+					<sec:authorize access="authentication.name eq #member.id">
 					<a class="btn btn-secondary" href="/member/modify?id=${member.id }">수정</a>
 					<button type="button" data-bs-toggle="modal" class="btn btn-danger" data-bs-target="#confirmModal">탈퇴</button>
 					</sec:authorize>
