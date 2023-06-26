@@ -15,9 +15,9 @@
 <body>
 	<my:navBar />
 
-	<my:header>
+	<my:mypageHeader>
 	찾아오시는길
-	</my:header>
+	</my:mypageHeader>
 	<section>
 		<div class="container-lg mt-3"></div>
 		<div class="mx-auto" style="width: 1300px; height: 400px; position: relative;">
