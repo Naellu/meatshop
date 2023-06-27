@@ -61,7 +61,6 @@ public class KakaoLoginController {
 		} catch (JsonMappingException e) {
 			e.printStackTrace();
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
 		}
 
 		System.out.println("카카오 액세스 토큰: " + oauthToken.getAccess_token());
