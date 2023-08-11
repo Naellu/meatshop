@@ -33,7 +33,8 @@ public class CartController {
 	
 	// 상품상세에서 장바구니 담기 
 	@PostMapping
-	public ResponseEntity<String> addCart(@RequestBody CartItemDto cartItemDto, HttpSession session, Authentication authentication) {
+	public ResponseEntity<String> addCart(@RequestBody CartItemDto cartItemDto,
+										  Authentication authentication) {
 		// 회원 인증정보 확인
 		if(authentication == null || !authentication.isAuthenticated() ) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -59,7 +60,6 @@ public class CartController {
 
 		// 장바구니에서 cartitem를 리스트로 가져오기
 		List<CartItem> cartItems = cartService.findAllItems(memberCart);
-//		log.info("cartItems IN CONTROLLER={}", cartItems);
 
 		// List<CartItem>을 뷰에 전달
 		model.addAttribute("cartItems", cartItems);

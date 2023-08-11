@@ -67,7 +67,6 @@ public class OrderServiceImpl implements OrderService{
 		
 		
 		Order order = Order.createOrder(memberId, orderItems);
-		log.info("order Status IN SERVICE = {}", order.getStatus());
 		orderMapper.saveOrder(order);
 		
 		for (OrderItem orderItem : orderItems) {

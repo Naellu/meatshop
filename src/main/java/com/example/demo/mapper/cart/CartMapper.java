@@ -51,15 +51,15 @@ public interface CartMapper {
     
     // cartItem의 id로 장바구니 항목 가져오기
     @Select("""
-    		SELECT
-    			id,
-    			cart_id,
-    			product_id,
-    			quantity,
-    			product_price
-    		FROM cartitems
-    		WHERE id = #{id}
-    		""")
+            SELECT
+                id,
+                cart_id,
+                product_id,
+                quantity,
+                product_price
+            FROM cartitems
+            WHERE id = #{id}
+            """)
     CartItem findByCartItemId(Integer Id);
 
     // 장바구니 가져오기

@@ -89,7 +89,7 @@
 						</button>
 						<button class="btn btn-danger" id="goToCartBtn">
 							<i class="fa-solid fa-cart-shopping"></i>
-							장바구니로가기
+							장바구니에 담기
 						</button>
 					</div>
 				</div>
