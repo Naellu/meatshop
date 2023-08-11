@@ -69,13 +69,12 @@ $(document).ready(function() {
 	
 	// 장바구니에서 주문 시
 	$('#orderButton').on('click', function () {
-        var selectedCartItems = [];
+        let selectedCartItems = [];
 		
         $('input.item-check:checked').each(function () {
-            var cartItemId = $(this).val();
-            var cartItem = {
+            let cartItemId = $(this).val();
+            let cartItem = {
                 id: cartItemId,
-                // productName: $('#productName_' + cartItemId).text(),
                 memberId: $('#memberId').val(),
                 productId: $('#productId_' + cartItemId).val(),
                 quantity: $('#quantity_' + cartItemId).val(),
@@ -84,26 +83,21 @@ $(document).ready(function() {
             };
             selectedCartItems.push(cartItem);
         });
-       	console.log(selectedCartItems);
 
 		if(selectedCartItems.length === 0) {
 			alert("상품을 선택해주세요");
 			return;
 		}
 		
-        var jsonData = JSON.stringify(selectedCartItems);
-
         $.ajax({
             url: '/order/detail',
             type: 'POST',
-            data: jsonData,
+            data: JSON.stringify(selectedCartItems),
             contentType: 'application/json',
             success: function (response) {
-                // Handle the success response
              	window.location.href = "/order/detail";
             },
             error: function (xhr, status, error) {
-                // Handle the error
             }
         });
     });

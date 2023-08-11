@@ -101,8 +101,8 @@
 				    </div>
 				</div>
 				<div id="buttonDiv">
-			        <button id="simpleOrderButton" type="submit" class="btn btn-outline-dark">결제완료</button>
-			        <button id="paymentButton" type="submit" class="btn btn-outline-dark">결제 테스트하기</button>
+<%--			        <button id="simpleOrderButton" type="submit" class="btn btn-outline-dark">결제완료</button>--%>
+			        <button id="paymentButton" type="submit" class="btn btn-outline-dark">결제하기</button>
 			    </div>
 			
 			</div>

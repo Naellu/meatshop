@@ -1,9 +1,6 @@
 package com.example.demo.controller.order;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,19 +36,25 @@ public class OrderController {
 
 	// 상품 상세에서 order/detail POST 요청 처리하는 메서드
 	@PostMapping("/detail")
-	public ResponseEntity<List<OrderItemDto>> initOrderUseJSON(@RequestBody List<OrderItemDto> orderItemDtos, HttpSession session, Authentication authentication) {
+	public ResponseEntity<List<OrderItemDto>> initOrderUseJSON(@RequestBody List<OrderItemDto> orderItemDtos,
+															   HttpSession session,
+															   Authentication authentication) {
 		// 회원 인증정보 확인
 		if(authentication == null || !authentication.isAuthenticated() ) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
-		
-		session.setAttribute("orderItemDtos", orderItemDtos);
-		
-		if(orderItemDtos == null) {
+
+		// 주문 데이터 확인
+		if(isEmptyOrderItems(orderItemDtos)) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		} else {
-			return ResponseEntity.status(HttpStatus.OK).body(orderItemDtos);
 		}
+
+		session.setAttribute("orderItemDtos", orderItemDtos);
+		return ResponseEntity.status(HttpStatus.OK).body(orderItemDtos);
+	}
+
+	private boolean isEmptyOrderItems(List<OrderItemDto> items) {
+		return Optional.ofNullable(items).map(List::isEmpty).orElse(true);
 	}
 
 	
@@ -60,7 +63,7 @@ public class OrderController {
 	public String checkOrderDetail(HttpSession session, Authentication authentication, Model model) {
 		
 		List<OrderItemDto> orderItemDtos = (List<OrderItemDto>) session.getAttribute("orderItemDtos");
-		List<String> ProductNames = new ArrayList();
+		List<String> ProductNames = new ArrayList<>();
 		
 		for(OrderItemDto orderItemDto : orderItemDtos) {
 			Integer productId = orderItemDto.getProductId();
@@ -74,24 +77,21 @@ public class OrderController {
 		
 		model.addAttribute("productNames", ProductNames);
 		model.addAttribute("orderItemDtos", orderItemDtos);
-		log.info("orderItemDtos IN ORDERCONTROLLER={}",orderItemDtos);
 		return "order/detail";
 	}
 	
 	
 	// 주문 상세에서 결제버튼 누르면 
-	// 실제 주문 들어가는 POST 메서드
+	// 결제 프로세스가 진행되는 메서드
 	@PostMapping("/payed")
 	@PreAuthorize("isAuthenticated()")
-	public ResponseEntity<PaymentDto> payedOrder(@RequestBody List<OrderItemDto> orderItemDtos, Authentication authentication) throws NotEnoughStockException {
-		log.info("into order payed IN ORDERCONTROLLER={}", orderItemDtos);
+	public ResponseEntity<PaymentDto> payedOrder(@RequestBody List<OrderItemDto> orderItemDtos,
+												 Authentication authentication) throws NotEnoughStockException {
+
 		String memberId = authentication.getName();
 		int orderId = orderService.makeOrderOfMultipleProduct(memberId, orderItemDtos);
-		log.info("orderId IN order/payed CONTROLLER ={}",orderId);
-		
-		// 결제 함수인 requestPay()에 필요한 데이터가 담긴 paymentDto를 보낼 예정
+
 		PaymentDto paymentDto = orderService.findRequiredPaymentData(orderId);
-		log.info("PaymentDto={}",paymentDto);
 		return new ResponseEntity<>(paymentDto, HttpStatus.OK);
 	}
 
@@ -100,7 +100,7 @@ public class OrderController {
 	public String getOrderPage(@PathVariable String memberId, Model model) {
 		List<OrderDto> orderList = orderService.showOrderList(memberId);
 		
-		Map<String, Integer> statusCount = new HashMap();
+		Map<String, Integer> statusCount = new HashMap<>();
 		List<String> titleArray = Status.fromName(Status.values());
 		
 		for(String title : titleArray) {

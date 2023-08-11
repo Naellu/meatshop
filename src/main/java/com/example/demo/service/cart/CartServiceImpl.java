@@ -32,8 +32,8 @@ public class CartServiceImpl implements CartService{
 		// 장바구니에 해당 cartitem이 없다면
 		if (cartItem == null) {
 
-			int productPrice = price.intValue();
 			// 장바구니에 장바구니항목 추가
+			int productPrice = price.intValue();
 			cartItem = CartItem.createCartItem(productId, quantity, productPrice);
 			cartItem.setCartId(cart.getId());
 			cartMapper.saveCartItems(cartItem);

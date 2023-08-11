@@ -38,10 +38,7 @@ $("#orderButton").click(function() {
 		contentType: 'application/json',
 		data: JSON.stringify(data),
 		success: function(response) {
-			console.log(response);
-			//값을 가지고
-			// orderdteatil/ odreid로 이동
-			//다른페이지로이동
+			// 주문 상세페이지로 이동
 			// 상태코드 200
 			window.location.href = "/order/detail";
 		},
@@ -58,7 +55,6 @@ $("#goToCartBtn").click(function() {
 	const productId = $("#productId").val();
 	const price = $("#price").val();
 
-	//json형식으로 담기
 	const data = {
 		quantity: count,
 		productId: productId,
@@ -70,10 +66,6 @@ $("#goToCartBtn").click(function() {
 		contentType: 'application/json',
 		data: JSON.stringify(data),
 		success: function(message) {
-			//값을 가지고
-			// orderdteatil/ odreid로 이동
-			//다른페이지로이동
-			// window.location.href = "/cart";
 			alert(message);
 		},
 		error: function(jqXHR, textStatus, errorThrown) {
