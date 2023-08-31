@@ -1,5 +1,9 @@
 # 나이스 투 미트 유
 
+> [김재정(Naellu)의 커밋 이력 보기](https://github.com/Naellu/meatshop/pulls?q=is%3Apr+is%3Aclosed+author%3ANaellu)
+
+<br>
+
 <img src="https://github.com/Naellu/meatshop/assets/119831581/0ecb93d6-5172-4cb7-932b-90be733b74ad" width="70%" height="70%">  
 
 <br>
